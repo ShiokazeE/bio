@@ -89,7 +89,7 @@
         
         .social-card:hover {
             transform: translateY(-5px);
-            border-color = 'rgba(255,255,255,0.3)';
+            border-color: 'rgba(255,255,255,0.3)';
         }
         
         .social-overlay {
@@ -276,6 +276,14 @@
         let isMusicReady = false;
         let isPlaying = false;
         
+        // ФУНКЦИЯ ДОЛЖНА БЫТЬ ЗДЕСЬ - ПЕРЕД ЕЁ ИСПОЛЬЗОВАНИЕМ!
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Курсор
             document.addEventListener('mousemove', function(e) {
@@ -364,13 +372,6 @@
                 elements.audio.currentTime = time;
             }
         });
-        
-        function formatTime(seconds) {
-            if (isNaN(seconds)) return '0:00';
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }
         
         document.querySelectorAll('.social-card').forEach(card => {
             card.addEventListener('mouseenter', function() {

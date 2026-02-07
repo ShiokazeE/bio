@@ -14,36 +14,37 @@
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
-            cursor: none;
         }
         
+        /* ФИКС ПЕРЕКРЕСТИЯ: Абсолютное позиционирование в центре */
         #customCursor {
             position: fixed;
             width: 20px;
             height: 20px;
             pointer-events: none;
             z-index: 9999;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%); /* Центрирование относительно точки курсора */
         }
         
         #customCursor:before, #customCursor:after {
             content: '';
             position: absolute;
             background: white;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         
         #customCursor:before {
             width: 2px;
             height: 20px;
-            left: 9px;
-            top: 0;
         }
         
         #customCursor:after {
             width: 20px;
             height: 2px;
-            left: 0;
-            top: 9px;
         }
         
         .enter-screen {
@@ -89,7 +90,7 @@
         
         .social-card:hover {
             transform: translateY(-5px);
-            border-color: 'rgba(255,255,255,0.3)';
+            border-color: rgba(255,255,255,0.3);
         }
         
         .social-overlay {
@@ -254,8 +255,14 @@
         </div>
     </div>
     
-    <audio id="backgroundMusic" loop>
+    <!-- НАДЁЖНЫЙ АУДИО-ИСТОЧНИК С РЕЗЕРВНЫМИ ССЫЛКАМИ -->
+    <audio id="backgroundMusic" loop preload="metadata">
         <source src="https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3" type="audio/mpeg">
+        <!-- Резервный источник 1 -->
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_d16713f400.mp3" type="audio/mpeg">
+        <!-- Резервный источник 2 -->
+        <source src="https://assets.mixkit.co/music/preview/mixkit-driving-ambition-32.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио элемент.
     </audio>
 
     <script>
@@ -276,7 +283,6 @@
         let isMusicReady = false;
         let isPlaying = false;
         
-        // ФУНКЦИЯ ДОЛЖНА БЫТЬ ЗДЕСЬ - ПЕРЕД ЕЁ ИСПОЛЬЗОВАНИЕМ!
         function formatTime(seconds) {
             if (isNaN(seconds)) return '0:00';
             const mins = Math.floor(seconds / 60);
@@ -285,23 +291,45 @@
         }
         
         document.addEventListener('DOMContentLoaded', function() {
-            // Курсор
+            // ФИКС ПЕРЕКРЕСТИЯ: Синхронизация с курсором
             document.addEventListener('mousemove', function(e) {
-                elements.cursor.style.left = e.pageX + 'px';
-                elements.cursor.style.top = e.pageY + 'px';
+                // Обновляем позицию перекрестия
+                elements.cursor.style.left = e.clientX + 'px';
+                elements.cursor.style.top = e.clientY + 'px';
             });
             
-            // Подготовка музыки
+            // Подготовка музыки с резервными источниками
+            let currentAudioSource = 0;
+            const audioSources = [
+                'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
+                'https://cdn.pixabay.com/download/audio/2022/03/10/audio_d16713f400.mp3',
+                'https://assets.mixkit.co/music/preview/mixkit-driving-ambition-32.mp3'
+            ];
+            
+            function loadNextAudioSource() {
+                if (currentAudioSource < audioSources.length - 1) {
+                    currentAudioSource++;
+                    elements.audio.src = audioSources[currentAudioSource];
+                    elements.audio.load();
+                    elements.trackTitle.textContent = 'Пробуем другой источник...';
+                    console.log('Пробуем аудио источник #' + (currentAudioSource + 1));
+                } else {
+                    elements.trackTitle.textContent = 'Не удалось загрузить музыку';
+                    elements.trackTitle.style.color = '#ff5555';
+                }
+            }
+            
             elements.audio.addEventListener('canplaythrough', function() {
                 isMusicReady = true;
                 elements.duration.textContent = formatTime(elements.audio.duration);
-                console.log("Музыка загружена и готова");
+                elements.trackTitle.textContent = 'Cinematic Trailer';
+                elements.trackTitle.style.color = '#aaa';
+                console.log("Музыка загружена: источник #" + (currentAudioSource + 1));
             });
             
             elements.audio.addEventListener('error', function(e) {
-                console.error("Ошибка загрузки аудио:", elements.audio.error);
-                elements.trackTitle.textContent = 'Ошибка загрузки трека';
-                elements.trackTitle.style.color = '#ff5555';
+                console.error("Ошибка загрузки аудио (источник #" + (currentAudioSource + 1) + "):", elements.audio.error);
+                loadNextAudioSource();
             });
             
             // Обновление прогресса
@@ -333,7 +361,7 @@
             }, 300);
         });
         
-        // ОСНОВНОЕ ИЗМЕНЕНИЕ: Управление ТОЛЬКО кнопкой в плеере
+        // Управление ТОЛЬКО кнопкой в плеере
         elements.playBtn.addEventListener('click', function() {
             if (!isMusicReady) {
                 console.log("Музыка ещё не загружена");
@@ -342,14 +370,12 @@
             }
             
             if (isPlaying) {
-                // Если играет - ставим на паузу
                 elements.audio.pause();
                 elements.playBtn.innerHTML = '<span>▶</span>';
                 isPlaying = false;
                 console.log("Музыка на паузе");
                 elements.trackTitle.textContent = 'На паузе';
             } else {
-                // Если на паузе - запускаем
                 elements.audio.play()
                     .then(() => {
                         elements.playBtn.innerHTML = '<span>⏸</span>';

@@ -116,14 +116,73 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background: rgba(30,30,40,0.9);
+            width: 300px; /* Уменьшил ширину */
+            background: rgba(30,30,40,0.95);
             backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            border-radius: 16px; /* Более круглые углы */
+            padding: 12px; /* Меньше отступы */
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            z-index: 100;
+        }
+        
+        /* Компактный заголовок плеера */
+        .player-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .player-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        .player-info {
+            flex: 1;
+            min-width: 0; /* Для корректного обрезания текста */
+        }
+        
+        .player-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .player-track {
+            font-size: 11px;
+            color: #aaa;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Компактный SoundCloud плеер */
+        .soundcloud-player {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.3);
+        }
+        
+        .soundcloud-player iframe {
+            height: 40px !important; /* Минимальная высота */
+            border-radius: 6px;
+        }
+        
+        /* Скрываем лишние элементы SoundCloud */
+        .soundcloud-player iframe {
+            filter: invert(1) hue-rotate(180deg) brightness(1.2); /* Темная тема */
         }
         
         .main-content {
@@ -166,23 +225,15 @@
             background: #333;
         }
         
-        /* Стили для SoundCloud плеера */
-        .soundcloud-player {
-            width: 100%;
-            margin-top: 15px;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
         @media (max-width: 768px) {
             .avatar { width: 120px; height: 120px; }
             .username { font-size: 36px; }
             .social-card { height: 130px; margin: 15px auto; }
             .social-title { font-size: 26px; }
             .music-player { 
-                width: 95%; 
+                width: 90%; 
                 bottom: 10px;
-                padding: 12px;
+                padding: 10px;
             }
             #customCursor { display: none; }
             body { cursor: auto; }
@@ -238,33 +289,29 @@
         </a>
     </div>
     
-    <!-- МУЗЫКАЛЬНЫЙ ПЛЕЕР С SOUNDCLOUD -->
+    <!-- КОМПАКТНЫЙ ПЛЕЕР -->
     <div class="music-player" id="musicPlayer" style="display: none;">
-        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-            <div style="width: 40px; height: 40px; background: #333; border-radius: 8px; 
-                        display: flex; align-items: center; justify-content: center; margin-right: 12px;">
-                <span style="color: #fff;">♪</span>
+        <div class="player-header">
+            <div class="player-icon">
+                <span style="color: #fff; font-size: 14px;">♪</span>
             </div>
-            <div style="flex: 1;">
-                <div style="font-weight: 600; font-size: 14px;">Сейчас играет</div>
-                <div style="font-size: 13px; color: #aaa;">do it (feat. Louman) - Rainmerge</div>
+            <div class="player-info">
+                <div class="player-title">Сейчас играет</div>
+                <div class="player-track">do it (feat. Louman) - Rainmerge</div>
             </div>
         </div>
         
-        <!-- SoundCloud плеер -->
+        <!-- SoundCloud плеер с автозапуском -->
         <div class="soundcloud-player">
             <iframe 
+                id="soundcloudIframe"
                 width="100%" 
-                height="166" 
+                height="40" 
                 scrolling="no" 
                 frameborder="no" 
                 allow="autoplay" 
-                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2186361973&color=%23ff5500&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true">
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2186361973&color=%23ff5500&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false">
             </iframe>
-        </div>
-        
-        <div style="text-align: center; font-size: 11px; color: #666; margin-top: 10px;">
-            Плеер предоставлен SoundCloud
         </div>
     </div>
 
@@ -293,7 +340,23 @@
                 elements.mainContent.style.display = 'block';
                 elements.musicPlayer.style.display = 'block';
                 
-                console.log("Страница загружена. SoundCloud плеер готов.");
+                console.log("Страница загружена. SoundCloud плеер запускается...");
+                
+                // Автоматически запускаем плеер
+                setTimeout(() => {
+                    const iframe = document.getElementById('soundcloudIframe');
+                    if (iframe && iframe.contentWindow) {
+                        try {
+                            // Отправляем команду автозапуска SoundCloud плееру
+                            iframe.contentWindow.postMessage(JSON.stringify({
+                                method: 'play'
+                            }), 'https://w.soundcloud.com');
+                        } catch (e) {
+                            console.log("SoundCloud плеер запущен автоматически");
+                        }
+                    }
+                }, 1000);
+                
             }, 300);
         });
         

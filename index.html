@@ -16,7 +16,6 @@
             overflow-x: hidden;
         }
         
-        /* ФИКС ПЕРЕКРЕСТИЯ: Абсолютное позиционирование в центре */
         #customCursor {
             position: fixed;
             width: 20px;
@@ -25,7 +24,7 @@
             z-index: 9999;
             top: 0;
             left: 0;
-            transform: translate(-50%, -50%); /* Центрирование относительно точки курсора */
+            transform: translate(-50%, -50%);
         }
         
         #customCursor:before, #customCursor:after {
@@ -167,12 +166,24 @@
             background: #333;
         }
         
+        /* Стили для SoundCloud плеера */
+        .soundcloud-player {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
         @media (max-width: 768px) {
             .avatar { width: 120px; height: 120px; }
             .username { font-size: 36px; }
             .social-card { height: 130px; margin: 15px auto; }
             .social-title { font-size: 26px; }
-            .music-player { width: 95%; bottom: 10px; }
+            .music-player { 
+                width: 95%; 
+                bottom: 10px;
+                padding: 12px;
+            }
             #customCursor { display: none; }
             body { cursor: auto; }
         }
@@ -227,6 +238,7 @@
         </a>
     </div>
     
+    <!-- МУЗЫКАЛЬНЫЙ ПЛЕЕР С SOUNDCLOUD -->
     <div class="music-player" id="musicPlayer" style="display: none;">
         <div style="display: flex; align-items: center; margin-bottom: 10px;">
             <div style="width: 40px; height: 40px; background: #333; border-radius: 8px; 
@@ -235,35 +247,26 @@
             </div>
             <div style="flex: 1;">
                 <div style="font-weight: 600; font-size: 14px;">Сейчас играет</div>
-                <div style="font-size: 13px; color: #aaa;" id="trackTitle">Нажмите ▶ для запуска</div>
+                <div style="font-size: 13px; color: #aaa;">do it (feat. Louman) - Rainmerge</div>
             </div>
-            <button id="playPauseBtn" 
-                    style="width: 36px; height: 36px; border-radius: 50%; background: #222; 
-                           border: 1px solid #444; color: white; cursor: pointer;">
-                <span>▶</span>
-            </button>
         </div>
-        <div style="display: flex; align-items: center; font-size: 12px; color: #888;">
-            <span id="currentTime">0:00</span>
-            <input type="range" id="progressBar" 
-                   style="flex: 1; margin: 0 10px; height: 4px; background: #333; outline: none;"
-                   min="0" max="100" value="0">
-            <span id="duration">0:00</span>
+        
+        <!-- SoundCloud плеер -->
+        <div class="soundcloud-player">
+            <iframe 
+                width="100%" 
+                height="166" 
+                scrolling="no" 
+                frameborder="no" 
+                allow="autoplay" 
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2186361973&color=%23ff5500&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true">
+            </iframe>
         </div>
+        
         <div style="text-align: center; font-size: 11px; color: #666; margin-top: 10px;">
-            Управление только кнопкой ▶/⏸
+            Плеер предоставлен SoundCloud
         </div>
     </div>
-    
-    <!-- НАДЁЖНЫЙ АУДИО-ИСТОЧНИК С РЕЗЕРВНЫМИ ССЫЛКАМИ -->
-    <audio id="backgroundMusic" loop preload="metadata">
-        <source src="https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3" type="audio/mpeg">
-        <!-- Резервный источник 1 -->
-        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_d16713f400.mp3" type="audio/mpeg">
-        <!-- Резервный источник 2 -->
-        <source src="https://assets.mixkit.co/music/preview/mixkit-driving-ambition-32.mp3" type="audio/mpeg">
-        Ваш браузер не поддерживает аудио элемент.
-    </audio>
 
     <script>
         const elements = {
@@ -271,81 +274,14 @@
             enterButton: document.getElementById('enterButton'),
             mainContent: document.getElementById('mainContent'),
             musicPlayer: document.getElementById('musicPlayer'),
-            cursor: document.getElementById('customCursor'),
-            audio: document.getElementById('backgroundMusic'),
-            playBtn: document.getElementById('playPauseBtn'),
-            progressBar: document.getElementById('progressBar'),
-            currentTime: document.getElementById('currentTime'),
-            duration: document.getElementById('duration'),
-            trackTitle: document.getElementById('trackTitle')
+            cursor: document.getElementById('customCursor')
         };
         
-        let isMusicReady = false;
-        let isPlaying = false;
-        
-        function formatTime(seconds) {
-            if (isNaN(seconds)) return '0:00';
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }
-        
         document.addEventListener('DOMContentLoaded', function() {
-            // ФИКС ПЕРЕКРЕСТИЯ: Синхронизация с курсором
+            // Курсор
             document.addEventListener('mousemove', function(e) {
-                // Обновляем позицию перекрестия
                 elements.cursor.style.left = e.clientX + 'px';
                 elements.cursor.style.top = e.clientY + 'px';
-            });
-            
-            // Подготовка музыки с резервными источниками
-            let currentAudioSource = 0;
-            const audioSources = [
-                'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
-                'https://cdn.pixabay.com/download/audio/2022/03/10/audio_d16713f400.mp3',
-                'https://assets.mixkit.co/music/preview/mixkit-driving-ambition-32.mp3'
-            ];
-            
-            function loadNextAudioSource() {
-                if (currentAudioSource < audioSources.length - 1) {
-                    currentAudioSource++;
-                    elements.audio.src = audioSources[currentAudioSource];
-                    elements.audio.load();
-                    elements.trackTitle.textContent = 'Пробуем другой источник...';
-                    console.log('Пробуем аудио источник #' + (currentAudioSource + 1));
-                } else {
-                    elements.trackTitle.textContent = 'Не удалось загрузить музыку';
-                    elements.trackTitle.style.color = '#ff5555';
-                }
-            }
-            
-            elements.audio.addEventListener('canplaythrough', function() {
-                isMusicReady = true;
-                elements.duration.textContent = formatTime(elements.audio.duration);
-                elements.trackTitle.textContent = 'Cinematic Trailer';
-                elements.trackTitle.style.color = '#aaa';
-                console.log("Музыка загружена: источник #" + (currentAudioSource + 1));
-            });
-            
-            elements.audio.addEventListener('error', function(e) {
-                console.error("Ошибка загрузки аудио (источник #" + (currentAudioSource + 1) + "):", elements.audio.error);
-                loadNextAudioSource();
-            });
-            
-            // Обновление прогресса
-            elements.audio.addEventListener('timeupdate', function() {
-                if (elements.audio.duration) {
-                    const percent = (elements.audio.currentTime / elements.audio.duration) * 100;
-                    elements.progressBar.value = percent;
-                    elements.currentTime.textContent = formatTime(elements.audio.currentTime);
-                }
-            });
-            
-            elements.audio.addEventListener('ended', function() {
-                elements.audio.currentTime = 0;
-                if (isPlaying) {
-                    elements.audio.play();
-                }
             });
         });
         
@@ -357,46 +293,8 @@
                 elements.mainContent.style.display = 'block';
                 elements.musicPlayer.style.display = 'block';
                 
-                console.log("Страница загружена. Нажмите кнопку ▶ в плеере.");
+                console.log("Страница загружена. SoundCloud плеер готов.");
             }, 300);
-        });
-        
-        // Управление ТОЛЬКО кнопкой в плеере
-        elements.playBtn.addEventListener('click', function() {
-            if (!isMusicReady) {
-                console.log("Музыка ещё не загружена");
-                elements.trackTitle.textContent = 'Загрузка...';
-                return;
-            }
-            
-            if (isPlaying) {
-                elements.audio.pause();
-                elements.playBtn.innerHTML = '<span>▶</span>';
-                isPlaying = false;
-                console.log("Музыка на паузе");
-                elements.trackTitle.textContent = 'На паузе';
-            } else {
-                elements.audio.play()
-                    .then(() => {
-                        elements.playBtn.innerHTML = '<span>⏸</span>';
-                        isPlaying = true;
-                        console.log("Музыка запущена");
-                        elements.trackTitle.textContent = 'Cinematic Trailer';
-                    })
-                    .catch(error => {
-                        console.error("Ошибка воспроизведения:", error);
-                        elements.trackTitle.textContent = 'Нажмите ещё раз';
-                        elements.trackTitle.style.color = '#ffaa00';
-                    });
-            }
-        });
-        
-        // Перемотка
-        elements.progressBar.addEventListener('input', function() {
-            if (elements.audio.duration) {
-                const time = (elements.progressBar.value / 100) * elements.audio.duration;
-                elements.audio.currentTime = time;
-            }
         });
         
         document.querySelectorAll('.social-card').forEach(card => {

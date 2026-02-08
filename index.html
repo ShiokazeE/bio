@@ -13,10 +13,6 @@
             box-sizing: border-box;
         }
         
-        html, body, button, a, input {
-            cursor: none !important;
-        }
-        
         :root {
             --primary-color: #ffffff;
             --secondary-color: #888888;
@@ -145,7 +141,7 @@
             to { width: 100%; }
         }
         
-        /* Экран входа - УПРОЩЕННЫЙ */
+        /* Экран входа */
         .enter-screen {
             position: fixed;
             top: 0; left: 0;
@@ -240,7 +236,7 @@
             transform: translateY(-1px);
         }
         
-        /* Основной контент */
+        /* Основной контент - УЛУЧШЕН ДЛЯ МОБИЛЬНЫХ */
         .main-container {
             display: flex;
             flex-direction: column;
@@ -259,8 +255,9 @@
             transition: all 0.8s ease;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /* Изменено с center на flex-start для мобильных */
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch; /* Плавная прокрутка на iOS */
         }
         
         .main-content.show {
@@ -514,7 +511,7 @@
             transform: scale(1.2) rotate(15deg);
         }
         
-        /* Нижний плеер */
+        /* Нижний плеер - УСКОРЕННОЕ ПОЯВЛЕНИЕ */
         .music-player {
             position: relative;
             width: 100%;
@@ -524,7 +521,7 @@
             z-index: 100;
             opacity: 0;
             transform: translateY(50px);
-            transition: all 0.6s ease;
+            transition: all 0.4s ease; /* Уменьшено с 0.6s до 0.4s */
             padding: 15px 20px;
         }
         
@@ -532,7 +529,7 @@
             display: flex;
             opacity: 1;
             transform: translateY(0);
-            animation: slideInBottom 0.8s ease 2.8s both;
+            animation: slideInBottom 0.5s ease 0.5s both; /* Ускорено */
         }
         
         .player-container {
@@ -707,7 +704,7 @@
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
         
-        /* Адаптивность */
+        /* Адаптивность - УЛУЧШЕНО ДЛЯ МОБИЛЬНЫХ */
         @media (max-width: 1024px) {
             html, body, button, a, input {
                 cursor: auto !important;
@@ -715,6 +712,8 @@
             
             .main-content {
                 padding: 30px 15px;
+                justify-content: flex-start; /* Для планшетов тоже меняем */
+                overflow-y: auto; /* Включаем прокрутку на планшетах */
             }
             
             .social-grid {
@@ -751,9 +750,23 @@
             .title { font-size: 48px; }
             .avatar-container { width: 150px; height: 150px; }
             .username { font-size: 42px; }
-            .tagline { font-size: 16px; max-width: 500px; }
-            .social-card { width: 140px; height: 140px; }
+            .tagline { 
+                font-size: 16px; 
+                max-width: 500px;
+                margin-bottom: 30px;
+            }
+            .social-card { 
+                width: 140px; 
+                height: 140px;
+                margin-bottom: 15px;
+            }
             .social-name { font-size: 20px; }
+            
+            .main-content {
+                padding: 25px 15px;
+                overflow-y: auto; /* Обязательно включаем прокрутку на мобильных */
+                -webkit-overflow-scrolling: touch;
+            }
             
             .player-container {
                 flex-direction: column;
@@ -790,16 +803,45 @@
             .custom-cursor {
                 display: none !important;
             }
+            
+            .music-player {
+                padding: 12px 15px;
+                position: sticky;
+                bottom: 0;
+                z-index: 200;
+            }
         }
         
         @media (max-width: 480px) {
             .title { font-size: 36px; }
             .enter-btn { padding: 14px 36px; }
             .username { font-size: 32px; }
-            .social-card { width: 120px; height: 120px; }
+            .social-card { 
+                width: 120px; 
+                height: 120px;
+            }
             .social-icon { font-size: 24px; }
             .social-name { font-size: 18px; }
-            .tagline { font-size: 15px; padding: 0 10px; }
+            .tagline { 
+                font-size: 15px; 
+                padding: 0 10px;
+                line-height: 1.5;
+            }
+            
+            .avatar-container {
+                width: 130px;
+                height: 130px;
+                margin-bottom: 20px;
+            }
+            
+            .social-grid {
+                gap: 15px;
+                justify-content: center;
+            }
+            
+            .contact-info {
+                margin-bottom: 30px;
+            }
             
             .play-btn {
                 width: 40px;
@@ -809,9 +851,13 @@
             
             .track-title { font-size: 14px; }
             .track-subtitle { font-size: 12px; }
+            
+            .volume-slider {
+                width: 80px;
+            }
         }
         
-        @media (max-height: 800px) {
+        @media (max-height: 700px) {
             .avatar-container {
                 width: 140px;
                 height: 140px;
@@ -836,6 +882,10 @@
                 width: 140px;
                 height: 140px;
             }
+            
+            .contact-info {
+                margin-bottom: 30px;
+            }
         }
         
         /* Для очень маленьких экранов включаем прокрутку */
@@ -844,6 +894,44 @@
                 overflow-y: auto;
                 padding-top: 20px;
                 padding-bottom: 20px;
+            }
+        }
+        
+        /* Оптимизация для мобильных в горизонтальной ориентации */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .main-content {
+                padding: 20px 15px;
+            }
+            
+            .avatar-container {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 15px;
+            }
+            
+            .username {
+                font-size: 32px;
+                margin-bottom: 5px;
+            }
+            
+            .tagline {
+                font-size: 14px;
+                margin-bottom: 20px;
+                max-width: 90%;
+            }
+            
+            .social-card {
+                width: 110px;
+                height: 110px;
+                margin-bottom: 10px;
+            }
+            
+            .social-name {
+                font-size: 16px;
+            }
+            
+            .social-icon {
+                font-size: 20px;
             }
         }
     </style>
@@ -1016,9 +1104,12 @@
         
         // Состояние
         let isPlaying = false;
+        let isMobile = /Mobi|Android/i.test(navigator.userAgent) || window.innerWidth <= 1024;
         
-        // Создание частиц
+        // Создание частиц (только для десктопа)
         function createParticles() {
+            if (isMobile) return; // На мобильных не создаем частицы
+            
             const colors = ['#ffffff', '#888888', '#444444', '#aaaaaa'];
             const particleCount = window.innerWidth < 768 ? 15 : 25;
             
@@ -1051,8 +1142,13 @@
             return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
         }
         
-        // ПРОСТАЯ логика кастомного курсора - без сложных состояний
+        // ПРОСТАЯ логика кастомного курсора - только для десктопа
         function initCustomCursor() {
+            if (isMobile) {
+                elements.cursor.style.display = 'none';
+                return;
+            }
+            
             const cursor = elements.cursor;
             
             // Движение курсора
@@ -1102,26 +1198,18 @@
                 cursor.style.opacity = '1';
             });
             
-            // На мобильных устройствах скрываем кастомный курсор
-            if (/Mobi|Android/i.test(navigator.userAgent) || window.innerWidth <= 1024) {
-                cursor.style.display = 'none';
-                document.body.style.cursor = 'auto';
-            } else {
-                document.body.style.cursor = 'none';
-            }
+            document.body.style.cursor = 'none';
         }
         
         // Инициализация
         document.addEventListener('DOMContentLoaded', () => {
-            // Скрываем системный курсор на десктопе
-            if (!(/Mobi|Android/i.test(navigator.userAgent)) && window.innerWidth > 1024) {
-                document.body.style.cursor = 'none';
-            }
+            // Проверяем мобильное устройство
+            isMobile = /Mobi|Android/i.test(navigator.userAgent) || window.innerWidth <= 1024;
             
-            // Создаем частицы
+            // Создаем частицы (только для десктопа)
             createParticles();
             
-            // Инициализируем кастомный курсор
+            // Инициализируем кастомный курсор (только для десктопа)
             initCustomCursor();
             
             // Когда аудио загружено
@@ -1173,11 +1261,21 @@
             // Устанавливаем громкость по умолчанию
             elements.audio.volume = 0.8;
             
-            // Блокируем прокрутку страницы
-            document.body.style.overflow = 'hidden';
+            // На мобильных разрешаем прокрутку, на десктопе блокируем
+            if (!isMobile) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+            
+            // Адаптируем размеры для мобильных
+            if (isMobile) {
+                // На мобильных уменьшаем отступы и размеры
+                document.querySelector('.main-content').style.padding = '20px 15px';
+            }
         });
         
-        // Кнопка входа - УПРОЩЕННАЯ логика
+        // Кнопка входа - УПРОЩЕННАЯ логика с ускоренным показом плеера
         elements.enterButton.addEventListener('click', function() {
             // Минимальная анимация кнопки
             const originalTransform = this.style.transform;
@@ -1195,14 +1293,14 @@
                     setTimeout(() => {
                         elements.mainContent.classList.add('show');
                     }, 50);
-                }, 800);
+                }, isMobile ? 300 : 500); // На мобильных быстрее
                 
-                // Показываем плеер
+                // Показываем плеер - УСКОРЕНО ДО 300ms (было 1000ms)
                 setTimeout(() => {
                     elements.musicPlayer.classList.add('show');
-                }, 1000);
+                }, isMobile ? 200 : 300); // На мобильных еще быстрее
                 
-                // Автозапуск музыки
+                // Автозапуск музыки - УСКОРЕНО ДО 500ms (было 1200ms)
                 setTimeout(() => {
                     const playPromise = elements.audio.play();
                     if (playPromise !== undefined) {
@@ -1215,7 +1313,7 @@
                             elements.playBtn.innerHTML = '<i class="fas fa-play"></i>';
                         });
                     }
-                }, 1200);
+                }, isMobile ? 400 : 500); // На мобильных быстрее
             }, 150);
         });
         
@@ -1259,21 +1357,44 @@
             elements.trackTitle.style.color = '#ff5555';
         });
         
-        // Предотвращаем прокрутку колесиком мыши
-        document.addEventListener('wheel', (e) => {
-            if (e.target.closest('.main-content')) {
-                return;
-            }
-            e.preventDefault();
-        }, { passive: false });
+        // Предотвращаем прокрутку колесиком мыши только на десктопе
+        if (!isMobile) {
+            document.addEventListener('wheel', (e) => {
+                if (e.target.closest('.main-content')) {
+                    return;
+                }
+                e.preventDefault();
+            }, { passive: false });
+        }
         
         // Ресайз окна
         window.addEventListener('resize', () => {
+            // Обновляем флаг мобильного устройства
+            isMobile = /Mobi|Android/i.test(navigator.userAgent) || window.innerWidth <= 1024;
+            
             // Очищаем старые частицы
             elements.particles.innerHTML = '';
-            // Создаем новые
-            createParticles();
+            // Создаем новые (только если не мобильное)
+            if (!isMobile) {
+                createParticles();
+            }
+            
+            // Обновляем курсор
+            if (isMobile) {
+                elements.cursor.style.display = 'none';
+                document.body.style.cursor = 'auto';
+                document.body.style.overflow = 'auto';
+            } else {
+                elements.cursor.style.display = 'flex';
+                document.body.style.cursor = 'none';
+                document.body.style.overflow = 'hidden';
+            }
         });
+        
+        // Оптимизация для мобильных: убираем hover-эффекты при касании
+        if (isMobile) {
+            document.addEventListener('touchstart', function() {}, {passive: true});
+        }
     </script>
 </body>
 </html>

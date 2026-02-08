@@ -13,6 +13,15 @@
             box-sizing: border-box;
         }
         
+        /* ПРЯМОЕ СКРЫТИЕ СИСТЕМНОГО КУРСОРА */
+        html, body, 
+        button, a, input, 
+        .enter-btn, .play-btn, 
+        .social-card, .contact-item,
+        .volume-slider, .progress-bar {
+            cursor: none !important;
+        }
+        
         :root {
             --primary-color: #ffffff;
             --secondary-color: #888888;
@@ -37,20 +46,34 @@
             overflow: hidden;
         }
         
-        /* Упрощенный кастомный курсор */
+        /* НАДЕЖНЫЙ КАСТОМНЫЙ КУРСОР */
         .custom-cursor {
             position: fixed;
+            width: 20px;
+            height: 20px;
             pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s linear;
+            z-index: 999999; /* Очень высокий z-index */
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            transition: transform 0.05s linear, width 0.2s, height 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         
-        .cursor-outer {
-            width: 20px;
-            height: 20px;
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            position: absolute;
+            transition: all 0.1s ease;
+        }
+        
+        .cursor-ring {
+            width: 24px;
+            height: 24px;
             border: 1px solid var(--primary-color);
             border-radius: 50%;
             position: absolute;
@@ -58,13 +81,25 @@
             opacity: 0.7;
         }
         
-        .cursor-inner {
-            width: 4px;
-            height: 4px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            position: absolute;
-            transition: all 0.1s ease;
+        .custom-cursor.hover .cursor-dot {
+            transform: scale(1.5);
+            background: #ffffff;
+        }
+        
+        .custom-cursor.hover .cursor-ring {
+            width: 36px;
+            height: 36px;
+            opacity: 0.5;
+            border-color: #ffffff;
+        }
+        
+        .custom-cursor.click .cursor-dot {
+            transform: scale(0.5);
+        }
+        
+        .custom-cursor.click .cursor-ring {
+            transform: scale(0.8);
+            border-color: #ffffff;
         }
         
         /* Эффект частиц на фоне */
@@ -236,7 +271,7 @@
             transform: translateY(-1px);
         }
         
-        /* Основной контент - УЛУЧШЕН ДЛЯ МОБИЛЬНЫХ */
+        /* Основной контент */
         .main-container {
             display: flex;
             flex-direction: column;
@@ -255,9 +290,9 @@
             transition: all 0.8s ease;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Изменено с center на flex-start для мобильных */
+            justify-content: flex-start;
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch; /* Плавная прокрутка на iOS */
+            -webkit-overflow-scrolling: touch;
         }
         
         .main-content.show {
@@ -511,7 +546,7 @@
             transform: scale(1.2) rotate(15deg);
         }
         
-        /* Нижний плеер - УСКОРЕННОЕ ПОЯВЛЕНИЕ */
+        /* Нижний плеер */
         .music-player {
             position: relative;
             width: 100%;
@@ -521,7 +556,7 @@
             z-index: 100;
             opacity: 0;
             transform: translateY(50px);
-            transition: all 0.4s ease; /* Уменьшено с 0.6s до 0.4s */
+            transition: all 0.4s ease;
             padding: 15px 20px;
         }
         
@@ -529,7 +564,7 @@
             display: flex;
             opacity: 1;
             transform: translateY(0);
-            animation: slideInBottom 0.5s ease 0.5s both; /* Ускорено */
+            animation: slideInBottom 0.5s ease 0.5s both;
         }
         
         .player-container {
@@ -704,16 +739,24 @@
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
         
-        /* Адаптивность - УЛУЧШЕНО ДЛЯ МОБИЛЬНЫХ */
+        /* Адаптивность */
         @media (max-width: 1024px) {
-            html, body, button, a, input {
+            /* На планшетах и мобильных - показываем системный курсор */
+            html, body, button, a, input,
+            .enter-btn, .play-btn, 
+            .social-card, .contact-item,
+            .volume-slider, .progress-bar {
                 cursor: auto !important;
+            }
+            
+            .custom-cursor {
+                display: none !important;
             }
             
             .main-content {
                 padding: 30px 15px;
-                justify-content: flex-start; /* Для планшетов тоже меняем */
-                overflow-y: auto; /* Включаем прокрутку на планшетах */
+                justify-content: flex-start;
+                overflow-y: auto;
             }
             
             .social-grid {
@@ -740,10 +783,6 @@
             .volume-control {
                 margin-left: 20px;
             }
-            
-            .custom-cursor {
-                display: none !important;
-            }
         }
         
         @media (max-width: 768px) {
@@ -764,7 +803,7 @@
             
             .main-content {
                 padding: 25px 15px;
-                overflow-y: auto; /* Обязательно включаем прокрутку на мобильных */
+                overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
             }
             
@@ -798,10 +837,6 @@
                 display: block;
                 margin: 0 auto 15px;
                 width: fit-content;
-            }
-            
-            .custom-cursor {
-                display: none !important;
             }
             
             .music-player {
@@ -940,10 +975,10 @@
     <!-- Эффект частиц -->
     <div class="particles" id="particles"></div>
     
-    <!-- Кастомный курсор -->
+    <!-- НАДЕЖНЫЙ КАСТОМНЫЙ КУРСОР -->
     <div class="custom-cursor" id="customCursor">
-        <div class="cursor-outer"></div>
-        <div class="cursor-inner"></div>
+        <div class="cursor-ring"></div>
+        <div class="cursor-dot"></div>
     </div>
     
     <!-- Экран входа -->
@@ -1104,14 +1139,14 @@
         
         // Состояние
         let isPlaying = false;
-        let isMobile = /Mobi|Android/i.test(navigator.userAgent) || window.innerWidth <= 1024;
+        let isDesktop = !(/Mobi|Android/i.test(navigator.userAgent)) && window.innerWidth > 1024;
         
         // Создание частиц (только для десктопа)
         function createParticles() {
-            if (isMobile) return; // На мобильных не создаем частицы
+            if (!isDesktop) return;
             
             const colors = ['#ffffff', '#888888', '#444444', '#aaaaaa'];
-            const particleCount = window.innerWidth < 768 ? 15 : 25;
+            const particleCount = 25;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
@@ -1125,7 +1160,6 @@
                 particle.style.top = Math.random() * 100 + 'vh';
                 particle.style.opacity = Math.random() * 0.2 + 0.1;
                 
-                // Анимация
                 const duration = Math.random() * 20 + 10;
                 const delay = Math.random() * 5;
                 particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
@@ -1142,21 +1176,24 @@
             return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
         }
         
-        // ПРОСТАЯ логика кастомного курсора - только для десктопа
+        // НАДЕЖНАЯ ЛОГИКА КАСТОМНОГО КУРСОРА
         function initCustomCursor() {
-            if (isMobile) {
+            if (!isDesktop) {
                 elements.cursor.style.display = 'none';
                 return;
             }
             
             const cursor = elements.cursor;
             
+            // Скрываем системный курсор на десктопе
+            document.body.style.cursor = 'none';
+            
             // Движение курсора
             document.addEventListener('mousemove', (e) => {
                 cursor.style.left = e.clientX + 'px';
                 cursor.style.top = e.clientY + 'px';
                 
-                // Простая логика: если элемент интерактивный, меняем курсор
+                // Проверяем, наведен ли курсор на интерактивный элемент
                 const target = e.target;
                 const isInteractive = 
                     target.tagName === 'BUTTON' || 
@@ -1166,27 +1203,21 @@
                     target.closest('a') || 
                     target.closest('input');
                 
-                // Мгновенное изменение без анимаций
+                // Немедленно применяем изменения без задержек
                 if (isInteractive) {
-                    cursor.style.transform = 'scale(1.5)';
-                    cursor.querySelector('.cursor-outer').style.width = '40px';
-                    cursor.querySelector('.cursor-outer').style.height = '40px';
-                    cursor.querySelector('.cursor-outer').style.opacity = '0.6';
+                    cursor.classList.add('hover');
                 } else {
-                    cursor.style.transform = 'scale(1)';
-                    cursor.querySelector('.cursor-outer').style.width = '20px';
-                    cursor.querySelector('.cursor-outer').style.height = '20px';
-                    cursor.querySelector('.cursor-outer').style.opacity = '0.7';
+                    cursor.classList.remove('hover');
                 }
-            });
+            }, { passive: true });
             
             // Эффект клика
             document.addEventListener('mousedown', () => {
-                cursor.style.transform = 'scale(0.9)';
+                cursor.classList.add('click');
             });
             
             document.addEventListener('mouseup', () => {
-                cursor.style.transform = 'scale(1)';
+                cursor.classList.remove('click');
             });
             
             // Скрытие курсора при выходе из окна
@@ -1198,18 +1229,31 @@
                 cursor.style.opacity = '1';
             });
             
-            document.body.style.cursor = 'none';
+            // Обработка для всех интерактивных элементов
+            const interactiveElements = document.querySelectorAll(
+                'button, a, input, .enter-btn, .play-btn, .social-card, .contact-item, .volume-slider, .progress-bar'
+            );
+            
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('hover');
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('hover');
+                });
+            });
         }
         
         // Инициализация
         document.addEventListener('DOMContentLoaded', () => {
-            // Проверяем мобильное устройство
-            isMobile = /Mobi|Android/i.test(navigator.userAgent) || window.innerWidth <= 1024;
+            // Определяем тип устройства
+            isDesktop = !(/Mobi|Android/i.test(navigator.userAgent)) && window.innerWidth > 1024;
             
             // Создаем частицы (только для десктопа)
             createParticles();
             
-            // Инициализируем кастомный курсор (только для десктопа)
+            // Инициализируем кастомный курсор
             initCustomCursor();
             
             // Когда аудио загружено
@@ -1239,7 +1283,6 @@
             elements.volumeSlider.addEventListener('input', function() {
                 elements.audio.volume = this.value / 100;
                 
-                // Анимация изменения громкости
                 const volumeIcon = document.querySelector('.volume-icon i');
                 if (this.value == 0) {
                     volumeIcon.className = 'fas fa-volume-mute';
@@ -1261,46 +1304,39 @@
             // Устанавливаем громкость по умолчанию
             elements.audio.volume = 0.8;
             
-            // На мобильных разрешаем прокрутку, на десктопе блокируем
-            if (!isMobile) {
-                document.body.style.overflow = 'hidden';
-            } else {
+            // Управление прокруткой
+            if (!isDesktop) {
                 document.body.style.overflow = 'auto';
-            }
-            
-            // Адаптируем размеры для мобильных
-            if (isMobile) {
-                // На мобильных уменьшаем отступы и размеры
-                document.querySelector('.main-content').style.padding = '20px 15px';
+            } else {
+                document.body.style.overflow = 'hidden';
             }
         });
         
-        // Кнопка входа - УПРОЩЕННАЯ логика с ускоренным показом плеера
+        // Кнопка входа
         elements.enterButton.addEventListener('click', function() {
-            // Минимальная анимация кнопки
-            const originalTransform = this.style.transform;
+            // Простая анимация кнопки
             this.style.transform = 'scale(0.98)';
             
             setTimeout(() => {
-                this.style.transform = originalTransform;
+                this.style.transform = '';
                 
                 // Скрываем экран входа
                 elements.enterScreen.classList.add('hidden');
                 
-                // Показываем основной контент с анимацией
+                // Показываем основной контент
                 setTimeout(() => {
                     elements.mainContent.style.display = 'flex';
                     setTimeout(() => {
                         elements.mainContent.classList.add('show');
                     }, 50);
-                }, isMobile ? 300 : 500); // На мобильных быстрее
+                }, isDesktop ? 500 : 300);
                 
-                // Показываем плеер - УСКОРЕНО ДО 300ms (было 1000ms)
+                // Показываем плеер (ускорено)
                 setTimeout(() => {
                     elements.musicPlayer.classList.add('show');
-                }, isMobile ? 200 : 300); // На мобильных еще быстрее
+                }, isDesktop ? 300 : 200);
                 
-                // Автозапуск музыки - УСКОРЕНО ДО 500ms (было 1200ms)
+                // Автозапуск музыки (ускорено)
                 setTimeout(() => {
                     const playPromise = elements.audio.play();
                     if (playPromise !== undefined) {
@@ -1313,7 +1349,7 @@
                             elements.playBtn.innerHTML = '<i class="fas fa-play"></i>';
                         });
                     }
-                }, isMobile ? 400 : 500); // На мобильных быстрее
+                }, isDesktop ? 500 : 400);
             }, 150);
         });
         
@@ -1358,7 +1394,7 @@
         });
         
         // Предотвращаем прокрутку колесиком мыши только на десктопе
-        if (!isMobile) {
+        if (isDesktop) {
             document.addEventListener('wheel', (e) => {
                 if (e.target.closest('.main-content')) {
                     return;
@@ -1369,32 +1405,27 @@
         
         // Ресайз окна
         window.addEventListener('resize', () => {
-            // Обновляем флаг мобильного устройства
-            isMobile = /Mobi|Android/i.test(navigator.userAgent) || window.innerWidth <= 1024;
+            // Определяем тип устройства
+            isDesktop = !(/Mobi|Android/i.test(navigator.userAgent)) && window.innerWidth > 1024;
             
-            // Очищаем старые частицы
+            // Обновляем частицы
             elements.particles.innerHTML = '';
-            // Создаем новые (только если не мобильное)
-            if (!isMobile) {
+            if (isDesktop) {
                 createParticles();
             }
             
             // Обновляем курсор
-            if (isMobile) {
-                elements.cursor.style.display = 'none';
-                document.body.style.cursor = 'auto';
-                document.body.style.overflow = 'auto';
-            } else {
+            if (isDesktop) {
                 elements.cursor.style.display = 'flex';
                 document.body.style.cursor = 'none';
                 document.body.style.overflow = 'hidden';
+                initCustomCursor();
+            } else {
+                elements.cursor.style.display = 'none';
+                document.body.style.cursor = 'auto';
+                document.body.style.overflow = 'auto';
             }
         });
-        
-        // Оптимизация для мобильных: убираем hover-эффекты при касании
-        if (isMobile) {
-            document.addEventListener('touchstart', function() {}, {passive: true});
-        }
     </script>
 </body>
 </html>

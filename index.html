@@ -16,7 +16,6 @@
             box-sizing: border-box;
         }
 
-        /* Базовые переменные */
         :root {
             --primary: 255, 255, 255;
             --primary-color: rgb(var(--primary));
@@ -74,7 +73,6 @@
             pointer-events: none;
         }
 
-        /* ----- ЖИВОЙ CANVAS-ФОН (ЧАСТИЦЫ) ----- */
         #canvas-particles {
             position: fixed;
             top: 0;
@@ -185,7 +183,7 @@
             100% { text-shadow: 0 0 60px rgba(255, 255, 255, 0.6); }
         }
 
-        /* ----- ЭКРАН ВХОДА (С BLUR-ЭФФЕКТОМ) ----- */
+        /* ----- ЭКРАН ВХОДА ----- */
         .enter-screen {
             position: fixed;
             top: 0;
@@ -359,7 +357,6 @@
             opacity: 1;
         }
 
-        /* ----- ЖИДКОЕ СТЕКЛО 3D (ЛИКВИД) ----- */
         .liquid-glass {
             position: absolute;
             top: 0;
@@ -413,7 +410,7 @@
             50% { opacity: 0.7; transform: scale(1.05); }
         }
 
-        /* ----- ИМЯ + ЯПОНСКИЙ ХОВЕР-ПОДТЕКСТ ----- */
+        /* ----- ИМЯ + ЯПОНСКИЙ ХОВЕР ----- */
         .username-wrapper {
             position: relative;
             margin-bottom: 8px;
@@ -471,7 +468,6 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* На мобильных ховер не работает, используем touch */
         @media (hover: none) and (pointer: coarse) {
             .japanese-hover::before {
                 display: none;
@@ -490,35 +486,38 @@
             word-break: break-word;
         }
 
-        /* ===== ИСПРАВЛЕННЫЕ СОЦСЕТИ – ТЕКСТ ВЛЕЗАЕТ ===== */
+        /* ===== СОЦСЕТИ – ИДЕАЛЬНО РОВНО, TELEGRAM ВЛЕЗАЕТ ===== */
         .social-grid {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: clamp(20px, 4vw, 30px);
+            gap: 35px;
             flex-wrap: wrap;
-            max-width: 800px;
-            margin: 0 auto 20px;
+            max-width: 1000px;
+            margin: 0 auto 25px;
             perspective: 1000px;
-            padding: 10px;
+            padding: 15px;
         }
 
         .social-card {
             position: relative;
-            width: 160px;
-            height: 160px;
-            border-radius: 24px;
+            width: 200px;
+            height: 200px;
+            border-radius: 30px;
             overflow: hidden;
             background-size: cover;
             background-position: center;
             border: 1px solid var(--glass-border);
-            transition: transform 0.3s var(--ease-out-expo);
+            transition: all 0.3s var(--ease-out-expo);
             text-decoration: none;
             box-shadow: var(--shadow-glass);
             backdrop-filter: blur(10px);
             transform-style: preserve-3d;
             will-change: transform;
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .social-card::before {
@@ -528,7 +527,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.65);
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(4px);
             z-index: 1;
             transition: all 0.4s var(--ease-out-expo);
@@ -536,14 +535,12 @@
         }
 
         .social-card:hover::before {
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(2px);
         }
 
         .social-content {
-            position: absolute;
-            top: 0;
-            left: 0;
+            position: relative;
             width: 100%;
             height: 100%;
             display: flex;
@@ -551,7 +548,7 @@
             align-items: center;
             justify-content: center;
             z-index: 2;
-            padding: 15px;
+            padding: 15px 10px;
             transform: translateZ(20px);
             transition: transform 0.4s var(--ease-out-expo);
         }
@@ -561,7 +558,7 @@
         }
 
         .social-icon {
-            font-size: 42px;
+            font-size: 44px;
             margin-bottom: 12px;
             color: white;
             filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
@@ -573,49 +570,78 @@
         }
 
         .social-name {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.1em;
             color: white;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             word-break: break-word;
             text-align: center;
             line-height: 1.2;
             text-transform: uppercase;
+            width: 100%;
+            white-space: nowrap;
         }
 
         .social-desc {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.75);
             text-align: center;
             letter-spacing: 0.1em;
             word-break: break-word;
             opacity: 0.9;
+            white-space: nowrap;
         }
 
         /* ----- Адаптация для планшетов ----- */
         @media (max-width: 1024px) {
             .social-card {
-                width: 150px;
-                height: 150px;
+                width: 180px;
+                height: 180px;
             }
             .social-name {
-                font-size: 22px;
+                font-size: 20px;
             }
             .social-icon {
-                font-size: 38px;
+                font-size: 40px;
+            }
+            .social-grid {
+                gap: 25px;
             }
         }
 
         @media (max-width: 768px) {
             .social-card {
+                width: 160px;
+                height: 160px;
+            }
+            .social-name {
+                font-size: 19px;
+                letter-spacing: 0.08em;
+                white-space: nowrap;
+            }
+            .social-icon {
+                font-size: 38px;
+                margin-bottom: 10px;
+            }
+            .social-desc {
+                font-size: 12px;
+                white-space: nowrap;
+            }
+            .social-grid {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .social-card {
                 width: 130px;
                 height: 130px;
             }
             .social-name {
-                font-size: 20px;
-                letter-spacing: 0.1em;
+                font-size: 17px;
+                white-space: nowrap;
             }
             .social-icon {
                 font-size: 34px;
@@ -623,21 +649,17 @@
             }
             .social-desc {
                 font-size: 11px;
-            }
-            .social-grid {
-                gap: 15px;
+                white-space: nowrap;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 360px) {
             .social-card {
                 width: 110px;
                 height: 110px;
             }
             .social-name {
-                font-size: 18px;
-                letter-spacing: 0.08em;
-                margin-bottom: 4px;
+                font-size: 15px;
             }
             .social-icon {
                 font-size: 30px;
@@ -645,23 +667,6 @@
             }
             .social-desc {
                 font-size: 10px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .social-card {
-                width: 95px;
-                height: 95px;
-            }
-            .social-name {
-                font-size: 16px;
-            }
-            .social-icon {
-                font-size: 26px;
-                margin-bottom: 4px;
-            }
-            .social-desc {
-                font-size: 9px;
             }
         }
 
@@ -875,7 +880,7 @@
             opacity: 0.8;
         }
 
-        /* ----- АУДИО-ВИЗУАЛИЗАТОР (ПОД ПЛЕЕРОМ) ----- */
+        /* ----- АУДИО-ВИЗУАЛИЗАТОР ----- */
         #audio-visualizer {
             position: fixed;
             bottom: 100px;
@@ -888,7 +893,7 @@
             mix-blend-mode: screen;
         }
 
-        /* ----- КОНТАКТНАЯ ИНФОРМАЦИЯ ----- */
+        /* ----- КОНТАКТЫ ----- */
         .contact-info {
             display: flex;
             flex-wrap: wrap;
@@ -1033,50 +1038,41 @@
             .username {
                 font-size: 28px;
             }
-            
             .tagline {
                 font-size: 12px;
             }
-            
             .cinematic-logo {
                 font-size: 40px;
             }
-            
             .enter-glitch {
                 font-size: 36px;
             }
         }
 
-        /* Для очень маленькой высоты */
+        /* Для маленькой высоты */
         @media (max-height: 700px) {
             .avatar-container {
                 width: 100px;
                 height: 100px;
                 margin-bottom: 8px;
             }
-            
             .username {
                 font-size: 32px;
                 margin-bottom: 2px;
             }
-            
             .tagline {
                 margin-bottom: 12px;
                 font-size: 13px;
             }
-            
             .social-grid {
                 margin-bottom: 12px;
             }
-            
             .contact-info {
                 margin-top: 8px;
             }
-            
             .music-player {
                 padding: 8px 12px;
             }
-            
             .play-btn {
                 width: 36px;
                 height: 36px;
@@ -1088,23 +1084,18 @@
                 width: 85px;
                 height: 85px;
             }
-            
             .username {
                 font-size: 28px;
             }
-            
             .tagline {
                 display: none;
             }
-            
             .social-desc {
                 display: none;
             }
-            
             .contact-info {
                 gap: 6px;
             }
-            
             .contact-item {
                 padding: 3px 8px;
             }
@@ -1116,34 +1107,27 @@
                 justify-content: flex-start;
                 padding: 10px 15px;
             }
-            
             .avatar-container {
                 width: 80px;
                 height: 80px;
                 margin-bottom: 5px;
             }
-            
             .username {
                 font-size: 28px;
                 margin-bottom: 2px;
             }
-            
             .tagline {
                 display: none;
             }
-            
             .social-grid {
                 margin-bottom: 10px;
             }
-            
             .social-desc {
                 display: none;
             }
-            
             .contact-info {
                 margin-top: 5px;
             }
-            
             .music-player {
                 padding: 8px 12px;
             }
@@ -1155,38 +1139,28 @@
     <div class="noise-layer"></div>
     <div class="radial-bg"></div>
 
-    <!-- ЖИВОЙ CANVAS-ФОН (ЧАСТИЦЫ) -->
+    <!-- ЖИВОЙ CANVAS-ФОН -->
     <canvas id="canvas-particles"></canvas>
-
-    <!-- АУДИО-ВИЗУАЛИЗАТОР -->
     <canvas id="audio-visualizer"></canvas>
-
-    <!-- ЖИДКОЕ СТЕКЛО 3D -->
     <div class="liquid-glass"></div>
 
     <!-- КИНЕМАТОГРАФИЧНЫЙ INTRO -->
     <div class="cinematic-intro" id="cinematicIntro">
         <div class="cinematic-content">
             <div class="cinematic-logo">
-                <span style="--i:1">S</span>
-                <span style="--i:2">H</span>
-                <span style="--i:3">I</span>
-                <span style="--i:4">O</span>
-                <span style="--i:5">K</span>
-                <span style="--i:6">A</span>
-                <span style="--i:7">Z</span>
-                <span style="--i:8">E</span>
+                <span style="--i:1">S</span><span style="--i:2">H</span><span style="--i:3">I</span><span style="--i:4">O</span>
+                <span style="--i:5">K</span><span style="--i:6">A</span><span style="--i:7">Z</span><span style="--i:8">E</span>
             </div>
             <div class="cinematic-sub">PORTFOLIO 2026 ∞ PREMIUM</div>
             <div class="cinematic-bar"></div>
         </div>
     </div>
 
-    <!-- КАСТОМНЫЙ КУРСОР + СЛЕД -->
+    <!-- КАСТОМНЫЙ КУРСОР -->
     <div class="custom-cursor" id="customCursor"></div>
     <div class="cursor-trail" id="cursorTrail"></div>
 
-    <!-- ЭКРАН ВХОДА (ENTER) -->
+    <!-- ЭКРАН ВХОДА -->
     <div class="enter-screen" id="enterScreen">
         <div class="enter-content">
             <div class="enter-glitch">SHIOKAZE</div>
@@ -1200,13 +1174,11 @@
     <!-- ОСНОВНОЙ КОНТЕНТ -->
     <div class="main-container" id="mainContainer">
         <div class="main-content">
-
             <!-- АВАТАР -->
             <div class="avatar-container">
                 <div class="avatar-glow"></div>
                 <img src="https://i.pinimg.com/originals/b3/36/c8/b336c8475be8102c40f7175cca2275fd.gif"
-                     alt="Avatar"
-                     class="avatar">
+                     alt="Avatar" class="avatar">
             </div>
 
             <!-- ИМЯ И ЯПОНСКИЙ ХОВЕР -->
@@ -1216,7 +1188,7 @@
             </div>
             <p class="tagline">crafting minimal aesthetics with soul</p>
 
-            <!-- МАГНИТНЫЕ TILT-КАРТОЧКИ - ИСПРАВЛЕНО -->
+            <!-- СОЦСЕТИ – ИДЕАЛЬНО РОВНО -->
             <div class="social-grid" id="socialGrid">
                 <!-- STEAM -->
                 <a href="https://steamcommunity.com/id/shiokazeIII/"
@@ -1240,7 +1212,7 @@
                         <div class="social-desc">connect</div>
                     </div>
                 </a>
-                <!-- TELEGRAM -->
+                <!-- TELEGRAM – ТЕПЕРЬ ПОЛНОСТЬЮ ВЛЕЗАЕТ -->
                 <a href="https://t.me/s_k4ze"
                    target="_blank"
                    class="social-card tilt-card"
@@ -1255,18 +1227,9 @@
 
             <!-- КОНТАКТЫ -->
             <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope contact-icon"></i>
-                    <span>lopgg96@gmail.com</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt contact-icon"></i>
-                    <span>Stavropol, Russia</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-clock contact-icon"></i>
-                    <span>UTC+3</span>
-                </div>
+                <div class="contact-item"><i class="fas fa-envelope contact-icon"></i><span>lopgg96@gmail.com</span></div>
+                <div class="contact-item"><i class="fas fa-map-marker-alt contact-icon"></i><span>Stavropol, Russia</span></div>
+                <div class="contact-item"><i class="fas fa-clock contact-icon"></i><span>UTC+3</span></div>
             </div>
         </div>
 
@@ -1274,22 +1237,15 @@
         <div class="music-player" id="musicPlayer">
             <div class="player-container">
                 <div class="player-section">
-                    <button class="play-btn" id="playPauseBtn">
-                        <i class="fas fa-play"></i>
-                    </button>
+                    <button class="play-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
                     <div class="track-info">
                         <div class="track-title" id="trackTitle">Murasame</div>
                         <div class="track-subtitle" id="trackSubtitle">Shiokaze · ambient waves</div>
                     </div>
                 </div>
                 <div class="progress-container">
-                    <div class="progress-bar" id="progressBar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <div class="time-display">
-                        <span id="currentTime">0:00</span>
-                        <span id="duration">3:30</span>
-                    </div>
+                    <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="time-display"><span id="currentTime">0:00</span><span id="duration">3:30</span></div>
                 </div>
                 <div class="volume-control">
                     <i class="fas fa-volume-up volume-icon"></i>
@@ -1299,7 +1255,7 @@
         </div>
     </div>
 
-    <!-- АУДИО – ПРЯМАЯ РАБОЧАЯ ССЫЛКА -->
+    <!-- АУДИО -->
     <audio id="backgroundMusic" loop preload="auto" crossorigin="anonymous">
         <source src="https://raw.githubusercontent.com/ShiokazeE/bio/main/murasame.mp3" type="audio/mpeg">
     </audio>
@@ -1308,7 +1264,6 @@
         (function() {
             "use strict";
 
-            // ---------- ЭЛЕМЕНТЫ ----------
             const el = {
                 cinematicIntro: document.getElementById('cinematicIntro'),
                 enterScreen: document.getElementById('enterScreen'),
@@ -1327,23 +1282,19 @@
                 socialCards: document.querySelectorAll('.tilt-card')
             };
 
-            // ---------- СОСТОЯНИЕ ----------
             let isPlaying = false;
             let isDesktop = !(/Mobi|Android/i.test(navigator.userAgent)) && window.innerWidth > 1024;
 
-            // AudioContext + анализатор
             let audioContext = null;
             let analyser = null;
             let source = null;
             let dataArray = null;
 
-            // Canvas
             let visualizerCtx = document.getElementById('audio-visualizer')?.getContext('2d');
             let particleCtx = document.getElementById('canvas-particles')?.getContext('2d');
             let particles = [];
             let animFrame = null, vizFrame = null;
 
-            // ---------- ПРИНУДИТЕЛЬНОЕ СКРЫТИЕ КУРСОРА (ДЕСКТОП) ----------
             if (isDesktop) {
                 document.body.style.cursor = 'none';
                 const style = document.createElement('style');
@@ -1351,7 +1302,6 @@
                 document.head.appendChild(style);
             }
 
-            // ---------- ФОРМАТ ВРЕМЕНИ ----------
             function formatTime(sec) {
                 if (isNaN(sec)) return '0:00';
                 const m = Math.floor(sec / 60);
@@ -1359,53 +1309,39 @@
                 return `${m}:${s < 10 ? '0' : ''}${s}`;
             }
 
-            // ---------- ЧАСТИЦЫ (ИНИЦИАЛИЗАЦИЯ) ----------
             function initParticles() {
                 if (!particleCtx) return;
-                const w = window.innerWidth;
-                const h = window.innerHeight;
-                particleCtx.canvas.width = w;
-                particleCtx.canvas.height = h;
+                const w = window.innerWidth, h = window.innerHeight;
+                particleCtx.canvas.width = w; particleCtx.canvas.height = h;
                 particles = [];
                 const count = isDesktop ? Math.min(70, Math.floor(w * h / 18000)) : Math.min(40, Math.floor(w * h / 25000));
                 for (let i = 0; i < count; i++) {
                     particles.push({
-                        x: Math.random() * w,
-                        y: Math.random() * h,
-                        vx: (Math.random() - 0.5) * 0.3,
-                        vy: (Math.random() - 0.5) * 0.3,
+                        x: Math.random() * w, y: Math.random() * h,
+                        vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
                         size: Math.random() * 2 + 0.5,
-                        baseX: Math.random() * w,
-                        baseY: Math.random() * h
+                        baseX: Math.random() * w, baseY: Math.random() * h
                     });
                 }
             }
 
-            // ---------- ОТРИСОВКА ЧАСТИЦ (С РЕАКЦИЕЙ НА МУЗЫКУ) ----------
             function drawParticles(audioIntensity = 0.5) {
                 if (!particleCtx) return;
-                const w = window.innerWidth;
-                const h = window.innerHeight;
+                const w = window.innerWidth, h = window.innerHeight;
                 particleCtx.clearRect(0, 0, w, h);
                 const speed = 0.5 + audioIntensity * 1.2;
-
                 particles.forEach(p => {
                     p.x += p.vx * speed;
                     p.y += p.vy * speed;
                     p.x += (p.baseX - p.x) * 0.005;
                     p.y += (p.baseY - p.y) * 0.005;
-                    if (p.x < 0) p.x = w;
-                    if (p.x > w) p.x = 0;
-                    if (p.y < 0) p.y = h;
-                    if (p.y > h) p.y = 0;
+                    if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+                    if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
                 });
-
-                // соединительные линии (только на десктопе или планшетах)
                 if (isDesktop || window.innerWidth > 768) {
                     for (let i = 0; i < particles.length; i++) {
                         for (let j = i + 1; j < particles.length; j++) {
-                            const dx = particles[i].x - particles[j].x;
-                            const dy = particles[i].y - particles[j].y;
+                            const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
                             const dist = Math.sqrt(dx * dx + dy * dy);
                             if (dist < 130) {
                                 const op = 0.12 * (1 - dist / 130) * (0.5 + audioIntensity * 0.5);
@@ -1418,8 +1354,6 @@
                         }
                     }
                 }
-
-                // сами точки
                 particles.forEach(p => {
                     const sz = p.size * (0.7 + audioIntensity * 0.6);
                     particleCtx.beginPath();
@@ -1427,11 +1361,9 @@
                     particleCtx.fillStyle = `rgba(255,255,255,${0.25 + audioIntensity * 0.3})`;
                     particleCtx.fill();
                 });
-
                 animFrame = requestAnimationFrame(() => drawParticles(audioIntensity));
             }
 
-            // ---------- НАСТРОЙКА АУДИО (AudioContext + analyser) ----------
             async function setupAudio() {
                 if (!audioContext) {
                     audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -1445,16 +1377,11 @@
                         source = audioContext.createMediaElementSource(el.audio);
                         source.connect(analyser);
                         analyser.connect(audioContext.destination);
-                    } catch (e) {
-                        console.warn('MediaElementSource уже существует или ошибка:', e);
-                    }
+                    } catch (e) { console.warn('MediaElementSource error:', e); }
                 }
-                if (audioContext.state === 'suspended') {
-                    await audioContext.resume();
-                }
+                if (audioContext.state === 'suspended') await audioContext.resume();
             }
 
-            // ---------- АУДИО-ВИЗУАЛИЗАТОР ----------
             function startVisualizer() {
                 if (!visualizerCtx) return;
                 const resizeCanvas = () => {
@@ -1463,23 +1390,19 @@
                 };
                 resizeCanvas();
                 window.addEventListener('resize', resizeCanvas);
-
                 function draw() {
                     if (!analyser || !dataArray || !visualizerCtx) {
                         vizFrame = requestAnimationFrame(draw);
                         return;
                     }
-                    const w = visualizerCtx.canvas.width;
-                    const h = visualizerCtx.canvas.height;
+                    const w = visualizerCtx.canvas.width, h = visualizerCtx.canvas.height;
                     visualizerCtx.clearRect(0, 0, w, h);
                     analyser.getByteFrequencyData(dataArray);
-
                     let sum = 0;
                     for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
                     const avgIntensity = sum / dataArray.length / 255;
                     if (animFrame) cancelAnimationFrame(animFrame);
                     animFrame = requestAnimationFrame(() => drawParticles(avgIntensity));
-
                     const barWidth = (w / dataArray.length) * 2.2;
                     let x = 0;
                     for (let i = 0; i < dataArray.length; i += 2) {
@@ -1496,19 +1419,15 @@
                 draw();
             }
 
-            // ---------- МАГНИТНЫЙ TILT-ЭФФЕКТ ДЛЯ КАРТОЧЕК ----------
             function initTilt() {
                 if (!isDesktop) return;
                 el.socialCards.forEach(card => {
                     card.addEventListener('mousemove', (e) => {
                         if (!isDesktop) return;
                         const rect = card.getBoundingClientRect();
-                        const x = e.clientX - rect.left;
-                        const y = e.clientY - rect.top;
-                        const cx = rect.width / 2;
-                        const cy = rect.height / 2;
-                        const rotX = (y - cy) / 12;
-                        const rotY = (cx - x) / 12;
+                        const x = e.clientX - rect.left, y = e.clientY - rect.top;
+                        const cx = rect.width / 2, cy = rect.height / 2;
+                        const rotX = (y - cy) / 12, rotY = (cx - x) / 12;
                         card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(10px)`;
                     });
                     card.addEventListener('mouseleave', () => {
@@ -1517,37 +1436,28 @@
                 });
             }
 
-            // ---------- КАСТОМНЫЙ КУРСОР (С МЯГКИМ СЛЕДОМ) ----------
             function initCursor() {
                 if (!isDesktop) {
                     if (el.cursor) el.cursor.style.display = 'none';
                     if (el.cursorTrail) el.cursorTrail.style.display = 'none';
                     return;
                 }
-                const cursor = el.cursor;
-                const trail = el.cursorTrail;
-                let mx = 0, my = 0;
-                let tx = 0, ty = 0;
-
+                const cursor = el.cursor, trail = el.cursorTrail;
+                let mx = 0, my = 0, tx = 0, ty = 0;
                 document.addEventListener('mousemove', (e) => {
-                    mx = e.clientX;
-                    my = e.clientY;
-                    cursor.style.left = mx + 'px';
-                    cursor.style.top = my + 'px';
+                    mx = e.clientX; my = e.clientY;
+                    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
                     const interactive = e.target.closest('button, a, .social-card, .play-btn, .enter-btn, .contact-item');
                     if (interactive) cursor.classList.add('hover');
                     else cursor.classList.remove('hover');
                 });
-
                 function follow() {
                     tx += (mx - tx) * 0.12;
                     ty += (my - ty) * 0.12;
-                    trail.style.left = tx + 'px';
-                    trail.style.top = ty + 'px';
+                    trail.style.left = tx + 'px'; trail.style.top = ty + 'px';
                     requestAnimationFrame(follow);
                 }
                 follow();
-
                 document.addEventListener('mousedown', () => {
                     cursor.style.transform = 'translate(-50%,-50%) scale(0.7)';
                     trail.style.transform = 'translate(-50%,-50%) scale(0.8)';
@@ -1556,20 +1466,12 @@
                     cursor.style.transform = 'translate(-50%,-50%) scale(1)';
                     trail.style.transform = 'translate(-50%,-50%) scale(1)';
                 });
-                document.addEventListener('mouseleave', () => {
-                    cursor.style.opacity = '0';
-                    trail.style.opacity = '0';
-                });
-                document.addEventListener('mouseenter', () => {
-                    cursor.style.opacity = '1';
-                    trail.style.opacity = '1';
-                });
+                document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; trail.style.opacity = '0'; });
+                document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; trail.style.opacity = '1'; });
             }
 
-            // ---------- DOM READY ----------
             document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => { el.cinematicIntro.classList.add('hidden'); }, 2200);
-
                 isDesktop = !(/Mobi|Android/i.test(navigator.userAgent)) && window.innerWidth > 1024;
                 initParticles();
                 drawParticles(0.5);
@@ -1602,14 +1504,12 @@
                 el.audio.volume = 0.8;
             });
 
-            // ---------- КЛИК ПО ENTER (ЗАПУСК МУЗЫКИ + ВИЗУАЛИЗАТОР) ----------
             el.enterButton.addEventListener('click', async function() {
                 this.style.transform = 'scale(0.96)';
                 setTimeout(() => { this.style.transform = ''; }, 150);
                 el.enterScreen.classList.add('hidden');
                 el.mainContainer.classList.add('visible');
                 setTimeout(() => { el.musicPlayer.classList.add('show'); }, 400);
-
                 setTimeout(async () => {
                     try {
                         await setupAudio();
@@ -1628,7 +1528,6 @@
                 }, 600);
             });
 
-            // ---------- PLAY/PAUSE ----------
             el.playBtn.addEventListener('click', async function() {
                 if (isPlaying) {
                     el.audio.pause();
@@ -1638,7 +1537,6 @@
                 }
                 isPlaying = !isPlaying;
             });
-
             el.audio.addEventListener('play', () => {
                 isPlaying = true;
                 el.playBtn.innerHTML = '<i class="fas fa-pause"></i>';
@@ -1650,7 +1548,6 @@
                 el.playBtn.classList.remove('playing');
             });
 
-            // ---------- RESIZE ----------
             window.addEventListener('resize', () => {
                 isDesktop = !(/Mobi|Android/i.test(navigator.userAgent)) && window.innerWidth > 1024;
                 initParticles();
@@ -1664,7 +1561,6 @@
                 }
             });
 
-            // ---------- ПОЛНАЯ БЛОКИРОВКА ПРОКРУТКИ ----------
             window.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
             window.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
         })();

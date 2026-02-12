@@ -16,14 +16,7 @@
             box-sizing: border-box;
         }
 
-        html, body, button, a, input,
-        .enter-btn, .play-btn, .social-card,
-        .contact-item, .volume-slider, .progress-bar,
-        .custom-cursor, .cursor-trail {
-            cursor: none !important;
-        }
-
-        /* ----- CSS-ПЕРЕМЕННЫЕ (ПРЕМИУМ-ПАЛИТРА) ----- */
+        /* Базовые переменные */
         :root {
             --primary: 255, 255, 255;
             --primary-color: rgb(var(--primary));
@@ -41,7 +34,6 @@
             --noise-opacity: 0.02;
         }
 
-        /* ----- БАЗА ----- */
         html, body {
             width: 100%;
             height: 100%;
@@ -118,15 +110,18 @@
 
         .cinematic-content {
             text-align: center;
+            padding: 20px;
         }
 
         .cinematic-logo {
-            font-size: 96px;
+            font-size: clamp(48px, 12vw, 96px);
             font-weight: 800;
-            letter-spacing: 12px;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             margin-bottom: 24px;
             animation: cinematicGlow 3s infinite alternate;
+            line-height: 1.2;
+            word-break: break-word;
         }
 
         .cinematic-logo span {
@@ -136,13 +131,14 @@
         }
 
         .cinematic-sub {
-            font-size: 18px;
-            letter-spacing: 6px;
+            font-size: clamp(14px, 4vw, 18px);
+            letter-spacing: 0.4em;
             color: rgba(255, 255, 255, 0.7);
             font-weight: 300;
             margin-bottom: 48px;
             position: relative;
             overflow: hidden;
+            word-break: break-word;
         }
 
         .cinematic-sub::after {
@@ -157,7 +153,7 @@
         }
 
         .cinematic-bar {
-            width: 240px;
+            width: min(240px, 80%);
             height: 1px;
             background: rgba(255, 255, 255, 0.2);
             margin: 0 auto;
@@ -203,6 +199,7 @@
             justify-content: center;
             z-index: 5000;
             transition: opacity 1.2s var(--ease-out-expo), backdrop-filter 1.2s var(--ease-out-expo), visibility 1.2s var(--ease-out-expo);
+            padding: 20px;
         }
 
         .enter-screen.hidden {
@@ -216,6 +213,7 @@
             transform: translateY(30px);
             opacity: 0;
             transition: all 1s var(--ease-out-expo) 0.3s;
+            max-width: 100%;
         }
 
         .enter-screen:not(.hidden) .enter-content {
@@ -224,12 +222,14 @@
         }
 
         .enter-glitch {
-            font-size: 84px;
+            font-size: clamp(48px, 12vw, 84px);
             font-weight: 800;
             margin-bottom: 24px;
             position: relative;
             color: white;
-            letter-spacing: 8px;
+            letter-spacing: 0.15em;
+            line-height: 1.2;
+            word-break: break-word;
         }
 
         .enter-glitch::before,
@@ -241,6 +241,7 @@
             width: 100%;
             height: 100%;
             opacity: 0.8;
+            pointer-events: none;
         }
 
         .enter-glitch::before {
@@ -266,33 +267,36 @@
         }
 
         .enter-sub {
-            font-size: 18px;
+            font-size: clamp(14px, 4vw, 18px);
             color: rgba(255, 255, 255, 0.6);
             margin-bottom: 48px;
-            letter-spacing: 4px;
+            letter-spacing: 0.3em;
             font-weight: 300;
+            word-break: break-word;
         }
 
         .enter-btn {
-            padding: 18px 56px;
+            padding: 16px 32px;
             background: transparent;
             border: 1.5px solid rgba(255, 255, 255, 0.3);
             color: white;
-            font-size: 18px;
+            font-size: clamp(16px, 4vw, 18px);
             font-weight: 400;
-            letter-spacing: 6px;
+            letter-spacing: 0.3em;
             border-radius: 40px;
             transition: all 0.6s var(--ease-out-expo);
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
+            width: fit-content;
+            margin: 0 auto;
         }
 
         .enter-btn:hover {
             border-color: white;
             background: rgba(255, 255, 255, 0.05);
             box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
-            letter-spacing: 8px;
+            letter-spacing: 0.4em;
         }
 
         .enter-btn::before {
@@ -338,13 +342,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            justify-content: flex-start;
+            padding: 20px 15px;
             position: relative;
             z-index: 10;
             transform: translateY(20px);
             opacity: 0;
             transition: all 1.2s var(--ease-out-expo) 0.2s;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
         }
 
         .main-container.visible .main-content {
@@ -369,10 +376,11 @@
         /* ----- АВАТАР ----- */
         .avatar-container {
             position: relative;
-            width: 160px;
-            height: 160px;
-            margin-bottom: 20px;
+            width: clamp(120px, 25vw, 160px);
+            height: clamp(120px, 25vw, 160px);
+            margin-bottom: 15px;
             filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
+            flex-shrink: 0;
         }
 
         .avatar {
@@ -408,25 +416,27 @@
         /* ----- ИМЯ + ЯПОНСКИЙ ХОВЕР-ПОДТЕКСТ ----- */
         .username-wrapper {
             position: relative;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             text-align: center;
+            width: 100%;
         }
 
         .username {
-            font-size: 48px;
+            font-size: clamp(32px, 8vw, 48px);
             font-weight: 700;
             color: white;
-            letter-spacing: 4px;
-            margin-bottom: 8px;
+            letter-spacing: 0.1em;
+            margin-bottom: 5px;
             line-height: 1.1;
+            word-break: break-word;
         }
 
         .japanese-hover {
-            font-size: 14px;
+            font-size: clamp(12px, 3vw, 14px);
             color: rgba(255, 255, 255, 0.5);
             font-family: 'Crimson Text', serif;
             font-style: italic;
-            letter-spacing: 2px;
+            letter-spacing: 0.15em;
             transition: all 0.3s var(--ease-out-expo);
             position: relative;
             display: inline-block;
@@ -442,11 +452,11 @@
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 30px;
-            font-size: 13px;
+            font-size: clamp(11px, 3vw, 13px);
             color: white;
-            letter-spacing: 2px;
+            letter-spacing: 0.15em;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s var(--ease-out-expo);
@@ -461,32 +471,42 @@
             transform: translateX(-50%) translateY(0);
         }
 
+        /* На мобильных ховер не работает, используем touch */
+        @media (hover: none) and (pointer: coarse) {
+            .japanese-hover::before {
+                display: none;
+            }
+        }
+
         .tagline {
-            font-size: 16px;
+            font-size: clamp(14px, 4vw, 16px);
             color: rgba(255, 255, 255, 0.65);
-            max-width: 600px;
-            margin: 0 auto 30px;
+            max-width: 90%;
+            margin: 0 auto 20px;
             font-weight: 300;
-            letter-spacing: 1px;
+            letter-spacing: 0.05em;
             font-family: 'Crimson Text', serif;
             font-style: italic;
+            word-break: break-word;
         }
 
         /* ----- МАГНИТНЫЕ TILT-КАРТОЧКИ (3D) ----- */
         .social-grid {
             display: flex;
             justify-content: center;
-            gap: 24px;
+            align-items: center;
+            gap: clamp(12px, 4vw, 24px);
             flex-wrap: wrap;
-            max-width: 700px;
-            margin: 0 auto 30px;
+            max-width: 100%;
+            margin: 0 auto 20px;
             perspective: 1000px;
+            padding: 5px;
         }
 
         .social-card {
             position: relative;
-            width: 150px;
-            height: 150px;
+            width: clamp(100px, 25vw, 150px);
+            height: clamp(100px, 25vw, 150px);
             border-radius: 20px;
             overflow: hidden;
             background-size: cover;
@@ -498,6 +518,7 @@
             backdrop-filter: blur(10px);
             transform-style: preserve-3d;
             will-change: transform;
+            flex-shrink: 0;
         }
 
         .social-card::before {
@@ -530,7 +551,7 @@
             align-items: center;
             justify-content: center;
             z-index: 2;
-            padding: 20px;
+            padding: clamp(10px, 3vw, 20px);
             transform: translateZ(20px);
             transition: transform 0.4s var(--ease-out-expo);
         }
@@ -540,8 +561,8 @@
         }
 
         .social-icon {
-            font-size: 36px;
-            margin-bottom: 12px;
+            font-size: clamp(24px, 8vw, 36px);
+            margin-bottom: clamp(6px, 2vw, 12px);
             color: white;
             filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
             transition: all 0.4s var(--ease-out-back);
@@ -552,22 +573,25 @@
         }
 
         .social-name {
-            font-size: 22px;
+            font-size: clamp(16px, 5vw, 22px);
             font-weight: 600;
-            letter-spacing: 3px;
+            letter-spacing: 0.15em;
             color: white;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            word-break: break-word;
+            text-align: center;
         }
 
         .social-desc {
-            font-size: 11px;
+            font-size: clamp(9px, 2.5vw, 11px);
             color: rgba(255, 255, 255, 0.7);
             text-align: center;
-            letter-spacing: 1px;
+            letter-spacing: 0.1em;
+            word-break: break-word;
         }
 
-        /* ----- GLASS-ПЛЕЕР (ПОЛНОСТЬЮ ПРОЗРАЧНЫЙ) ----- */
+        /* ----- GLASS-ПЛЕЕР ----- */
         .music-player {
             position: relative;
             width: 100%;
@@ -577,11 +601,12 @@
             border-bottom: 1px solid var(--glass-highlight);
             display: none;
             z-index: 200;
-            padding: 16px 24px;
+            padding: 12px 16px;
             box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
             transform: translateY(20px);
             opacity: 0;
             transition: all 0.6s var(--ease-out-expo);
+            flex-shrink: 0;
         }
 
         .music-player.show {
@@ -597,27 +622,32 @@
             width: 100%;
             max-width: 1100px;
             margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .player-section {
             display: flex;
             align-items: center;
+            flex: 1 1 auto;
+            min-width: 200px;
         }
 
         .play-btn {
-            width: 48px;
-            height: 48px;
+            width: clamp(40px, 10vw, 48px);
+            height: clamp(40px, 10vw, 48px);
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
-            font-size: 16px;
+            font-size: clamp(14px, 4vw, 16px);
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.4s var(--ease-out-back);
-            margin-right: 18px;
+            margin-right: 12px;
             backdrop-filter: blur(10px);
+            flex-shrink: 0;
         }
 
         .play-btn:hover {
@@ -638,25 +668,33 @@
 
         .track-info {
             text-align: left;
+            flex: 1;
+            min-width: 0;
         }
 
         .track-title {
             font-weight: 600;
-            font-size: 16px;
+            font-size: clamp(14px, 4vw, 16px);
             color: white;
-            margin-bottom: 4px;
-            letter-spacing: 1px;
+            margin-bottom: 2px;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .track-subtitle {
-            font-size: 13px;
+            font-size: clamp(11px, 3vw, 13px);
             color: rgba(255, 255, 255, 0.55);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .progress-container {
-            flex: 1;
-            max-width: 400px;
-            margin: 0 30px;
+            flex: 2 1 300px;
+            min-width: 200px;
+            margin: 0 15px;
         }
 
         .progress-bar {
@@ -664,7 +702,7 @@
             background: rgba(255, 255, 255, 0.08);
             border-radius: 3px;
             overflow: hidden;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             position: relative;
         }
 
@@ -680,25 +718,28 @@
         .time-display {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
+            font-size: 10px;
             color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 1px;
+            letter-spacing: 0.1em;
         }
 
         .volume-control {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            flex: 0 1 auto;
+            min-width: 120px;
+            justify-content: flex-end;
         }
 
         .volume-icon {
-            font-size: 18px;
+            font-size: clamp(14px, 4vw, 18px);
             color: rgba(255, 255, 255, 0.6);
             transition: all 0.3s ease;
         }
 
         .volume-slider {
-            width: 90px;
+            width: clamp(70px, 20vw, 90px);
             height: 3px;
             -webkit-appearance: none;
             background: rgba(255, 255, 255, 0.1);
@@ -708,8 +749,8 @@
 
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: white;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
@@ -766,7 +807,7 @@
             bottom: 100px;
             left: 0;
             width: 100%;
-            height: 120px;
+            height: clamp(60px, 15vw, 120px);
             pointer-events: none;
             z-index: 50;
             opacity: 0.25;
@@ -778,22 +819,27 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 16px;
-            margin-top: 20px;
+            align-items: center;
+            gap: clamp(8px, 3vw, 16px);
+            margin-top: 15px;
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 5px;
         }
 
         .contact-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 20px;
+            gap: 6px;
+            padding: 6px 16px;
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 50px;
             color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
+            font-size: clamp(11px, 3vw, 14px);
             transition: all 0.3s var(--ease-out-expo);
+            white-space: nowrap;
         }
 
         .contact-item:hover {
@@ -804,73 +850,323 @@
 
         .contact-icon {
             color: white;
-            font-size: 14px;
+            font-size: clamp(12px, 3vw, 14px);
         }
 
-        /* ----- АДАПТАЦИЯ ДЛЯ ПЛАНШЕТОВ И МОБИЛЬНЫХ ----- */
-        @media (max-width: 1024px) {
+        /* ----- АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ (ОСНОВНАЯ) ----- */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 15px 12px;
+                justify-content: flex-start;
+            }
+            
+            .social-grid {
+                gap: 12px;
+            }
+            
+            .social-card {
+                width: 110px;
+                height: 110px;
+            }
+            
+            .social-name {
+                font-size: 18px;
+            }
+            
+            .social-icon {
+                font-size: 28px;
+            }
+            
+            .username {
+                font-size: 36px;
+            }
+            
+            .player-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .player-section {
+                width: 100%;
+                justify-content: flex-start;
+                min-width: 100%;
+            }
+            
+            .progress-container {
+                width: 100%;
+                margin: 10px 0;
+                min-width: 100%;
+            }
+            
+            .volume-control {
+                width: 100%;
+                justify-content: center;
+                margin-left: 0;
+                min-width: 100%;
+            }
+            
+            .contact-info {
+                gap: 8px;
+            }
+            
+            .contact-item {
+                padding: 5px 12px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+            
+            /* Скрываем кастомный курсор на мобильных */
             .custom-cursor,
             .cursor-trail {
                 display: none !important;
             }
+            
             html, body, button, a, input,
             .enter-btn, .play-btn, .social-card,
             .contact-item, .volume-slider, .progress-bar {
                 cursor: auto !important;
             }
-            .social-card {
-                width: 130px;
-                height: 130px;
-            }
-            .username {
-                font-size: 42px;
-            }
-            .enter-glitch {
-                font-size: 64px;
-            }
-            .cinematic-logo {
-                font-size: 72px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .social-card {
-                width: 110px;
-                height: 110px;
-            }
-            .username {
-                font-size: 36px;
-            }
-            .player-container {
-                flex-wrap: wrap;
-            }
-            .progress-container {
-                order: 3;
-                width: 100%;
-                margin: 12px 0 0;
-            }
-            .volume-control {
-                margin-left: auto;
+            
+            #audio-visualizer {
+                bottom: 120px;
+                height: 60px;
             }
         }
 
         @media (max-width: 480px) {
+            .main-content {
+                padding: 12px 10px;
+            }
+            
+            .avatar-container {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 10px;
+            }
+            
+            .username {
+                font-size: 32px;
+                letter-spacing: 0.08em;
+            }
+            
+            .tagline {
+                font-size: 13px;
+                margin-bottom: 15px;
+            }
+            
             .social-card {
                 width: 95px;
                 height: 95px;
             }
+            
             .social-name {
-                font-size: 18px;
+                font-size: 16px;
+                letter-spacing: 0.1em;
             }
+            
             .social-icon {
+                font-size: 24px;
+                margin-bottom: 5px;
+            }
+            
+            .social-desc {
+                font-size: 9px;
+            }
+            
+            .contact-item {
+                padding: 4px 10px;
+                font-size: 11px;
+                gap: 4px;
+            }
+            
+            .play-btn {
+                width: 36px;
+                height: 36px;
+                margin-right: 8px;
+            }
+            
+            .track-title {
+                font-size: 13px;
+            }
+            
+            .track-subtitle {
+                font-size: 11px;
+            }
+            
+            .volume-slider {
+                width: 70px;
+            }
+            
+            #audio-visualizer {
+                bottom: 130px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .social-card {
+                width: 85px;
+                height: 85px;
+            }
+            
+            .social-name {
+                font-size: 14px;
+            }
+            
+            .social-icon {
+                font-size: 22px;
+            }
+            
+            .contact-item {
+                padding: 3px 8px;
+                font-size: 10px;
+            }
+            
+            .username {
                 font-size: 28px;
             }
+            
+            .tagline {
+                font-size: 12px;
+            }
+            
+            .cinematic-logo {
+                font-size: 40px;
+            }
+            
+            .enter-glitch {
+                font-size: 36px;
+            }
+        }
+
+        /* Для очень маленькой высоты */
+        @media (max-height: 700px) {
+            .avatar-container {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 8px;
+            }
+            
             .username {
                 font-size: 32px;
+                margin-bottom: 2px;
             }
+            
+            .tagline {
+                margin-bottom: 12px;
+                font-size: 13px;
+            }
+            
+            .social-grid {
+                margin-bottom: 12px;
+            }
+            
+            .social-card {
+                width: 95px;
+                height: 95px;
+            }
+            
+            .contact-info {
+                margin-top: 8px;
+            }
+            
+            .music-player {
+                padding: 8px 12px;
+            }
+            
+            .play-btn {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .avatar-container {
+                width: 85px;
+                height: 85px;
+            }
+            
+            .username {
+                font-size: 28px;
+            }
+            
+            .tagline {
+                display: none;
+            }
+            
+            .social-card {
+                width: 85px;
+                height: 85px;
+            }
+            
+            .social-desc {
+                display: none;
+            }
+            
+            .contact-info {
+                gap: 6px;
+            }
+            
             .contact-item {
-                padding: 6px 16px;
-                font-size: 12px;
+                padding: 3px 8px;
+            }
+        }
+
+        /* Горизонтальная ориентация */
+        @media (max-width: 900px) and (orientation: landscape) {
+            .main-content {
+                justify-content: flex-start;
+                padding: 10px 15px;
+            }
+            
+            .avatar-container {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 5px;
+            }
+            
+            .username {
+                font-size: 28px;
+                margin-bottom: 2px;
+            }
+            
+            .tagline {
+                display: none;
+            }
+            
+            .social-grid {
+                margin-bottom: 10px;
+            }
+            
+            .social-card {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .social-name {
+                font-size: 14px;
+            }
+            
+            .social-icon {
+                font-size: 22px;
+                margin-bottom: 4px;
+            }
+            
+            .social-desc {
+                display: none;
+            }
+            
+            .contact-info {
+                margin-top: 5px;
+            }
+            
+            .contact-item {
+                padding: 4px 10px;
+                font-size: 11px;
+            }
+            
+            .music-player {
+                padding: 8px 12px;
             }
         }
     </style>
@@ -1024,7 +1320,7 @@
         </div>
     </div>
 
-    <!-- АУДИО – ПРЯМАЯ РАБОЧАЯ ССЫЛКА (ИЗ НАЧАЛА ЧАТА) -->
+    <!-- АУДИО – ПРЯМАЯ РАБОЧАЯ ССЫЛКА -->
     <audio id="backgroundMusic" loop preload="auto" crossorigin="anonymous">
         <source src="https://raw.githubusercontent.com/ShiokazeE/bio/main/murasame.mp3" type="audio/mpeg">
     </audio>
@@ -1092,7 +1388,7 @@
                 particleCtx.canvas.width = w;
                 particleCtx.canvas.height = h;
                 particles = [];
-                const count = Math.min(70, Math.floor(w * h / 18000));
+                const count = isDesktop ? Math.min(70, Math.floor(w * h / 18000)) : Math.min(40, Math.floor(w * h / 25000));
                 for (let i = 0; i < count; i++) {
                     particles.push({
                         x: Math.random() * w,
@@ -1114,7 +1410,6 @@
                 particleCtx.clearRect(0, 0, w, h);
                 const speed = 0.5 + audioIntensity * 1.2;
 
-                // движение
                 particles.forEach(p => {
                     p.x += p.vx * speed;
                     p.y += p.vy * speed;
@@ -1126,19 +1421,21 @@
                     if (p.y > h) p.y = 0;
                 });
 
-                // соединительные линии
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 130) {
-                            const op = 0.12 * (1 - dist / 130) * (0.5 + audioIntensity * 0.5);
-                            particleCtx.beginPath();
-                            particleCtx.moveTo(particles[i].x, particles[i].y);
-                            particleCtx.lineTo(particles[j].x, particles[j].y);
-                            particleCtx.strokeStyle = `rgba(255,255,255,${op})`;
-                            particleCtx.stroke();
+                // соединительные линии (только на десктопе или планшетах)
+                if (isDesktop || window.innerWidth > 768) {
+                    for (let i = 0; i < particles.length; i++) {
+                        for (let j = i + 1; j < particles.length; j++) {
+                            const dx = particles[i].x - particles[j].x;
+                            const dy = particles[i].y - particles[j].y;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+                            if (dist < 130) {
+                                const op = 0.12 * (1 - dist / 130) * (0.5 + audioIntensity * 0.5);
+                                particleCtx.beginPath();
+                                particleCtx.moveTo(particles[i].x, particles[i].y);
+                                particleCtx.lineTo(particles[j].x, particles[j].y);
+                                particleCtx.strokeStyle = `rgba(255,255,255,${op})`;
+                                particleCtx.stroke();
+                            }
                         }
                     }
                 }
@@ -1183,7 +1480,7 @@
                 if (!visualizerCtx) return;
                 const resizeCanvas = () => {
                     visualizerCtx.canvas.width = window.innerWidth;
-                    visualizerCtx.canvas.height = 120;
+                    visualizerCtx.canvas.height = window.innerHeight < 700 ? 60 : 120;
                 };
                 resizeCanvas();
                 window.addEventListener('resize', resizeCanvas);
@@ -1198,14 +1495,12 @@
                     visualizerCtx.clearRect(0, 0, w, h);
                     analyser.getByteFrequencyData(dataArray);
 
-                    // средняя громкость для частиц
                     let sum = 0;
                     for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
                     const avgIntensity = sum / dataArray.length / 255;
                     if (animFrame) cancelAnimationFrame(animFrame);
                     animFrame = requestAnimationFrame(() => drawParticles(avgIntensity));
 
-                    // рисуем полосы
                     const barWidth = (w / dataArray.length) * 2.2;
                     let x = 0;
                     for (let i = 0; i < dataArray.length; i += 2) {
@@ -1224,6 +1519,7 @@
 
             // ---------- МАГНИТНЫЙ TILT-ЭФФЕКТ ДЛЯ КАРТОЧЕК ----------
             function initTilt() {
+                if (!isDesktop) return;
                 el.socialCards.forEach(card => {
                     card.addEventListener('mousemove', (e) => {
                         if (!isDesktop) return;
@@ -1293,7 +1589,6 @@
 
             // ---------- DOM READY ----------
             document.addEventListener('DOMContentLoaded', () => {
-                // intro через 2.2 сек
                 setTimeout(() => { el.cinematicIntro.classList.add('hidden'); }, 2200);
 
                 isDesktop = !(/Mobi|Android/i.test(navigator.userAgent)) && window.innerWidth > 1024;
@@ -1302,7 +1597,6 @@
                 initCursor();
                 initTilt();
 
-                // метаданные аудио
                 el.audio.addEventListener('loadedmetadata', () => {
                     el.duration.textContent = formatTime(el.audio.duration);
                 });
@@ -1313,14 +1607,12 @@
                         el.currentTime.textContent = formatTime(el.audio.currentTime);
                     }
                 });
-                // клик по прогресс-бару
                 el.progressBar.addEventListener('click', (e) => {
                     if (!el.audio.duration) return;
                     const rect = el.progressBar.getBoundingClientRect();
                     const perc = (e.clientX - rect.left) / rect.width;
                     el.audio.currentTime = perc * el.audio.duration;
                 });
-                // громкость
                 el.volumeSlider.addEventListener('input', function() {
                     el.audio.volume = this.value / 100;
                     const icon = document.querySelector('.volume-icon');
@@ -1387,7 +1679,10 @@
                     particleCtx.canvas.width = window.innerWidth;
                     particleCtx.canvas.height = window.innerHeight;
                 }
-                if (visualizerCtx) visualizerCtx.canvas.width = window.innerWidth;
+                if (visualizerCtx) {
+                    visualizerCtx.canvas.width = window.innerWidth;
+                    visualizerCtx.canvas.height = window.innerHeight < 700 ? 60 : 120;
+                }
             });
 
             // ---------- ПОЛНАЯ БЛОКИРОВКА ПРОКРУТКИ ----------

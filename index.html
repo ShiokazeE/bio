@@ -486,7 +486,7 @@
             word-break: break-word;
         }
 
-        /* ===== СОЦСЕТИ – ИДЕАЛЬНО РОВНО, TELEGRAM ВЛЕЗАЕТ ===== */
+        /* ===== СОЦСЕТИ – ИДЕАЛЬНО РОВНО ===== */
         .social-grid {
             display: flex;
             justify-content: center;
@@ -594,7 +594,7 @@
             white-space: nowrap;
         }
 
-        /* ----- Адаптация для планшетов ----- */
+        /* ----- Адаптация планшетов ----- */
         @media (max-width: 1024px) {
             .social-card {
                 width: 180px;
@@ -618,8 +618,6 @@
             }
             .social-name {
                 font-size: 19px;
-                letter-spacing: 0.08em;
-                white-space: nowrap;
             }
             .social-icon {
                 font-size: 38px;
@@ -627,7 +625,6 @@
             }
             .social-desc {
                 font-size: 12px;
-                white-space: nowrap;
             }
             .social-grid {
                 gap: 20px;
@@ -641,7 +638,6 @@
             }
             .social-name {
                 font-size: 17px;
-                white-space: nowrap;
             }
             .social-icon {
                 font-size: 34px;
@@ -649,7 +645,6 @@
             }
             .social-desc {
                 font-size: 11px;
-                white-space: nowrap;
             }
         }
 
@@ -670,7 +665,7 @@
             }
         }
 
-        /* ----- GLASS-ПЛЕЕР ----- */
+        /* ===== GLASS-ПЛЕЕР – ДЕСКТОП ===== */
         .music-player {
             position: relative;
             width: 100%;
@@ -680,7 +675,7 @@
             border-bottom: 1px solid var(--glass-highlight);
             display: none;
             z-index: 200;
-            padding: 12px 16px;
+            padding: 12px 20px;
             box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
             transform: translateY(20px);
             opacity: 0;
@@ -713,18 +708,18 @@
         }
 
         .play-btn {
-            width: clamp(40px, 10vw, 48px);
-            height: clamp(40px, 10vw, 48px);
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
-            font-size: clamp(14px, 4vw, 16px);
+            font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.4s var(--ease-out-back);
-            margin-right: 12px;
+            margin-right: 15px;
             backdrop-filter: blur(10px);
             flex-shrink: 0;
         }
@@ -753,7 +748,7 @@
 
         .track-title {
             font-weight: 600;
-            font-size: clamp(14px, 4vw, 16px);
+            font-size: 16px;
             color: white;
             margin-bottom: 2px;
             letter-spacing: 0.05em;
@@ -763,7 +758,7 @@
         }
 
         .track-subtitle {
-            font-size: clamp(11px, 3vw, 13px);
+            font-size: 13px;
             color: rgba(255, 255, 255, 0.55);
             white-space: nowrap;
             overflow: hidden;
@@ -797,7 +792,7 @@
         .time-display {
             display: flex;
             justify-content: space-between;
-            font-size: 10px;
+            font-size: 11px;
             color: rgba(255, 255, 255, 0.5);
             letter-spacing: 0.1em;
         }
@@ -805,20 +800,20 @@
         .volume-control {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             flex: 0 1 auto;
             min-width: 120px;
             justify-content: flex-end;
         }
 
         .volume-icon {
-            font-size: clamp(14px, 4vw, 18px);
+            font-size: 18px;
             color: rgba(255, 255, 255, 0.6);
             transition: all 0.3s ease;
         }
 
         .volume-slider {
-            width: clamp(70px, 20vw, 90px);
+            width: 90px;
             height: 3px;
             -webkit-appearance: none;
             background: rgba(255, 255, 255, 0.1);
@@ -838,6 +833,175 @@
 
         .volume-slider::-webkit-slider-thumb:hover {
             transform: scale(1.3);
+        }
+
+        /* ===== МОБИЛЬНЫЙ ПЛЕЕР – КОМПАКТНЫЙ ===== */
+        @media (max-width: 768px) {
+            .music-player {
+                padding: 8px 12px;
+            }
+
+            .player-container {
+                flex-direction: row;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .player-section {
+                flex: 0 1 auto;
+                min-width: 0;
+                width: auto;
+            }
+
+            .play-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+                margin-right: 8px;
+            }
+
+            .track-info {
+                max-width: 120px;
+            }
+
+            .track-title {
+                font-size: 13px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .track-subtitle {
+                font-size: 11px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .progress-container {
+                flex: 1 1 100px;
+                min-width: 80px;
+                margin: 0 5px;
+            }
+
+            .progress-bar {
+                height: 2px;
+                margin-bottom: 2px;
+            }
+
+            .time-display {
+                font-size: 9px;
+            }
+
+            .volume-control {
+                flex: 0 1 auto;
+                min-width: 80px;
+                gap: 4px;
+            }
+
+            .volume-icon {
+                font-size: 14px;
+            }
+
+            .volume-slider {
+                width: 50px;
+                height: 2px;
+            }
+
+            .volume-slider::-webkit-slider-thumb {
+                width: 10px;
+                height: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .music-player {
+                padding: 6px 10px;
+            }
+
+            .player-section {
+                flex: 0 1 auto;
+            }
+
+            .play-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+                margin-right: 6px;
+            }
+
+            .track-info {
+                max-width: 100px;
+            }
+
+            .track-title {
+                font-size: 12px;
+            }
+
+            .track-subtitle {
+                font-size: 10px;
+            }
+
+            .progress-container {
+                flex: 1 1 80px;
+                min-width: 70px;
+                margin: 0 4px;
+            }
+
+            .time-display {
+                font-size: 8px;
+            }
+
+            .volume-control {
+                min-width: 70px;
+                gap: 3px;
+            }
+
+            .volume-icon {
+                font-size: 12px;
+            }
+
+            .volume-slider {
+                width: 45px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .music-player {
+                padding: 5px 8px;
+            }
+
+            .play-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 11px;
+                margin-right: 4px;
+            }
+
+            .track-info {
+                max-width: 80px;
+            }
+
+            .track-title {
+                font-size: 11px;
+            }
+
+            .track-subtitle {
+                font-size: 9px;
+            }
+
+            .progress-container {
+                flex: 1 1 60px;
+                min-width: 60px;
+            }
+
+            .volume-control {
+                min-width: 60px;
+            }
+
+            .volume-slider {
+                width: 35px;
+            }
         }
 
         /* ----- УЛУЧШЕННЫЙ КАСТОМНЫЙ КУРСОР (СЛЕД) ----- */
@@ -932,7 +1096,7 @@
             font-size: clamp(12px, 3vw, 14px);
         }
 
-        /* ----- АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ ----- */
+        /* ----- АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ (ОБЩАЯ) ----- */
         @media (max-width: 1024px) {
             .custom-cursor,
             .cursor-trail {
@@ -949,37 +1113,13 @@
                 justify-content: flex-start;
             }
             
-            .player-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .player-section {
-                width: 100%;
-                justify-content: flex-start;
-                min-width: 100%;
-            }
-            
-            .progress-container {
-                width: 100%;
-                margin: 10px 0;
-                min-width: 100%;
-            }
-            
-            .volume-control {
-                width: 100%;
-                justify-content: center;
-                margin-left: 0;
-                min-width: 100%;
-            }
-            
             .contact-info {
                 gap: 8px;
             }
             
             #audio-visualizer {
-                bottom: 120px;
-                height: 60px;
+                bottom: 90px;
+                height: 50px;
             }
         }
 
@@ -1010,27 +1150,9 @@
                 gap: 4px;
             }
             
-            .play-btn {
-                width: 36px;
-                height: 36px;
-                margin-right: 8px;
-            }
-            
-            .track-title {
-                font-size: 13px;
-            }
-            
-            .track-subtitle {
-                font-size: 11px;
-            }
-            
-            .volume-slider {
-                width: 70px;
-            }
-            
             #audio-visualizer {
-                bottom: 130px;
-                height: 50px;
+                bottom: 80px;
+                height: 40px;
             }
         }
 
@@ -1069,13 +1191,6 @@
             }
             .contact-info {
                 margin-top: 8px;
-            }
-            .music-player {
-                padding: 8px 12px;
-            }
-            .play-btn {
-                width: 36px;
-                height: 36px;
             }
         }
 
@@ -1127,9 +1242,6 @@
             }
             .contact-info {
                 margin-top: 5px;
-            }
-            .music-player {
-                padding: 8px 12px;
             }
         }
     </style>
@@ -1188,9 +1300,8 @@
             </div>
             <p class="tagline">crafting minimal aesthetics with soul</p>
 
-            <!-- СОЦСЕТИ – ИДЕАЛЬНО РОВНО -->
+            <!-- СОЦСЕТИ -->
             <div class="social-grid" id="socialGrid">
-                <!-- STEAM -->
                 <a href="https://steamcommunity.com/id/shiokazeIII/"
                    target="_blank"
                    class="social-card tilt-card"
@@ -1201,7 +1312,6 @@
                         <div class="social-desc">game library</div>
                     </div>
                 </a>
-                <!-- DISCORD -->
                 <a href="https://discord.com/users/912747427465928754"
                    target="_blank"
                    class="social-card tilt-card"
@@ -1212,7 +1322,6 @@
                         <div class="social-desc">connect</div>
                     </div>
                 </a>
-                <!-- TELEGRAM – ТЕПЕРЬ ПОЛНОСТЬЮ ВЛЕЗАЕТ -->
                 <a href="https://t.me/s_k4ze"
                    target="_blank"
                    class="social-card tilt-card"

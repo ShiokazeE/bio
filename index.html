@@ -490,29 +490,29 @@
             word-break: break-word;
         }
 
-        /* ----- МАГНИТНЫЕ TILT-КАРТОЧКИ (3D) ----- */
+        /* ===== ИСПРАВЛЕННЫЕ СОЦСЕТИ – ТЕКСТ ВЛЕЗАЕТ ===== */
         .social-grid {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: clamp(12px, 4vw, 24px);
+            gap: clamp(20px, 4vw, 30px);
             flex-wrap: wrap;
-            max-width: 100%;
+            max-width: 800px;
             margin: 0 auto 20px;
             perspective: 1000px;
-            padding: 5px;
+            padding: 10px;
         }
 
         .social-card {
             position: relative;
-            width: clamp(100px, 25vw, 150px);
-            height: clamp(100px, 25vw, 150px);
-            border-radius: 20px;
+            width: 160px;
+            height: 160px;
+            border-radius: 24px;
             overflow: hidden;
             background-size: cover;
             background-position: center;
             border: 1px solid var(--glass-border);
-            transition: transform 0.2s var(--ease-out-expo);
+            transition: transform 0.3s var(--ease-out-expo);
             text-decoration: none;
             box-shadow: var(--shadow-glass);
             backdrop-filter: blur(10px);
@@ -551,7 +551,7 @@
             align-items: center;
             justify-content: center;
             z-index: 2;
-            padding: clamp(10px, 3vw, 20px);
+            padding: 15px;
             transform: translateZ(20px);
             transition: transform 0.4s var(--ease-out-expo);
         }
@@ -561,8 +561,8 @@
         }
 
         .social-icon {
-            font-size: clamp(24px, 8vw, 36px);
-            margin-bottom: clamp(6px, 2vw, 12px);
+            font-size: 42px;
+            margin-bottom: 12px;
             color: white;
             filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
             transition: all 0.4s var(--ease-out-back);
@@ -573,22 +573,96 @@
         }
 
         .social-name {
-            font-size: clamp(16px, 5vw, 22px);
-            font-weight: 600;
+            font-size: 24px;
+            font-weight: 700;
             letter-spacing: 0.15em;
             color: white;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             word-break: break-word;
             text-align: center;
+            line-height: 1.2;
+            text-transform: uppercase;
         }
 
         .social-desc {
-            font-size: clamp(9px, 2.5vw, 11px);
+            font-size: 12px;
             color: rgba(255, 255, 255, 0.7);
             text-align: center;
             letter-spacing: 0.1em;
             word-break: break-word;
+            opacity: 0.9;
+        }
+
+        /* ----- Адаптация для планшетов ----- */
+        @media (max-width: 1024px) {
+            .social-card {
+                width: 150px;
+                height: 150px;
+            }
+            .social-name {
+                font-size: 22px;
+            }
+            .social-icon {
+                font-size: 38px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .social-card {
+                width: 130px;
+                height: 130px;
+            }
+            .social-name {
+                font-size: 20px;
+                letter-spacing: 0.1em;
+            }
+            .social-icon {
+                font-size: 34px;
+                margin-bottom: 8px;
+            }
+            .social-desc {
+                font-size: 11px;
+            }
+            .social-grid {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .social-card {
+                width: 110px;
+                height: 110px;
+            }
+            .social-name {
+                font-size: 18px;
+                letter-spacing: 0.08em;
+                margin-bottom: 4px;
+            }
+            .social-icon {
+                font-size: 30px;
+                margin-bottom: 6px;
+            }
+            .social-desc {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .social-card {
+                width: 95px;
+                height: 95px;
+            }
+            .social-name {
+                font-size: 16px;
+            }
+            .social-icon {
+                font-size: 26px;
+                margin-bottom: 4px;
+            }
+            .social-desc {
+                font-size: 9px;
+            }
         }
 
         /* ----- GLASS-ПЛЕЕР ----- */
@@ -853,32 +927,21 @@
             font-size: clamp(12px, 3vw, 14px);
         }
 
-        /* ----- АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ (ОСНОВНАЯ) ----- */
-        @media (max-width: 768px) {
+        /* ----- АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ ----- */
+        @media (max-width: 1024px) {
+            .custom-cursor,
+            .cursor-trail {
+                display: none !important;
+            }
+            html, body, button, a, input,
+            .enter-btn, .play-btn, .social-card,
+            .contact-item, .volume-slider, .progress-bar {
+                cursor: auto !important;
+            }
+            
             .main-content {
                 padding: 15px 12px;
                 justify-content: flex-start;
-            }
-            
-            .social-grid {
-                gap: 12px;
-            }
-            
-            .social-card {
-                width: 110px;
-                height: 110px;
-            }
-            
-            .social-name {
-                font-size: 18px;
-            }
-            
-            .social-icon {
-                font-size: 28px;
-            }
-            
-            .username {
-                font-size: 36px;
             }
             
             .player-container {
@@ -909,24 +972,6 @@
                 gap: 8px;
             }
             
-            .contact-item {
-                padding: 5px 12px;
-                font-size: 12px;
-                white-space: nowrap;
-            }
-            
-            /* Скрываем кастомный курсор на мобильных */
-            .custom-cursor,
-            .cursor-trail {
-                display: none !important;
-            }
-            
-            html, body, button, a, input,
-            .enter-btn, .play-btn, .social-card,
-            .contact-item, .volume-slider, .progress-bar {
-                cursor: auto !important;
-            }
-            
             #audio-visualizer {
                 bottom: 120px;
                 height: 60px;
@@ -952,25 +997,6 @@
             .tagline {
                 font-size: 13px;
                 margin-bottom: 15px;
-            }
-            
-            .social-card {
-                width: 95px;
-                height: 95px;
-            }
-            
-            .social-name {
-                font-size: 16px;
-                letter-spacing: 0.1em;
-            }
-            
-            .social-icon {
-                font-size: 24px;
-                margin-bottom: 5px;
-            }
-            
-            .social-desc {
-                font-size: 9px;
             }
             
             .contact-item {
@@ -1004,24 +1030,6 @@
         }
 
         @media (max-width: 360px) {
-            .social-card {
-                width: 85px;
-                height: 85px;
-            }
-            
-            .social-name {
-                font-size: 14px;
-            }
-            
-            .social-icon {
-                font-size: 22px;
-            }
-            
-            .contact-item {
-                padding: 3px 8px;
-                font-size: 10px;
-            }
-            
             .username {
                 font-size: 28px;
             }
@@ -1061,11 +1069,6 @@
                 margin-bottom: 12px;
             }
             
-            .social-card {
-                width: 95px;
-                height: 95px;
-            }
-            
             .contact-info {
                 margin-top: 8px;
             }
@@ -1092,11 +1095,6 @@
             
             .tagline {
                 display: none;
-            }
-            
-            .social-card {
-                width: 85px;
-                height: 85px;
             }
             
             .social-desc {
@@ -1138,31 +1136,12 @@
                 margin-bottom: 10px;
             }
             
-            .social-card {
-                width: 80px;
-                height: 80px;
-            }
-            
-            .social-name {
-                font-size: 14px;
-            }
-            
-            .social-icon {
-                font-size: 22px;
-                margin-bottom: 4px;
-            }
-            
             .social-desc {
                 display: none;
             }
             
             .contact-info {
                 margin-top: 5px;
-            }
-            
-            .contact-item {
-                padding: 4px 10px;
-                font-size: 11px;
             }
             
             .music-player {
@@ -1237,7 +1216,7 @@
             </div>
             <p class="tagline">crafting minimal aesthetics with soul</p>
 
-            <!-- МАГНИТНЫЕ TILT-КАРТОЧКИ -->
+            <!-- МАГНИТНЫЕ TILT-КАРТОЧКИ - ИСПРАВЛЕНО -->
             <div class="social-grid" id="socialGrid">
                 <!-- STEAM -->
                 <a href="https://steamcommunity.com/id/shiokazeIII/"

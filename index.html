@@ -500,12 +500,11 @@
         .status-indicator.dnd { background-color: #f04747; box-shadow: 0 0 10px #f04747; }
         .status-indicator.offline { background-color: #747f8d; box-shadow: 0 0 10px #747f8d; }
 
-        /* --- БЛОК АКТИВНОСТИ DISCORD С ВАШИМ GIF (весь фон заменён) --- */
+        /* --- БЛОК АКТИВНОСТИ DISCORD С ВАШИМ GIF --- */
         .discord-activity {
             margin-top: 12px;
             padding: 12px 16px;
             border-radius: 20px;
-            /* ФОН — ВАШ GIF (полностью заменяет прежний фон) */
             background: url('https://i.pinimg.com/originals/67/24/73/672473381ea72682e852bdc69f739492.gif') center/cover no-repeat;
             border: 1px solid rgba(255,255,255,0.1);
             backdrop-filter: blur(5px);
@@ -518,12 +517,11 @@
             color: #fff;
             z-index: 1;
         }
-        /* Затемняющий слой для читаемости текста (текст поверх гифки) */
         .discord-activity::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.5); /* регулируйте прозрачность */
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 20px;
             z-index: -1;
         }
@@ -538,107 +536,207 @@
         .activity-name { font-weight: 600; color: white; margin-bottom: 2px; }
         .activity-state { font-size: 12px; color: rgba(255,255,255,0.5); }
 
-        /* ----- ПЛЕЕР ----- */
+        /* ----- ПЛЕЕР (ПЕРЕРАБОТАННЫЙ) ----- */
         .music-player {
             width: 100%;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border-top: 1px solid var(--glass-border);
-            padding: 12px 20px;
+            padding: 12px 16px;
             display: none;
             transform: translateY(20px);
             opacity: 0;
             transition: 0.6s;
         }
         .music-player.show { display: flex; transform: translateY(0); opacity: 1; }
+        
         .player-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            gap: 8px;
+        }
+        
+        .player-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 10px;
-            max-width: 1100px;
-            margin: 0 auto;
-            width: 100%;
         }
+        
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1 1 auto;
+        }
+        
         .play-btn {
-            width: 48px; height: 48px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
             font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.4s;
+            transition: 0.3s;
             flex-shrink: 0;
+            cursor: pointer;
         }
-        .play-btn:hover { background: rgba(255,255,255,0.15); transform: scale(1.15) rotate(180deg); }
+        .play-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1) rotate(180deg);
+            border-color: rgba(255,255,255,0.4);
+        }
+        .play-btn.playing {
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+        }
+        
         .track-info {
             text-align: left;
-            flex: 1;
             min-width: 0;
+            flex: 1;
         }
         .track-title {
             font-weight: 600;
-            font-size: 16px;
+            font-size: 15px;
             color: white;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         .track-subtitle {
-            font-size: 13px;
+            font-size: 12px;
             color: rgba(255,255,255,0.55);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        
+        .volume-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .volume-icon {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+            width: 20px;
+            text-align: center;
+        }
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            -webkit-appearance: none;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            outline: none;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            cursor: pointer;
+        }
+        
+        .progress-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
         .progress-container {
-            flex: 2 1 300px;
-            min-width: 200px;
-            margin: 0 15px;
+            flex: 1;
+            min-width: 0;
         }
         .progress-bar {
             height: 3px;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.1);
             border-radius: 3px;
             overflow: hidden;
             margin-bottom: 4px;
+            cursor: pointer;
         }
         .progress-fill {
             height: 100%;
             background: white;
             width: 0%;
             box-shadow: 0 0 10px rgba(255,255,255,0.3);
+            transition: width 0.05s linear;
         }
         .time-display {
             display: flex;
             justify-content: space-between;
             font-size: 11px;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 0.5px;
         }
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 120px;
-            justify-content: flex-end;
+        .time-display span {
+            font-family: 'Space Grotesk', monospace;
         }
-        .volume-slider {
-            width: 90px;
-            height: 3px;
-            -webkit-appearance: none;
-            background: rgba(255,255,255,0.1);
-            border-radius: 3px;
+
+        /* Адаптация для мобильных */
+        @media (max-width: 600px) {
+            .player-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .player-controls {
+                justify-content: space-between;
+            }
+            .volume-wrap {
+                justify-content: flex-end;
+                margin-top: 5px;
+            }
+            .progress-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 5px;
+            }
+            .time-display {
+                order: 2;
+            }
         }
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 12px; height: 12px;
-            border-radius: 50%;
-            background: white;
-            box-shadow: 0 0 15px rgba(255,255,255,0.5);
+
+        @media (max-width: 480px) {
+            .music-player {
+                padding: 10px 12px;
+            }
+            .play-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+            .track-title {
+                font-size: 14px;
+            }
+            .volume-slider {
+                width: 70px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .player-controls {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .track-info {
+                min-width: 120px;
+            }
+            .volume-slider {
+                width: 60px;
+            }
         }
 
         /* ----- КОНТАКТЫ ----- */
@@ -705,7 +803,57 @@
             mix-blend-mode: screen;
         }
 
-        /* ----- АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ ----- */
+        /* ----- СЕКРЕТНАЯ КНОПКА И ОВЕРЛЕЙ ----- */
+        #secretButton {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10000;
+            transition: background 0.2s;
+        }
+        #secretButton:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            opacity: 0;
+            transition: opacity 1s ease;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20000;
+            visibility: hidden;
+        }
+        #overlay.active {
+            visibility: visible;
+            pointer-events: auto;
+        }
+        #overlay span {
+            color: white;
+            font-size: 20vw;
+            font-weight: bold;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.5s ease;
+        }
+        #overlay.active span {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ----- АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ (общая) ----- */
         @media (max-width: 1024px) {
             html, body { overflow: auto; }
             .main-container { position: relative; min-height: 100vh; height: auto; }
@@ -714,11 +862,6 @@
             .social-card { width: 160px; height: 160px; }
             .social-name { font-size: 19px; }
             .social-icon { font-size: 38px; }
-            .music-player { padding: 8px 12px; }
-            .player-section { min-width: 0; }
-            .track-info { max-width: 120px; }
-            .progress-container { flex: 1 1 100px; min-width: 80px; margin: 0 5px; }
-            .volume-control { min-width: 80px; }
         }
         @media (max-width: 768px) {
             .social-card { width: 130px; height: 130px; }
@@ -821,7 +964,7 @@
                 </a>
             </div>
 
-            <!-- DISCORD СТАТУС (ВЕСЬ БЛОК АКТИВНОСТИ С ВАШИМ GIF) -->
+            <!-- DISCORD СТАТУС -->
             <div class="discord-presence" id="discordPresence">
                 <div class="discord-header">
                     <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar" class="discord-avatar" id="discordAvatar">
@@ -847,24 +990,37 @@
         <!-- ПЛЕЕР -->
         <div class="music-player" id="musicPlayer">
             <div class="player-container">
-                <div class="player-section">
-                    <button class="play-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
-                    <div class="track-info">
-                        <div class="track-title" id="trackTitle">Murasame</div>
-                        <div class="track-subtitle" id="trackSubtitle">Shiokaze · ambient waves</div>
+                <div class="player-row">
+                    <div class="player-controls">
+                        <button class="play-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
+                        <div class="track-info">
+                            <div class="track-title" id="trackTitle">Murasame</div>
+                            <div class="track-subtitle" id="trackSubtitle">Shiokaze · ambient waves</div>
+                        </div>
+                    </div>
+                    <div class="volume-wrap">
+                        <i class="fas fa-volume-up volume-icon"></i>
+                        <input type="range" min="0" max="100" value="80" class="volume-slider" id="volumeSlider">
                     </div>
                 </div>
-                <div class="progress-container">
-                    <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
-                    <div class="time-display"><span id="currentTime">0:00</span><span id="duration">3:30</span></div>
-                </div>
-                <div class="volume-control">
-                    <i class="fas fa-volume-up volume-icon"></i>
-                    <input type="range" min="0" max="100" value="80" class="volume-slider" id="volumeSlider">
+                <div class="progress-row">
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="time-display">
+                            <span id="currentTime">0:00</span>
+                            <span id="duration">3:30</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- СЕКРЕТНАЯ КНОПКА И ОВЕРЛЕЙ -->
+    <div id="secretButton"></div>
+    <div id="overlay"><span>67</span></div>
 
     <!-- АУДИО -->
     <audio id="backgroundMusic" loop preload="auto" crossorigin="anonymous">
@@ -1118,6 +1274,26 @@
                 if (discordInterval) clearInterval(discordInterval);
                 discordInterval = setInterval(loadDiscordStatus, 15000);
             }
+
+            // --- СЕКРЕТНАЯ КНОПКА ---
+            const secretBtn = document.getElementById('secretButton');
+            const overlay = document.getElementById('overlay');
+            let timeoutId = null;
+
+            function showOverlay() {
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                    timeoutId = null;
+                }
+                overlay.classList.add('active');
+                // Через 2 секунды начинаем скрывать
+                timeoutId = setTimeout(() => {
+                    overlay.classList.remove('active');
+                    timeoutId = null;
+                }, 2000);
+            }
+
+            secretBtn.addEventListener('click', showOverlay);
 
             // Инициализация
             document.addEventListener('DOMContentLoaded', () => {

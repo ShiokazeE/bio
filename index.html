@@ -803,7 +803,7 @@
             mix-blend-mode: screen;
         }
 
-        /* ----- СЕКРЕТНАЯ КНОПКА И ОВЕРЛЕЙ ----- */
+        /* ----- СЕКРЕТНАЯ КНОПКА И ОВЕРЛЕЙ (ИСПРАВЛЕНО) ----- */
         #secretButton {
             position: fixed;
             bottom: 10px;
@@ -828,7 +828,7 @@
             height: 100%;
             background: black;
             opacity: 0;
-            transition: opacity 1s ease;
+            transition: opacity 0.5s ease; /* синхронизация с затуханием музыки */
             pointer-events: none;
             display: flex;
             align-items: center;
@@ -838,6 +838,7 @@
         }
         #overlay.active {
             visibility: visible;
+            opacity: 0.9; /* степень затемнения (0.9 = почти чёрный) */
             pointer-events: auto;
         }
         #overlay span {
@@ -1275,25 +1276,75 @@
                 discordInterval = setInterval(loadDiscordStatus, 15000);
             }
 
-            // --- СЕКРЕТНАЯ КНОПКА ---
+            // --- СЕКРЕТНАЯ КНОПКА С ЗАТИХАНИЕМ МУЗЫКИ И ЗАТЕМНЕНИЕМ ---
             const secretBtn = document.getElementById('secretButton');
             const overlay = document.getElementById('overlay');
-            let timeoutId = null;
+            const audio = el.audio;
 
-            function showOverlay() {
-                if (timeoutId) {
-                    clearTimeout(timeoutId);
-                    timeoutId = null;
+            // Переменные для управления эффектом
+            let fadeInterval = null;
+            let effectTimeout = null;
+            const originalVolume = 0.8; // исходная громкость (80%)
+
+            // Функция плавного изменения громкости
+            function fadeVolume(targetVol, duration, onComplete) {
+                if (fadeInterval) {
+                    cancelAnimationFrame(fadeInterval);
+                    fadeInterval = null;
                 }
-                overlay.classList.add('active');
-                // Через 2 секунды начинаем скрывать
-                timeoutId = setTimeout(() => {
-                    overlay.classList.remove('active');
-                    timeoutId = null;
-                }, 2000);
+                const startVol = audio.volume;
+                const startTime = performance.now();
+                const updateVolume = () => {
+                    const now = performance.now();
+                    const elapsed = now - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    audio.volume = startVol + (targetVol - startVol) * progress;
+                    if (progress < 1) {
+                        fadeInterval = requestAnimationFrame(updateVolume);
+                    } else {
+                        audio.volume = targetVol;
+                        fadeInterval = null;
+                        if (onComplete) onComplete();
+                    }
+                };
+                fadeInterval = requestAnimationFrame(updateVolume);
             }
 
-            secretBtn.addEventListener('click', showOverlay);
+            // Функция сброса эффекта (останавливает текущие анимации и возвращает громкость)
+            function resetEffect() {
+                if (fadeInterval) {
+                    cancelAnimationFrame(fadeInterval);
+                    fadeInterval = null;
+                }
+                if (effectTimeout) {
+                    clearTimeout(effectTimeout);
+                    effectTimeout = null;
+                }
+                audio.volume = originalVolume; // мгновенно возвращаем громкость
+                overlay.classList.remove('active');
+            }
+
+            // Обработчик клика на секретную кнопку
+            secretBtn.addEventListener('click', () => {
+                resetEffect(); // сбрасываем предыдущий эффект (громкость сразу на исходную, оверлей скрыт)
+
+                // Показываем оверлей
+                overlay.classList.add('active');
+
+                // Плавно убавляем громкость до 0 за 0.5 секунды
+                fadeVolume(0, 500, () => {
+                    // Можно ничего не делать, просто оставляем громкость 0
+                });
+
+                // Через 3 секунды начинаем возврат
+                effectTimeout = setTimeout(() => {
+                    // Плавно возвращаем громкость к исходной за 0.5 секунды
+                    fadeVolume(originalVolume, 500, () => {
+                        // После возврата громкости скрываем оверлей
+                        overlay.classList.remove('active');
+                    });
+                }, 3000);
+            });
 
             // Инициализация
             document.addEventListener('DOMContentLoaded', () => {
@@ -1321,7 +1372,8 @@
                     else if (this.value < 50) icon.className = 'fas fa-volume-down volume-icon';
                     else icon.className = 'fas fa-volume-up volume-icon';
                 });
-                el.audio.volume = 0.8;
+                el.audio.volume = originalVolume; // устанавливаем исходную громкость
+                el.volumeSlider.value = originalVolume * 100;
             });
 
             el.enterButton.addEventListener('click', async function() {

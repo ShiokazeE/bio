@@ -2,11 +2,11 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>SHIOKAZE · PORTFOLIO 2026 ∞ PREMIUM</title>
-    <!-- Шрифты -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Crimson+Text:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Иконки Font Awesome 6 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Shiokaze · портфолио</title>
+    <!-- Шрифт Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -15,1426 +15,656 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: 255, 255, 255;
-            --bg-deep: #030405;
-            --glass-bg: rgba(10, 12, 18, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-highlight: rgba(255, 255, 255, 0.03);
-            --shadow-soft: 0 20px 40px -12px rgba(0, 0, 0, 0.8);
-            --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
-            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        html, body {
-            width: 100%;
-            min-height: 100vh;
-            background: #000;
-            font-family: 'Space Grotesk', 'Inter', sans-serif;
-            color: white;
+        body {
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
         }
 
-        /* ----- ФОН ----- */
-        .bg-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://i.pinimg.com/1200x/88/13/98/881398ac4a7b9e9659c41eb958437fc5.jpg');
-            background-size: cover;
-            background-position: center;
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        .noise-layer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBudW1PY3RhdmVzPSIzIiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iMC4wNCIgLz48L3N2Zz4=');
-            opacity: 0.03;
-            pointer-events: none;
-            z-index: 100;
-            mix-blend-mode: overlay;
-        }
-
-        .radial-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at 30% 40%, rgba(20, 30, 50, 0.25) 0%, rgba(0, 0, 0, 0.8) 90%);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* ----- КИНЕМАТОГРАФИЧНЫЙ INTRO ----- */
-        .cinematic-intro {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 1.5s var(--ease-out-expo), visibility 1.5s var(--ease-out-expo);
-        }
-        .cinematic-intro.hidden { opacity: 0; visibility: hidden; }
-
-        .cinematic-logo {
-            font-size: clamp(48px, 12vw, 96px);
-            font-weight: 800;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            margin-bottom: 24px;
-            animation: cinematicGlow 3s infinite alternate;
-        }
-        .cinematic-logo span { display: inline-block; animation: cinematicFloat 2s infinite; animation-delay: calc(var(--i, 0) * 0.1s); }
-        @keyframes cinematicFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        @keyframes cinematicGlow { 0% { text-shadow: 0 0 30px rgba(255,255,255,0.3); } 100% { text-shadow: 0 0 60px rgba(255,255,255,0.6); } }
-
-        .cinematic-sub {
-            font-size: clamp(14px, 4vw, 18px);
-            letter-spacing: 0.4em;
-            color: rgba(255,255,255,0.7);
-            font-weight: 300;
-            margin-bottom: 48px;
-        }
-        .cinematic-bar {
-            width: min(240px, 80%);
-            height: 1px;
-            background: rgba(255,255,255,0.2);
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-        }
-        .cinematic-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: white;
-            animation: cinematicLoad 2.2s var(--ease-out-expo) forwards;
-        }
-        @keyframes cinematicLoad { 0% { left: -100%; } 100% { left: 100%; } }
-
-        /* ----- ЭКРАН ВХОДА ----- */
-        .enter-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.98);
-            backdrop-filter: blur(20px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 5000;
-            transition: opacity 1.2s, backdrop-filter 1.2s, visibility 1.2s;
-            padding: 20px;
-        }
-        .enter-screen.hidden { opacity: 0; backdrop-filter: blur(0); visibility: hidden; }
-
-        .enter-content {
-            text-align: center;
-            transform: translateY(30px);
-            opacity: 0;
-            transition: all 1s 0.3s;
-        }
-        .enter-screen:not(.hidden) .enter-content { transform: translateY(0); opacity: 1; }
-
-        .enter-glitch {
-            font-size: clamp(48px, 12vw, 84px);
-            font-weight: 800;
-            margin-bottom: 24px;
-            position: relative;
-            color: white;
-            letter-spacing: 0.15em;
-        }
-        .enter-glitch::before, .enter-glitch::after {
-            content: "SHIOKAZE";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.8;
-            pointer-events: none;
-        }
-        .enter-glitch::before { color: rgba(255,80,120,0.6); z-index: -1; transform: translate(-2px,-2px); animation: glitchShift 3s infinite; }
-        .enter-glitch::after { color: rgba(80,200,255,0.6); z-index: -2; transform: translate(2px,2px); animation: glitchShift 2.8s infinite reverse; }
-        @keyframes glitchShift { 0%,100% { transform: translate(0); } 20% { transform: translate(-3px,2px); } 40% { transform: translate(2px,-2px); } 60% { transform: translate(1px,3px); } 80% { transform: translate(-2px,-1px); } }
-
-        .enter-sub {
-            font-size: clamp(14px, 4vw, 18px);
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 48px;
-            letter-spacing: 0.3em;
-        }
-        .enter-btn {
-            padding: 16px 32px;
-            background: transparent;
-            border: 1.5px solid rgba(255,255,255,0.3);
-            color: white;
-            font-size: clamp(16px, 4vw, 18px);
-            letter-spacing: 0.3em;
-            border-radius: 40px;
-            transition: all 0.6s;
-            backdrop-filter: blur(10px);
-            width: fit-content;
-            margin: 0 auto;
-            cursor: pointer;
-        }
-        .enter-btn:hover { border-color: white; background: rgba(255,255,255,0.05); box-shadow: 0 0 40px rgba(255,255,255,0.1); letter-spacing: 0.4em; }
-
-        /* ----- ОСНОВНОЙ КОНТЕЙНЕР ----- */
-        .main-container {
-            position: relative;
-            min-height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s, visibility 1s;
-        }
-        .main-container.visible { opacity: 1; visibility: visible; }
-
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 20px 15px;
-            width: 100%;
+        .container {
             max-width: 1200px;
             margin: 0 auto;
-            transform: translateY(20px);
-            opacity: 0;
-            transition: all 1.2s 0.2s;
-        }
-        .main-container.visible .main-content { transform: translateY(0); opacity: 1; }
-
-        .liquid-glass {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 5;
-            opacity: 0.4;
-            mix-blend-mode: screen;
+            padding: 4rem 2rem;
         }
 
-        .cursor-gradient {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(600px at var(--x) var(--y), rgba(255,255,255,0.06), transparent 80%);
-            pointer-events: none;
-            z-index: 3;
-            mix-blend-mode: screen;
+        /* Заголовок секций */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: inline-block;
+            padding-bottom: 0.5rem;
         }
 
-        /* ----- АВАТАР ----- */
-        .avatar-container {
-            position: relative;
-            width: clamp(120px, 25vw, 160px);
-            height: clamp(120px, 25vw, 160px);
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 20px rgba(255,255,255,0.1));
+        /* Hero (имя + роль) */
+        .hero {
+            text-align: center;
+            margin-bottom: 5rem;
         }
-        .avatar {
-            width: 100%;
-            height: 100%;
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #888;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        /* WHOAMI секция */
+        .whoami {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 5rem;
+            flex-wrap: wrap;
+        }
+        .whoami-avatar {
+            flex-shrink: 0;
+        }
+        .whoami-avatar img {
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.1);
         }
-        .avatar-glow {
-            position: absolute;
-            top: -15px; left: -15px; right: -15px; bottom: -15px;
-            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1), transparent 70%);
-            border-radius: 50%;
-            filter: blur(20px);
-            z-index: 1;
-            animation: avatarPulse 6s infinite;
+        .whoami-text {
+            flex: 1;
         }
-        @keyframes avatarPulse { 0%,100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.05); } }
-
-        /* ----- ИМЯ ----- */
-        .username-wrapper {
-            text-align: center;
-            margin-bottom: 8px;
+        .whoami-text p {
+            margin-bottom: 1rem;
+            color: #ccc;
+            font-size: 1rem;
         }
-        .username {
-            font-size: clamp(32px, 8vw, 48px);
-            font-weight: 700;
-            color: white;
-            letter-spacing: 0.1em;
-            line-height: 1.1;
-        }
-        .japanese-hover {
-            font-size: clamp(12px, 3vw, 14px);
-            color: rgba(255,255,255,0.5);
-            font-family: 'Crimson Text', serif;
-            font-style: italic;
-            position: relative;
-            display: inline-block;
-            cursor: default;
-        }
-        .japanese-hover::before {
-            content: "潮風 • デジタルクリエイター";
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(-10px);
-            white-space: nowrap;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 6px 12px;
-            border-radius: 30px;
-            font-size: clamp(11px, 3vw, 13px);
-            color: white;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-            pointer-events: none;
-            z-index: 100;
-        }
-        .japanese-hover:hover::before {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-        }
-        @media (hover: none) { .japanese-hover::before { display: none; } }
-
-        .tagline {
-            font-size: clamp(14px, 4vw, 16px);
-            color: rgba(255,255,255,0.65);
-            font-family: 'Crimson Text', serif;
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-
-        /* ----- ЗНАЧКИ ----- */
-        .badges-container {
+        .badge-list {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin: 10px 0 20px;
+            gap: 0.6rem;
+            margin-top: 1.5rem;
         }
         .badge {
-            position: relative;
-            width: 45px; height: 45px;
-            border-radius: 50%;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            display: flex;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 40px;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 22px;
-            transition: all 0.3s var(--ease-out-back);
-            cursor: help;
+            gap: 0.5rem;
         }
-        .badge:hover { transform: translateY(-5px) scale(1.1); border-color: rgba(255,255,255,0.3); }
-        .badge::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 120%;
-            left: 50%;
-            transform: translateX(-50%) translateY(-10px);
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 6px 12px;
-            border-radius: 30px;
-            font-size: clamp(11px, 3vw, 13px);
-            color: white;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-            pointer-events: none;
-            z-index: 100;
-        }
-        .badge:hover::after { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-        @media (hover: none) { .badge::after { display: none; } }
-
-        /* ----- СОЦСЕТИ ----- */
-        .social-grid {
-            display: flex;
-            justify-content: center;
-            gap: 35px;
-            flex-wrap: wrap;
-            max-width: 1000px;
-            margin: 0 auto 25px;
-            perspective: 1000px;
-            padding: 15px;
-        }
-        .social-card {
-            position: relative;
-            width: 200px; height: 200px;
-            border-radius: 30px;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s;
-            text-decoration: none;
-            box-shadow: var(--shadow-glass);
-            transform-style: preserve-3d;
-        }
-        .social-card[href*="steam"] { background-image: url('https://i.pinimg.com/originals/42/9f/50/429f50db0beadaf93859cd904f87f774.gif'); }
-        .social-card[href*="discord"] { background-image: url('https://i.pinimg.com/originals/13/8a/33/138a3374225ace2443815b2424966ac7.gif'); }
-        .social-card[href*="t.me"] { background-image: url('https://i.pinimg.com/originals/1a/dc/d3/1adcd32a85c581057a982a947930ba1b.gif'); }
-        .social-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1;
-            transition: 0.4s;
-        }
-        .social-card:hover::before { background: rgba(0,0,0,0.3); }
-        .social-content {
-            position: relative;
-            width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-            padding: 15px;
-            transform: translateZ(20px);
-            transition: transform 0.4s;
-        }
-        .social-card:hover .social-content { transform: translateZ(30px); }
-        .social-icon {
-            font-size: 44px;
-            margin-bottom: 12px;
-            color: white;
-            filter: drop-shadow(0 0 15px rgba(255,255,255,0.3));
-            transition: 0.4s;
-        }
-        .social-card:hover .social-icon { transform: scale(1.2) rotate(360deg); }
-        .social-name {
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-        .social-desc {
-            font-size: 13px;
-            color: rgba(255,255,255,0.75);
-            white-space: nowrap;
+        .badge i {
+            color: #aaa;
+            font-size: 0.75rem;
         }
 
-        /* ----- DISCORD СТАТУС ----- */
-        .discord-presence {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
+        /* MY INTERESTS */
+        .interests {
+            margin-bottom: 5rem;
+        }
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .interest-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 24px;
-            padding: 16px 20px;
-            margin: 20px auto 15px;
-            width: 100%;
-            max-width: 500px;
-            transition: 0.3s;
+            padding: 1.2rem;
+            text-align: center;
+            transition: 0.2s;
         }
-        .discord-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .discord-avatar {
-            width: 50px; height: 50px;
-            border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.15);
-        }
-        .discord-username {
-            font-weight: 600;
-            font-size: 18px;
-            color: white;
-        }
-        .discord-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            color: rgba(255,255,255,0.65);
-        }
-        .status-indicator {
-            width: 10px; height: 10px;
-            border-radius: 50%;
+        .interest-card i {
+            font-size: 2rem;
+            color: #bbb;
+            margin-bottom: 0.8rem;
             display: inline-block;
         }
-        .status-indicator.online { background-color: #43b581; box-shadow: 0 0 10px #43b581; }
-        .status-indicator.idle { background-color: #faa61a; box-shadow: 0 0 10px #faa61a; }
-        .status-indicator.dnd { background-color: #f04747; box-shadow: 0 0 10px #f04747; }
-        .status-indicator.offline { background-color: #747f8d; box-shadow: 0 0 10px #747f8d; }
-
-        /* --- БЛОК АКТИВНОСТИ DISCORD С ВАШИМ GIF --- */
-        .discord-activity {
-            margin-top: 12px;
-            padding: 12px 16px;
-            border-radius: 20px;
-            background: url('https://i.pinimg.com/originals/67/24/73/672473381ea72682e852bdc69f739492.gif') center/cover no-repeat;
-            border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
-            animation: glowPulse 4s infinite ease-in-out;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.3s;
-            position: relative;
-            color: #fff;
-            z-index: 1;
+        .interest-card h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
         }
-        .discord-activity::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 20px;
-            z-index: -1;
-        }
-        @keyframes glowPulse {
-            0% { border-color: rgba(255,255,255,0.2); box-shadow: 0 0 5px rgba(255,255,255,0.1); }
-            50% { border-color: rgba(255,255,255,0.5); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
-            100% { border-color: rgba(255,255,255,0.2); box-shadow: 0 0 5px rgba(255,255,255,0.1); }
+        .interest-card p {
+            font-size: 0.85rem;
+            color: #777;
         }
 
-        .activity-icon { font-size: 24px; min-width: 30px; text-align: center; }
-        .activity-details { flex: 1; }
-        .activity-name { font-weight: 600; color: white; margin-bottom: 2px; }
-        .activity-state { font-size: 12px; color: rgba(255,255,255,0.5); }
-
-        /* ----- ПЛЕЕР (ПЕРЕРАБОТАННЫЙ) ----- */
-        .music-player {
-            width: 100%;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--glass-border);
-            padding: 12px 16px;
-            display: none;
-            transform: translateY(20px);
-            opacity: 0;
-            transition: 0.6s;
+        /* FEATURED PROJECTS */
+        .projects {
+            margin-bottom: 5rem;
         }
-        .music-player.show { display: flex; transform: translateY(0); opacity: 1; }
-        
-        .player-container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-            gap: 8px;
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
-        
-        .player-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
+        .project-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 28px;
+            padding: 1.8rem;
+            transition: 0.2s;
         }
-        
-        .player-controls {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1 1 auto;
+        .project-card:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.15);
+            transform: translateY(-4px);
         }
-        
-        .play-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-            flex-shrink: 0;
-            cursor: pointer;
-        }
-        .play-btn:hover {
-            background: rgba(255,255,255,0.2);
-            transform: scale(1.1) rotate(180deg);
-            border-color: rgba(255,255,255,0.4);
-        }
-        .play-btn.playing {
-            background: rgba(255,255,255,0.1);
-            box-shadow: 0 0 15px rgba(255,255,255,0.3);
-        }
-        
-        .track-info {
-            text-align: left;
-            min-width: 0;
-            flex: 1;
-        }
-        .track-title {
+        .project-card h3 {
+            font-size: 1.6rem;
             font-weight: 600;
-            font-size: 15px;
+            margin-bottom: 0.5rem;
+        }
+        .project-card .project-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #888;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+        .project-card p {
+            color: #bbb;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .project-link {
             color: white;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 2px;
+            transition: 0.2s;
         }
-        .track-subtitle {
-            font-size: 12px;
-            color: rgba(255,255,255,0.55);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .volume-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-        }
-        .volume-icon {
-            font-size: 16px;
-            color: rgba(255,255,255,0.7);
-            width: 20px;
-            text-align: center;
-        }
-        .volume-slider {
-            width: 80px;
-            height: 4px;
-            -webkit-appearance: none;
-            background: rgba(255,255,255,0.2);
-            border-radius: 4px;
-            outline: none;
-        }
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: white;
-            box-shadow: 0 0 10px rgba(255,255,255,0.5);
-            cursor: pointer;
-        }
-        
-        .progress-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-        }
-        .progress-container {
-            flex: 1;
-            min-width: 0;
-        }
-        .progress-bar {
-            height: 3px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-bottom: 4px;
-            cursor: pointer;
-        }
-        .progress-fill {
-            height: 100%;
-            background: white;
-            width: 0%;
-            box-shadow: 0 0 10px rgba(255,255,255,0.3);
-            transition: width 0.05s linear;
-        }
-        .time-display {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: rgba(255,255,255,0.6);
-            letter-spacing: 0.5px;
-        }
-        .time-display span {
-            font-family: 'Space Grotesk', monospace;
+        .project-link:hover {
+            border-bottom-color: white;
         }
 
-        /* Адаптация для мобильных */
-        @media (max-width: 600px) {
-            .player-row {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .player-controls {
-                justify-content: space-between;
-            }
-            .volume-wrap {
-                justify-content: flex-end;
-                margin-top: 5px;
-            }
-            .progress-row {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 5px;
-            }
-            .time-display {
-                order: 2;
-            }
+        /* SOCIALS & CONTACT */
+        .contact-section {
+            margin-bottom: 5rem;
         }
-
-        @media (max-width: 480px) {
-            .music-player {
-                padding: 10px 12px;
-            }
-            .play-btn {
-                width: 36px;
-                height: 36px;
-                font-size: 14px;
-            }
-            .track-title {
-                font-size: 14px;
-            }
-            .volume-slider {
-                width: 70px;
-            }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
         }
-
-        @media (max-width: 360px) {
-            .player-controls {
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-            .track-info {
-                min-width: 120px;
-            }
-            .volume-slider {
-                width: 60px;
-            }
+        .contact-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 28px;
+            padding: 1.6rem;
         }
-
-        /* ----- КОНТАКТЫ ----- */
-        .contact-info {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: clamp(8px, 3vw, 16px);
-            margin: 15px 0 10px;
+        .contact-card h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
         }
         .contact-item {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 16px;
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 50px;
-            color: rgba(255,255,255,0.8);
-            font-size: clamp(11px, 3vw, 14px);
-            white-space: nowrap;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.9rem;
         }
-
-        /* ----- КАСТОМНЫЙ КУРСОР (только десктоп) ----- */
-        .custom-cursor, .cursor-trail { display: none; }
-        @media (min-width: 1025px) {
-            .custom-cursor, .cursor-trail { display: block; }
-            .custom-cursor {
-                position: fixed;
-                width: 8px; height: 8px;
-                background: white;
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 99999;
-                transform: translate(-50%, -50%);
-                transition: width 0.2s, height 0.2s, opacity 0.2s;
-                box-shadow: 0 0 20px rgba(255,255,255,0.5);
-            }
-            .cursor-trail {
-                position: fixed;
-                width: 40px; height: 40px;
-                border: 1px solid rgba(255,255,255,0.3);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 99998;
-                transform: translate(-50%, -50%);
-                opacity: 0.5;
-            }
-            .custom-cursor.hover { width: 16px; height: 16px; background: rgba(255,255,255,0.9); }
-            .custom-cursor.hover + .cursor-trail { width: 60px; height: 60px; border-color: rgba(255,255,255,0.5); opacity: 0.8; }
+        .contact-item i {
+            width: 24px;
+            color: #aaa;
         }
-
-        /* ----- АУДИО-ВИЗУАЛИЗАТОР ----- */
-        #audio-visualizer {
-            position: fixed;
-            bottom: 100px;
-            left: 0;
-            width: 100%;
-            height: clamp(60px, 15vw, 120px);
-            pointer-events: none;
-            z-index: 50;
-            opacity: 0.25;
-            mix-blend-mode: screen;
+        .contact-item:hover {
+            color: white;
         }
-
-        /* ----- СЕКРЕТНАЯ КНОПКА И ОВЕРЛЕЙ (ИСПРАВЛЕНО) ----- */
-        #secretButton {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            width: 20px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 10000;
-            transition: background 0.2s;
+        .discord-presence {
+            margin-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 1rem;
         }
-        #secretButton:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        #overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: black;
-            opacity: 0;
-            transition: opacity 0.5s ease; /* синхронизация с затуханием музыки */
-            pointer-events: none;
+        .discord-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            z-index: 20000;
-            visibility: hidden;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
         }
-        #overlay.active {
-            visibility: visible;
-            opacity: 0.9; /* степень затемнения (0.9 = почти чёрный) */
-            pointer-events: auto;
+        .discord-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
         }
-        #overlay span {
-            color: white;
-            font-size: 20vw;
-            font-weight: bold;
-            opacity: 0;
-            transform: scale(0.5);
-            transition: all 0.5s ease;
+        .discord-username {
+            font-weight: 600;
         }
-        #overlay.active span {
-            opacity: 1;
-            transform: scale(1);
+        .discord-status {
+            font-size: 0.7rem;
+            color: #aaa;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .status-indicator.online { background: #23a55a; }
+        .status-indicator.idle { background: #f0b232; }
+        .status-indicator.dnd { background: #f23f43; }
+        .status-indicator.offline { background: #80848e; }
+        .discord-activity {
+            background: rgba(255,255,255,0.03);
+            border-radius: 18px;
+            padding: 0.6rem 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
         }
 
-        /* ----- АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ (общая) ----- */
-        @media (max-width: 1024px) {
-            html, body { overflow: auto; }
-            .main-container { position: relative; min-height: 100vh; height: auto; }
-            .main-content { overflow: visible; padding: 15px 12px; }
-            .social-grid { gap: 20px; }
-            .social-card { width: 160px; height: 160px; }
-            .social-name { font-size: 19px; }
-            .social-icon { font-size: 38px; }
+        /* Музыкальный плеер */
+        .music-player {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 28px;
+            padding: 1rem 1.2rem;
+            margin-top: 1rem;
         }
+        .player-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .play-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .track-info {
+            flex: 1;
+        }
+        .track-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .track-subtitle {
+            font-size: 0.7rem;
+            color: #888;
+        }
+        .volume-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .volume-slider {
+            width: 80px;
+            height: 3px;
+            background: #333;
+            border-radius: 3px;
+        }
+        .progress-bar {
+            margin-top: 0.6rem;
+            height: 3px;
+            background: #333;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: #e0e0e0;
+            border-radius: 3px;
+        }
+
+        /* FOOTER */
+        .footer {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .back-to-top {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            color: #ccc;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .back-to-top:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
         @media (max-width: 768px) {
-            .social-card { width: 130px; height: 130px; }
-            .social-name { font-size: 17px; }
-            .social-desc { display: none; }
-        }
-        @media (max-width: 480px) {
-            .social-card { width: 110px; height: 110px; }
-            .social-name { font-size: 15px; }
-            .social-icon { font-size: 30px; }
-        }
-        @media (max-height: 700px) {
-            .avatar-container { width: 100px; height: 100px; }
-            .username { font-size: 32px; }
-            .tagline { display: none; }
+            .container { padding: 2rem 1.5rem; }
+            .hero h1 { font-size: 2.8rem; }
+            .whoami { flex-direction: column; align-items: center; text-align: center; }
+            .badge-list { justify-content: center; }
+            .section-title { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
-    <!-- ФОН -->
-    <div class="bg-image"></div>
-    <div class="noise-layer"></div>
-    <div class="radial-bg"></div>
-    <canvas id="audio-visualizer"></canvas>
-    <div class="cursor-gradient" id="cursorGradient"></div>
+<div class="container">
+    <!-- Hero -->
+    <div class="hero">
+        <h1>Shiokaze</h1>
+        <p>DIGITAL CREATOR</p>
+    </div>
 
-    <!-- ИНТРО -->
-    <div class="cinematic-intro" id="cinematicIntro">
-        <div class="cinematic-content">
-            <div class="cinematic-logo">
-                <span style="--i:1">S</span><span style="--i:2">H</span><span style="--i:3">I</span><span style="--i:4">O</span>
-                <span style="--i:5">K</span><span style="--i:6">A</span><span style="--i:7">Z</span><span style="--i:8">E</span>
+    <!-- WHOAMI секция -->
+    <div class="whoami">
+        <div class="whoami-avatar">
+            <img src="https://i.pinimg.com/736x/b1/e5/92/b1e59263434149eb460a480ed4080604.jpg" alt="Shiokaze avatar">
+        </div>
+        <div class="whoami-text">
+            <h2 class="section-title" style="margin-bottom: 1rem;">WHOAMI</h2>
+            <p>Hello! I'm Shiokaze. I'm a digital creator who is really into programming and design. I'm currently learning C++ and I'm also interested in cybersecurity.</p>
+            <p>I'm a bit of a perfectionist and I'm always looking to improve my skills. I'm also a bit of a nerd and I enjoy playing video games.</p>
+            <div class="badge-list">
+                <span class="badge"><i class="fas fa-crown"></i> Staff</span>
+                <span class="badge"><i class="fas fa-check-circle"></i> Verified</span>
+                <span class="badge"><i class="fas fa-images"></i> Image Host</span>
+                <span class="badge"><i class="fas fa-hands-helping"></i> Helper</span>
+                <span class="badge"><i class="fas fa-star"></i> Premium</span>
+                <span class="badge"><i class="fas fa-gem"></i> OG</span>
             </div>
-            <div class="cinematic-sub">PORTFOLIO 2026 ∞ PREMIUM</div>
-            <div class="cinematic-bar"></div>
         </div>
     </div>
 
-    <!-- КАСТОМНЫЙ КУРСОР -->
-    <div class="custom-cursor" id="customCursor"></div>
-    <div class="cursor-trail" id="cursorTrail"></div>
-
-    <!-- ЭКРАН ВХОДА -->
-    <div class="enter-screen" id="enterScreen">
-        <div class="enter-content">
-            <div class="enter-glitch">SHIOKAZE</div>
-            <div class="enter-sub">DIGITAL CREATOR · VISUAL DESIGNER</div>
-            <button class="enter-btn" id="enterButton"><span style="margin-right: 10px;">⌘</span> ENTER THE VOID</button>
+    <!-- MY INTERESTS -->
+    <div class="interests">
+        <h2 class="section-title">MY INTERESTS</h2>
+        <div class="interests-grid">
+            <div class="interest-card">
+                <i class="fas fa-code"></i>
+                <h3>Programming</h3>
+                <p>C++, Python, Web dev</p>
+            </div>
+            <div class="interest-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Cybersecurity</h3>
+                <p>CTF, ethical hacking</p>
+            </div>
+            <div class="interest-card">
+                <i class="fas fa-paint-brush"></i>
+                <h3>Design</h3>
+                <p>UI/UX, minimalism</p>
+            </div>
+            <div class="interest-card">
+                <i class="fas fa-gamepad"></i>
+                <h3>Gaming</h3>
+                <p>Roblox, Deadlock, indie games</p>
+            </div>
         </div>
     </div>
 
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
-    <div class="main-container" id="mainContainer">
-        <div class="main-content">
-            <!-- АВАТАР -->
-            <div class="avatar-container">
-                <div class="avatar-glow"></div>
-                <img src="https://i.pinimg.com/736x/b1/e5/92/b1e59263434149eb460a480ed4080604.jpg" alt="Avatar" class="avatar">
+    <!-- FEATURED PROJECTS -->
+    <div class="projects">
+        <h2 class="section-title">FEATURED PROJECTS</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>THESEUS</h3>
+                <div class="project-tag">EXTERNAL CHEAT</div>
+                <p>The fastest external on the market. Designed the site for a Roblox external cheat called Theseus.</p>
+                <a href="#" class="project-link">View Project →</a>
             </div>
-
-            <!-- ИМЯ -->
-            <div class="username-wrapper">
-                <h1 class="username">Shiokaze</h1>
-                <span class="japanese-hover">潮風 • digital creator</span>
+            <div class="project-card">
+                <h3>Deadlock Server Picker</h3>
+                <div class="project-tag">NETWORK TOOL</div>
+                <p>Select the server regions you want to BLOCK. Leave the regions you want to PLAY unchecked.</p>
+                <a href="#" class="project-link">View Project →</a>
             </div>
-            <p class="tagline">crafting minimal aesthetics with soul</p>
-
-            <!-- ЗНАЧКИ -->
-            <div class="badges-container">
-                <div class="badge" data-tooltip="Staff - часть команды"><i class="fas fa-crown"></i></div>
-                <div class="badge" data-tooltip="Verified - известный креатор"><i class="fas fa-check-circle"></i></div>
-                <div class="badge" data-tooltip="Image Host - владелец хостинга"><i class="fas fa-images"></i></div>
-                <div class="badge" data-tooltip="Helper - помощник сообщества"><i class="fas fa-hands-helping"></i></div>
-                <div class="badge" data-tooltip="Premium - эксклюзивный доступ"><i class="fas fa-star"></i></div>
-                <div class="badge" data-tooltip="OG - ранний сторонник"><i class="fas fa-gem"></i></div>
+            <div class="project-card">
+                <h3>Portfolio 2026</h3>
+                <div class="project-tag">WEB DESIGN</div>
+                <p>Minimalist, responsive portfolio with live Discord status and ambient music player.</p>
+                <a href="#" class="project-link">View Project →</a>
             </div>
+        </div>
+    </div>
 
-            <!-- СОЦСЕТИ -->
-            <div class="social-grid" id="socialGrid">
-                <a href="https://steamcommunity.com/id/shiokazeIII/" target="_blank" class="social-card tilt-card">
-                    <div class="social-content">
-                        <div class="social-icon"><i class="fab fa-steam"></i></div>
-                        <div class="social-name">STEAM</div>
-                        <div class="social-desc">game library</div>
-                    </div>
+    <!-- SOCIALS & CONTACT + Discord + Player -->
+    <div class="contact-section">
+        <h2 class="section-title">WANT TO CONTACT ME?</h2>
+        <div class="contact-grid">
+            <!-- Левый блок: соцсети и контакты -->
+            <div class="contact-card">
+                <h4>My Socials</h4>
+                <a href="https://steamcommunity.com/id/shiokazeIII/" target="_blank" class="contact-item">
+                    <i class="fab fa-steam"></i> Steam
                 </a>
-                <a href="https://discord.com/users/912747427465928754" target="_blank" class="social-card tilt-card">
-                    <div class="social-content">
-                        <div class="social-icon"><i class="fab fa-discord"></i></div>
-                        <div class="social-name">DISCORD</div>
-                        <div class="social-desc">connect</div>
-                    </div>
+                <a href="https://discord.com/users/912747427465928754" target="_blank" class="contact-item">
+                    <i class="fab fa-discord"></i> Discord / shiokaze
                 </a>
-                <a href="https://t.me/s_k4ze" target="_blank" class="social-card tilt-card">
-                    <div class="social-content">
-                        <div class="social-icon"><i class="fab fa-telegram"></i></div>
-                        <div class="social-name">TELEGRAM</div>
-                        <div class="social-desc">message</div>
-                    </div>
+                <a href="https://t.me/s_k4ze" target="_blank" class="contact-item">
+                    <i class="fab fa-telegram"></i> Telegram
                 </a>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i> lopgg96@gmail.com
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i> Stavropol, Russia
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i> UTC+3
+                </div>
             </div>
 
-            <!-- DISCORD СТАТУС -->
-            <div class="discord-presence" id="discordPresence">
-                <div class="discord-header">
-                    <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar" class="discord-avatar" id="discordAvatar">
-                    <div>
-                        <div class="discord-username" id="discordUsername">Shiokaze</div>
-                        <div class="discord-status" id="discordStatus">
-                            <span class="status-indicator" id="statusIndicator"></span>
-                            <span id="statusText">Загрузка...</span>
+            <!-- Правый блок: Discord статус и плеер -->
+            <div class="contact-card">
+                <h4>DISCORD STATUS</h4>
+                <div id="discordWidget">
+                    <div class="discord-header">
+                        <img class="discord-avatar" id="discordAvatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar">
+                        <div>
+                            <div class="discord-username" id="discordUsername">Shiokaze</div>
+                            <div class="discord-status">
+                                <span class="status-indicator" id="statusIndicator"></span>
+                                <span id="statusText">Загрузка...</span>
+                            </div>
                         </div>
                     </div>
+                    <div class="discord-activity" id="discordActivity">
+                        <i class="fas fa-circle-notch fa-spin"></i> Загрузка...
+                    </div>
                 </div>
-                <div class="discord-activity" id="discordActivity"></div>
-            </div>
-
-            <!-- КОНТАКТЫ -->
-            <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-envelope contact-icon"></i><span>lopgg96@gmail.com</span></div>
-                <div class="contact-item"><i class="fas fa-map-marker-alt contact-icon"></i><span>Stavropol, Russia</span></div>
-                <div class="contact-item"><i class="fas fa-clock contact-icon"></i><span>UTC+3</span></div>
-            </div>
-        </div>
-
-        <!-- ПЛЕЕР -->
-        <div class="music-player" id="musicPlayer">
-            <div class="player-container">
-                <div class="player-row">
-                    <div class="player-controls">
+                <div class="music-player">
+                    <div class="player-row">
                         <button class="play-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
                         <div class="track-info">
-                            <div class="track-title" id="trackTitle">Murasame</div>
-                            <div class="track-subtitle" id="trackSubtitle">Shiokaze · ambient waves</div>
+                            <div class="track-title">Murasame</div>
+                            <div class="track-subtitle">Shiokaze · ambient waves</div>
+                        </div>
+                        <div class="volume-wrap">
+                            <i class="fas fa-volume-up"></i>
+                            <input type="range" min="0" max="100" value="70" class="volume-slider" id="volumeSlider">
                         </div>
                     </div>
-                    <div class="volume-wrap">
-                        <i class="fas fa-volume-up volume-icon"></i>
-                        <input type="range" min="0" max="100" value="80" class="volume-slider" id="volumeSlider">
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-fill" id="progressFill"></div>
                     </div>
-                </div>
-                <div class="progress-row">
-                    <div class="progress-container">
-                        <div class="progress-bar" id="progressBar">
-                            <div class="progress-fill" id="progressFill"></div>
-                        </div>
-                        <div class="time-display">
-                            <span id="currentTime">0:00</span>
-                            <span id="duration">3:30</span>
-                        </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-top: 0.3rem;">
+                        <span id="currentTime">0:00</span>
+                        <span id="duration">0:00</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- СЕКРЕТНАЯ КНОПКА И ОВЕРЛЕЙ -->
-    <div id="secretButton"></div>
-    <div id="overlay"><span>67</span></div>
+    <!-- FOOTER -->
+    <div class="footer">
+        <div>SHIOKAZE © 2026</div>
+        <div>SYSTEM STATUS: <span style="color: #23a55a;">ALL SYSTEMS OPERATIONAL</span></div>
+        <button class="back-to-top" id="backToTop">↑ BACK TO TOP</button>
+    </div>
+</div>
 
-    <!-- АУДИО -->
-    <audio id="backgroundMusic" loop preload="auto" crossorigin="anonymous">
-        <source src="https://raw.githubusercontent.com/ShiokazeE/bio/main/murasame.mp3" type="audio/mpeg">
-    </audio>
+<audio id="bgAudio" loop preload="auto" src="https://raw.githubusercontent.com/ShiokazeE/bio/main/murasame.mp3"></audio>
 
-    <script>
-        (function() {
-            "use strict";
+<script>
+    (function() {
+        // ------------------- MUSIC PLAYER -------------------
+        const audio = document.getElementById('bgAudio');
+        const playBtn = document.getElementById('playPauseBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const currentSpan = document.getElementById('currentTime');
+        const durationSpan = document.getElementById('duration');
+        const volumeSlider = document.getElementById('volumeSlider');
+        let isPlaying = false;
 
-            const el = {
-                cinematicIntro: document.getElementById('cinematicIntro'),
-                enterScreen: document.getElementById('enterScreen'),
-                enterButton: document.getElementById('enterButton'),
-                mainContainer: document.getElementById('mainContainer'),
-                musicPlayer: document.getElementById('musicPlayer'),
-                cursor: document.getElementById('customCursor'),
-                cursorTrail: document.getElementById('cursorTrail'),
-                audio: document.getElementById('backgroundMusic'),
-                playBtn: document.getElementById('playPauseBtn'),
-                progressBar: document.getElementById('progressBar'),
-                progressFill: document.getElementById('progressFill'),
-                currentTime: document.getElementById('currentTime'),
-                duration: document.getElementById('duration'),
-                volumeSlider: document.getElementById('volumeSlider'),
-                socialCards: document.querySelectorAll('.tilt-card')
-            };
+        function formatTime(sec) {
+            if (isNaN(sec)) return '0:00';
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
 
-            let isPlaying = false;
-            let isDesktop = window.innerWidth > 1024 && !/Mobi|Android/i.test(navigator.userAgent);
-
-            let audioContext, analyser, source, dataArray;
-            let visualizerCtx = document.getElementById('audio-visualizer')?.getContext('2d');
-            let vizFrame;
-
-            if (isDesktop) {
-                document.body.style.cursor = 'none';
-                const style = document.createElement('style');
-                style.innerHTML = `body * { cursor: none !important; }`;
-                document.head.appendChild(style);
+        audio.addEventListener('loadedmetadata', () => {
+            durationSpan.textContent = formatTime(audio.duration);
+        });
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                const percent = (audio.currentTime / audio.duration) * 100;
+                progressFill.style.width = percent + '%';
+                currentSpan.textContent = formatTime(audio.currentTime);
             }
+        });
+        audio.addEventListener('play', () => {
+            isPlaying = true;
+            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        });
+        audio.addEventListener('pause', () => {
+            isPlaying = false;
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        });
 
-            function formatTime(sec) {
-                if (isNaN(sec)) return '0:00';
-                const m = Math.floor(sec / 60);
-                const s = Math.floor(sec % 60);
-                return `${m}:${s < 10 ? '0' : ''}${s}`;
-            }
+        playBtn.addEventListener('click', (e) => {
+            if (isPlaying) audio.pause();
+            else audio.play().catch(err => console.log('autoplay blocked, click to play'));
+        });
 
-            async function setupAudio() {
-                if (!audioContext) {
-                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    analyser = audioContext.createAnalyser();
-                    analyser.fftSize = 256;
-                    dataArray = new Uint8Array(analyser.frequencyBinCount);
-                }
-                if (el.audio && audioContext) {
-                    try {
-                        if (source) source.disconnect();
-                        source = audioContext.createMediaElementSource(el.audio);
-                        source.connect(analyser);
-                        analyser.connect(audioContext.destination);
-                    } catch (e) { console.warn('Audio error:', e); }
-                }
-                if (audioContext.state === 'suspended') await audioContext.resume();
-            }
+        progressBar.addEventListener('click', (e) => {
+            if (!audio.duration) return;
+            const rect = progressBar.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = percent * audio.duration;
+        });
 
-            function startVisualizer() {
-                if (!visualizerCtx) return;
-                const resize = () => {
-                    visualizerCtx.canvas.width = window.innerWidth;
-                    visualizerCtx.canvas.height = window.innerHeight < 700 ? 60 : 120;
-                };
-                resize();
-                window.addEventListener('resize', resize);
-                function draw() {
-                    if (!analyser || !dataArray) { vizFrame = requestAnimationFrame(draw); return; }
-                    const w = visualizerCtx.canvas.width, h = visualizerCtx.canvas.height;
-                    visualizerCtx.clearRect(0, 0, w, h);
-                    analyser.getByteFrequencyData(dataArray);
-                    const barWidth = (w / dataArray.length) * 2.2;
-                    let x = 0;
-                    for (let i = 0; i < dataArray.length; i += 2) {
-                        const barH = (dataArray[i] / 255) * h * 0.7;
-                        const grad = visualizerCtx.createLinearGradient(0, h - barH, 0, h);
-                        grad.addColorStop(0, 'rgba(255,255,255,0.35)');
-                        grad.addColorStop(1, 'rgba(255,255,255,0.05)');
-                        visualizerCtx.fillStyle = grad;
-                        visualizerCtx.fillRect(x, h - barH, barWidth - 1, barH);
-                        x += barWidth;
+        volumeSlider.addEventListener('input', () => {
+            audio.volume = volumeSlider.value / 100;
+        });
+        audio.volume = 0.7;
+
+        // авто-воспроизведение после первого клика по странице
+        const tryAutoPlay = () => {
+            audio.play().catch(() => {});
+            document.removeEventListener('click', tryAutoPlay);
+            document.removeEventListener('touchstart', tryAutoPlay);
+        };
+        document.addEventListener('click', tryAutoPlay);
+        document.addEventListener('touchstart', tryAutoPlay);
+
+        // ------------------- DISCORD STATUS (LANYARD) -------------------
+        const discordUserId = '912747427465928754';
+        const avatarImg = document.getElementById('discordAvatar');
+        const usernameSpan = document.getElementById('discordUsername');
+        const statusIndicator = document.getElementById('statusIndicator');
+        const statusTextSpan = document.getElementById('statusText');
+        const activityDiv = document.getElementById('discordActivity');
+
+        async function fetchDiscordStatus() {
+            try {
+                const res = await fetch(`https://api.lanyard.rest/v1/users/${discordUserId}`);
+                const data = await res.json();
+                if (!data.success) return;
+
+                const user = data.data;
+                const avatar = user.discord_user.avatar;
+                const avatarUrl = avatar 
+                    ? `https://cdn.discordapp.com/avatars/${discordUserId}/${avatar}.${avatar.startsWith('a_') ? 'gif' : 'png'}`
+                    : `https://cdn.discordapp.com/embed/avatars/${parseInt(user.discord_user.discriminator) % 5}.png`;
+                avatarImg.src = avatarUrl;
+                usernameSpan.textContent = user.discord_user.username;
+
+                const status = user.discord_status;
+                statusIndicator.className = `status-indicator ${status}`;
+                let statusLabel = '';
+                if (status === 'online') statusLabel = 'Online';
+                else if (status === 'idle') statusLabel = 'Idle';
+                else if (status === 'dnd') statusLabel = 'Do not disturb';
+                else statusLabel = 'Offline';
+                statusTextSpan.textContent = statusLabel;
+
+                const activities = user.activities || [];
+                let stream = activities.find(a => a.type === 1);
+                if (!stream) stream = activities.find(a => a.type === 0 && (a.flags & (1 << 6)) !== 0);
+                const game = activities.find(a => a.type === 0 && a !== stream);
+                const spotify = activities.find(a => a.type === 2);
+
+                let activity = stream || game || spotify;
+                if (activity) {
+                    let icon = '', name = '', details = '', state = '';
+                    if (activity.type === 1 || (activity.type === 0 && stream === activity)) {
+                        icon = '🔴'; name = activity.name; details = activity.details || ''; state = activity.state || '';
+                    } else if (activity.type === 0) {
+                        icon = '🎮'; name = activity.name; details = activity.details || ''; state = activity.state || '';
+                    } else if (activity.type === 2) {
+                        icon = '🎧'; name = activity.details || 'Spotify'; details = activity.state || ''; state = activity.assets?.large_text || '';
                     }
-                    vizFrame = requestAnimationFrame(draw);
-                }
-                draw();
-            }
-
-            function initTilt() {
-                if (!isDesktop) return;
-                el.socialCards.forEach(card => {
-                    card.addEventListener('mousemove', (e) => {
-                        const rect = card.getBoundingClientRect();
-                        const x = e.clientX - rect.left, y = e.clientY - rect.top;
-                        const cx = rect.width / 2, cy = rect.height / 2;
-                        const rotX = (y - cy) / 12, rotY = (cx - x) / 12;
-                        card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(10px)`;
-                    });
-                    card.addEventListener('mouseleave', () => {
-                        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)';
-                    });
-                });
-            }
-
-            function initCursor() {
-                if (!isDesktop) return;
-                const cursor = el.cursor, trail = el.cursorTrail;
-                let mx = 0, my = 0, tx = 0, ty = 0;
-                document.addEventListener('mousemove', (e) => {
-                    mx = e.clientX; my = e.clientY;
-                    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-                    if (e.target.closest('button, a, .social-card, .play-btn, .enter-btn, .contact-item')) {
-                        cursor.classList.add('hover');
-                    } else {
-                        cursor.classList.remove('hover');
-                    }
-                });
-                function follow() {
-                    tx += (mx - tx) * 0.12;
-                    ty += (my - ty) * 0.12;
-                    trail.style.left = tx + 'px'; trail.style.top = ty + 'px';
-                    requestAnimationFrame(follow);
-                }
-                follow();
-                document.addEventListener('mousedown', () => {
-                    cursor.style.transform = 'translate(-50%,-50%) scale(0.7)';
-                    trail.style.transform = 'translate(-50%,-50%) scale(0.8)';
-                });
-                document.addEventListener('mouseup', () => {
-                    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
-                    trail.style.transform = 'translate(-50%,-50%) scale(1)';
-                });
-                document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; trail.style.opacity = '0'; });
-                document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; trail.style.opacity = '1'; });
-            }
-
-            // Градиент за курсором
-            const gradientLayer = document.getElementById('cursorGradient');
-            if (gradientLayer) {
-                document.addEventListener('mousemove', (e) => {
-                    gradientLayer.style.setProperty('--x', e.clientX + 'px');
-                    gradientLayer.style.setProperty('--y', e.clientY + 'px');
-                });
-            }
-
-            // УЛУЧШЕННАЯ ФУНКЦИЯ ЗАГРУЗКИ СТАТУСА (СТРИМЫ РАСПОЗНАЮТСЯ КОРРЕКТНО)
-            async function loadDiscordStatus() {
-                const discordUserId = "912747427465928754";
-                try {
-                    const response = await fetch(`https://api.lanyard.rest/v1/users/${discordUserId}`);
-                    const data = await response.json();
-
-                    if (data.success) {
-                        const user = data.data;
-                        console.log('Discord data:', user); // для отладки
-
-                        const avatar = user.discord_user.avatar;
-                        const avatarUrl = avatar 
-                            ? `https://cdn.discordapp.com/avatars/${discordUserId}/${avatar}.${avatar.startsWith('a_') ? 'gif' : 'png'}`
-                            : `https://cdn.discordapp.com/embed/avatars/${parseInt(user.discord_user.discriminator) % 5}.png`;
-
-                        document.getElementById('discordAvatar').src = avatarUrl;
-                        document.getElementById('discordUsername').textContent = user.discord_user.username;
-
-                        const statusElem = document.getElementById('statusIndicator');
-                        const statusText = document.getElementById('statusText');
-                        statusElem.className = `status-indicator ${user.discord_status}`;
-
-                        let statusLabel = '';
-                        switch (user.discord_status) {
-                            case 'online': statusLabel = 'В сети'; break;
-                            case 'idle': statusLabel = 'Нет на месте'; break;
-                            case 'dnd': statusLabel = 'Не беспокоить'; break;
-                            default: statusLabel = 'Не в сети';
-                        }
-                        statusText.textContent = statusLabel;
-
-                        const activityDiv = document.getElementById('discordActivity');
-                        const activities = user.activities || [];
-
-                        // Приоритет: явный стрим (type=1) > игра с флагами стрима > обычная игра > Spotify
-                        let streamActivity = activities.find(a => a.type === 1);
-                        if (!streamActivity) {
-                            // Ищем игру, у которой flags указывают на стрим (обычно 1<<6 или 48)
-                            streamActivity = activities.find(a => a.type === 0 && (a.flags & (1 << 6)) !== 0);
-                        }
-                        const gameActivity = activities.find(a => a.type === 0 && a !== streamActivity);
-                        const spotifyActivity = activities.find(a => a.type === 2);
-
-                        let activity = streamActivity || gameActivity || spotifyActivity;
-
-                        if (activity) {
-                            let icon = '', name = '', details = '', state = '';
-                            if (activity.type === 1 || (activity.type === 0 && streamActivity === activity)) {
-                                // Это стрим
-                                icon = '🔴';
-                                name = activity.name; // например "Twitch"
-                                details = activity.details || ''; // название стрима
-                                state = activity.state || ''; // игра или категория
-                            } else if (activity.type === 0) {
-                                // Обычная игра
-                                icon = '🎮';
-                                name = activity.name;
-                                details = activity.details || '';
-                                state = activity.state || '';
-                            } else if (activity.type === 2) {
-                                // Spotify
-                                icon = '🎧';
-                                name = activity.details || 'Unknown';
-                                details = activity.state || '';
-                                state = activity.assets ? activity.assets.large_text : '';
-                            }
-
-                            activityDiv.innerHTML = `
-                                <div class="activity-icon">${icon}</div>
-                                <div class="activity-details">
-                                    <div class="activity-name">${name}</div>
-                                    ${details ? `<div class="activity-state">${details}</div>` : ''}
-                                    ${state ? `<div class="activity-state">${state}</div>` : ''}
-                                </div>
-                            `;
-                        } else {
-                            // Нет активности
-                            activityDiv.innerHTML = `
-                                <div class="activity-icon">⚡</div>
-                                <div class="activity-details">
-                                    <div class="activity-name">No active session</div>
-                                    <div class="activity-state">● Idle</div>
-                                </div>
-                            `;
-                        }
-                        // Всегда показываем блок
-                        activityDiv.style.display = 'flex';
-                    }
-                } catch (error) {
-                    console.error('Ошибка загрузки Discord статуса:', error);
-                }
-            }
-
-            // Запускаем периодическое обновление статуса (каждые 15 секунд)
-            let discordInterval;
-            function startDiscordPolling() {
-                if (discordInterval) clearInterval(discordInterval);
-                discordInterval = setInterval(loadDiscordStatus, 15000);
-            }
-
-            // --- СЕКРЕТНАЯ КНОПКА С ЗАТИХАНИЕМ МУЗЫКИ И ЗАТЕМНЕНИЕМ ---
-            const secretBtn = document.getElementById('secretButton');
-            const overlay = document.getElementById('overlay');
-            const audio = el.audio;
-
-            // Переменные для управления эффектом
-            let fadeInterval = null;
-            let effectTimeout = null;
-            const originalVolume = 0.8; // исходная громкость (80%)
-
-            // Функция плавного изменения громкости
-            function fadeVolume(targetVol, duration, onComplete) {
-                if (fadeInterval) {
-                    cancelAnimationFrame(fadeInterval);
-                    fadeInterval = null;
-                }
-                const startVol = audio.volume;
-                const startTime = performance.now();
-                const updateVolume = () => {
-                    const now = performance.now();
-                    const elapsed = now - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    audio.volume = startVol + (targetVol - startVol) * progress;
-                    if (progress < 1) {
-                        fadeInterval = requestAnimationFrame(updateVolume);
-                    } else {
-                        audio.volume = targetVol;
-                        fadeInterval = null;
-                        if (onComplete) onComplete();
-                    }
-                };
-                fadeInterval = requestAnimationFrame(updateVolume);
-            }
-
-            // Функция сброса эффекта (останавливает текущие анимации и возвращает громкость)
-            function resetEffect() {
-                if (fadeInterval) {
-                    cancelAnimationFrame(fadeInterval);
-                    fadeInterval = null;
-                }
-                if (effectTimeout) {
-                    clearTimeout(effectTimeout);
-                    effectTimeout = null;
-                }
-                audio.volume = originalVolume; // мгновенно возвращаем громкость
-                overlay.classList.remove('active');
-            }
-
-            // Обработчик клика на секретную кнопку
-            secretBtn.addEventListener('click', () => {
-                resetEffect(); // сбрасываем предыдущий эффект (громкость сразу на исходную, оверлей скрыт)
-
-                // Показываем оверлей
-                overlay.classList.add('active');
-
-                // Плавно убавляем громкость до 0 за 0.5 секунды
-                fadeVolume(0, 500, () => {
-                    // Можно ничего не делать, просто оставляем громкость 0
-                });
-
-                // Через 3 секунды начинаем возврат
-                effectTimeout = setTimeout(() => {
-                    // Плавно возвращаем громкость к исходной за 0.5 секунды
-                    fadeVolume(originalVolume, 500, () => {
-                        // После возврата громкости скрываем оверлей
-                        overlay.classList.remove('active');
-                    });
-                }, 3000);
-            });
-
-            // Инициализация
-            document.addEventListener('DOMContentLoaded', () => {
-                setTimeout(() => el.cinematicIntro.classList.add('hidden'), 2200);
-                isDesktop = window.innerWidth > 1024 && !/Mobi|Android/i.test(navigator.userAgent);
-                initCursor();
-                initTilt();
-
-                el.audio.addEventListener('loadedmetadata', () => { el.duration.textContent = formatTime(el.audio.duration); });
-                el.audio.addEventListener('timeupdate', () => {
-                    if (el.audio.duration) {
-                        el.progressFill.style.width = (el.audio.currentTime / el.audio.duration) * 100 + '%';
-                        el.currentTime.textContent = formatTime(el.audio.currentTime);
-                    }
-                });
-                el.progressBar.addEventListener('click', (e) => {
-                    if (!el.audio.duration) return;
-                    const rect = el.progressBar.getBoundingClientRect();
-                    el.audio.currentTime = ((e.clientX - rect.left) / rect.width) * el.audio.duration;
-                });
-                el.volumeSlider.addEventListener('input', function() {
-                    el.audio.volume = this.value / 100;
-                    const icon = document.querySelector('.volume-icon');
-                    if (this.value == 0) icon.className = 'fas fa-volume-mute volume-icon';
-                    else if (this.value < 50) icon.className = 'fas fa-volume-down volume-icon';
-                    else icon.className = 'fas fa-volume-up volume-icon';
-                });
-                el.audio.volume = originalVolume; // устанавливаем исходную громкость
-                el.volumeSlider.value = originalVolume * 100;
-            });
-
-            el.enterButton.addEventListener('click', async function() {
-                this.style.transform = 'scale(0.96)';
-                setTimeout(() => this.style.transform = '', 150);
-                el.enterScreen.classList.add('hidden');
-                el.mainContainer.classList.add('visible');
-                setTimeout(() => el.musicPlayer.classList.add('show'), 400);
-                setTimeout(async () => {
-                    try {
-                        await setupAudio();
-                        startVisualizer();
-                        await el.audio.play();
-                        isPlaying = true;
-                        el.playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                        el.playBtn.classList.add('playing');
-                    } catch (e) {
-                        console.error('Play error:', e);
-                        el.playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                    }
-                }, 600);
-
-                // Первая загрузка статуса и запуск периодического обновления
-                loadDiscordStatus();
-                startDiscordPolling();
-            });
-
-            el.playBtn.addEventListener('click', async function() {
-                if (isPlaying) {
-                    el.audio.pause();
+                    activityDiv.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:0.6rem;">
+                            <div>${icon}</div>
+                            <div>
+                                <div style="font-weight:500;">${name}</div>
+                                ${details ? `<div style="font-size:0.7rem; color:#aaa;">${details}</div>` : ''}
+                                ${state ? `<div style="font-size:0.7rem; color:#aaa;">${state}</div>` : ''}
+                            </div>
+                        </div>
+                    `;
                 } else {
-                    if (!audioContext) await setupAudio();
-                    await el.audio.play();
+                    activityDiv.innerHTML = `<div style="display:flex; gap:0.5rem;"><i class="fas fa-moon"></i> No active session</div>`;
                 }
-                isPlaying = !isPlaying;
-            });
-            el.audio.addEventListener('play', () => {
-                isPlaying = true;
-                el.playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                el.playBtn.classList.add('playing');
-            });
-            el.audio.addEventListener('pause', () => {
-                isPlaying = false;
-                el.playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                el.playBtn.classList.remove('playing');
-            });
-
-            window.addEventListener('resize', () => {
-                isDesktop = window.innerWidth > 1024 && !/Mobi|Android/i.test(navigator.userAgent);
-                if (visualizerCtx) {
-                    visualizerCtx.canvas.width = window.innerWidth;
-                    visualizerCtx.canvas.height = window.innerHeight < 700 ? 60 : 120;
-                }
-            });
-
-            // Блокировка скролла только на десктопе
-            if (isDesktop) {
-                window.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
-                window.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+            } catch (err) {
+                console.warn(err);
+                activityDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Could not load status`;
             }
-        })();
-    </script>
+        }
+        fetchDiscordStatus();
+        setInterval(fetchDiscordStatus, 15000);
+
+        // BACK TO TOP
+        const backBtn = document.getElementById('backToTop');
+        backBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    })();
+</script>
 </body>
 </html>

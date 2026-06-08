@@ -1,670 +1,736 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Shiokaze · портфолио</title>
-    <!-- Шрифт Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Shiokaze — портфолио</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            background-color: #0a0a0a;
-            color: #e0e0e0;
-            font-family: 'Inter', sans-serif;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-        }
+    :root {
+      --bg: #0a0a0a;
+      --surface: rgba(255,255,255,0.02);
+      --border: rgba(255,255,255,0.08);
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.45);
+      --green: #4ade80;
+      --radius-card: 24px;
+      --radius-badge: 40px;
+      --transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        /* Заголовок секций */
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: inline-block;
-            padding-bottom: 0.5rem;
-        }
+    /* Progress bar */
+    #progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: #fff;
+      width: 0%;
+      z-index: 1000;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        /* Hero (имя + роль) */
-        .hero {
-            text-align: center;
-            margin-bottom: 5rem;
-        }
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.5rem;
-            color: white;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            color: #888;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-        }
+    /* Slides container */
+    #slides {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+    }
 
-        /* WHOAMI секция */
-        .whoami {
-            display: flex;
-            gap: 3rem;
-            margin-bottom: 5rem;
-            flex-wrap: wrap;
-        }
-        .whoami-avatar {
-            flex-shrink: 0;
-        }
-        .whoami-avatar img {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.1);
-        }
-        .whoami-text {
-            flex: 1;
-        }
-        .whoami-text p {
-            margin-bottom: 1rem;
-            color: #ccc;
-            font-size: 1rem;
-        }
-        .badge-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-top: 1.5rem;
-        }
-        .badge {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 40px;
-            padding: 0.3rem 1rem;
-            font-size: 0.8rem;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .badge i {
-            color: #aaa;
-            font-size: 0.75rem;
-        }
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition);
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
+    }
 
-        /* MY INTERESTS */
-        .interests {
-            margin-bottom: 5rem;
-        }
-        .interests-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-        .interest-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 24px;
-            padding: 1.2rem;
-            text-align: center;
-            transition: 0.2s;
-        }
-        .interest-card i {
-            font-size: 2rem;
-            color: #bbb;
-            margin-bottom: 0.8rem;
-            display: inline-block;
-        }
-        .interest-card h3 {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 0.3rem;
-        }
-        .interest-card p {
-            font-size: 0.85rem;
-            color: #777;
-        }
+    .slide::-webkit-scrollbar {
+      display: none;
+    }
 
-        /* FEATURED PROJECTS */
-        .projects {
-            margin-bottom: 5rem;
-        }
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        .project-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 28px;
-            padding: 1.8rem;
-            transition: 0.2s;
-        }
-        .project-card:hover {
-            background: rgba(255,255,255,0.04);
-            border-color: rgba(255,255,255,0.15);
-            transform: translateY(-4px);
-        }
-        .project-card h3 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        .project-card .project-tag {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #888;
-            margin-bottom: 1rem;
-            display: inline-block;
-        }
-        .project-card p {
-            color: #bbb;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-        .project-link {
-            color: white;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            padding-bottom: 2px;
-            transition: 0.2s;
-        }
-        .project-link:hover {
-            border-bottom-color: white;
-        }
+    .slide.active {
+      opacity: 1;
+      pointer-events: all;
+    }
 
-        /* SOCIALS & CONTACT */
-        .contact-section {
-            margin-bottom: 5rem;
-        }
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 2rem;
-        }
-        .contact-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 28px;
-            padding: 1.6rem;
-        }
-        .contact-card h4 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 0.8rem;
-            color: #ccc;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        .contact-item i {
-            width: 24px;
-            color: #aaa;
-        }
-        .contact-item:hover {
-            color: white;
-        }
-        .discord-presence {
-            margin-top: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            padding-top: 1rem;
-        }
-        .discord-header {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 0.8rem;
-        }
-        .discord-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-        .discord-username {
-            font-weight: 600;
-        }
-        .discord-status {
-            font-size: 0.7rem;
-            color: #aaa;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-        .status-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .status-indicator.online { background: #23a55a; }
-        .status-indicator.idle { background: #f0b232; }
-        .status-indicator.dnd { background: #f23f43; }
-        .status-indicator.offline { background: #80848e; }
-        .discord-activity {
-            background: rgba(255,255,255,0.03);
-            border-radius: 18px;
-            padding: 0.6rem 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.8rem;
-        }
+    .slide-inner {
+      width: 100%;
+      max-width: 960px;
+      padding: 60px 32px;
+    }
 
-        /* Музыкальный плеер */
-        .music-player {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 28px;
-            padding: 1rem 1.2rem;
-            margin-top: 1rem;
-        }
-        .player-row {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .play-btn {
-            background: none;
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .track-info {
-            flex: 1;
-        }
-        .track-title {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        .track-subtitle {
-            font-size: 0.7rem;
-            color: #888;
-        }
-        .volume-wrap {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .volume-slider {
-            width: 80px;
-            height: 3px;
-            background: #333;
-            border-radius: 3px;
-        }
-        .progress-bar {
-            margin-top: 0.6rem;
-            height: 3px;
-            background: #333;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        .progress-fill {
-            width: 0%;
-            height: 100%;
-            background: #e0e0e0;
-            border-radius: 3px;
-        }
+    /* Section label (small upper) */
+    .section-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 48px;
+    }
 
-        /* FOOTER */
-        .footer {
-            border-top: 1px solid rgba(255,255,255,0.08);
-            padding-top: 2rem;
-            margin-top: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            font-size: 0.85rem;
-            color: #888;
-        }
-        .back-to-top {
-            background: none;
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 0.4rem 1rem;
-            border-radius: 30px;
-            color: #ccc;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .back-to-top:hover {
-            background: rgba(255,255,255,0.05);
-        }
+    /* Slide titles */
+    .slide-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 40px;
+    }
 
-        @media (max-width: 768px) {
-            .container { padding: 2rem 1.5rem; }
-            .hero h1 { font-size: 2.8rem; }
-            .whoami { flex-direction: column; align-items: center; text-align: center; }
-            .badge-list { justify-content: center; }
-            .section-title { font-size: 1.5rem; }
-        }
-    </style>
+    /* Hero slide */
+    #slide-1 .slide-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      min-height: 100vh;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(56px, 10vw, 120px);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 28px;
+    }
+
+    .hero-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-scroll-hint {
+      margin-top: 80px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.2);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-scroll-hint::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* WHOAMI grid */
+    .whoami-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    .whoami-avatar {
+      width: 200px;
+      height: 200px;
+      border-radius: 20px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    .whoami-name-tag {
+      margin-top: 16px;
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .whoami-handle {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .whoami-content h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .whoami-bio {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 32px;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 16px;
+      border-radius: var(--radius-badge);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.8);
+      white-space: nowrap;
+    }
+
+    /* Interests */
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .interest-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 32px 28px;
+      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+      cursor: default;
+    }
+    .interest-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.18);
+    }
+    .interest-icon {
+      font-size: 22px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 18px;
+    }
+    .interest-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .interest-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 28px 24px;
+      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+      cursor: default;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.18);
+    }
+    .project-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      padding: 3px 8px;
+      margin-bottom: 16px;
+    }
+    .project-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .project-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Contact slide */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .contact-section h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(24px, 4vw, 38px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+      line-height: 1.1;
+    }
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+    .contact-link:hover {
+      color: #fff;
+    }
+    .contact-link i {
+      width: 16px;
+      text-align: center;
+      color: rgba(255,255,255,0.3);
+    }
+    .contact-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .contact-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .contact-meta-item i {
+      width: 14px;
+      text-align: center;
+    }
+
+    /* Discord + Player */
+    .discord-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .discord-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .discord-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+    #discord-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    #discord-status-dot {
+      position: absolute;
+      bottom: 1px;
+      right: 1px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      background: #747f8d;
+    }
+    #discord-username {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    #discord-tag {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    #discord-activity {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+      min-height: 18px;
+    }
+
+    /* Player */
+    .player-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 22px 24px;
+    }
+    .player-meta {
+      margin-bottom: 16px;
+    }
+    .player-track {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .player-artist {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .player-progress-wrap {
+      position: relative;
+      height: 3px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 99px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    #player-progress-bar {
+      height: 100%;
+      border-radius: 99px;
+      background: #fff;
+      width: 0%;
+      transition: width 0.2s linear;
+      pointer-events: none;
+    }
+    .player-times {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .player-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    #play-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    #play-btn:hover {
+      background: rgba(255,255,255,0.14);
+    }
+    .volume-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+    .volume-wrap i {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    #volume-slider {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 3px;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.12);
+      cursor: pointer;
+      outline: none;
+    }
+    #volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    /* Footer inside slide 5 */
+    .slide-footer {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+    .footer-status {
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .footer-status::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+    .back-top-btn {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 40px;
+      padding: 6px 16px;
+      transition: color 0.2s, border-color 0.2s;
+      background: none;
+    }
+    .back-top-btn:hover {
+      color: #fff;
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    @media (max-width: 768px) {
+      .slide-inner { padding: 40px 20px; }
+      .hero-name { font-size: clamp(48px, 14vw, 72px); }
+      .whoami-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .whoami-avatar {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+      }
+      .whoami-name-tag, .whoami-handle { text-align: center; }
+      .interests-grid, .projects-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-    <!-- Hero -->
-    <div class="hero">
-        <h1>Shiokaze</h1>
-        <p>DIGITAL CREATOR</p>
-    </div>
 
-    <!-- WHOAMI секция -->
-    <div class="whoami">
-        <div class="whoami-avatar">
-            <img src="https://i.pinimg.com/736x/b1/e5/92/b1e59263434149eb460a480ed4080604.jpg" alt="Shiokaze avatar">
+<div id="progress"></div>
+
+<div id="slides">
+  <!-- SLIDE 1: HERO -->
+  <section class="slide active" id="slide-1">
+    <div class="slide-inner">
+      <p class="hero-eyebrow">Portfolio</p>
+      <h1 class="hero-name">Shiokaze</h1>
+      <p class="hero-sub">Digital Creator</p>
+      <p class="hero-scroll-hint">Scroll to explore</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: WHOAMI -->
+  <section class="slide" id="slide-2">
+    <div class="slide-inner">
+      <p class="section-label">01 — Identity</p>
+      <div class="whoami-grid">
+        <div class="whoami-avatar-wrap">
+          <img class="whoami-avatar" src="https://i.pinimg.com/736x/b1/e5/92/b1e59263434149eb460a480ed4080604.jpg" alt="Shiokaze avatar">
+          <p class="whoami-name-tag">Shiokaze</p>
+          <p class="whoami-handle">@shiokazee</p>
         </div>
-        <div class="whoami-text">
-            <h2 class="section-title" style="margin-bottom: 1rem;">WHOAMI</h2>
-            <p>Hello! I'm Shiokaze. I'm a digital creator who is really into programming and design. I'm currently learning C++ and I'm also interested in cybersecurity.</p>
-            <p>I'm a bit of a perfectionist and I'm always looking to improve my skills. I'm also a bit of a nerd and I enjoy playing video games.</p>
-            <div class="badge-list">
-                <span class="badge"><i class="fas fa-crown"></i> Staff</span>
-                <span class="badge"><i class="fas fa-check-circle"></i> Verified</span>
-                <span class="badge"><i class="fas fa-images"></i> Image Host</span>
-                <span class="badge"><i class="fas fa-hands-helping"></i> Helper</span>
-                <span class="badge"><i class="fas fa-star"></i> Premium</span>
-                <span class="badge"><i class="fas fa-gem"></i> OG</span>
-            </div>
+        <div class="whoami-content">
+          <h2>Whoami</h2>
+          <p class="whoami-bio">
+            Привет! Здесь будет твоё описание. Расскажи о себе — чем занимаешься,
+            что тебя вдохновляет, какие у тебя цели. Этот текст — заглушка,
+            замени его на что-то личное и настоящее.
+          </p>
+          <div class="badges">
+            <span class="badge">👑 Staff</span>
+            <span class="badge">✅ Verified</span>
+            <span class="badge">🖼️ Image Host</span>
+            <span class="badge">🤝 Helper</span>
+            <span class="badge">⭐ Premium</span>
+            <span class="badge">💎 OG</span>
+          </div>
         </div>
+      </div>
     </div>
+  </section>
 
-    <!-- MY INTERESTS -->
-    <div class="interests">
-        <h2 class="section-title">MY INTERESTS</h2>
-        <div class="interests-grid">
-            <div class="interest-card">
-                <i class="fas fa-code"></i>
-                <h3>Programming</h3>
-                <p>C++, Python, Web dev</p>
-            </div>
-            <div class="interest-card">
-                <i class="fas fa-shield-alt"></i>
-                <h3>Cybersecurity</h3>
-                <p>CTF, ethical hacking</p>
-            </div>
-            <div class="interest-card">
-                <i class="fas fa-paint-brush"></i>
-                <h3>Design</h3>
-                <p>UI/UX, minimalism</p>
-            </div>
-            <div class="interest-card">
-                <i class="fas fa-gamepad"></i>
-                <h3>Gaming</h3>
-                <p>Roblox, Deadlock, indie games</p>
-            </div>
+  <!-- SLIDE 3: INTERESTS -->
+  <section class="slide" id="slide-3">
+    <div class="slide-inner">
+      <p class="section-label">02 — What I Do</p>
+      <h2 class="slide-title">My Interests</h2>
+      <div class="interests-grid">
+        <div class="interest-card">
+          <div class="interest-icon"><i class="fa-solid fa-code"></i></div>
+          <h3 class="interest-title">Programming</h3>
+          <p class="interest-desc">C++, Python, Web development. Люблю чистый код.</p>
         </div>
-    </div>
-
-    <!-- FEATURED PROJECTS -->
-    <div class="projects">
-        <h2 class="section-title">FEATURED PROJECTS</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <h3>THESEUS</h3>
-                <div class="project-tag">EXTERNAL CHEAT</div>
-                <p>The fastest external on the market. Designed the site for a Roblox external cheat called Theseus.</p>
-                <a href="#" class="project-link">View Project →</a>
-            </div>
-            <div class="project-card">
-                <h3>Deadlock Server Picker</h3>
-                <div class="project-tag">NETWORK TOOL</div>
-                <p>Select the server regions you want to BLOCK. Leave the regions you want to PLAY unchecked.</p>
-                <a href="#" class="project-link">View Project →</a>
-            </div>
-            <div class="project-card">
-                <h3>Portfolio 2026</h3>
-                <div class="project-tag">WEB DESIGN</div>
-                <p>Minimalist, responsive portfolio with live Discord status and ambient music player.</p>
-                <a href="#" class="project-link">View Project →</a>
-            </div>
+        <div class="interest-card">
+          <div class="interest-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3 class="interest-title">Cybersecurity</h3>
+          <p class="interest-desc">CTF, ethical hacking, изучение уязвимостей.</p>
         </div>
-    </div>
-
-    <!-- SOCIALS & CONTACT + Discord + Player -->
-    <div class="contact-section">
-        <h2 class="section-title">WANT TO CONTACT ME?</h2>
-        <div class="contact-grid">
-            <!-- Левый блок: соцсети и контакты -->
-            <div class="contact-card">
-                <h4>My Socials</h4>
-                <a href="https://steamcommunity.com/id/shiokazeIII/" target="_blank" class="contact-item">
-                    <i class="fab fa-steam"></i> Steam
-                </a>
-                <a href="https://discord.com/users/912747427465928754" target="_blank" class="contact-item">
-                    <i class="fab fa-discord"></i> Discord / shiokaze
-                </a>
-                <a href="https://t.me/s_k4ze" target="_blank" class="contact-item">
-                    <i class="fab fa-telegram"></i> Telegram
-                </a>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i> lopgg96@gmail.com
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i> Stavropol, Russia
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-clock"></i> UTC+3
-                </div>
-            </div>
-
-            <!-- Правый блок: Discord статус и плеер -->
-            <div class="contact-card">
-                <h4>DISCORD STATUS</h4>
-                <div id="discordWidget">
-                    <div class="discord-header">
-                        <img class="discord-avatar" id="discordAvatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar">
-                        <div>
-                            <div class="discord-username" id="discordUsername">Shiokaze</div>
-                            <div class="discord-status">
-                                <span class="status-indicator" id="statusIndicator"></span>
-                                <span id="statusText">Загрузка...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="discord-activity" id="discordActivity">
-                        <i class="fas fa-circle-notch fa-spin"></i> Загрузка...
-                    </div>
-                </div>
-                <div class="music-player">
-                    <div class="player-row">
-                        <button class="play-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
-                        <div class="track-info">
-                            <div class="track-title">Murasame</div>
-                            <div class="track-subtitle">Shiokaze · ambient waves</div>
-                        </div>
-                        <div class="volume-wrap">
-                            <i class="fas fa-volume-up"></i>
-                            <input type="range" min="0" max="100" value="70" class="volume-slider" id="volumeSlider">
-                        </div>
-                    </div>
-                    <div class="progress-bar" id="progressBar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-top: 0.3rem;">
-                        <span id="currentTime">0:00</span>
-                        <span id="duration">0:00</span>
-                    </div>
-                </div>
-            </div>
+        <div class="interest-card">
+          <div class="interest-icon"><i class="fa-solid fa-pen-nib"></i></div>
+          <h3 class="interest-title">Design</h3>
+          <p class="interest-desc">UI/UX, минимализм, продуманные интерфейсы.</p>
         </div>
+        <div class="interest-card">
+          <div class="interest-icon"><i class="fa-solid fa-gamepad"></i></div>
+          <h3 class="interest-title">Gaming & LARP</h3>
+          <p class="interest-desc">Roblox, Deadlock и живые ролевые игры.</p>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- FOOTER -->
-    <div class="footer">
-        <div>SHIOKAZE © 2026</div>
-        <div>SYSTEM STATUS: <span style="color: #23a55a;">ALL SYSTEMS OPERATIONAL</span></div>
-        <button class="back-to-top" id="backToTop">↑ BACK TO TOP</button>
+  <!-- SLIDE 4: PROJECTS -->
+  <section class="slide" id="slide-4">
+    <div class="slide-inner">
+      <p class="section-label">03 — Work</p>
+      <h2 class="slide-title">Featured Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <span class="project-tag">Coming Soon</span>
+          <h3 class="project-title">Project Theseus</h3>
+          <p class="project-desc">Краткое описание проекта. Замени на своё.</p>
+        </div>
+        <div class="project-card">
+          <span class="project-tag">In Development</span>
+          <h3 class="project-title">Deadlock Tool</h3>
+          <p class="project-desc">Скоро здесь будет информация.</p>
+        </div>
+        <div class="project-card">
+          <span class="project-tag">2026</span>
+          <h3 class="project-title">Portfolio 2026</h3>
+          <p class="project-desc">Этот сайт — пример минималистичного портфолио.</p>
+        </div>
+      </div>
     </div>
-</div>
+  </section>
 
-<audio id="bgAudio" loop preload="auto" src="https://raw.githubusercontent.com/ShiokazeE/bio/main/murasame.mp3"></audio>
+  <!-- SLIDE 5: CONTACT + DISCORD + PLAYER + FOOTER -->
+  <section class="slide" id="slide-5">
+    <div class="slide-inner">
+      <p class="section-label">04 — Connect</p>
+      <div class="contact-grid">
+        <!-- Левая колонка: контакты -->
+        <div class="contact-section">
+          <h2>WANT TO CONTACT ME?</h2>
+          <div class="contact-links">
+            <a href="https://steamcommunity.com/id/shiokazeIII/" target="_blank" class="contact-link"><i class="fab fa-steam"></i> Steam</a>
+            <a href="https://discord.com/users/912747427465928754" target="_blank" class="contact-link"><i class="fab fa-discord"></i> Discord / shiokaze</a>
+            <a href="https://t.me/s_k4ze" target="_blank" class="contact-link"><i class="fab fa-telegram"></i> Telegram</a>
+          </div>
+          <div class="contact-meta">
+            <div class="contact-meta-item"><i class="fas fa-envelope"></i> lopgg96@gmail.com</div>
+            <div class="contact-meta-item"><i class="fas fa-map-marker-alt"></i> Stavropol, Russia</div>
+            <div class="contact-meta-item"><i class="fas fa-clock"></i> UTC+3</div>
+          </div>
+        </div>
 
-<script>
-    (function() {
-        // ------------------- MUSIC PLAYER -------------------
-        const audio = document.getElementById('bgAudio');
-        const playBtn = document.getElementById('playPauseBtn');
-        const progressBar = document.getElementById('progressBar');
-        const progressFill = document.getElementById('progressFill');
-        const currentSpan = document.getElementById('currentTime');
-        const durationSpan = document.getElementById('duration');
-        const volumeSlider = document.getElementById('volumeSlider');
-        let isPlaying = false;
+        <!-- Правая колонка: Discord статус + плеер -->
+        <div>
+          <div class="discord-card">
+            <div class="discord-header">
+              <div class="discord-avatar-wrap">
+                <img id="discord-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar">
+                <div id="discord-status-dot"></div>
+              </div>
+              <div>
+                <div id="discord-username">Shiokaze</div>
+                <div id="discord-tag">Загрузка...</div>
+              </div>
+            </div>
+            <div id="discord-activity"><i class="fas fa-circle-notch fa-spin"></i> Загрузка статуса...</div>
+          </div>
 
-        function formatTime(sec) {
-            if (isNaN(sec)) return '0:00';
-            const m = Math.floor(sec / 60);
-            const s = Math.floor(sec % 60);
-            return `${m}:${s < 10 ? '0' : ''}${s}`;
-        }
-
-        audio.addEventListener('loadedmetadata', () => {
-            durationSpan.textContent = formatTime(audio.duration);
-        });
-        audio.addEventListener('timeupdate', () => {
-            if (audio.duration) {
-                const percent = (audio.currentTime / audio.duration) * 100;
-                progressFill.style.width = percent + '%';
-                currentSpan.textContent = formatTime(audio.currentTime);
-            }
-        });
-        audio.addEventListener('play', () => {
-            isPlaying = true;
-            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-        });
-        audio.addEventListener('pause', () => {
-            isPlaying = false;
-            playBtn.innerHTML = '<i class="fas fa-play"></i>';
-        });
-
-        playBtn.addEventListener('click', (e) => {
-            if (isPlaying) audio.pause();
-            else audio.play().catch(err => console.log('autoplay blocked, click to play'));
-        });
-
-        progressBar.addEventListener('click', (e) => {
-            if (!audio.duration) return;
-            const rect = progressBar.getBoundingClientRect();
-            const percent = (e.clientX - rect.left) / rect.width;
-            audio.currentTime = percent * audio.duration;
-        });
-
-        volumeSlider.addEventListener('input', () => {
-            audio.volume = volumeSlider.value / 100;
-        });
-        audio.volume = 0.7;
-
-        // авто-воспроизведение после первого клика по странице
-        const tryAutoPlay = () => {
-            audio.play().catch(() => {});
-            document.removeEventListener('click', tryAutoPlay);
-            document.removeEventListener('touchstart', tryAutoPlay);
-        };
-        document.addEventListener('click', tryAutoPlay);
-        document.addEventListener('touchstart', tryAutoPlay);
-
-        // ------------------- DISCORD STATUS (LANYARD) -------------------
-        const discordUserId = '912747427465928754';
-        const avatarImg = document.getElementById('discordAvatar');
-        const usernameSpan = document.getElementById('discordUsername');
-        const statusIndicator = document.getElementById('statusIndicator');
-        const statusTextSpan = document.getElementById('statusText');
-        const activityDiv = document.getElementById('discordActivity');
-
-        async function fetchDiscordStatus() {
-            try {
-                const res = await fetch(`https://api.lanyard.rest/v1/users/${discordUserId}`);
-                const data = await res.json();
-                if (!data.success) return;
-
-                const user = data.data;
-                const avatar = user.discord_user.avatar;
-                const avatarUrl = avatar 
-                    ? `https://cdn.discordapp.com/avatars/${discordUserId}/${avatar}.${avatar.startsWith('a_') ? 'gif' : 'png'}`
-                    : `https://cdn.discordapp.com/embed/avatars/${parseInt(user.discord_user.discriminator) % 5}.png`;
-                avatarImg.src = avatarUrl;
-                usernameSpan.textContent = user.discord_user.username;
-
-                const status = user.discord_status;
-                statusIndicator.className = `status-indicator ${status}`;
-                let statusLabel = '';
-                if (status === 'online') statusLabel = 'Online';
-                else if (status === 'idle') statusLabel = 'Idle';
-                else if (status === 'dnd') statusLabel = 'Do not disturb';
-                else statusLabel = 'Offline';
-                statusTextSpan.textContent = statusLabel;
-
-                const activities = user.activities || [];
-                let stream = activities.find(a => a.type === 1);
-                if (!stream) stream = activities.find(a => a.type === 0 && (a.flags & (1 << 6)) !== 0);
-                const game = activities.find(a => a.type === 0 && a !== stream);
-                const spotify = activities.find(a => a.type === 2);
-
-                let activity = stream || game || spotify;
-                if (activity) {
-                    let icon = '', name = '', details = '', state = '';
-                    if (activity.type === 1 || (activity.type === 0 && stream === activity)) {
-                        icon = '🔴'; name = activity.name; details = activity.details || ''; state = activity.state || '';
-                    } else if (activity.type === 0) {
-                        icon = '🎮'; name = activity.name; details = activity.details || ''; state = activity.state || '';
-                    } else if (activity.type === 2) {
-                        icon = '🎧'; name = activity.details || 'Spotify'; details = activity.state || ''; state = activity.assets?.large_text || '';
-                    }
-                    activityDiv.innerHTML = `
-                        <div style="display:flex; align-items:center; gap:0.6rem;">
-                            <div>${icon}</div>
-                            <div>
-                                <div style="font-weight:500;">${name}</div>
-                                ${details ? `<div style="font-size:0.7rem; color:#aaa;">${details}</div>` : ''}
-                                ${state ? `<div style="font-size:0.7rem; color:#aaa;">${state}</div>` : ''}
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    activityDiv.innerHTML = `<div style="display:flex; gap:0.5rem;"><i class="fas fa-moon"></i> No active session</div>`;
-                }
-            } catch (err) {
-                console.warn(err);
-                activityDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Could not load status`;
-            }
-        }
-        fetchDiscordStatus();
-        setInterval(fetchDiscordStatus, 15000);
-
-        // BACK TO TOP
-        const backBtn = document.getElementById('backToTop');
-        backBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    })();
-</script>
-</body>
-</html>
+          <div class="player-card">
+            <div class="player-meta">
+              <div class="player-track">Murasame</div>
+              <div class="player-artist">Shiokaze · ambient waves</div>
+            </div>
+            <div class="player-progress-wrap" id="player-progress-wrap">
+              <div id="player-progress-bar"></div>
+            </div>
+            <div class="player-times">
+              <span id="player-current">0:00</span>
+              <span id="player-duration">0:00</span>
+            </div>
+            <div class="player-controls">
+              <button id="play-btn"><i class="

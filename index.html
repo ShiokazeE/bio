@@ -2,735 +2,1518 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Shiokaze — портфолио</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shiokaze | Digital Creator</title>
+  <meta name="description" content="Personal portfolio of Shiokaze — digital creator, programmer, designer.">
+  <meta name="theme-color" content="#8b5cf6">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      color-scheme: dark;
+      --bg-color: #030712;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --glass-bg: rgba(255,255,255,0.02);
+      --glass-border: rgba(255,255,255,0.05);
+      --accent-rgb: 139, 92, 246;
+      --accent-light-rgb: 196, 181, 253;
+      --accent: rgb(var(--accent-rgb));
+      --accent-light: rgb(var(--accent-light-rgb));
+      --accent-text: #c4b5fd;
+      --sakura: #ffb7c5;
+      --sakura-soft: rgba(255, 183, 197, 0.35);
+      --sakura-glow: rgba(255, 183, 197, 0.15);
     }
 
-    :root {
-      --bg: #0a0a0a;
-      --surface: rgba(255,255,255,0.02);
-      --border: rgba(255,255,255,0.08);
-      --text: #ffffff;
-      --muted: rgba(255,255,255,0.45);
-      --green: #4ade80;
-      --radius-card: 24px;
-      --radius-badge: 40px;
-      --transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
-      height: 100%;
-      overflow: hidden;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-main);
+      font-family: Outfit, -apple-system, sans-serif;
       -webkit-font-smoothing: antialiased;
-    }
-
-    /* Progress bar */
-    #progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 2px;
-      background: #fff;
-      width: 0%;
-      z-index: 1000;
-      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Slides container */
-    #slides {
-      position: relative;
+      min-height: 100dvh;
+      overflow-x: clip;
       width: 100%;
-      height: 100vh;
     }
 
-    .slide {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity var(--transition);
-      overflow-y: auto;
-      overflow-x: hidden;
-      scrollbar-width: none;
+    @media (pointer: fine) {
+      *, a, button { cursor: none !important; }
     }
 
-    .slide::-webkit-scrollbar {
-      display: none;
+    ::-webkit-scrollbar { display: none; }
+    html { scrollbar-width: none; -ms-overflow-style: none; }
+
+    /* ── CURSOR ── */
+    .cursor-dot, .cursor-outline {
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; border-radius: 50%;
+      will-change: transform;
+    }
+    .cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--accent-light);
+      z-index: 9999; mix-blend-mode: difference;
+    }
+    .cursor-outline {
+      width: 32px; height: 32px;
+      border: 1px solid rgba(var(--accent-rgb), 0.8);
+      z-index: 9998; background: transparent;
+      transition: width .3s, height .3s, background-color .3s, border-color .3s;
+    }
+    .cursor-outline.hover {
+      width: 48px; height: 48px;
+      background: rgba(var(--accent-rgb), 0.15);
+      border-color: rgba(var(--accent-rgb), 0.4);
     }
 
-    .slide.active {
-      opacity: 1;
-      pointer-events: all;
+    /* ── BG ── */
+    #bg-wrap {
+      position: fixed; inset: 0; z-index: 0;
+      width: 100%; overflow: hidden;
+    }
+    #dither-mount { position: absolute; inset: 0; }
+#dither-mount canvas { display: block; width: 100%; height: 100%; }
+    #bg-overlay {
+      position: absolute; inset: 0; pointer-events: none; z-index: 1;
+      backdrop-filter: blur(7px);
+      background: rgba(0,0,0,0.22);
+    }
+    .aurora-layer {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      opacity: .15; overflow: hidden;
+    }
+    .aurora-layer::before, .aurora-layer::after {
+      content: ''; position: absolute; border-radius: 50%;
+      filter: blur(80px);
+    }
+    .aurora-layer::before {
+      width: 60vw; height: 60vw; top: -20%; left: -10%;
+      background: radial-gradient(circle, rgba(var(--accent-rgb),.4) 0%, transparent 70%);
+      animation: aurora1 12s ease-in-out infinite alternate;
+    }
+    .aurora-layer::after {
+      width: 50vw; height: 50vw; bottom: -15%; right: -10%;
+      background: radial-gradient(circle, rgba(var(--accent-light-rgb),.3) 0%, transparent 70%);
+      animation: aurora2 15s ease-in-out infinite alternate;
+    }
+    @keyframes aurora1 { to { transform: translate(15vw,10vh) scale(1.1); } }
+    @keyframes aurora2 { to { transform: translate(-12vw,-8vh) scale(1.15); } }
+
+    #top-fade {
+      position: fixed; top: 0; left: 0; width: 100%; height: 12vh;
+      z-index: 50; pointer-events: none;
+      background: linear-gradient(rgba(3,7,18,.8) 0%, transparent 100%);
+      mask-image: linear-gradient(black 5%, transparent 100%);
     }
 
-    .slide-inner {
-      width: 100%;
-      max-width: 960px;
-      padding: 60px 32px;
+    /* ── SAKURA PETALS ── */
+    #sakura-canvas {
+      position: fixed; inset: 0; z-index: 2;
+      pointer-events: none; width: 100%; height: 100%;
     }
 
-    /* Section label (small upper) */
-    .section-label {
-      font-family: 'Syne', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      color: var(--muted);
+    .edge-bloom {
+      position: fixed; pointer-events: none; z-index: 2;
+      width: 28vw; height: 100vh; opacity: .55;
+      background: radial-gradient(ellipse at center, var(--sakura-glow) 0%, transparent 70%);
+      filter: blur(40px);
+    }
+    .edge-bloom--left { left: -8vw; top: 0; }
+    .edge-bloom--right { right: -8vw; top: 0; }
+
+    /* ── PROGRESS ── */
+    .scroll-progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+      z-index: 10000; transform-origin: 0%;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 50%, #fff 100%);
+      background-size: 200% 100%;
+      box-shadow: 0 2px 10px rgba(var(--accent-rgb),.5);
+      animation: accent-shimmer 3s ease-in-out infinite;
+      transform: scaleX(0);
+    }
+    @keyframes accent-shimmer {
+      0%, 100% { background-position: 0%; }
+      50% { background-position: 100%; }
+    }
+
+    /* ── PRELOADER ── */
+    #preloader {
+      position: fixed; inset: 0; z-index: 999999;
+      display: flex; align-items: center; justify-content: center;
+      background: #000; overflow: hidden;
+    }
+    #preloader.hide { pointer-events: none; }
+    .preloader-scanlines {
+      position: absolute; inset: 0; pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,.015) 2px, rgba(255,255,255,.015) 4px);
+    }
+    .preloader-grid {
+      position: absolute; inset: 0; pointer-events: none; opacity: 0;
+      background-image: radial-gradient(rgba(var(--accent-rgb),.12) 1px, transparent 1px);
+      background-size: 32px 32px;
+      animation: grid-in 1.5s ease-out .3s forwards;
+    }
+    @keyframes grid-in { to { opacity: 1; } }
+    .preloader-bracket {
+      position: absolute; width: 24px; height: 24px;
+      border: 0 solid rgba(var(--accent-rgb),.3);
+      opacity: 0; animation: bracket-in .6s ease-out .5s forwards;
+    }
+    .preloader-bracket--tl { top: 10%; left: 10%; border-top-width: 1px; border-left-width: 1px; }
+    .preloader-bracket--tr { top: 10%; right: 10%; border-top-width: 1px; border-right-width: 1px; }
+    .preloader-bracket--bl { bottom: 10%; left: 10%; border-bottom-width: 1px; border-left-width: 1px; }
+    .preloader-bracket--br { bottom: 10%; right: 10%; border-bottom-width: 1px; border-right-width: 1px; }
+    @keyframes bracket-in { to { opacity: 1; } }
+    .preloader-inner {
+      position: relative; z-index: 10;
+      display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+    }
+    .preloader-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .875rem; font-weight: 500;
+      letter-spacing: .2em; color: #fff;
       text-transform: uppercase;
-      margin-bottom: 48px;
+      text-shadow: 0 0 12px rgba(var(--accent-rgb),.4);
     }
-
-    /* Slide titles */
-    .slide-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 40px;
+    .preloader-cursor {
+      display: inline-block; width: 8px; height: 1.2em;
+      margin-left: 6px; background: var(--accent);
+      vertical-align: middle; animation: blink .8s infinite;
     }
-
-    /* Hero slide */
-    #slide-1 .slide-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      min-height: 100vh;
-      padding-top: 0;
-      padding-bottom: 0;
+    @keyframes blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+    .preloader-bar-wrap {
+      width: 200px; height: 2px; background: rgba(255,255,255,.05); overflow: hidden;
     }
-
-    .hero-eyebrow {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: 0.3em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 24px;
+    .preloader-bar-fill {
+      height: 100%; width: 0%;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent);
+      transition: width .4s ease-out;
     }
-
-    .hero-name {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(56px, 10vw, 120px);
-      font-weight: 800;
-      line-height: 0.95;
-      letter-spacing: -0.03em;
-      margin-bottom: 28px;
-    }
-
-    .hero-sub {
-      font-family: 'DM Sans', sans-serif;
-      font-size: clamp(14px, 2vw, 18px);
-      font-weight: 300;
-      color: var(--muted);
-      letter-spacing: 0.08em;
+    .preloader-status {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .65rem; letter-spacing: .15em;
+      color: rgba(var(--accent-rgb),.5);
       text-transform: uppercase;
     }
-
-    .hero-scroll-hint {
-      margin-top: 80px;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      color: rgba(255,255,255,0.2);
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .preloader-panel {
+      position: absolute; left: 0; width: 100%; height: 51%;
+      background: #000; z-index: 1;
+      transition: transform .95s cubic-bezier(.76,0,.24,1) .1s;
     }
-    .hero-scroll-hint::before {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 1px;
-      background: rgba(255,255,255,0.2);
-    }
+    .preloader-panel--top { top: 0; }
+    .preloader-panel--bottom { bottom: 0; }
+    #preloader.done .preloader-panel--top { transform: translateY(-300%); }
+    #preloader.done .preloader-panel--bottom { transform: translateY(300%); }
+    #preloader.done .preloader-inner { opacity: 0; transform: scale(.9); filter: blur(8px); transition: .3s; }
 
-    /* WHOAMI grid */
-    .whoami-grid {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 56px;
-      align-items: start;
+    /* ── LAYOUT ── */
+    #app { position: relative; z-index: 10; }
+
+    .sticky-hero-wrap {
+      position: sticky; top: 0; height: 100dvh;
+      z-index: 5; pointer-events: none; width: 100%;
     }
 
-    .whoami-avatar {
-      width: 200px;
-      height: 200px;
-      border-radius: 20px;
-      object-fit: cover;
-      border: 1px solid var(--border);
-      display: block;
+    .landing-section {
+      width: 100%; height: 100dvh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      transition: opacity .3s, transform .3s;
     }
 
-    .whoami-name-tag {
-      margin-top: 16px;
-      font-family: 'Syne', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      text-align: center;
+    .top-icons {
+      position: absolute; top: 2rem; right: 2rem;
+      display: flex; gap: 1rem; z-index: 30; pointer-events: auto;
     }
-
-    .whoami-handle {
-      font-size: 12px;
-      color: var(--muted);
-      text-align: center;
-      margin-top: 4px;
-    }
-
-    .whoami-content h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 20px;
-    }
-
-    .whoami-bio {
-      font-size: 15px;
-      font-weight: 300;
-      line-height: 1.8;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 32px;
-    }
-
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 16px;
-      border-radius: var(--radius-badge);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      font-size: 12px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.8);
-      white-space: nowrap;
-    }
-
-    /* Interests */
-    .interests-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-
-    .interest-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-card);
-      padding: 32px 28px;
-      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-      cursor: default;
-    }
-    .interest-card:hover {
-      transform: translateY(-4px);
-      background: rgba(255,255,255,0.04);
-      border-color: rgba(255,255,255,0.18);
-    }
-    .interest-icon {
-      font-size: 22px;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 18px;
-    }
-    .interest-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .interest-desc {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    /* Projects */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    .project-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-card);
-      padding: 28px 24px;
-      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-      cursor: default;
-    }
-    .project-card:hover {
-      transform: translateY(-4px);
-      background: rgba(255,255,255,0.04);
-      border-color: rgba(255,255,255,0.18);
-    }
-    .project-tag {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 4px;
-      padding: 3px 8px;
-      margin-bottom: 16px;
-    }
-    .project-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 17px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .project-desc {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    /* Contact slide */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: start;
-    }
-    .contact-section h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(24px, 4vw, 38px);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 32px;
-      line-height: 1.1;
-    }
-    .contact-links {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-bottom: 24px;
-    }
-    .contact-link {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      font-size: 14px;
-      color: rgba(255,255,255,0.6);
-      transition: color 0.2s;
-      text-decoration: none;
-    }
-    .contact-link:hover {
-      color: #fff;
-    }
-    .contact-link i {
-      width: 16px;
-      text-align: center;
-      color: rgba(255,255,255,0.3);
-    }
-    .contact-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-    }
-    .contact-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .contact-meta-item i {
-      width: 14px;
-      text-align: center;
-    }
-
-    /* Discord + Player */
-    .discord-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-card);
-      padding: 24px;
-      margin-bottom: 16px;
-    }
-    .discord-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 16px;
-    }
-    .discord-avatar-wrap {
-      position: relative;
-      flex-shrink: 0;
-    }
-    #discord-avatar {
-      width: 52px;
-      height: 52px;
+    .top-icon {
+      width: 58px; height: 58px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--text-main); text-decoration: none;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.08);
       border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid var(--border);
-      display: block;
+      box-shadow: 0 4px 15px -5px rgba(0,0,0,.3), inset 0 0 0 1px rgba(255,255,255,.05);
+      transition: all .4s cubic-bezier(.19,1,.22,1);
     }
-    #discord-status-dot {
-      position: absolute;
-      bottom: 1px;
-      right: 1px;
-      width: 13px;
-      height: 13px;
-      border-radius: 50%;
-      border: 2px solid var(--bg);
+    .top-icon::before {
+      content: ''; position: absolute; inset: 0; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--sakura-glow), transparent 65%);
+      opacity: 0; transition: opacity .4s;
+    }
+    .top-icon { position: relative; overflow: hidden; }
+    .top-icon:hover::before { opacity: 1; }
+    .top-icon:hover {
+      background: rgba(var(--accent-rgb),.15);
+      border-color: rgba(255, 183, 197, 0.35);
+      box-shadow: 0 15px 30px -10px rgba(var(--accent-rgb),.5), 0 0 24px var(--sakura-glow);
+      transform: translateY(-4px) scale(1.08);
+    }
+    .top-icon#copy-discord:hover { border-color: #5865f2; box-shadow: 0 15px 30px -10px rgba(88,101,242,.4), 0 0 20px var(--sakura-glow); }
+    .top-icon i { font-size: 22px; position: relative; z-index: 1; }
+
+    .landing-content {
+      z-index: 10; display: flex; flex-direction: column;
+      align-items: center; width: 100%;
+      margin-top: -8vh; pointer-events: auto;
+    }
+    .ascii-wrapper {
+      position: relative; width: 100%; max-width: 900px;
+      height: clamp(220px, 40vw, 460px);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ascii-text-container {
+      position: absolute; width: 100%; height: 100%; pointer-events: none;
+    }
+    .ascii-text-container pre {
+      margin: 0; padding: 0; line-height: 1em; text-align: left;
+      position: absolute; left: 0; top: 0; z-index: 9;
+      background-attachment: fixed; mix-blend-mode: difference;
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      background-image: radial-gradient(circle, #ff6188 0%, #fc9867 50%, #ffd866 100%);
+      user-select: none; white-space: pre;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .ascii-text-container canvas { position: absolute; left: 0; top: 0; width: 100%; height: 100%; image-rendering: pixelated; }
+
+    .subtitle {
+      margin-top: -7rem; z-index: 20; text-align: center;
+      font-size: clamp(1rem, 2.5vw, 1.5rem); font-weight: 500;
+      letter-spacing: .3em; text-transform: uppercase;
+      color: var(--text-main);
+    }
+    .text-type__cursor { margin-left: .25rem; display: inline-block; }
+
+    .scroll-down-indicator {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%); z-index: 30;
+      color: var(--text-muted); opacity: .7;
+      pointer-events: auto; cursor: pointer;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, 15px); }
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      display: flex; align-items: center; gap: 1rem;
+      width: 100%; max-width: 700px; margin: 0 auto; padding: 3rem 2rem;
+    }
+    .section-divider__line {
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb),.3), rgba(var(--accent-light-rgb),.4), rgba(var(--accent-rgb),.3), transparent);
+    }
+    .section-divider__dot {
+      width: 8px; height: 8px; flex-shrink: 0;
+      background: var(--accent); border-radius: 2px;
+      transform: rotate(45deg);
+      box-shadow: 0 0 12px rgba(var(--accent-rgb),.5);
+      animation: divider-pulse 3s ease-in-out infinite;
+    }
+    @keyframes divider-pulse {
+      0%, 100% { opacity: .8; box-shadow: 0 0 8px rgba(var(--accent-rgb),.4); }
+      50% { opacity: 1; box-shadow: 0 0 18px rgba(var(--accent-rgb),.7); }
+    }
+
+    /* ── ABOUT ── */
+    .about-section {
+      position: relative; z-index: 20;
+      display: flex; flex-direction: column; align-items: center;
+      width: 100vw; min-height: 100vh;
+      padding: 6rem 2rem 10rem;
+    }
+    .about-content { width: 100%; max-width: 900px; display: flex; flex-direction: column; gap: 2.5rem; }
+    .about-eyebrow {
+      font-size: .75rem; font-weight: 600;
+      letter-spacing: .3em; text-transform: uppercase; color: var(--accent);
+    }
+    .about-title {
+      font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 700;
+      letter-spacing: -.02em; line-height: 1.1;
+      background: linear-gradient(135deg, #fff 0%, var(--accent-text) 30%, var(--accent) 50%, var(--accent-text) 70%, #fff 100%);
+      background-size: 300% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: title-gradient-shift 6s ease-in-out infinite;
+    }
+    @keyframes title-gradient-shift {
+      0%, 100% { background-position: 0%; }
+      50% { background-position: 100%; }
+    }
+    .about-accent-bar {
+      width: 100%; height: 3px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+      background-size: 200% 100%;
+      animation: accent-shimmer 3s ease-in-out infinite;
+    }
+    .about-body {
+      display: grid; grid-template-columns: auto 1fr; gap: 2.5rem; align-items: start;
+    }
+    .about-profile { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+    .about-bio-col { display: flex; flex-direction: column; gap: 1.25rem; justify-content: center; }
+    .about-quote {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: clamp(1rem, 2.2vw, 1.15rem);
+      line-height: 1.85;
+      font-weight: 300;
+      font-style: italic;
+      border-left: 2px solid rgba(255, 183, 197, 0.45);
+      padding-left: 1.25rem;
+      margin: 0;
+    }
+    .about-bio-text {
+      color: var(--text-muted); font-size: 1.1rem; line-height: 1.9;
+    }
+    .currently-badge {
+      display: inline-flex; align-items: center; gap: .6rem;
+      width: fit-content; padding: .4rem 1rem;
+      font-size: .85rem; font-weight: 500;
+      color: var(--text-muted);
+      background: rgba(var(--accent-rgb),.08);
+      border: 1px solid rgba(var(--accent-rgb),.2);
+      border-radius: 999px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
+    }
+    .badge-avatar-wrap { position: relative; width: 28px; height: 28px; flex-shrink: 0; }
+    .badge-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; display: block; }
+    .badge-avatar-dot {
+      position: absolute; bottom: -1px; right: -1px;
+      width: 10px; height: 10px; border-radius: 50%;
+      border: 2px solid rgba(var(--accent-rgb),.08);
       background: #747f8d;
     }
-    #discord-username {
-      font-family: 'Syne', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
+    .about-avatar {
+      width: 140px; height: 140px; border-radius: 20px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 183, 197, 0.25);
+      box-shadow: 0 0 32px var(--sakura-glow), 0 8px 24px rgba(0,0,0,.4);
     }
-    #discord-tag {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
+    .about-divider {
+      width: 100%; height: 1px; margin: .5rem 0;
+      background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb),.2), rgba(var(--accent-light-rgb),.3), rgba(var(--accent-rgb),.2), transparent);
     }
-    #discord-activity {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.5;
-      min-height: 18px;
+    .interests-heading {
+      text-align: center; margin-top: .5rem;
+      font-size: .9rem; font-weight: 600;
+      letter-spacing: .3em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .logoloop-wrap { width: 100%; overflow: hidden; padding: 1.5rem 0; }
+    .logoloop-track {
+      display: flex; width: max-content;
+      animation: marquee 30s linear infinite;
+    }
+    .logoloop-track:hover { animation-play-state: paused; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .logoloop-item {
+      display: inline-flex; align-items: center; gap: .5rem;
+      margin-right: 2rem; font-size: 1.75rem;
+      color: rgba(255,255,255,.35);
+      transition: color .3s, filter .3s, transform .3s;
+    }
+    .logoloop-item:hover {
+      color: #fff;
+      filter: drop-shadow(0 0 16px rgba(var(--accent-rgb),.6));
+      transform: scale(1.15);
     }
 
-    /* Player */
-    .player-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-card);
-      padding: 22px 24px;
+    /* ── PROJECTS ── */
+    .projects-section {
+      position: relative; z-index: 20;
+      display: flex; flex-direction: column; align-items: center;
+      width: 100vw; min-height: 100vh;
+      padding: 6rem 2rem 10rem;
     }
-    .player-meta {
-      margin-bottom: 16px;
+    .projects-content { width: 100%; max-width: 1100px; display: flex; flex-direction: column; gap: 3rem; }
+    .projects-eyebrow {
+      font-size: .75rem; font-weight: 600;
+      letter-spacing: .3em; text-transform: uppercase; color: var(--accent);
     }
-    .player-track {
-      font-family: 'Syne', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
+    .projects-title {
+      font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700;
+      letter-spacing: -.02em; line-height: 1.1;
+      background: linear-gradient(135deg, #fff 0%, var(--accent-text) 30%, var(--accent) 50%, var(--accent-text) 70%, #fff 100%);
+      background-size: 300% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: title-gradient-shift 6s ease-in-out infinite;
     }
-    .player-artist {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 3px;
+    .projects-accent-bar {
+      width: 100%; height: 3px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+      background-size: 200% 100%;
+      animation: accent-shimmer 3s ease-in-out infinite;
+    }
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .project-card {
+      display: flex; flex-direction: column;
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 20px; overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
+      transition: border-color .4s, box-shadow .4s, transform .4s;
+      text-decoration: none; color: inherit;
+    }
+    .project-card:hover {
+      border-color: rgba(var(--accent-rgb),.2);
+      box-shadow: 0 0 30px -8px rgba(var(--accent-rgb),.2);
+      transform: translateY(-4px);
+    }
+    .project-card--featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1.2fr 1fr; }
+    .project-card__image-wrap {
+      aspect-ratio: 16/10; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, rgba(var(--accent-rgb),.15), rgba(3,7,18,.9));
+      display: flex; align-items: center; justify-content: center;
+    }
+    .project-card--featured .project-card__image-wrap {
+      min-height: 320px; aspect-ratio: auto;
+      border-right: 1px solid rgba(255,255,255,.06);
+    }
+    .project-card__placeholder {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: clamp(2rem, 6vw, 4rem); font-weight: 600;
+      color: rgba(var(--accent-rgb),.35);
+      letter-spacing: .1em;
+    }
+    .project-card__body {
+      display: flex; flex-direction: column; justify-content: center;
+      gap: .75rem; padding: 1.75rem; flex: 1;
+    }
+    .project-card__number {
+      font-size: .75rem; font-weight: 600;
+      letter-spacing: .15em; color: var(--accent); opacity: .6;
+    }
+    .project-card__title {
+      font-size: 1.6rem; font-weight: 700; line-height: 1.2;
+      transition: color .3s;
+    }
+    .project-card:hover .project-card__title { color: var(--accent-light); }
+    .project-card__desc { color: var(--text-muted); font-size: .95rem; line-height: 1.7; margin: 0; }
+    .project-tag {
+      display: inline-block; width: fit-content;
+      padding: .3rem .7rem; border-radius: 999px;
+      font-size: .7rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--accent-light);
+      background: rgba(var(--accent-rgb),.1);
+      border: 1px solid rgba(var(--accent-rgb),.2);
+    }
+
+    /* ── CONNECT ── */
+    .connect-section {
+      position: relative; z-index: 20;
+      display: flex; flex-direction: column; align-items: center;
+      width: 100vw; padding: 6rem 2rem 4rem;
+    }
+    .connect-content { width: 100%; max-width: 900px; display: flex; flex-direction: column; gap: 3rem; }
+    .connect-eyebrow {
+      font-size: .75rem; font-weight: 600;
+      letter-spacing: .3em; text-transform: uppercase; color: var(--accent);
+    }
+    .connect-title {
+      font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700;
+      letter-spacing: -.02em; line-height: 1.1;
+      background: linear-gradient(135deg, #fff 0%, var(--accent-text) 30%, var(--accent) 50%, var(--accent-text) 70%, #fff 100%);
+      background-size: 300% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: title-gradient-shift 6s ease-in-out infinite;
+    }
+    .connect-accent-bar {
+      width: 100%; height: 3px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+      background-size: 200% 100%;
+      animation: accent-shimmer 3s ease-in-out infinite;
+    }
+    .connect-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; width: 100%; }
+    .connect-card {
+      display: flex; align-items: center;
+      padding: 2rem; border-radius: 24px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.06);
+      text-decoration: none; color: inherit;
+      position: relative; overflow: hidden;
+      transition: border-color .5s, box-shadow .5s, transform .5s, background .5s;
+    }
+    .connect-card::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 60% at 0% 100%, var(--sakura-glow), transparent 55%),
+        radial-gradient(ellipse 60% 50% at 100% 0%, rgba(var(--accent-rgb), 0.12), transparent 50%);
+      opacity: .85;
+      transition: opacity .5s;
+    }
+    .connect-card::after {
+      content: '';
+      position: absolute; width: 48px; height: 48px; right: 12px; bottom: 8px;
+      pointer-events: none; opacity: .12;
+      background: radial-gradient(ellipse, var(--sakura) 30%, transparent 70%);
+      border-radius: 50% 0 50% 50%;
+      transform: rotate(-25deg);
+      filter: blur(1px);
+    }
+    .connect-card:hover::before { opacity: 1; }
+    .connect-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      background: rgba(255,255,255,.04);
+      border-color: rgba(255, 183, 197, 0.28);
+      box-shadow: 0 20px 40px -20px rgba(0,0,0,.5), 0 0 28px var(--sakura-glow);
+    }
+    .connect-card > * { position: relative; z-index: 1; }
+    .connect-card--full { grid-column: 1 / -1; }
+    .connect-card__icon-wrap {
+      width: 64px; height: 64px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 16px; margin-right: 1.5rem;
+      transition: transform .5s;
+    }
+    .connect-card:hover .connect-card__icon-wrap { transform: scale(1.15) rotate(8deg); }
+    .steam-bg { background: linear-gradient(135deg, rgba(23,26,33,.85), rgba(255,183,197,.08)); border: 1px solid rgba(255,255,255,.12); box-shadow: inset 0 0 20px var(--sakura-glow); }
+    .discord-bg { background: linear-gradient(135deg, rgba(88,101,242,.28), rgba(255,183,197,.1)); border: 1px solid rgba(88,101,242,.35); box-shadow: inset 0 0 20px rgba(88,101,242,.15); }
+    .telegram-bg { background: linear-gradient(135deg, rgba(36,161,222,.28), rgba(255,183,197,.08)); border: 1px solid rgba(36,161,222,.32); box-shadow: inset 0 0 18px var(--sakura-glow); }
+    .email-bg { background: linear-gradient(135deg, rgba(var(--accent-rgb),.28), rgba(255,183,197,.12)); border: 1px solid rgba(var(--accent-rgb),.32); box-shadow: inset 0 0 20px var(--sakura-glow); }
+    .connect-card__title { font-size: 1.25rem; font-weight: 700; margin-bottom: .3rem; }
+    .connect-card__handle { color: var(--text-muted); font-size: .95rem; font-weight: 500; }
+    .connect-card__action {
+      margin-left: auto; color: var(--text-muted); opacity: .3;
+      transition: opacity .4s, transform .4s;
+    }
+    .connect-card:hover .connect-card__action { opacity: 1; color: var(--accent-light); transform: translate(6px) scale(1.1); }
+    .contact-meta {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      color: var(--text-muted); font-size: .9rem;
+    }
+    .contact-meta span { display: inline-flex; align-items: center; gap: .5rem; }
+
+    /* ── FLOATING PLAYER ── */
+    #float-player {
+      position: fixed; bottom: 1.25rem; right: 1.25rem;
+      z-index: 9000; width: min(320px, calc(100vw - 2rem));
+      background: rgba(3, 7, 18, 0.82);
+      border: 1px solid rgba(255, 183, 197, 0.2);
+      border-radius: 20px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.45), 0 0 24px var(--sakura-glow), inset 0 0 0 1px rgba(255,255,255,.06);
+      overflow: hidden;
+      transition: box-shadow .3s, transform .3s;
+    }
+    #float-player:hover { box-shadow: 0 16px 48px rgba(0,0,0,.5), 0 0 32px rgba(255,183,197,.22); }
+    .float-player__bar {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .75rem 1rem;
+    }
+    #float-play-btn {
+      width: 40px; height: 40px; flex-shrink: 0;
+      border-radius: 50%; border: 1px solid rgba(255,183,197,.35);
+      background: linear-gradient(135deg, rgba(var(--accent-rgb),.2), rgba(255,183,197,.12));
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      transition: background .2s, box-shadow .2s, transform .2s;
+    }
+    #float-play-btn:hover {
+      background: rgba(var(--accent-rgb),.28);
+      box-shadow: 0 0 16px var(--sakura-glow);
+      transform: scale(1.05);
+    }
+    .float-player__info { flex: 1; min-width: 0; }
+    .float-player__track {
+      display: block; font-weight: 600; font-size: .9rem;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .float-player__artist {
+      display: block; font-size: .75rem; color: var(--text-muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    #float-toggle {
+      width: 32px; height: 32px; flex-shrink: 0;
+      border: none; background: rgba(255,255,255,.06);
+      border-radius: 10px; color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, color .2s, transform .3s;
+    }
+    #float-toggle:hover { background: rgba(255,183,197,.12); color: #fff; }
+    #float-player.expanded #float-toggle { transform: rotate(180deg); }
+    .float-player__mini-progress {
+      height: 2px; background: rgba(255,255,255,.08);
+      margin: 0 1rem;
+    }
+    #float-mini-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--sakura), var(--accent-light));
+      transition: width .2s linear;
+    }
+    .float-player__expanded {
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s cubic-bezier(.4,0,.2,1), padding .35s;
+      padding: 0 1rem;
+    }
+    #float-player.expanded .float-player__expanded {
+      max-height: 120px; padding: 0 1rem .85rem;
     }
     .player-progress-wrap {
-      position: relative;
-      height: 3px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 99px;
-      margin-bottom: 8px;
-      cursor: pointer;
+      height: 3px; background: rgba(255,255,255,.08);
+      border-radius: 99px; margin: .5rem 0 .35rem; cursor: pointer;
     }
-    #player-progress-bar {
-      height: 100%;
-      border-radius: 99px;
-      background: #fff;
-      width: 0%;
-      transition: width 0.2s linear;
-      pointer-events: none;
+    #player-bar {
+      height: 100%; width: 0%; border-radius: 99px;
+      background: linear-gradient(90deg, var(--sakura), var(--accent-light));
     }
     .player-times {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--muted);
-      margin-bottom: 16px;
+      display: flex; justify-content: space-between;
+      font-size: .65rem; color: var(--text-muted); margin-bottom: .5rem;
     }
-    .player-controls {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    #play-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid var(--border);
-      color: var(--text);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      transition: background 0.2s;
-      flex-shrink: 0;
-    }
-    #play-btn:hover {
-      background: rgba(255,255,255,0.14);
-    }
-    .volume-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: 1;
-    }
-    .volume-wrap i {
-      font-size: 12px;
-      color: var(--muted);
-    }
+    .player-controls { display: flex; align-items: center; gap: .75rem; }
     #volume-slider {
-      flex: 1;
-      -webkit-appearance: none;
-      height: 3px;
-      border-radius: 99px;
-      background: rgba(255,255,255,0.12);
-      cursor: pointer;
-      outline: none;
+      flex: 1; -webkit-appearance: none; height: 3px;
+      border-radius: 99px; background: rgba(255,255,255,.12); outline: none;
     }
     #volume-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #fff;
-      cursor: pointer;
+      -webkit-appearance: none; width: 12px; height: 12px;
+      border-radius: 50%; background: var(--sakura);
     }
 
-    /* Footer inside slide 5 */
-    .slide-footer {
-      margin-top: 40px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
+    /* ── FOOTER ── */
+    .footer-section {
+      position: relative; z-index: 20;
+      width: 100vw; padding: 0 4rem 7rem;
+      display: flex; flex-direction: column;
     }
-    .footer-copy {
-      font-size: 12px;
-      color: rgba(255,255,255,0.25);
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      letter-spacing: 0.1em;
+    .footer__divider {
+      width: 100%; height: 1px; margin-bottom: 3rem;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.1), transparent);
     }
-    .footer-status {
-      font-size: 11px;
-      color: var(--green);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 7px;
+    .footer__content {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 100%; max-width: 1100px; margin: 0 auto;
     }
-    .footer-status::before {
-      content: '';
-      display: block;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 8px var(--green);
+    .footer__logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 2.5rem; font-weight: 700;
+      letter-spacing: -.05em; color: #fff;
     }
-    .back-top-btn {
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 40px;
-      padding: 6px 16px;
-      transition: color 0.2s, border-color 0.2s;
-      background: none;
+    .footer__copyright {
+      margin-left: .5rem; font-size: .9rem; font-weight: 400;
+      color: var(--text-muted); opacity: .6;
     }
-    .back-top-btn:hover {
-      color: #fff;
-      border-color: rgba(255,255,255,0.3);
+    .footer__label {
+      font-size: .65rem; font-weight: 500;
+      letter-spacing: .25em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .footer__value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .8rem; font-weight: 600;
+      color: #4ade80; text-shadow: 0 0 15px rgba(74,222,128,.4);
+      letter-spacing: .05em;
+    }
+    .footer__totop {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: .8rem 1.6rem; border-radius: 999px;
+      font-size: .75rem; font-weight: 600;
+      letter-spacing: .12em; color: var(--text-main);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
+      transition: all .4s cubic-bezier(.19,1,.22,1);
+      font-family: inherit;
+    }
+    .footer__totop:hover {
+      background: rgba(var(--accent-rgb),.12);
+      border-color: rgba(var(--accent-rgb),.4);
+      box-shadow: 0 15px 30px -10px rgba(var(--accent-rgb),.3);
+      transform: translateY(-4px);
     }
 
     @media (max-width: 768px) {
-      .slide-inner { padding: 40px 20px; }
-      .hero-name { font-size: clamp(48px, 14vw, 72px); }
-      .whoami-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
+      .cursor-dot, .cursor-outline { display: none; }
+      html, body, *, a, button { cursor: auto !important; }
+      .top-icons { top: 1.25rem; right: 1.25rem; gap: .75rem; }
+      .top-icon { width: 46px; height: 46px; }
+      .subtitle { margin-top: -4rem; letter-spacing: .15em; }
+      .about-section { padding: 4rem 1.5rem 6rem; }
+      .about-body { grid-template-columns: 1fr; gap: 2rem; }
+      .about-profile { flex-direction: row; justify-content: flex-start; align-items: center; }
+      .about-avatar { width: 100px; height: 100px; }
+      #float-player { bottom: 1rem; right: 1rem; left: 1rem; width: auto; }
+      .edge-bloom { opacity: .35; width: 40vw; }
+      .projects-grid, .project-card--featured { grid-template-columns: 1fr; }
+      .project-card--featured .project-card__image-wrap {
+        min-height: unset; aspect-ratio: 16/10; border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,.06);
       }
-      .whoami-avatar {
-        width: 120px;
-        height: 120px;
-        margin: 0 auto;
-      }
-      .whoami-name-tag, .whoami-handle { text-align: center; }
-      .interests-grid, .projects-grid { grid-template-columns: 1fr; }
-      .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+      .connect-grid { grid-template-columns: 1fr; }
+      .footer-section { padding: 0 1.25rem 3rem; }
+      .footer__content { flex-direction: column; gap: 2rem; text-align: center; }
+      .aurora-layer { opacity: .08; }
+    }
+    @media (max-width: 480px) {
+      .aurora-layer { display: none; }
     }
   </style>
 </head>
 <body>
 
-<div id="progress"></div>
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="preloader-panel preloader-panel--top"></div>
+  <div class="preloader-panel preloader-panel--bottom"></div>
+  <div class="preloader-scanlines"></div>
+  <div class="preloader-grid"></div>
+  <div class="preloader-bracket preloader-bracket--tl"></div>
+  <div class="preloader-bracket preloader-bracket--tr"></div>
+  <div class="preloader-bracket preloader-bracket--bl"></div>
+  <div class="preloader-bracket preloader-bracket--br"></div>
+  <div class="preloader-inner">
+    <div class="preloader-text"><span id="preloader-typed"></span><span class="preloader-cursor"></span></div>
+    <div class="preloader-bar-wrap"><div class="preloader-bar-fill" id="preloader-bar"></div></div>
+    <div class="preloader-status"><span id="preloader-pct">0</span>% — LOADING ASSETS</div>
+  </div>
+</div>
 
-<div id="slides">
-  <!-- SLIDE 1: HERO -->
-  <section class="slide active" id="slide-1">
-    <div class="slide-inner">
-      <p class="hero-eyebrow">Portfolio</p>
-      <h1 class="hero-name">Shiokaze</h1>
-      <p class="hero-sub">Digital Creator</p>
-      <p class="hero-scroll-hint">Scroll to explore</p>
-    </div>
-  </section>
+<!-- CURSOR -->
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-outline" id="cursor-outline"></div>
 
-  <!-- SLIDE 2: WHOAMI -->
-  <section class="slide" id="slide-2">
-    <div class="slide-inner">
-      <p class="section-label">01 — Identity</p>
-      <div class="whoami-grid">
-        <div class="whoami-avatar-wrap">
-          <img class="whoami-avatar" src="https://i.pinimg.com/736x/b1/e5/92/b1e59263434149eb460a480ed4080604.jpg" alt="Shiokaze avatar">
-          <p class="whoami-name-tag">Shiokaze</p>
-          <p class="whoami-handle">@shiokazee</p>
+<!-- BG -->
+<div id="bg-wrap">
+  <div id="dither-mount"></div>
+  <div id="bg-overlay"></div>
+</div>
+<div class="aurora-layer"></div>
+<div class="edge-bloom edge-bloom--left"></div>
+<div class="edge-bloom edge-bloom--right"></div>
+<canvas id="sakura-canvas" aria-hidden="true"></canvas>
+<div id="top-fade"></div>
+<div class="scroll-progress-bar" id="progress"></div>
+
+<div id="app">
+
+  <!-- HERO (sticky) -->
+  <div class="sticky-hero-wrap" id="sticky-hero">
+    <section class="landing-section" id="hero">
+      <div class="top-icons">
+        <a class="top-icon" href="https://steamcommunity.com/id/shiokazeIII/" target="_blank" rel="noopener" aria-label="Steam"><i class="fab fa-steam"></i></a>
+        <div class="top-icon" id="copy-discord" aria-label="Copy Discord" role="button" tabindex="0"><i class="fab fa-discord"></i></div>
+        <a class="top-icon" href="mailto:lopgg96@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+      <div class="landing-content">
+        <div class="ascii-wrapper">
+          <div class="ascii-text-container" id="ascii-container"></div>
         </div>
-        <div class="whoami-content">
-          <h2>Whoami</h2>
-          <p class="whoami-bio">
-            Привет! Здесь будет твоё описание. Расскажи о себе — чем занимаешься,
-            что тебя вдохновляет, какие у тебя цели. Этот текст — заглушка,
-            замени его на что-то личное и настоящее.
-          </p>
-          <div class="badges">
-            <span class="badge">👑 Staff</span>
-            <span class="badge">✅ Verified</span>
-            <span class="badge">🖼️ Image Host</span>
-            <span class="badge">🤝 Helper</span>
-            <span class="badge">⭐ Premium</span>
-            <span class="badge">💎 OG</span>
+        <h2 class="subtitle" id="subtitle"><span id="type-text"></span><span class="text-type__cursor" id="type-cursor">|</span></h2>
+      </div>
+      <div class="scroll-down-indicator" id="scroll-down" aria-label="Scroll down">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+    </section>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about" class="about-section">
+    <div class="about-content">
+      <div class="about-header">
+        <span class="about-eyebrow">WHO AM I</span>
+        <div class="about-title-group">
+          <h1 class="about-title">About Me</h1>
+          <div class="about-accent-bar"></div>
+        </div>
+      </div>
+      <div class="about-body">
+        <div class="about-profile">
+          <!-- !!REPLACE!! аватар -->
+          <img class="about-avatar" src="https://i.pinimg.com/736x/78/3a/51/783a51225e59190364a1e54057c50fcd.jpg" alt="Shiokaze">
+          <div class="currently-badge" id="discord-badge">
+            <span class="badge-avatar-wrap">
+              <img class="badge-avatar" id="badge-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="">
+              <span class="badge-avatar-dot" id="badge-dot"></span>
+            </span>
+            <span id="badge-status">Loading...</span>
           </div>
         </div>
+        <div class="about-bio-col">
+          <!-- !!REPLACE!! описание -->
+          <blockquote class="about-quote">❝ Risking your life and doing something that could easily rob you of your life are exact opposites. ❞</blockquote>
+        </div>
       </div>
-    </div>
-  </section>
-
-  <!-- SLIDE 3: INTERESTS -->
-  <section class="slide" id="slide-3">
-    <div class="slide-inner">
-      <p class="section-label">02 — What I Do</p>
-      <h2 class="slide-title">My Interests</h2>
-      <div class="interests-grid">
-        <div class="interest-card">
-          <div class="interest-icon"><i class="fa-solid fa-code"></i></div>
-          <h3 class="interest-title">Programming</h3>
-          <p class="interest-desc">C++, Python, Web development. Люблю чистый код.</p>
-        </div>
-        <div class="interest-card">
-          <div class="interest-icon"><i class="fa-solid fa-shield-halved"></i></div>
-          <h3 class="interest-title">Cybersecurity</h3>
-          <p class="interest-desc">CTF, ethical hacking, изучение уязвимостей.</p>
-        </div>
-        <div class="interest-card">
-          <div class="interest-icon"><i class="fa-solid fa-pen-nib"></i></div>
-          <h3 class="interest-title">Design</h3>
-          <p class="interest-desc">UI/UX, минимализм, продуманные интерфейсы.</p>
-        </div>
-        <div class="interest-card">
-          <div class="interest-icon"><i class="fa-solid fa-gamepad"></i></div>
-          <h3 class="interest-title">Gaming & LARP</h3>
-          <p class="interest-desc">Roblox, Deadlock и живые ролевые игры.</p>
+      <div class="about-divider"></div>
+      <p class="interests-heading">MY INTERESTS</p>
+      <div class="logoloop-wrap">
+        <div class="logoloop-track" id="logoloop">
+          <span class="logoloop-item"><i class="fa-solid fa-code"></i> Programming</span>
+          <span class="logoloop-item"><i class="fa-solid fa-shield-halved"></i> Cybersecurity</span>
+          <span class="logoloop-item"><i class="fa-solid fa-pen-nib"></i> Design</span>
+          <span class="logoloop-item"><i class="fa-solid fa-gamepad"></i> Gaming</span>
+          <span class="logoloop-item"><i class="fab fa-python"></i> Python</span>
+          <span class="logoloop-item"><i class="fab fa-steam"></i> Steam</span>
+          <span class="logoloop-item"><i class="fab fa-discord"></i> Discord</span>
+          <span class="logoloop-item"><i class="fab fa-telegram"></i> Telegram</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SLIDE 4: PROJECTS -->
-  <section class="slide" id="slide-4">
-    <div class="slide-inner">
-      <p class="section-label">03 — Work</p>
-      <h2 class="slide-title">Featured Projects</h2>
+  <div class="section-divider"><div class="section-divider__line"></div><div class="section-divider__dot"></div><div class="section-divider__line"></div></div>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="projects-section">
+    <div class="projects-content">
+      <div class="projects-header">
+        <span class="projects-eyebrow">WORK</span>
+        <div class="projects-title-group">
+          <h2 class="projects-title">Featured Projects</h2>
+          <div class="projects-accent-bar"></div>
+        </div>
+      </div>
       <div class="projects-grid">
-        <div class="project-card">
-          <span class="project-tag">Coming Soon</span>
-          <h3 class="project-title">Project Theseus</h3>
-          <p class="project-desc">Краткое описание проекта. Замени на своё.</p>
-        </div>
-        <div class="project-card">
-          <span class="project-tag">In Development</span>
-          <h3 class="project-title">Deadlock Tool</h3>
-          <p class="project-desc">Скоро здесь будет информация.</p>
-        </div>
-        <div class="project-card">
-          <span class="project-tag">2026</span>
-          <h3 class="project-title">Portfolio 2026</h3>
-          <p class="project-desc">Этот сайт — пример минималистичного портфолио.</p>
-        </div>
+        <!-- !!REPLACE!! проекты -->
+        <a class="project-card project-card--featured" href="#">
+          <div class="project-card__image-wrap"><div class="project-card__placeholder">01</div></div>
+          <div class="project-card__body">
+            <span class="project-card__number">01</span>
+            <h3 class="project-card__title">Project Theseus</h3>
+            <p class="project-card__desc">Краткое описание. Замените на своё.</p>
+            <span class="project-tag">Coming Soon</span>
+          </div>
+        </a>
+        <a class="project-card" href="#">
+          <div class="project-card__image-wrap"><div class="project-card__placeholder">02</div></div>
+          <div class="project-card__body">
+            <span class="project-card__number">02</span>
+            <h3 class="project-card__title">Deadlock Tool</h3>
+            <p class="project-card__desc">Скоро здесь будет информация.</p>
+            <span class="project-tag">In Dev</span>
+          </div>
+        </a>
+        <a class="project-card" href="#">
+          <div class="project-card__image-wrap"><div class="project-card__placeholder">03</div></div>
+          <div class="project-card__body">
+            <span class="project-card__number">03</span>
+            <h3 class="project-card__title">Portfolio 2026</h3>
+            <p class="project-card__desc">Этот сайт — минималистичное портфолио.</p>
+            <span class="project-tag">2026</span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- SLIDE 5: CONTACT + DISCORD + PLAYER + FOOTER -->
-  <section class="slide" id="slide-5">
-    <div class="slide-inner">
-      <p class="section-label">04 — Connect</p>
-      <div class="contact-grid">
-        <!-- Левая колонка: контакты -->
-        <div class="contact-section">
-          <h2>WANT TO CONTACT ME?</h2>
-          <div class="contact-links">
-            <a href="https://steamcommunity.com/id/shiokazeIII/" target="_blank" class="contact-link"><i class="fab fa-steam"></i> Steam</a>
-            <a href="https://discord.com/users/912747427465928754" target="_blank" class="contact-link"><i class="fab fa-discord"></i> Discord / shiokaze</a>
-            <a href="https://t.me/s_k4ze" target="_blank" class="contact-link"><i class="fab fa-telegram"></i> Telegram</a>
-          </div>
-          <div class="contact-meta">
-            <div class="contact-meta-item"><i class="fas fa-envelope"></i> lopgg96@gmail.com</div>
-            <div class="contact-meta-item"><i class="fas fa-map-marker-alt"></i> Stavropol, Russia</div>
-            <div class="contact-meta-item"><i class="fas fa-clock"></i> UTC+3</div>
-          </div>
+  <div class="section-divider"><div class="section-divider__line"></div><div class="section-divider__dot"></div><div class="section-divider__line"></div></div>
+
+  <!-- CONNECT -->
+  <section id="connect" class="connect-section">
+    <div class="connect-content">
+      <div>
+        <span class="connect-eyebrow">WANT TO CONTACT ME?</span>
+        <div style="margin-top:.75rem">
+          <h2 class="connect-title">My Socials</h2>
+          <div class="connect-accent-bar" style="margin-top:.75rem"></div>
         </div>
+      </div>
+      <div class="connect-grid">
+        <a class="connect-card" href="https://steamcommunity.com/id/shiokazeIII/" target="_blank" rel="noopener">
+          <div class="connect-card__icon-wrap steam-bg"><i class="fab fa-steam fa-lg"></i></div>
+          <div><div class="connect-card__title">Steam</div><div class="connect-card__handle">shiokazeIII</div></div>
+          <div class="connect-card__action">↗</div>
+        </a>
+        <a class="connect-card" href="https://discord.com/users/912747427465928754" target="_blank" rel="noopener">
+          <div class="connect-card__icon-wrap discord-bg"><i class="fab fa-discord fa-lg"></i></div>
+          <div><div class="connect-card__title">Discord</div><div class="connect-card__handle" id="discord-handle">shiokaze</div></div>
+          <div class="connect-card__action">↗</div>
+        </a>
+        <a class="connect-card" href="https://t.me/s_k4ze" target="_blank" rel="noopener">
+          <div class="connect-card__icon-wrap telegram-bg"><i class="fab fa-telegram fa-lg"></i></div>
+          <div><div class="connect-card__title">Telegram</div><div class="connect-card__handle">@s_k4ze</div></div>
+          <div class="connect-card__action">↗</div>
+        </a>
+        <a class="connect-card connect-card--full" href="mailto:lopgg96@gmail.com">
+          <div class="connect-card__icon-wrap email-bg"><i class="fas fa-envelope fa-lg"></i></div>
+          <div><div class="connect-card__title">Email</div><div class="connect-card__handle">lopgg96@gmail.com</div></div>
+          <div class="connect-card__action">↗</div>
+        </a>
+      </div>
+      <div class="contact-meta">
+        <span><i class="fas fa-map-marker-alt"></i> Stavropol, Russia</span>
+        <span><i class="fas fa-clock"></i> UTC+3</span>
+      </div>
+    </div>
+  </section>
 
-        <!-- Правая колонка: Discord статус + плеер -->
-        <div>
-          <div class="discord-card">
-            <div class="discord-header">
-              <div class="discord-avatar-wrap">
-                <img id="discord-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar">
-                <div id="discord-status-dot"></div>
-              </div>
-              <div>
-                <div id="discord-username">Shiokaze</div>
-                <div id="discord-tag">Загрузка...</div>
-              </div>
-            </div>
-            <div id="discord-activity"><i class="fas fa-circle-notch fa-spin"></i> Загрузка статуса...</div>
-          </div>
+  <!-- FOOTER -->
+  <footer class="footer-section">
+    <div class="footer__divider"></div>
+    <div class="footer__content">
+      <div>
+        <span class="footer__logo">SHIOKAZE</span>
+        <span class="footer__copyright">© 2026</span>
+      </div>
+      <div class="footer__info">
+        <div class="footer__label">System Status</div>
+        <div class="footer__value">All Systems Operational</div>
+      </div>
+      <button class="footer__totop" id="back-top" type="button">↑ BACK TO TOP</button>
+    </div>
+  </footer>
+</div>
 
-          <div class="player-card">
-            <div class="player-meta">
-              <div class="player-track">Murasame</div>
-              <div class="player-artist">Shiokaze · ambient waves</div>
-            </div>
-            <div class="player-progress-wrap" id="player-progress-wrap">
-              <div id="player-progress-bar"></div>
-            </div>
-            <div class="player-times">
-              <span id="player-current">0:00</span>
-              <span id="player-duration">0:00</span>
-            </div>
-            <div class="player-controls">
-              <button id="play-btn"><i class="
+<!-- !!REPLACE!! плеер — всегда виден внизу справа -->
+<div id="float-player">
+  <div class="float-player__bar">
+    <button id="float-play-btn" type="button" aria-label="Play/Pause"><i class="fas fa-play"></i></button>
+    <div class="float-player__info">
+      <span class="float-player__track">Murasame</span>
+      <span class="float-player__artist">Shiokaze</span>
+    </div>
+    <button id="float-toggle" type="button" aria-label="Expand player"><i class="fas fa-chevron-up"></i></button>
+  </div>
+  <div class="float-player__mini-progress"><div id="float-mini-bar"></div></div>
+  <div class="float-player__expanded">
+    <div class="player-progress-wrap" id="player-wrap"><div id="player-bar"></div></div>
+    <div class="player-times"><span id="player-cur">0:00</span><span id="player-dur">0:00</span></div>
+    <div class="player-controls">
+      <i class="fas fa-volume-up" style="font-size:.75rem;color:var(--text-muted)"></i>
+      <input type="range" id="volume-slider" min="0" max="100" value="70" aria-label="Volume">
+    </div>
+  </div>
+</div>
+
+<audio id="bg-audio" loop preload="auto" src="https://raw.githubusercontent.com/ShiokazeE/bio/main/murasame.mp3"></audio>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  const DISCORD_ID = '912747427465928754';
+  const IS_MOBILE = window.matchMedia('(pointer: coarse)').matches;
+  const ASCII_CHARSET = " .'`^\",:;Il!i~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
+
+  /* ═══ PRELOADER ═══ */
+  const preloader = document.getElementById('preloader');
+  const preloaderMsg = '[ DECRYPTING CONNECTION ... ]';
+  const typedEl = document.getElementById('preloader-typed');
+  const preloaderBar = document.getElementById('preloader-bar');
+  const preloaderPct = document.getElementById('preloader-pct');
+  let typedIdx = 0;
+  let loadPct = 0;
+
+  const typeInterval = setInterval(() => {
+    typedEl.textContent = preloaderMsg.substring(0, typedIdx++);
+    if (typedIdx > preloaderMsg.length) clearInterval(typeInterval);
+  }, 40);
+
+  const loadInterval = setInterval(() => {
+    loadPct = Math.min(100, loadPct + Math.random() * 18 + 4);
+    preloaderBar.style.width = loadPct + '%';
+    preloaderPct.textContent = Math.floor(loadPct);
+    if (loadPct >= 100) clearInterval(loadInterval);
+  }, 200);
+
+  function finishPreloader() {
+    setTimeout(() => {
+      preloader.classList.add('done');
+      setTimeout(() => { preloader.style.display = 'none'; }, 1200);
+    }, 400);
+  }
+
+  /* ═══ CURSOR ═══ */
+  const dot = document.getElementById('cursor-dot');
+  const outline = document.getElementById('cursor-outline');
+  let mx = -100, my = -100, rx = -100, ry = -100, oSize = 32;
+
+  if (!IS_MOBILE) {
+    window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    document.addEventListener('mouseover', e => {
+      const hover = e.target.closest('a,button,.top-icon,.connect-card,.project-card,#copy-discord,h1,h2,h3');
+      outline.classList.toggle('hover', !!hover);
+    });
+    (function animCursor() {
+      dot.style.transform = `translate3d(${mx - 4}px, ${my - 4}px, 0)`;
+      rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+      const target = outline.classList.contains('hover') ? 48 : 32;
+      oSize += (target - oSize) * 0.12;
+      outline.style.transform = `translate3d(${rx - oSize / 2}px, ${ry - oSize / 2}px, 0)`;
+      outline.style.width = outline.style.height = oSize + 'px';
+      requestAnimationFrame(animCursor);
+    })();
+  }
+
+  /* ═══ DITHER BACKGROUND (Three.js) ═══ */
+  const waveVert = `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }`;
+  const waveFrag = `
+    precision highp float;
+    uniform vec2 resolution;
+    uniform float time;
+    uniform vec2 mousePos;
+    uniform int enableMouse;
+    uniform float mouseRadius;
+    varying vec2 vUv;
+
+    vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}
+    vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}
+    vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
+    vec2 fade(vec2 t){return t*t*t*(t*(t*6.0-15.0)+10.0);}
+    float cnoise(vec2 P){
+      vec4 Pi=floor(P.xyxy)+vec4(0.,0.,1.,1.);
+      vec4 Pf=fract(P.xyxy)-vec4(0.,0.,1.,1.);
+      Pi=mod289(Pi); vec4 ix=Pi.xzxz; vec4 iy=Pi.yyww; vec4 fx=Pf.xzxz; vec4 fy=Pf.yyww;
+      vec4 i=permute(permute(ix)+iy);
+      vec4 gx=fract(i*(1.0/41.0))*2.0-1.0; vec4 gy=abs(gx)-0.5; vec4 tx=floor(gx+0.5); gx=gx-tx;
+      vec2 g00=vec2(gx.x,gy.x); vec2 g10=vec2(gx.y,gy.y); vec2 g01=vec2(gx.z,gy.z); vec2 g11=vec2(gx.w,gy.w);
+      vec4 norm=taylorInvSqrt(vec4(dot(g00,g00),dot(g01,g01),dot(g10,g10),dot(g11,g11)));
+      g00*=norm.x; g01*=norm.y; g10*=norm.z; g11*=norm.w;
+      float n00=dot(g00,vec2(fx.x,fy.x)); float n10=dot(g10,vec2(fx.y,fy.y));
+      float n01=dot(g01,vec2(fx.z,fy.z)); float n11=dot(g11,vec2(fx.w,fy.w));
+      vec2 fade_xy=fade(Pf.xy);
+      vec2 n_x=mix(vec2(n00,n01),vec2(n10,n11),fade_xy.x);
+      return 2.3*mix(n_x.x,n_x.y,fade_xy.y);
+    }
+    float fbm(vec2 p){
+      float v=0.0,a=1.0,f=3.0;
+      for(int i=0;i<3;i++){v+=a*abs(cnoise(p)); p*=f; a*=0.3; }
+      return v;
+    }
+    float bayer4(vec2 p){
+      p=floor(mod(p,4.0));
+      int x=int(p.x); int y=int(p.y);
+      if(y==0) return x==0?0.0:x==1?0.5:x==2?0.125:0.625;
+      if(y==1) return x==0?0.75:x==1?0.25:x==2?0.875:0.375;
+      if(y==2) return x==0?0.1875:x==1?0.6875:x==2?0.0625:0.5625;
+      return x==0?0.9375:x==1?0.4375:x==2?0.8125:0.3125;
+    }
+    void main(){
+      vec2 uv=gl_FragCoord.xy/resolution.xy;
+      uv-=0.5; uv.x*=resolution.x/resolution.y;
+      vec2 p2=uv-time*0.05;
+      float f=fbm(uv+fbm(p2));
+      if(enableMouse==1){
+        vec2 m=(mousePos/resolution-0.5)*vec2(1.0,-1.0);
+        m.x*=resolution.x/resolution.y;
+        f-=0.5*(1.0-smoothstep(0.0,mouseRadius,length(uv-m)));
+      }
+      vec3 col=mix(vec3(0.0), vec3(0.545,0.361,0.965), f);
+      vec2 px=floor(gl_FragCoord.xy/2.0);
+      float th=bayer4(px)-0.25;
+      col+=th*(1.0/3.0);
+      col=clamp(col-0.2,0.0,1.0);
+      col=floor(col*3.0+0.5)/3.0;
+      gl_FragColor=vec4(col,1.0);
+    }`;
+
+  let bgRenderer, bgScene, bgCamera, bgUniforms, bgMouse = new THREE.Vector2(0, 0);
+  function initDither() {
+    const mount = document.getElementById('dither-mount');
+    const w = window.innerWidth, h = window.innerHeight;
+    bgScene = new THREE.Scene();
+    bgCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    bgRenderer = new THREE.WebGLRenderer({ antialias: false, alpha: false });
+    bgRenderer.setPixelRatio(IS_MOBILE ? 0.35 : 0.5);
+    bgRenderer.setSize(w, h);
+    mount.appendChild(bgRenderer.domElement);
+    bgUniforms = {
+      time: { value: 0 },
+      resolution: { value: new THREE.Vector2(w * bgRenderer.getPixelRatio(), h * bgRenderer.getPixelRatio()) },
+      mousePos: { value: bgMouse },
+      enableMouse: { value: IS_MOBILE ? 0 : 1 },
+      mouseRadius: { value: 1.0 }
+    };
+    const mat = new THREE.ShaderMaterial({ vertexShader: waveVert, fragmentShader: waveFrag, uniforms: bgUniforms });
+    bgScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
+    if (!IS_MOBILE) {
+      window.addEventListener('mousemove', e => {
+        const pr = bgRenderer.getPixelRatio();
+        bgMouse.set(e.clientX * pr, (h - e.clientY) * pr);
+      });
+    }
+    (function animBg() {
+      bgUniforms.time.value = performance.now() * 0.001;
+      bgRenderer.render(bgScene, bgCamera);
+      requestAnimationFrame(animBg);
+    })();
+    window.addEventListener('resize', () => {
+      const nw = window.innerWidth, nh = window.innerHeight;
+      bgRenderer.setSize(nw, nh);
+      const pr = bgRenderer.getPixelRatio();
+      bgUniforms.resolution.value.set(nw * pr, nh * pr);
+    });
+  }
+
+  /* ═══ ASCII HERO TEXT ═══ */
+  const asciiVert = `
+    varying vec2 vUv;
+    uniform float uTime;
+    uniform float uEnableWaves;
+    void main(){
+      vUv=uv; vec3 p=position; float t=uTime*5.;
+      p.x+=sin(t+p.y)*0.5*uEnableWaves;
+      p.y+=cos(t+p.z)*0.15*uEnableWaves;
+      p.z+=sin(t+p.x)*uEnableWaves;
+      gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);
+    }`;
+  const asciiFrag = `
+    varying vec2 vUv;
+    uniform float uTime;
+    uniform sampler2D uTexture;
+    void main(){
+      float t=uTime;
+      float r=texture2D(uTexture,vUv+cos(t*2.-t+vUv.x)*.01).r;
+      float g=texture2D(uTexture,vUv+tan(t*.5+vUv.x-t)*.01).g;
+      float b=texture2D(uTexture,vUv-cos(t*2.+t+vUv.y)*.01).b;
+      float a=texture2D(uTexture,vUv).a;
+      gl_FragColor=vec4(r,g,b,a);
+    }`;
+
+  class AsciiFilter {
+    constructor(renderer, fontSize) {
+      this.renderer = renderer;
+      this.fontSize = fontSize || 10;
+      this.fontFamily = "'IBM Plex Mono', monospace";
+      this.charset = ASCII_CHARSET;
+      this.dom = document.createElement('div');
+      this.dom.style.cssText = 'position:absolute;inset:0;pointer-events:none';
+      this.pre = document.createElement('pre');
+      this.canvas = document.createElement('canvas');
+      this.ctx = this.canvas.getContext('2d');
+      this.dom.appendChild(this.pre);
+      this.dom.appendChild(this.canvas);
+      this.mouse = { x: 0, y: 0 };
+      this.center = { x: 0, y: 0 };
+      this.deg = 0; this.lastDeg = 0;
+      document.addEventListener('mousemove', e => { this.mouse.x = e.clientX; this.mouse.y = e.clientY; });
+    }
+    setSize(w, h) {
+      this.width = w; this.height = h;
+      this.renderer.setSize(w, h);
+      this.center = { x: w / 2, y: h / 2 };
+      this.reset();
+    }
+    reset() {
+      this.ctx.font = this.fontSize + 'px ' + this.fontFamily;
+      const cw = this.ctx.measureText('A').width;
+      this.cols = Math.floor(this.width / (this.fontSize * (cw / this.fontSize)));
+      this.rows = Math.floor(this.height / this.fontSize);
+      this.canvas.width = this.cols; this.canvas.height = this.rows;
+      Object.assign(this.pre.style, {
+        fontFamily: this.fontFamily, fontSize: this.fontSize + 'px',
+        margin: '0', padding: '0', lineHeight: '1em', position: 'absolute',
+        left: '0', top: '0', zIndex: '9', mixBlendMode: 'difference',
+        whiteSpace: 'pre', userSelect: 'none'
+      });
+    }
+    render(scene, camera) {
+      this.renderer.render(scene, camera);
+      const n = this.canvas.width, r = this.canvas.height;
+      this.ctx.clearRect(0, 0, n, r);
+      this.ctx.drawImage(this.renderer.domElement, 0, 0, n, r);
+      const data = this.ctx.getImageData(0, 0, n, r).data;
+      let out = '';
+      for (let y = 0; y < r; y++) {
+        for (let x = 0; x < n; x++) {
+          const i = (y * n + x) * 4;
+          if (!data[i + 3]) { out += ' '; continue; }
+          const lum = (0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]) / 255;
+          let idx = Math.floor((1 - lum) * (this.charset.length - 1));
+          out += this.charset[idx];
+        }
+        out += '\n';
+      }
+      if (this.pre.textContent !== out) this.pre.textContent = out;
+      const ang = Math.atan2(this.mouse.y - this.center.y, this.mouse.x - this.center.x) * 180 / Math.PI;
+      this.deg += (ang - this.deg) * 0.075;
+      if (Math.abs(this.lastDeg - this.deg) > 2) {
+        this.dom.style.filter = 'hue-rotate(' + Math.round(this.deg) + 'deg)';
+        this.lastDeg = this.deg;
+      }
+    }
+  }
+
+  class AsciiHero {
+    constructor(container, text) {
+      this.container = container;
+      this.text = text;
+      this.mouse = { x: 0, y: 0 };
+      this.onMove = this.onMove.bind(this);
+    }
+    async init() {
+      await document.fonts.load('600 200px "IBM Plex Mono"');
+      const rect = this.container.getBoundingClientRect();
+      this.width = rect.width; this.height = rect.height;
+      this.scene = new THREE.Scene();
+      this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 1000);
+      this.camera.position.z = 30;
+      const tc = document.createElement('canvas');
+      const tctx = tc.getContext('2d');
+      tctx.font = '600 200px "IBM Plex Mono"';
+      const m = tctx.measureText(this.text);
+      tc.width = Math.ceil(m.width) + 20;
+      tc.height = Math.ceil(m.actualBoundingBoxAscent + m.actualBoundingBoxDescent) + 20;
+      tctx.font = '600 200px "IBM Plex Mono"';
+      tctx.fillStyle = '#fdf9f3';
+      tctx.fillText(this.text, 10, 10 + m.actualBoundingBoxAscent);
+      const tex = new THREE.CanvasTexture(tc);
+      tex.minFilter = THREE.NearestFilter;
+      const aspect = tc.width / tc.height;
+      const baseH = 8;
+      const geo = new THREE.PlaneGeometry(baseH * aspect, baseH, 36, 36);
+      this.uniforms = {
+        uTime: { value: 0 },
+        uTexture: { value: tex },
+        uEnableWaves: { value: IS_MOBILE ? 0 : 1 }
+      };
+      this.mesh = new THREE.Mesh(geo, new THREE.ShaderMaterial({
+        vertexShader: asciiVert, fragmentShader: asciiFrag,
+        transparent: true, uniforms: this.uniforms
+      }));
+      this.scene.add(this.mesh);
+      this.renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+      this.renderer.setClearColor(0, 0);
+      this.renderer.setPixelRatio(1);
+      this.filter = new AsciiFilter(this.renderer, 8);
+      this.container.appendChild(this.filter.dom);
+      this.setSize(this.width, this.height);
+      document.addEventListener('mousemove', this.onMove);
+      document.addEventListener('touchmove', this.onMove, { passive: true });
+      this.animate();
+    }
+    onMove(e) {
+      const r = this.container.getBoundingClientRect();
+      const p = e.touches ? e.touches[0] : e;
+      this.mouse.x = this.width / 2 + (p.clientX - (r.left + r.width / 2));
+      this.mouse.y = this.height / 2 - (p.clientY - (r.top + r.height / 2));
+    }
+    setSize(w, h) {
+      this.width = w; this.height = h;
+      this.camera.aspect = w / h;
+      this.camera.updateProjectionMatrix();
+      this.filter.setSize(w, h);
+      this.center = { x: w / 2, y: h / 2 };
+    }
+    animate() {
+      requestAnimationFrame(() => this.animate());
+      const now = performance.now();
+      if (now - (this._last || 0) < 42) return;
+      this._last = now;
+      this.uniforms.uTime.value = Math.sin(now * 0.001);
+      const t = 0.4;
+      const ty = Math.max(-t, Math.min(t, (this.mouse.y / this.height - 0.5) * -1));
+      const tx = Math.max(-t, Math.min(t, (this.mouse.x / this.width - 0.5)));
+      this.mesh.rotation.x += (ty - this.mesh.rotation.x) * 0.05;
+      this.mesh.rotation.y += (tx - this.mesh.rotation.y) * 0.05;
+      this.filter.render(this.scene, this.camera);
+    }
+  }
+
+  /* ═══ TYPEWRITER ═══ */
+  const phrases = ['Digital Creator', 'C++ & Python', 'Designer', 'Digital Creator'];
+  let pi = 0, ci = 0, deleting = false;
+  const typeEl = document.getElementById('type-text');
+  const typeCursor = document.getElementById('type-cursor');
+
+  function typeTick() {
+    const word = phrases[pi];
+    if (!deleting) {
+      typeEl.textContent = word.substring(0, ++ci);
+      if (ci === word.length) { deleting = true; return setTimeout(typeTick, 2000); }
+      setTimeout(typeTick, 60);
+    } else {
+      typeEl.textContent = word.substring(0, --ci);
+      if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; return setTimeout(typeTick, 400); }
+      setTimeout(typeTick, 30);
+    }
+  }
+
+  /* ═══ SCROLL ═══ */
+  const hero = document.getElementById('hero');
+  const progress = document.getElementById('progress');
+
+  function onScroll() {
+    const sh = document.documentElement.scrollHeight - window.innerHeight;
+    const p = sh > 0 ? window.scrollY / sh : 0;
+    progress.style.transform = 'scaleX(' + p + ')';
+    const heroFade = Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.8));
+    hero.style.opacity = heroFade;
+    hero.style.transform = 'scale(' + (0.92 + heroFade * 0.08) + ')';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  document.getElementById('scroll-down').addEventListener('click', () => {
+    document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+  });
+  document.getElementById('back-top').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ═══ LOGO LOOP duplicate ═══ */
+  const loop = document.getElementById('logoloop');
+  loop.innerHTML += loop.innerHTML;
+
+  /* ═══ COPY DISCORD ═══ */
+  document.getElementById('copy-discord').addEventListener('click', () => {
+    navigator.clipboard.writeText('shiokaze').catch(() => {});
+  });
+
+  /* ═══ DISCORD LANYARD ═══ */
+  const statusColors = { online: '#23a55a', idle: '#f0b232', dnd: '#f23f43', offline: '#747f8d' };
+  const statusLabels = { online: 'Online', idle: 'Away', dnd: 'Do Not Disturb', offline: 'Offline' };
+
+  async function fetchDiscord() {
+    try {
+      const d = (await (await fetch('https://api.lanyard.rest/v1/users/' + DISCORD_ID)).json()).data;
+      const u = d.discord_user;
+      const av = u.avatar
+        ? `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${u.avatar}.${u.avatar.startsWith('a_') ? 'gif' : 'webp'}?size=64`
+        : `https://cdn.discordapp.com/embed/avatars/0.png`;
+      document.getElementById('badge-avatar').src = av;
+      const st = d.discord_status || 'offline';
+      const col = statusColors[st] || statusColors.offline;
+      document.getElementById('badge-dot').style.background = col;
+      document.getElementById('badge-dot').style.boxShadow = `0 0 6px ${col}`;
+      const acts = d.activities || [];
+      const act = acts.find(a => a.type === 0) || acts.find(a => a.type === 2) || acts.find(a => a.type === 1);
+      let label = statusLabels[st] || 'Offline';
+      if (act) label = act.type === 2 ? (act.details || 'Spotify') : act.name;
+      document.getElementById('badge-status').textContent = 'Currently ' + label.toLowerCase();
+      document.getElementById('discord-handle').textContent = u.username;
+    } catch {
+      document.getElementById('badge-status').textContent = 'Currently offline';
+    }
+  }
+
+  /* ═══ SAKURA PETALS ═══ */
+  (function initSakura() {
+    const canvas = document.getElementById('sakura-canvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, petals = [];
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    function spawn() {
+      const fromLeft = Math.random() > 0.5;
+      petals.push({
+        x: fromLeft ? -10 : w + 10,
+        y: Math.random() * h,
+        size: 4 + Math.random() * 8,
+        speedX: (fromLeft ? 1 : -1) * (0.3 + Math.random() * 0.8),
+        speedY: 0.2 + Math.random() * 0.6,
+        rot: Math.random() * Math.PI * 2,
+        rotSpd: (Math.random() - 0.5) * 0.04,
+        opacity: 0.25 + Math.random() * 0.45,
+        hue: 330 + Math.random() * 30
+      });
+    }
+
+    function drawPetal(p) {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.globalAlpha = p.opacity;
+      ctx.fillStyle = `hsl(${p.hue}, 75%, 82%)`;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(p.size * 0.5, -p.size * 0.3, p.size, -p.size * 0.1, 0, p.size);
+      ctx.bezierCurveTo(-p.size, -p.size * 0.1, -p.size * 0.5, -p.size * 0.3, 0, 0);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, w, h);
+      if (petals.length < 28 && Math.random() < 0.08) spawn();
+      petals = petals.filter(p => {
+        p.x += p.speedX;
+        p.y += p.speedY + Math.sin(p.rot) * 0.3;
+        p.rot += p.rotSpd;
+        drawPetal(p);
+        return p.y < h + 20 && p.x > -30 && p.x < w + 30;
+      });
+      requestAnimationFrame(tick);
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    for (let i = 0; i < 12; i++) spawn();
+    tick();
+  })();
+
+  /* ═══ AUDIO PLAYER (floating) ═══ */
+  const audio = document.getElementById('bg-audio');
+  const floatPlayBtn = document.getElementById('float-play-btn');
+  const floatPlayer = document.getElementById('float-player');
+  const floatToggle = document.getElementById('float-toggle');
+  const playerBar = document.getElementById('player-bar');
+  const floatMiniBar = document.getElementById('float-mini-bar');
+  const playerWrap = document.getElementById('player-wrap');
+  const fmt = s => isNaN(s) ? '0:00' : Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+
+  function setPlayIcon(playing) {
+    const icon = playing ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+    floatPlayBtn.innerHTML = icon;
+  }
+
+  audio.volume = 0.7;
+  audio.addEventListener('loadedmetadata', () => { document.getElementById('player-dur').textContent = fmt(audio.duration); });
+  audio.addEventListener('timeupdate', () => {
+    if (!audio.duration) return;
+    const pct = (audio.currentTime / audio.duration * 100) + '%';
+    playerBar.style.width = pct;
+    floatMiniBar.style.width = pct;
+    document.getElementById('player-cur').textContent = fmt(audio.currentTime);
+  });
+  audio.addEventListener('play', () => setPlayIcon(true));
+  audio.addEventListener('pause', () => setPlayIcon(false));
+  floatPlayBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    audio.paused ? audio.play().catch(() => {}) : audio.pause();
+  });
+  floatToggle.addEventListener('click', e => {
+    e.stopPropagation();
+    floatPlayer.classList.toggle('expanded');
+  });
+  playerWrap.addEventListener('click', e => {
+    if (!audio.duration) return;
+    const r = playerWrap.getBoundingClientRect();
+    audio.currentTime = (e.clientX - r.left) / r.width * audio.duration;
+  });
+  document.getElementById('volume-slider').addEventListener('input', e => { audio.volume = e.target.value / 100; });
+  function tryPlay() { audio.play().catch(() => {}); document.removeEventListener('click', tryPlay); document.removeEventListener('touchstart', tryPlay); }
+  document.addEventListener('click', tryPlay);
+  document.addEventListener('touchstart', tryPlay);
+
+  /* ═══ INIT ═══ */
+  window.addEventListener('load', async () => {
+    initDither();
+    const ascii = new AsciiHero(document.getElementById('ascii-container'), 'SHIOKAZE');
+    await ascii.init();
+    new ResizeObserver(entries => {
+      const { width, height } = entries[0].contentRect;
+      if (width && height) ascii.setSize(width, height);
+    }).observe(document.getElementById('ascii-container'));
+    typeTick();
+    fetchDiscord();
+    setInterval(fetchDiscord, 15000);
+    onScroll();
+    finishPreloader();
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -760,6 +760,1309 @@
     @media (max-width: 480px) {
       .aurora-layer { display: none; }
     }
+
+    /* =========================================================
+       SHIOKAZE — VISUAL FUSION OVERRIDES
+       1336.netlify.app × itsfizys.gg
+       Content / links / media / functionality intentionally kept.
+       ========================================================= */
+
+    :root {
+      --bg-color: #05060a;
+      --text-main: #f2f3f7;
+      --text-muted: #858b9b;
+      --glass-bg: rgba(255,255,255,.035);
+      --glass-border: rgba(255,255,255,.085);
+
+      --accent-rgb: 124,143,255;
+      --accent-light-rgb: 190,198,255;
+      --accent: rgb(var(--accent-rgb));
+      --accent-light: rgb(var(--accent-light-rgb));
+      --accent-text: #b9c1ff;
+
+      --sakura: #d8c7ff;
+      --sakura-soft: rgba(216,199,255,.22);
+      --sakura-glow: rgba(124,143,255,.12);
+
+      --void: #05060a;
+      --panel: rgba(255,255,255,.035);
+      --line: rgba(255,255,255,.075);
+      --line-strong: rgba(255,255,255,.15);
+      --ember: #e7b86b;
+      --radius: 16px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: #05060a;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 50% -10%, rgba(124,143,255,.09), transparent 35%),
+        #05060a;
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      letter-spacing: -.01em;
+    }
+
+    /* Background: atmospheric, but deliberately darker and calmer. */
+    #bg-wrap { opacity: .72; }
+    #bg-overlay {
+      backdrop-filter: blur(1px);
+      background:
+        linear-gradient(rgba(5,6,10,.38), rgba(5,6,10,.72)),
+        radial-gradient(circle at 50% 40%, transparent 0%, rgba(5,6,10,.35) 65%, rgba(5,6,10,.8) 100%);
+    }
+    .aurora-layer {
+      opacity: .09;
+      mix-blend-mode: screen;
+    }
+    .edge-bloom {
+      opacity: .18;
+      filter: blur(70px);
+    }
+    #top-fade {
+      height: 18vh;
+      background: linear-gradient(rgba(5,6,10,.9), transparent);
+    }
+
+    /* Fine grid/noise language inspired by the reference cards. */
+    #bg-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .16;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+
+    /* Cursor */
+    .cursor-dot {
+      width: 5px;
+      height: 5px;
+      background: #fff;
+      box-shadow: 0 0 12px rgba(124,143,255,.9);
+      mix-blend-mode: normal;
+    }
+    .cursor-outline {
+      width: 30px;
+      height: 30px;
+      border: 1px solid rgba(190,198,255,.55);
+      mix-blend-mode: normal;
+    }
+    .cursor-outline.hover {
+      width: 44px;
+      height: 44px;
+      background: rgba(124,143,255,.08);
+      border-color: rgba(190,198,255,.8);
+    }
+
+    /* Progress */
+    .scroll-progress-bar {
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), #fff, var(--ember));
+      box-shadow: 0 0 14px rgba(124,143,255,.45);
+    }
+
+    /* Hero */
+    .landing-section {
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(124,143,255,.07), transparent 42%);
+    }
+    .landing-content {
+      margin-top: 0;
+      transform: translateY(-2vh);
+    }
+    .ascii-wrapper {
+      max-width: 1050px;
+      height: clamp(190px, 30vw, 360px);
+    }
+    .ascii-text-container pre {
+      background-image: linear-gradient(120deg, #f4f5fa 0%, #aeb8ff 45%, #777fd1 100%);
+      filter: drop-shadow(0 0 18px rgba(124,143,255,.18));
+      mix-blend-mode: normal;
+    }
+    .subtitle {
+      margin-top: -2rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: clamp(.7rem, 1.4vw, .9rem);
+      letter-spacing: .32em;
+      color: rgba(242,243,247,.55);
+    }
+    .text-type__cursor {
+      color: var(--accent-light);
+    }
+
+    .top-icons {
+      top: 1.5rem;
+      right: 1.5rem;
+      gap: .65rem;
+    }
+    .top-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(8,10,17,.58);
+      border: 1px solid rgba(255,255,255,.09);
+      backdrop-filter: blur(12px);
+      box-shadow: none;
+    }
+    .top-icon:hover {
+      transform: translateY(-2px);
+      background: rgba(124,143,255,.10);
+      border-color: rgba(124,143,255,.42);
+      box-shadow: 0 0 22px rgba(124,143,255,.13);
+    }
+    .top-icon::before { display: none; }
+
+    .scroll-down-indicator {
+      bottom: 1.5rem;
+      color: rgba(242,243,247,.42);
+    }
+
+    /* Section architecture */
+    .about-section,
+    .projects-section,
+    .connect-section {
+      background: transparent;
+    }
+
+    .about-section {
+      padding: 8rem 2rem 9rem;
+    }
+    .about-content,
+    .projects-content,
+    .connect-content {
+      max-width: 1040px;
+      gap: 2rem;
+    }
+
+    .about-eyebrow,
+    .projects-eyebrow,
+    .connect-eyebrow {
+      color: var(--accent-light);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .25em;
+      opacity: .72;
+    }
+
+    .about-title,
+    .projects-title,
+    .connect-title {
+      background: none;
+      -webkit-text-fill-color: initial;
+      color: var(--text-main);
+      animation: none;
+      letter-spacing: -.045em;
+      font-weight: 600;
+    }
+
+    .about-title {
+      font-size: clamp(2.7rem, 7vw, 5.2rem);
+    }
+    .projects-title,
+    .connect-title {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+    }
+
+    .about-accent-bar,
+    .projects-accent-bar,
+    .connect-accent-bar {
+      height: 1px;
+      border-radius: 0;
+      background: linear-gradient(90deg, var(--accent), rgba(124,143,255,.08), transparent);
+      animation: none;
+    }
+
+    .about-body {
+      grid-template-columns: 180px 1fr;
+      gap: 3.5rem;
+      padding-top: 1rem;
+    }
+
+    .about-avatar {
+      width: 160px;
+      height: 200px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 25px 60px -35px rgba(124,143,255,.5);
+      filter: saturate(.78) contrast(1.03);
+    }
+
+    .currently-badge {
+      border-radius: 8px;
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: none;
+      padding: .45rem .7rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .63rem;
+      white-space: nowrap;
+    }
+
+    .about-quote {
+      border-left: 1px solid rgba(124,143,255,.55);
+      color: rgba(242,243,247,.72);
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      line-height: 1.9;
+      max-width: 700px;
+      padding-left: 1.5rem;
+    }
+
+    .about-divider,
+    .section-divider__line {
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);
+    }
+    .section-divider__dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(124,143,255,.55);
+      animation: none;
+    }
+
+    .interests-heading {
+      text-align: left;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .22em;
+      color: var(--text-muted);
+    }
+
+    .logoloop-wrap {
+      padding: .7rem 0 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .logoloop-item {
+      margin-right: 2.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .82rem;
+      color: rgba(242,243,247,.38);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .logoloop-item:hover {
+      color: var(--text-main);
+      filter: drop-shadow(0 0 10px rgba(124,143,255,.45));
+      transform: none;
+    }
+
+    /* Project cards: sharper, more "stat-card" and less glossy. */
+    .projects-section {
+      padding: 8rem 2rem 9rem;
+    }
+    .projects-grid {
+      gap: 1rem;
+    }
+    .project-card {
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.075);
+      border-radius: 12px;
+      box-shadow: none;
+      min-height: 230px;
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,.04);
+      border-color: rgba(124,143,255,.38);
+      box-shadow: 0 20px 50px -35px rgba(124,143,255,.55);
+    }
+    .project-card--featured {
+      min-height: 330px;
+    }
+    .project-card__image-wrap {
+      background: #090b12;
+      border-color: rgba(255,255,255,.07);
+    }
+    .project-card__image-wrap img {
+      filter: saturate(.7) brightness(.72) contrast(1.05);
+      transition: filter .5s, transform .7s;
+    }
+    .project-card:hover .project-card__image-wrap img {
+      filter: saturate(.9) brightness(.82) contrast(1.08);
+      transform: scale(1.025);
+    }
+    .project-card__body {
+      padding: 1.6rem;
+    }
+    .project-card__number {
+      color: var(--ember);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .project-card__title {
+      font-size: 1.35rem;
+      letter-spacing: -.025em;
+    }
+    .project-card__desc {
+      color: var(--text-muted);
+    }
+    .project-tag {
+      border-radius: 5px;
+      color: var(--accent-light);
+      background: rgba(124,143,255,.07);
+      border: 1px solid rgba(124,143,255,.2);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* Socials */
+    .connect-section {
+      padding: 8rem 2rem 5rem;
+    }
+    .connect-grid {
+      gap: .8rem;
+    }
+    .connect-card {
+      min-height: 100px;
+      padding: 1.15rem 1.25rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.075);
+      box-shadow: none;
+      backdrop-filter: blur(12px);
+    }
+    .connect-card::before,
+    .connect-card::after {
+      opacity: 0;
+    }
+    .connect-card:hover {
+      transform: translateY(-4px);
+      background: rgba(124,143,255,.055);
+      border-color: rgba(124,143,255,.34);
+      box-shadow: 0 18px 45px -35px rgba(124,143,255,.55);
+    }
+    .connect-card__icon-wrap {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      margin-right: 1rem;
+      background: rgba(255,255,255,.045) !important;
+      border: 1px solid rgba(255,255,255,.08) !important;
+      box-shadow: none !important;
+    }
+    .connect-card__title {
+      font-size: .95rem;
+      font-weight: 600;
+    }
+    .connect-card__handle {
+      color: var(--text-muted);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .72rem;
+    }
+    .connect-card__action {
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+    .contact-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .68rem;
+      color: var(--text-muted);
+    }
+    .contact-meta i {
+      color: var(--accent-light);
+    }
+
+    /* Player: small utility widget, not a dominant glass bubble. */
+    #float-player {
+      width: min(300px, calc(100vw - 2rem));
+      right: 1.25rem;
+      bottom: 1.25rem;
+      background: rgba(8,10,16,.86);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 10px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.35);
+      backdrop-filter: blur(18px);
+    }
+    #float-play-btn {
+      width: 34px;
+      height: 34px;
+      background: rgba(124,143,255,.12);
+      border-color: rgba(124,143,255,.3);
+    }
+    #float-toggle {
+      border-radius: 7px;
+      background: rgba(255,255,255,.045);
+    }
+    #float-mini-bar,
+    #player-bar {
+      background: linear-gradient(90deg, var(--accent), var(--ember));
+    }
+
+    /* Footer */
+    .footer-section {
+      padding: 0 2rem 4rem;
+    }
+    .footer__content {
+      max-width: 1040px;
+    }
+    .footer__logo {
+      font-size: 1.5rem;
+      letter-spacing: .08em;
+      font-weight: 600;
+    }
+    .footer__copyright {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .65rem;
+    }
+    .footer__label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .6rem;
+    }
+    .footer__value {
+      color: #8fe0ad;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .68rem;
+      text-shadow: none;
+    }
+    .footer__totop {
+      border-radius: 7px;
+      background: rgba(255,255,255,.035);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .65rem;
+      box-shadow: none;
+    }
+
+    /* Preloader: restrained terminal feel. */
+    #preloader {
+      background: #05060a;
+    }
+    .preloader-grid {
+      opacity: .35;
+      background-image: radial-gradient(rgba(124,143,255,.16) 1px, transparent 1px);
+      background-size: 42px 42px;
+    }
+    .preloader-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .7rem;
+      letter-spacing: .22em;
+    }
+    .preloader-status {
+      color: rgba(124,143,255,.58);
+    }
+    .preloader-bar-fill {
+      background: var(--accent);
+      box-shadow: 0 0 14px rgba(124,143,255,.55);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .about-section,
+      .projects-section,
+      .connect-section {
+        padding-left: 1.15rem;
+        padding-right: 1.15rem;
+      }
+      .about-body {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+      }
+      .about-profile {
+        flex-direction: row;
+        align-items: center;
+      }
+      .about-avatar {
+        width: 100px;
+        height: 120px;
+      }
+      .about-quote {
+        font-size: 1rem;
+      }
+      .projects-grid,
+      .project-card--featured {
+        grid-template-columns: 1fr;
+      }
+      .project-card--featured .project-card__image-wrap {
+        min-height: 240px;
+      }
+      .connect-grid {
+        grid-template-columns: 1fr;
+      }
+      #float-player {
+        left: 1rem;
+        right: 1rem;
+        width: auto;
+      }
+      .footer-section {
+        padding-left: 1.15rem;
+        padding-right: 1.15rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .top-icons {
+        top: .9rem;
+        right: .9rem;
+      }
+      .top-icon {
+        width: 38px;
+        height: 38px;
+      }
+      .ascii-wrapper {
+        height: 190px;
+      }
+      .subtitle {
+        margin-top: -1rem;
+        font-size: .62rem;
+        letter-spacing: .18em;
+      }
+      .about-profile {
+        align-items: flex-start;
+      }
+    }
+
+
+    /* ITSFIZYS-STYLE VISUAL PASS */
+    :root { --fizys-purple:#7b4dff; --fizys-violet:#9b7bff; --fizys-pink:#e7a4c7; }
+    body { background:#030409; overflow-x:hidden; }
+    #bg-wrap { opacity:.96; background:radial-gradient(ellipse at 72% 30%,rgba(82,31,150,.16),transparent 34%),radial-gradient(ellipse at 23% 72%,rgba(54,25,120,.13),transparent 38%),#030409; }
+    #bg-overlay { background:linear-gradient(180deg,rgba(2,3,8,.35),rgba(2,3,8,.64)),radial-gradient(circle at 50% 45%,transparent 20%,rgba(2,3,8,.22) 60%,rgba(2,3,8,.82) 100%); }
+    .aurora-layer { opacity:.15; } .edge-bloom { opacity:.32; filter:blur(95px); }
+    .edge-bloom--left { background:rgba(76,35,180,.16); } .edge-bloom--right { background:rgba(116,44,180,.13); }
+    #bg-wrap::after { opacity:.24; background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px); background-size:44px 44px; mask-image:linear-gradient(to bottom,black,rgba(0,0,0,.8) 50%,transparent); }
+    .landing-section { background:radial-gradient(circle at 50% 50%,rgba(106,55,205,.10),transparent 30%),transparent; }
+    .landing-content { transform:translateY(-1vh); } .ascii-wrapper { max-width:1080px; height:clamp(210px,31vw,380px); }
+    .ascii-text-container pre { filter:drop-shadow(0 0 12px rgba(111,67,255,.26)) drop-shadow(0 0 42px rgba(111,67,255,.08)); }
+    .subtitle { color:rgba(255,255,255,.48); letter-spacing:.36em; }
+    .top-icons { gap:.35rem; top:1.35rem; right:1.35rem; }
+    .top-icon { width:39px;height:39px;border-radius:9px;background:rgba(3,4,10,.54);border:1px solid rgba(255,255,255,.055);box-shadow:none;backdrop-filter:blur(16px); }
+    .top-icon:hover { background:rgba(115,67,235,.12);border-color:rgba(155,123,255,.34);box-shadow:0 0 25px rgba(105,57,220,.12); }
+    .about-content,.projects-content,.connect-content { max-width:1080px; }
+    .about-eyebrow,.projects-eyebrow,.connect-eyebrow,.interests-heading { font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(214,204,255,.52); }
+    .about-title,.projects-title,.connect-title { font-weight:600;letter-spacing:-.055em;text-shadow:0 8px 40px rgba(0,0,0,.5); }
+    .about-accent-bar,.projects-accent-bar,.connect-accent-bar { background:linear-gradient(90deg,rgba(155,123,255,.9),rgba(155,123,255,.12),transparent);height:1px; }
+    .about-body { grid-template-columns:185px minmax(0,1fr);gap:4.2rem;align-items:start; }
+    .about-avatar { width:166px;height:205px;border-radius:8px;border:1px solid rgba(255,255,255,.10);box-shadow:0 25px 80px -45px rgba(111,60,235,.8);filter:grayscale(.18) saturate(.72) contrast(1.06); }
+    .currently-badge { margin-top:.75rem;border-radius:5px;background:rgba(8,8,16,.65);border:1px solid rgba(255,255,255,.07);box-shadow:none; }
+    .about-quote { border-left:1px solid rgba(155,123,255,.45);padding-left:1.6rem;color:rgba(238,237,244,.58);line-height:1.95; }
+    .logoloop-wrap { border-top:1px solid rgba(255,255,255,.045);border-bottom:1px solid rgba(255,255,255,.045);padding:1rem 0 1.25rem; }
+    .logoloop-item { color:rgba(255,255,255,.28);letter-spacing:.12em;font-family:'IBM Plex Mono',monospace; } .logoloop-item:hover { color:rgba(218,208,255,.8);filter:none; }
+    .project-card,.connect-card { background:rgba(3,4,9,.64);border-color:rgba(255,255,255,.065);box-shadow:inset 0 1px rgba(255,255,255,.018);backdrop-filter:blur(10px); }
+    .project-card { border-radius:8px; } .connect-card { border-radius:8px; }
+    .project-card:hover,.connect-card:hover { background:rgba(7,6,15,.76);border-color:rgba(143,108,255,.28);box-shadow:0 25px 65px -45px rgba(98,51,210,.75); }
+    .project-card__image-wrap { border-color:rgba(255,255,255,.055);background:#05060b; }
+    .project-card__image-wrap img { filter:grayscale(.38) saturate(.72) brightness(.64) contrast(1.08); } .project-card:hover .project-card__image-wrap img { filter:grayscale(.12) saturate(.88) brightness(.78) contrast(1.08); }
+    .project-tag { border-radius:4px;color:rgba(207,194,255,.7);background:rgba(108,67,222,.08);border-color:rgba(143,108,255,.18); }
+    .connect-grid { gap:.65rem; } .connect-card { min-height:96px; }
+    .connect-card__icon-wrap { border-radius:8px!important;background:rgba(255,255,255,.025)!important;border-color:rgba(255,255,255,.07)!important; }
+    .dac-topline { display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem;font:600 .52rem/1 'IBM Plex Mono',monospace;letter-spacing:.16em;color:rgba(255,255,255,.32); }
+    .dac-live { color:rgba(147,222,174,.65); } .dac-live i { display:inline-block;width:5px;height:5px;border-radius:50%;margin-right:4px;background:#79d89a;box-shadow:0 0 8px rgba(121,216,154,.7); }
+    .dac-main { display:flex;align-items:center;min-width:0;gap:.7rem; } .dac-avatar-wrap { position:relative;flex:0 0 auto; }
+    .dac-avatar-wrap img { width:42px;height:42px;display:block;border-radius:8px;border:1px solid rgba(255,255,255,.08); }
+    .dac-status-dot { position:absolute;right:-2px;bottom:-2px;width:10px;height:10px;border-radius:50%;border:2px solid #07070c;background:#747684; }
+    .dac-copy { display:flex;flex-direction:column;min-width:0;gap:.18rem; } .dac-copy strong { font-size:.78rem;font-weight:600;color:rgba(255,255,255,.86);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .dac-copy span { font-size:.63rem;color:rgba(203,194,255,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; } .dac-copy small { font:.52rem/1 'IBM Plex Mono',monospace;color:rgba(255,255,255,.25);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .dac-chevron { margin-left:auto;align-self:flex-start;color:rgba(255,255,255,.3);font-size:.9rem;line-height:1; }
+    .dac-line { height:1px;margin-top:.65rem;background:rgba(255,255,255,.055);overflow:hidden; } .dac-line span { display:block;width:38%;height:100%;background:linear-gradient(90deg,rgba(123,77,255,.65),rgba(231,164,199,.55));box-shadow:0 0 10px rgba(123,77,255,.35); }
+    #float-player { right:1.35rem;bottom:1.25rem;width:272px;border-radius:9px;background:rgba(5,5,10,.86);border-color:rgba(255,255,255,.075);box-shadow:0 24px 65px rgba(0,0,0,.42); }
+    #float-play-btn { width:34px;height:34px;background:rgba(123,77,255,.12);border-color:rgba(143,108,255,.3); } #float-mini-bar,#player-bar { background:linear-gradient(90deg,#7650ff,#d99bbb); }
+    .footer__content { max-width:1080px; } .footer__logo { letter-spacing:.16em; }
+    @media (max-width:768px) { .about-body{grid-template-columns:1fr;gap:2rem}.about-avatar{width:120px;height:150px}.discord-activity-card{right:1rem;bottom:6.1rem;width:calc(100vw - 2rem);max-width:272px}#float-player{right:1rem;bottom:1rem;width:calc(100vw - 2rem)} }
+    @media (max-width:480px) { .discord-activity-card{max-width:none}.top-icons{top:.8rem;right:.8rem}.top-icon{width:36px;height:36px} }
+
+
+    /* =========================================================
+       ITSFIZYS SIDE SYSTEM
+       Left navigation = reference vibe.
+       Discord = 1336-inspired compact activity card.
+       Player intentionally stays bottom-right.
+       ========================================================= */
+
+    .fz-side-nav {
+      position: fixed;
+      z-index: 80;
+      left: 1.35rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 185px;
+      padding: 1.15rem 0 1rem 1.1rem;
+      pointer-events: none;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .fz-side-nav__rail {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(190,198,255,.35) 15%,
+        rgba(190,198,255,.12) 50%,
+        transparent 90%
+      );
+    }
+
+    .fz-side-nav__brand {
+      margin-bottom: 1.8rem;
+      color: rgba(242,243,247,.88);
+      font-size: .62rem;
+      letter-spacing: .16em;
+      white-space: nowrap;
+    }
+
+    .fz-side-nav__brand span {
+      color: rgba(190,198,255,.45);
+      padding: 0 .2rem;
+    }
+
+    .fz-side-nav__links {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+      pointer-events: auto;
+    }
+
+    .fz-side-nav__links a {
+      position: relative;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: center;
+      min-height: 36px;
+      padding: 0 .7rem;
+      color: rgba(242,243,247,.34);
+      text-decoration: none;
+      font-size: .63rem;
+      letter-spacing: .055em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      transition:
+        color .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        transform .25s ease;
+    }
+
+    .fz-side-nav__links a::before {
+      content: "";
+      position: absolute;
+      left: -1.1rem;
+      top: 50%;
+      width: 0;
+      height: 1px;
+      background: rgba(216,199,255,.75);
+      box-shadow: 0 0 10px rgba(124,143,255,.35);
+      transition: width .25s ease;
+    }
+
+    .fz-side-nav__links a:hover,
+    .fz-side-nav__links a.is-active {
+      color: rgba(255,255,255,.94);
+      background: rgba(255,255,255,.035);
+      border-color: rgba(255,255,255,.06);
+      transform: translateX(3px);
+    }
+
+    .fz-side-nav__links a:hover::before,
+    .fz-side-nav__links a.is-active::before {
+      width: 12px;
+    }
+
+    .fz-side-nav__index {
+      color: rgba(190,198,255,.3);
+      font-size: .55rem;
+    }
+
+    .fz-side-nav__links a.is-active .fz-side-nav__index {
+      color: rgba(216,199,255,.8);
+    }
+
+    .fz-side-nav__hint {
+      margin-top: 2rem;
+      color: rgba(242,243,247,.18);
+      font-size: .48rem;
+      letter-spacing: .18em;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+
+    /* 1336-inspired Discord activity card. */
+    .fz-discord-card {
+      position: fixed;
+      z-index: 79;
+      left: 1.35rem;
+      bottom: 1.35rem;
+      width: 235px;
+      padding: .85rem;
+      border: 1px solid rgba(255,255,255,.085);
+      border-radius: 9px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.045), rgba(255,255,255,.018)),
+        rgba(6,7,12,.82);
+      backdrop-filter: blur(18px) saturate(.9);
+      -webkit-backdrop-filter: blur(18px) saturate(.9);
+      box-shadow: 0 22px 60px rgba(0,0,0,.4);
+      overflow: hidden;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .fz-discord-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 0 0, rgba(124,143,255,.10), transparent 48%),
+        linear-gradient(90deg, transparent, rgba(255,255,255,.02), transparent);
+    }
+
+    .fz-discord-card__top {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: .7rem;
+      color: rgba(242,243,247,.34);
+      font-size: .49rem;
+      letter-spacing: .15em;
+    }
+
+    .fz-discord-card__dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #747b8b;
+      box-shadow: 0 0 7px rgba(255,255,255,.1);
+    }
+
+    .fz-discord-card__dot.online {
+      background: #75df9d;
+      box-shadow: 0 0 9px rgba(117,223,157,.65);
+    }
+
+    .fz-discord-card__dot.idle {
+      background: #e6bd70;
+      box-shadow: 0 0 9px rgba(230,189,112,.5);
+    }
+
+    .fz-discord-card__dot.dnd {
+      background: #e57484;
+      box-shadow: 0 0 9px rgba(229,116,132,.5);
+    }
+
+    .fz-discord-card__main {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+
+    .fz-discord-card__avatar-wrap {
+      position: relative;
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+    }
+
+    .fz-discord-card__avatar-wrap img {
+      width: 44px;
+      height: 44px;
+      object-fit: cover;
+      border-radius: 11px;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .fz-discord-card__status {
+      position: absolute;
+      right: -2px;
+      bottom: -2px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #747b8b;
+      border: 2px solid #090a10;
+    }
+
+    .fz-discord-card__status.online { background: #75df9d; }
+    .fz-discord-card__status.idle { background: #e6bd70; }
+    .fz-discord-card__status.dnd { background: #e57484; }
+
+    .fz-discord-card__identity {
+      min-width: 0;
+    }
+
+    .fz-discord-card__name {
+      color: rgba(255,255,255,.92);
+      font-family: 'Outfit', sans-serif;
+      font-size: .82rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fz-discord-card__activity {
+      margin-top: .18rem;
+      color: rgba(242,243,247,.46);
+      font-size: .55rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fz-discord-card__details {
+      position: relative;
+      margin-top: .75rem;
+      padding-top: .6rem;
+      border-top: 1px solid rgba(255,255,255,.055);
+      color: rgba(190,198,255,.45);
+      font-size: .49rem;
+      letter-spacing: .08em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fz-discord-card__progress {
+      position: relative;
+      height: 2px;
+      margin-top: .55rem;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+    }
+
+    .fz-discord-card__progress span {
+      display: block;
+      width: 18%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(124,143,255,.85), rgba(216,199,255,.75));
+      box-shadow: 0 0 10px rgba(124,143,255,.3);
+      transition: width .4s linear;
+    }
+
+    @media (max-width: 1099px) {
+      .fz-side-nav {
+        left: .85rem;
+        width: 150px;
+      }
+
+      .fz-discord-card {
+        left: .85rem;
+        bottom: 1rem;
+        width: 215px;
+      }
+
+      .fz-side-nav__brand,
+      .fz-side-nav__hint {
+        display: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .fz-side-nav {
+        top: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100vw - 2rem);
+        padding: 0;
+      }
+
+      .fz-side-nav__rail {
+        display: none;
+      }
+
+      .fz-side-nav__links {
+        flex-direction: row;
+        justify-content: center;
+        gap: .25rem;
+        padding: .35rem;
+        border: 1px solid rgba(255,255,255,.07);
+        border-radius: 9px;
+        background: rgba(6,7,12,.65);
+        backdrop-filter: blur(16px);
+      }
+
+      .fz-side-nav__links a {
+        min-height: 31px;
+        grid-template-columns: 1fr;
+        padding: 0 .55rem;
+        font-size: .48rem;
+        letter-spacing: .04em;
+      }
+
+      .fz-side-nav__index {
+        display: none;
+      }
+
+      .fz-side-nav__links a::before {
+        display: none;
+      }
+
+      .fz-side-nav__links a:hover,
+      .fz-side-nav__links a.is-active {
+        transform: none;
+      }
+
+      .fz-discord-card {
+        left: 1rem;
+        bottom: 1rem;
+        width: 205px;
+      }
+
+      #float-player {
+        right: 1rem;
+        left: auto;
+        bottom: 1rem;
+        width: 205px;
+        transform: translateY(-86px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .fz-side-nav__links a {
+        padding: 0 .4rem;
+      }
+
+      .fz-side-nav__links a span:last-child {
+        font-size: .43rem;
+      }
+
+      .fz-discord-card {
+        width: 190px;
+      }
+
+      #float-player {
+        width: 190px;
+      }
+    }
+
+  
+    @media (max-width: 760px) {
+      .fz-discord-card {
+        left: 1rem !important;
+        right: auto !important;
+        bottom: 1rem !important;
+      }
+
+      #float-player {
+        left: auto !important;
+        right: 1rem !important;
+        bottom: 1rem !important;
+        transform: translateY(-86px) !important;
+      }
+    }
+
+
+    /* Never let the optional ASCII/WebGL effect make the hero empty. */
+    .ascii-text-container.ascii-fallback {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: #f8fafc;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: clamp(3rem, 9vw, 8rem);
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-shadow:
+        2px 0 rgba(255, 70, 120, .45),
+        -2px 0 rgba(80, 210, 255, .35);
+      animation: fallbackGlitch 2.4s steps(2,end) infinite;
+    }
+
+    @keyframes fallbackGlitch {
+      0%, 88%, 100% { transform: translateX(0); opacity: 1; }
+      90% { transform: translateX(-2px); opacity: .9; }
+      92% { transform: translateX(2px); opacity: .95; }
+    }
+
+
+    /* Final ITSFIZYS-inspired polish */
+    .fz-side-nav {
+      left: 1.15rem;
+      width: 168px;
+      padding-left: 1.25rem;
+    }
+
+    .fz-side-nav__rail {
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(255,255,255,.12) 10%,
+        rgba(255,255,255,.18) 50%,
+        rgba(255,255,255,.08) 90%,
+        transparent 100%
+      );
+    }
+
+    .fz-side-nav__brand {
+      margin-bottom: 1.35rem;
+      color: rgba(255,255,255,.72);
+      font-family: 'Outfit', sans-serif;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+    }
+
+    .fz-side-nav__links {
+      gap: .12rem;
+    }
+
+    .fz-side-nav__links a {
+      min-height: 34px;
+      grid-template-columns: 27px 1fr;
+      padding: 0 .55rem;
+      border-radius: 3px;
+      font-size: .58rem;
+      letter-spacing: .09em;
+    }
+
+    .fz-side-nav__links a::after {
+      content: "↗";
+      position: absolute;
+      right: .55rem;
+      color: transparent;
+      font-size: .55rem;
+      transition: color .2s ease;
+    }
+
+    .fz-side-nav__links a:hover::after,
+    .fz-side-nav__links a.is-active::after {
+      color: rgba(255,255,255,.28);
+    }
+
+    .fz-side-nav__links a:hover,
+    .fz-side-nav__links a.is-active {
+      background: rgba(255,255,255,.028);
+      border-color: rgba(255,255,255,.055);
+      transform: translateX(2px);
+    }
+
+    .fz-side-nav__index {
+      font-size: .48rem;
+      letter-spacing: .08em;
+    }
+
+    .fz-side-nav__links a.is-active .fz-side-nav__index {
+      color: rgba(231,164,199,.8);
+    }
+
+    .fz-side-nav__links a.is-active::before {
+      background: rgba(231,164,199,.75);
+      box-shadow: 0 0 12px rgba(231,164,199,.28);
+    }
+
+    .fz-side-nav__hint {
+      margin-top: 1.5rem;
+      opacity: .75;
+    }
+
+    /* The interests row is still content inside About, not a nav section. */
+    .interests-heading {
+      margin-top: 2.1rem;
+      margin-bottom: .75rem;
+      opacity: .62;
+    }
+
+    .logoloop-wrap {
+      overflow: hidden;
+      mask-image: linear-gradient(
+        90deg,
+        transparent,
+        black 7%,
+        black 93%,
+        transparent
+      );
+      -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent,
+        black 7%,
+        black 93%,
+        transparent
+      );
+    }
+
+    /* Keep the Discord card left and the music player right with no overlap. */
+    .fz-discord-card {
+      left: 1.15rem;
+      bottom: 1.15rem;
+      width: 238px;
+      border-radius: 6px;
+      background: rgba(4,5,10,.82);
+      border-color: rgba(255,255,255,.07);
+      box-shadow: 0 24px 70px rgba(0,0,0,.48);
+    }
+
+    #float-player {
+      right: 1.15rem;
+      bottom: 1.15rem;
+      width: 272px;
+    }
+
+    /* Hide any legacy activity component if it exists in an older copy. */
+    .discord-activity-card,
+    #discord-activity-card,
+    .discord-activity {
+      display: none !important;
+    }
+
+    @media (min-width: 1100px) {
+      .landing-content,
+      .about-content,
+      .projects-content,
+      .connect-content,
+      .footer__content {
+        transform: translateX(2.8%);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .fz-side-nav {
+        left: 50%;
+        width: calc(100vw - 1.5rem);
+      }
+
+      .fz-side-nav__links {
+        padding: .28rem;
+      }
+
+      .fz-side-nav__links a::after {
+        display: none;
+      }
+
+      .fz-discord-card {
+        left: 1rem;
+        bottom: 1rem;
+        width: 198px;
+      }
+
+      #float-player {
+        right: 1rem;
+        bottom: 1rem;
+        width: 198px;
+        transform: translateY(-88px);
+      }
+    }
+
+\n    /* =========================================================
+       FINAL VISUAL RESET — STATIC MOON / FOREST
+       No animated WebGL/dither background, no aurora, no petals.
+       The supplied photograph stays sharp and becomes the only background.
+       ========================================================= */
+    #bg-wrap {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      opacity: 1 !important;
+      background: #17171b url("moon-forest-bg.jpg") center center / cover no-repeat !important;
+    }
+
+    #bg-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("moon-forest-bg.jpg") center center / cover no-repeat;
+      transform: scale(1.002);
+    }
+
+    #dither-mount { display: none !important; }
+    .aurora-layer, .edge-bloom, #sakura-canvas { display: none !important; }
+
+    #bg-overlay {
+      z-index: 2;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      background:
+        linear-gradient(180deg, rgba(5,6,10,.20) 0%, rgba(5,6,10,.08) 42%, rgba(5,6,10,.42) 100%),
+        linear-gradient(90deg, rgba(4,5,8,.18) 0%, transparent 38%, rgba(4,5,8,.10) 100%) !important;
+    }
+
+    #bg-wrap::after { display: none !important; }
+    #top-fade {
+      height: 10vh;
+      background: linear-gradient(rgba(5,6,10,.32), transparent) !important;
+    }
+
+    /* Pure SHIOKAZE wordmark — monochrome, no RGB/glitch/gradient animation. */
+    .ascii-static-name {
+      position: absolute !important;
+      inset: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      pointer-events: none !important;
+      z-index: 5 !important;
+    }
+
+    .ascii-static-name > span {
+      display: block;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background: none !important;
+      font-family: "Outfit", sans-serif !important;
+      font-size: clamp(4.5rem, 11vw, 10.5rem) !important;
+      line-height: .86 !important;
+      font-weight: 500 !important;
+      letter-spacing: -.075em !important;
+      text-transform: uppercase;
+      white-space: nowrap;
+      mix-blend-mode: normal !important;
+      filter: none !important;
+      text-shadow: 0 2px 22px rgba(0,0,0,.24);
+      animation: none !important;
+    }
+
+    .ascii-static-name:hover > span { animation: none !important; }
+
+    /* The hero itself should not add another colored glow over the photograph. */
+    .landing-section { background: transparent !important; }
+    .landing-content { transform: translateY(-1vh); }
+
+    /* Keep the photograph crisp on mobile and use its native orientation there. */
+    @media (max-width: 760px) {
+      #bg-wrap, #bg-wrap::before {
+        background-image: url("moon-forest-mobile.jpg") !important;
+        background-position: center center;
+      }
+
+      .ascii-static-name > span {
+        font-size: clamp(3.1rem, 17vw, 6rem) !important;
+        letter-spacing: -.065em !important;
+      }
+    }
+
+    /* Subtle UI only: no glowing neon treatment. */
+    .top-icon {
+      background: rgba(8,9,12,.38) !important;
+      border-color: rgba(255,255,255,.16) !important;
+      backdrop-filter: blur(7px);
+      box-shadow: 0 5px 24px rgba(0,0,0,.14) !important;
+    }
+
+    .top-icon:hover {
+      background: rgba(8,9,12,.58) !important;
+      border-color: rgba(255,255,255,.28) !important;
+      box-shadow: 0 7px 28px rgba(0,0,0,.2) !important;
+    }
+
+    .scroll-progress-bar {
+      background: rgba(255,255,255,.72) !important;
+      box-shadow: none !important;
+      animation: none !important;
+    }
+
+    .section-divider__line {
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent) !important;
+    }
+
+    .section-divider__dot {
+      background: rgba(255,255,255,.72) !important;
+      box-shadow: none !important;
+      animation: none !important;
+    }
+
   </style>
 </head>
 <body>
@@ -786,14 +2089,10 @@
 <div class="cursor-outline" id="cursor-outline"></div>
 
 <!-- BG -->
-<div id="bg-wrap">
+<div id="bg-wrap" aria-hidden="true">
   <div id="dither-mount"></div>
   <div id="bg-overlay"></div>
 </div>
-<div class="aurora-layer"></div>
-<div class="edge-bloom edge-bloom--left"></div>
-<div class="edge-bloom edge-bloom--right"></div>
-<canvas id="sakura-canvas" aria-hidden="true"></canvas>
 <div id="top-fade"></div>
 <div class="scroll-progress-bar" id="progress"></div>
 
@@ -801,7 +2100,7 @@
 
   <!-- HERO (sticky) -->
   <div class="sticky-hero-wrap" id="sticky-hero">
-    <section class="landing-section" id="hero">
+    <section class="landing-section" id="top">
       <div class="top-icons">
         <a class="top-icon" href="https://steamcommunity.com/id/shiokazeIII/" target="_blank" rel="noopener" aria-label="Steam"><i class="fab fa-steam"></i></a>
         <div class="top-icon" id="copy-discord" aria-label="Copy Discord" role="button" tabindex="0"><i class="fab fa-discord"></i></div>
@@ -809,7 +2108,7 @@
       </div>
       <div class="landing-content">
         <div class="ascii-wrapper">
-          <div class="ascii-text-container" id="ascii-container"></div>
+          <div class="ascii-text-container ascii-static-name" id="ascii-container"><span>SHIOKAZE</span></div>
         </div>
         <h2 class="subtitle" id="subtitle"><span id="type-text"></span><span class="text-type__cursor" id="type-cursor">|</span></h2>
       </div>
@@ -845,7 +2144,7 @@
         </div>
       </div>
       <div class="about-divider"></div>
-      <p class="interests-heading">MY INTERESTS</p>
+      <p class="interests-heading" id="interests">MY INTERESTS</p>
       <div class="logoloop-wrap">
         <div class="logoloop-track" id="logoloop">
           <span class="logoloop-item"><i class="fa-solid fa-code"></i> Programming</span>
@@ -864,7 +2163,7 @@
   <div class="section-divider"><div class="section-divider__line"></div><div class="section-divider__dot"></div><div class="section-divider__line"></div></div>
 
 <!-- PROJECTS -->
-  <section id="projects" class="projects-section">
+  <section id="work" class="projects-section">
     <div class="projects-content">
       <div class="projects-header">
         <span class="projects-eyebrow">WORK</span>
@@ -910,7 +2209,7 @@
   <div class="section-divider"><div class="section-divider__line"></div><div class="section-divider__dot"></div><div class="section-divider__line"></div></div>
 
   <!-- CONNECT -->
-  <section id="connect" class="connect-section">
+  <section id="socials" class="connect-section">
     <div class="connect-content">
       <div>
         <span class="connect-eyebrow">WANT TO CONTACT ME?</span>
@@ -966,6 +2265,9 @@
 </div>
 
 <!-- плеер — всегда виден внизу справа -->
+
+
+
 <div id="float-player">
   <div class="float-player__bar">
     <button id="float-play-btn" type="button" aria-label="Play/Pause"><i class="fas fa-play"></i></button>
@@ -1375,21 +2677,97 @@
       const d = (await (await fetch('https://api.lanyard.rest/v1/users/' + DISCORD_ID)).json()).data;
       const u = d.discord_user;
       const av = u.avatar
-        ? `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${u.avatar}.${u.avatar.startsWith('a_') ? 'gif' : 'webp'}?size=64`
+        ? `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${u.avatar}.${u.avatar.startsWith('a_') ? 'gif' : 'webp'}?size=128`
         : `https://cdn.discordapp.com/embed/avatars/0.png`;
-      document.getElementById('badge-avatar').src = av;
+
+      // Existing Discord badge.
+      const badgeAvatar = document.getElementById('badge-avatar');
+      if (badgeAvatar) badgeAvatar.src = av;
+
       const st = d.discord_status || 'offline';
       const col = statusColors[st] || statusColors.offline;
-      document.getElementById('badge-dot').style.background = col;
-      document.getElementById('badge-dot').style.boxShadow = `0 0 6px ${col}`;
+
+      const badgeDot = document.getElementById('badge-dot');
+      if (badgeDot) {
+        badgeDot.style.background = col;
+        badgeDot.style.boxShadow = `0 0 6px ${col}`;
+      }
+
       const acts = d.activities || [];
       const act = acts.find(a => a.type === 0) || acts.find(a => a.type === 2) || acts.find(a => a.type === 1);
+
       let label = statusLabels[st] || 'Offline';
-      if (act) label = act.type === 2 ? (act.details || 'Spotify') : act.name;
-      document.getElementById('badge-status').textContent = 'Currently ' + label.toLowerCase();
-      document.getElementById('discord-handle').textContent = u.username;
+      if (act) {
+        label = act.type === 2 ? (act.details || 'Spotify') : (act.name || 'Activity');
+      }
+
+      const currentText = 'Currently ' + label.toLowerCase();
+
+      const badgeStatus = document.getElementById('badge-status');
+      if (badgeStatus) badgeStatus.textContent = currentText;
+
+      const discordHandle = document.getElementById('discord-handle');
+      if (discordHandle) discordHandle.textContent = u.username;
+
+      // New left-side 1336-style activity card.
+      const activityAvatar = document.getElementById('fzDiscordAvatar');
+      const activityName = document.getElementById('fzDiscordName');
+      const activityText = document.getElementById('fzDiscordActivity');
+      const activityDetail = document.getElementById('fzDiscordDetails');
+      const activityDot = document.getElementById('fzDiscordDot');
+      const activityStatus = document.getElementById('fzDiscordStatus');
+      const activityProgress = document.querySelector('.fz-discord-card__progress span');
+
+      if (activityAvatar) activityAvatar.src = av;
+      if (activityName) activityName.textContent = u.global_name || u.username;
+      if (activityDot) {
+        activityDot.className = 'fz-discord-card__dot ' + (['online','idle','dnd'].includes(st) ? st : '');
+        activityDot.style.background = col;
+        activityDot.style.boxShadow = `0 0 8px ${col}`;
+      }
+      if (activityStatus) {
+        activityStatus.className = 'fz-discord-card__status ' + (['online','idle','dnd'].includes(st) ? st : '');
+        activityStatus.style.background = col;
+      }
+
+      if (act) {
+        const title = act.type === 2 ? (act.details || 'Spotify') : (act.name || 'Activity');
+        const detail = act.details || act.state || (act.type === 2 ? 'Listening on Discord' : 'Active on Discord');
+
+        if (activityText) activityText.textContent = title;
+        if (activityDetail) activityDetail.textContent = detail;
+        if (activityProgress) {
+          if (act.timestamps && act.timestamps.start && act.timestamps.end) {
+            const start = Number(act.timestamps.start);
+            const end = Number(act.timestamps.end);
+            const now = Date.now();
+            const pct = Math.max(2, Math.min(100, ((now - start) / (end - start)) * 100));
+            activityProgress.style.width = pct + '%';
+          } else {
+            activityProgress.style.width = '18%';
+          }
+        }
+      } else {
+        if (activityText) activityText.textContent = currentText;
+        if (activityDetail) activityDetail.textContent = st === 'offline' ? 'OFFLINE' : 'NO CURRENT ACTIVITY';
+        if (activityProgress) activityProgress.style.width = '0%';
+      }
+
     } catch {
-      document.getElementById('badge-status').textContent = 'Currently offline';
+      const badgeStatus = document.getElementById('badge-status');
+      if (badgeStatus) badgeStatus.textContent = 'Currently offline';
+
+      const activityText = document.getElementById('fzDiscordActivity');
+      const activityDetail = document.getElementById('fzDiscordDetails');
+      const activityDot = document.getElementById('fzDiscordDot');
+      const activityStatus = document.getElementById('fzDiscordStatus');
+      const activityProgress = document.querySelector('.fz-discord-card__progress span');
+
+      if (activityText) activityText.textContent = 'Currently offline';
+      if (activityDetail) activityDetail.textContent = 'DISCORD OFFLINE';
+      if (activityDot) activityDot.className = 'fz-discord-card__dot';
+      if (activityStatus) activityStatus.className = 'fz-discord-card__status';
+      if (activityProgress) activityProgress.style.width = '0%';
     }
   }
 
@@ -1501,22 +2879,155 @@
   document.addEventListener('touchstart', tryPlay);
 
   /* ═══ INIT ═══ */
-  window.addEventListener('load', async () => {
-    initDither();
-    const ascii = new AsciiHero(document.getElementById('ascii-container'), 'SHIOKAZE');
-    await ascii.init();
-    new ResizeObserver(entries => {
-      const { width, height } = entries[0].contentRect;
-      if (width && height) ascii.setSize(width, height);
-    }).observe(document.getElementById('ascii-container'));
+  window.addEventListener('load', () => {
+    /*
+     * IMPORTANT:
+     * The visual/WebGL effects must never be allowed to block the page.
+     * Previously finishPreloader() was called only AFTER `await ascii.init()`.
+     * If WebGL, fonts, Three.js or a local-file browser restriction stalled,
+     * the preloader stayed on screen forever.
+     */
+    let preloaderFinished = false;
+
+    const safeFinishPreloader = () => {
+      if (preloaderFinished) return;
+      preloaderFinished = true;
+      finishPreloader();
+    };
+
+    // Hard fallback: the website becomes visible even if an optional effect fails.
+    setTimeout(safeFinishPreloader, 1800);
+
+    // Background and ASCII effects intentionally disabled.
+    // The hero now uses the supplied static photograph + a clean wordmark.
+    const asciiContainer = document.getElementById('ascii-container');
+    if (asciiContainer) asciiContainer.classList.add('ascii-fallback');
+
     typeTick();
+
+    // Discord is independent from the page loading animation.
     fetchDiscord();
     setInterval(fetchDiscord, 15000);
+
     onScroll();
-    finishPreloader();
+
+    // Finish immediately once the important page code is ready.
+    safeFinishPreloader();
   });
 
 })();
+</script>
+
+  <!-- ITSFIZYS-STYLE LEFT NAV + 1336-STYLE DISCORD ACTIVITY -->
+  <aside class="fz-side-nav" id="fzSideNav" aria-label="Site navigation">
+    <div class="fz-side-nav__rail"></div>
+    <div class="fz-side-nav__brand">XDD<span>/</span>SHIOKAZE</div>
+
+    <nav class="fz-side-nav__links">
+      <a href="#top" data-fz-nav="top" class="is-active">
+        <span class="fz-side-nav__index">01</span>
+        <span>Home</span>
+      </a>
+      <a href="#about" data-fz-nav="about">
+        <span class="fz-side-nav__index">02</span>
+        <span>About me</span>
+      </a>
+      <a href="#work" data-fz-nav="work">
+        <span class="fz-side-nav__index">03</span>
+        <span>Projects</span>
+      </a>
+      <a href="#socials" data-fz-nav="socials">
+        <span class="fz-side-nav__index">04</span>
+        <span>Socials</span>
+      </a>
+    </nav>
+
+    <div class="fz-side-nav__hint">SCROLL TO EXPLORE</div>
+  </aside>
+
+  <aside class="fz-discord-card" id="fzDiscordCard" aria-label="Discord activity">
+    <div class="fz-discord-card__top">
+      <span class="fz-discord-card__label">DISCORD / LIVE</span>
+      <span class="fz-discord-card__dot" id="fzDiscordDot"></span>
+    </div>
+
+    <div class="fz-discord-card__main">
+      <div class="fz-discord-card__avatar-wrap">
+        <img id="fzDiscordAvatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Discord avatar">
+        <span class="fz-discord-card__status" id="fzDiscordStatus"></span>
+      </div>
+
+      <div class="fz-discord-card__identity">
+        <div class="fz-discord-card__name" id="fzDiscordName">shiokaze</div>
+        <div class="fz-discord-card__activity" id="fzDiscordActivity">Checking activity...</div>
+      </div>
+    </div>
+
+    <div class="fz-discord-card__details" id="fzDiscordDetails">DISCORD STATUS</div>
+    <div class="fz-discord-card__progress"><span></span></div>
+  </aside>
+
+<script>
+
+    /* =========================================================
+       ITSFIZYS-STYLE SIDE NAV
+       Only real page sections are navigable:
+       Home / About me / Projects / Socials.
+       The interests marquee belongs to About, so it never gets
+       its own navigation state.
+       ========================================================= */
+    (() => {
+      const sideLinks = [...document.querySelectorAll('[data-fz-nav]')];
+      const sectionIds = ['top', 'about', 'work', 'socials'];
+      const sections = sectionIds
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+
+      const setActive = id => {
+        sideLinks.forEach(link => {
+          link.classList.toggle('is-active', link.dataset.fzNav === id);
+        });
+      };
+
+      sideLinks.forEach(link => {
+        link.addEventListener('click', event => {
+          const id = link.dataset.fzNav;
+          const target = document.getElementById(id);
+          if (!target) return;
+
+          event.preventDefault();
+
+          const offset = id === 'top' ? 0 : 24;
+          const y = target.getBoundingClientRect().top + window.scrollY - offset;
+
+          window.scrollTo({
+            top: Math.max(0, y),
+            behavior: 'smooth'
+          });
+
+          setActive(id);
+        });
+      });
+
+      // A simple position-based detector is more reliable here than
+      // IntersectionObserver because the hero is sticky and About contains
+      // the interests marquee.
+      const updateActive = () => {
+        const marker = window.scrollY + window.innerHeight * 0.35;
+        let current = 'top';
+
+        for (const section of sections) {
+          if (section.offsetTop <= marker) current = section.id;
+        }
+
+        setActive(current);
+      };
+
+      window.addEventListener('scroll', updateActive, { passive: true });
+      window.addEventListener('resize', updateActive, { passive: true });
+      updateActive();
+    })();
+
 </script>
 </body>
 </html>

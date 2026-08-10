@@ -211,6 +211,16 @@
     #preloader.done .preloader-panel--bottom { transform: translateY(300%); }
     #preloader.done .preloader-inner { opacity: 0; transform: scale(.9); filter: blur(8px); transition: .3s; }
 
+
+    /* HARD FAILSAFE: loader can never block the page indefinitely. */
+    #preloader { animation: preloader-emergency-hide .9s ease forwards; animation-delay: 1.15s; }
+    @keyframes preloader-emergency-hide {
+      0% { opacity:1; visibility:visible; pointer-events:auto; }
+      70% { opacity:0; visibility:visible; pointer-events:none; }
+      100% { opacity:0; visibility:hidden; pointer-events:none; display:none; }
+    }
+    #dither-mount, #sakura-canvas { display:none !important; }
+
     /* ── LAYOUT ── */
     #app { position: relative; z-index: 10; }
 
@@ -2288,9 +2298,8 @@
   </div>
 </div>
 
-<audio id="bg-audio" loop preload="auto" src="https://raw.githubusercontent.com/ShiokazeE/bio/main/murasame.mp3"></audio>
+<audio id="bg-audio" loop preload="none" src="https://raw.githubusercontent.com/ShiokazeE/bio/main/murasame.mp3"></audio>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function () {
   'use strict';
@@ -2348,320 +2357,6 @@
       requestAnimationFrame(animCursor);
     })();
   }
-
-  /* ═══ DITHER BACKGROUND (Three.js) ═══ */
-  const waveVert = `
-    varying vec2 vUv;
-    void main() {
-      vUv = uv;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }`;
-  const waveFrag = `
-    precision highp float;
-    uniform vec2 resolution;
-    uniform float time;
-    uniform vec2 mousePos;
-    uniform int enableMouse;
-    uniform float mouseRadius;
-    varying vec2 vUv;
-
-    vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}
-    vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}
-    vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
-    vec2 fade(vec2 t){return t*t*t*(t*(t*6.0-15.0)+10.0);}
-    float cnoise(vec2 P){
-      vec4 Pi=floor(P.xyxy)+vec4(0.,0.,1.,1.);
-      vec4 Pf=fract(P.xyxy)-vec4(0.,0.,1.,1.);
-      Pi=mod289(Pi); vec4 ix=Pi.xzxz; vec4 iy=Pi.yyww; vec4 fx=Pf.xzxz; vec4 fy=Pf.yyww;
-      vec4 i=permute(permute(ix)+iy);
-      vec4 gx=fract(i*(1.0/41.0))*2.0-1.0; vec4 gy=abs(gx)-0.5; vec4 tx=floor(gx+0.5); gx=gx-tx;
-      vec2 g00=vec2(gx.x,gy.x); vec2 g10=vec2(gx.y,gy.y); vec2 g01=vec2(gx.z,gy.z); vec2 g11=vec2(gx.w,gy.w);
-      vec4 norm=taylorInvSqrt(vec4(dot(g00,g00),dot(g01,g01),dot(g10,g10),dot(g11,g11)));
-      g00*=norm.x; g01*=norm.y; g10*=norm.z; g11*=norm.w;
-      float n00=dot(g00,vec2(fx.x,fy.x)); float n10=dot(g10,vec2(fx.y,fy.y));
-      float n01=dot(g01,vec2(fx.z,fy.z)); float n11=dot(g11,vec2(fx.w,fy.w));
-      vec2 fade_xy=fade(Pf.xy);
-      vec2 n_x=mix(vec2(n00,n01),vec2(n10,n11),fade_xy.x);
-      return 2.3*mix(n_x.x,n_x.y,fade_xy.y);
-    }
-    float fbm(vec2 p){
-      float v=0.0,a=1.0,f=3.0;
-      for(int i=0;i<3;i++){v+=a*abs(cnoise(p)); p*=f; a*=0.3; }
-      return v;
-    }
-    float bayer4(vec2 p){
-      p=floor(mod(p,4.0));
-      int x=int(p.x); int y=int(p.y);
-      if(y==0) return x==0?0.0:x==1?0.5:x==2?0.125:0.625;
-      if(y==1) return x==0?0.75:x==1?0.25:x==2?0.875:0.375;
-      if(y==2) return x==0?0.1875:x==1?0.6875:x==2?0.0625:0.5625;
-      return x==0?0.9375:x==1?0.4375:x==2?0.8125:0.3125;
-    }
-    void main(){
-      vec2 uv=gl_FragCoord.xy/resolution.xy;
-      uv-=0.5; uv.x*=resolution.x/resolution.y;
-      vec2 p2=uv-time*0.05;
-      float f=fbm(uv+fbm(p2));
-      if(enableMouse==1){
-        vec2 m=(mousePos/resolution-0.5)*vec2(1.0,-1.0);
-        m.x*=resolution.x/resolution.y;
-        f-=0.5*(1.0-smoothstep(0.0,mouseRadius,length(uv-m)));
-      }
-      vec3 col=mix(vec3(0.0), vec3(0.545,0.361,0.965), f);
-      vec2 px=floor(gl_FragCoord.xy/2.0);
-      float th=bayer4(px)-0.25;
-      col+=th*(1.0/3.0);
-      col=clamp(col-0.2,0.0,1.0);
-      col=floor(col*3.0+0.5)/3.0;
-      gl_FragColor=vec4(col,1.0);
-    }`;
-
-  let bgRenderer, bgScene, bgCamera, bgUniforms, bgMouse = new THREE.Vector2(0, 0);
-  function initDither() {
-    const mount = document.getElementById('dither-mount');
-    const w = window.innerWidth, h = window.innerHeight;
-    bgScene = new THREE.Scene();
-    bgCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    bgRenderer = new THREE.WebGLRenderer({ antialias: false, alpha: false });
-    bgRenderer.setPixelRatio(IS_MOBILE ? 0.35 : 0.5);
-    bgRenderer.setSize(w, h);
-    mount.appendChild(bgRenderer.domElement);
-    bgUniforms = {
-      time: { value: 0 },
-      resolution: { value: new THREE.Vector2(w * bgRenderer.getPixelRatio(), h * bgRenderer.getPixelRatio()) },
-      mousePos: { value: bgMouse },
-      enableMouse: { value: IS_MOBILE ? 0 : 1 },
-      mouseRadius: { value: 1.0 }
-    };
-    const mat = new THREE.ShaderMaterial({ vertexShader: waveVert, fragmentShader: waveFrag, uniforms: bgUniforms });
-    bgScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
-    if (!IS_MOBILE) {
-      window.addEventListener('mousemove', e => {
-        const pr = bgRenderer.getPixelRatio();
-        bgMouse.set(e.clientX * pr, (h - e.clientY) * pr);
-      });
-    }
-    (function animBg() {
-      bgUniforms.time.value = performance.now() * 0.001;
-      bgRenderer.render(bgScene, bgCamera);
-      requestAnimationFrame(animBg);
-    })();
-    window.addEventListener('resize', () => {
-      const nw = window.innerWidth, nh = window.innerHeight;
-      bgRenderer.setSize(nw, nh);
-      const pr = bgRenderer.getPixelRatio();
-      bgUniforms.resolution.value.set(nw * pr, nh * pr);
-    });
-  }
-
-  /* ═══ ASCII HERO TEXT ═══ */
-  const asciiVert = `
-    varying vec2 vUv;
-    uniform float uTime;
-    uniform float uEnableWaves;
-    void main(){
-      vUv=uv; vec3 p=position; float t=uTime*5.;
-      p.x+=sin(t+p.y)*0.5*uEnableWaves;
-      p.y+=cos(t+p.z)*0.15*uEnableWaves;
-      p.z+=sin(t+p.x)*uEnableWaves;
-      gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);
-    }`;
-  const asciiFrag = `
-    varying vec2 vUv;
-    uniform float uTime;
-    uniform sampler2D uTexture;
-    void main(){
-      float t=uTime;
-      float r=texture2D(uTexture,vUv+cos(t*2.-t+vUv.x)*.01).r;
-      float g=texture2D(uTexture,vUv+tan(t*.5+vUv.x-t)*.01).g;
-      float b=texture2D(uTexture,vUv-cos(t*2.+t+vUv.y)*.01).b;
-      float a=texture2D(uTexture,vUv).a;
-      gl_FragColor=vec4(r,g,b,a);
-    }`;
-
-  class AsciiFilter {
-    constructor(renderer, fontSize) {
-      this.renderer = renderer;
-      this.fontSize = fontSize || 10;
-      this.fontFamily = "'IBM Plex Mono', monospace";
-      this.charset = ASCII_CHARSET;
-      this.dom = document.createElement('div');
-      this.dom.style.cssText = 'position:absolute;inset:0;pointer-events:none';
-      this.pre = document.createElement('pre');
-      this.canvas = document.createElement('canvas');
-      this.ctx = this.canvas.getContext('2d');
-      this.dom.appendChild(this.pre);
-      this.dom.appendChild(this.canvas);
-      this.mouse = { x: 0, y: 0 };
-      this.center = { x: 0, y: 0 };
-      this.deg = 0; this.lastDeg = 0;
-      document.addEventListener('mousemove', e => { this.mouse.x = e.clientX; this.mouse.y = e.clientY; });
-    }
-    setSize(w, h) {
-      this.width = w; this.height = h;
-      this.renderer.setSize(w, h);
-      this.center = { x: w / 2, y: h / 2 };
-      this.reset();
-    }
-    reset() {
-      this.ctx.font = this.fontSize + 'px ' + this.fontFamily;
-      const cw = this.ctx.measureText('A').width;
-      this.cols = Math.floor(this.width / (this.fontSize * (cw / this.fontSize)));
-      this.rows = Math.floor(this.height / this.fontSize);
-      this.canvas.width = this.cols; this.canvas.height = this.rows;
-      Object.assign(this.pre.style, {
-        fontFamily: this.fontFamily, fontSize: this.fontSize + 'px',
-        margin: '0', padding: '0', lineHeight: '1em', position: 'absolute',
-        left: '0', top: '0', zIndex: '9', mixBlendMode: 'difference',
-        whiteSpace: 'pre', userSelect: 'none'
-      });
-    }
-    render(scene, camera) {
-      this.renderer.render(scene, camera);
-      const n = this.canvas.width, r = this.canvas.height;
-      this.ctx.clearRect(0, 0, n, r);
-      this.ctx.drawImage(this.renderer.domElement, 0, 0, n, r);
-      const data = this.ctx.getImageData(0, 0, n, r).data;
-      let out = '';
-      for (let y = 0; y < r; y++) {
-        for (let x = 0; x < n; x++) {
-          const i = (y * n + x) * 4;
-          if (!data[i + 3]) { out += ' '; continue; }
-          const lum = (0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]) / 255;
-          let idx = Math.floor((1 - lum) * (this.charset.length - 1));
-          out += this.charset[idx];
-        }
-        out += '\n';
-      }
-      if (this.pre.textContent !== out) this.pre.textContent = out;
-      const ang = Math.atan2(this.mouse.y - this.center.y, this.mouse.x - this.center.x) * 180 / Math.PI;
-      this.deg += (ang - this.deg) * 0.075;
-      if (Math.abs(this.lastDeg - this.deg) > 2) {
-        this.dom.style.filter = 'hue-rotate(' + Math.round(this.deg) + 'deg)';
-        this.lastDeg = this.deg;
-      }
-    }
-  }
-
-  class AsciiHero {
-    constructor(container, text) {
-      this.container = container;
-      this.text = text;
-      this.mouse = { x: 0, y: 0 };
-      this.onMove = this.onMove.bind(this);
-    }
-    async init() {
-      await document.fonts.load('600 200px "IBM Plex Mono"');
-      const rect = this.container.getBoundingClientRect();
-      this.width = rect.width; this.height = rect.height;
-      this.scene = new THREE.Scene();
-      this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 1000);
-      this.camera.position.z = 30;
-      const tc = document.createElement('canvas');
-      const tctx = tc.getContext('2d');
-      tctx.font = '600 200px "IBM Plex Mono"';
-      const m = tctx.measureText(this.text);
-      tc.width = Math.ceil(m.width) + 20;
-      tc.height = Math.ceil(m.actualBoundingBoxAscent + m.actualBoundingBoxDescent) + 20;
-      tctx.font = '600 200px "IBM Plex Mono"';
-      tctx.fillStyle = '#fdf9f3';
-      tctx.fillText(this.text, 10, 10 + m.actualBoundingBoxAscent);
-      const tex = new THREE.CanvasTexture(tc);
-      tex.minFilter = THREE.NearestFilter;
-      const aspect = tc.width / tc.height;
-      const baseH = 8;
-      const geo = new THREE.PlaneGeometry(baseH * aspect, baseH, 36, 36);
-      this.uniforms = {
-        uTime: { value: 0 },
-        uTexture: { value: tex },
-        uEnableWaves: { value: IS_MOBILE ? 0 : 1 }
-      };
-      this.mesh = new THREE.Mesh(geo, new THREE.ShaderMaterial({
-        vertexShader: asciiVert, fragmentShader: asciiFrag,
-        transparent: true, uniforms: this.uniforms
-      }));
-      this.scene.add(this.mesh);
-      this.renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
-      this.renderer.setClearColor(0, 0);
-      this.renderer.setPixelRatio(1);
-      this.filter = new AsciiFilter(this.renderer, 8);
-      this.container.appendChild(this.filter.dom);
-      this.setSize(this.width, this.height);
-      document.addEventListener('mousemove', this.onMove);
-      document.addEventListener('touchmove', this.onMove, { passive: true });
-      this.animate();
-    }
-    onMove(e) {
-      const r = this.container.getBoundingClientRect();
-      const p = e.touches ? e.touches[0] : e;
-      this.mouse.x = this.width / 2 + (p.clientX - (r.left + r.width / 2));
-      this.mouse.y = this.height / 2 - (p.clientY - (r.top + r.height / 2));
-    }
-    setSize(w, h) {
-      this.width = w; this.height = h;
-      this.camera.aspect = w / h;
-      this.camera.updateProjectionMatrix();
-      this.filter.setSize(w, h);
-      this.center = { x: w / 2, y: h / 2 };
-    }
-    animate() {
-      requestAnimationFrame(() => this.animate());
-      const now = performance.now();
-      if (now - (this._last || 0) < 42) return;
-      this._last = now;
-      this.uniforms.uTime.value = Math.sin(now * 0.001);
-      const t = 0.4;
-      const ty = Math.max(-t, Math.min(t, (this.mouse.y / this.height - 0.5) * -1));
-      const tx = Math.max(-t, Math.min(t, (this.mouse.x / this.width - 0.5)));
-      this.mesh.rotation.x += (ty - this.mesh.rotation.x) * 0.05;
-      this.mesh.rotation.y += (tx - this.mesh.rotation.y) * 0.05;
-      this.filter.render(this.scene, this.camera);
-    }
-  }
-
-  /* ═══ TYPEWRITER ═══ */
-  const phrases = ['Digital Creator', 'C++ & Python', 'Designer', 'Digital Creator'];
-  let pi = 0, ci = 0, deleting = false;
-  const typeEl = document.getElementById('type-text');
-  const typeCursor = document.getElementById('type-cursor');
-
-  function typeTick() {
-    const word = phrases[pi];
-    if (!deleting) {
-      typeEl.textContent = word.substring(0, ++ci);
-      if (ci === word.length) { deleting = true; return setTimeout(typeTick, 2000); }
-      setTimeout(typeTick, 60);
-    } else {
-      typeEl.textContent = word.substring(0, --ci);
-      if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; return setTimeout(typeTick, 400); }
-      setTimeout(typeTick, 30);
-    }
-  }
-
-  /* ═══ SCROLL ═══ */
-  const hero = document.getElementById('hero');
-  const progress = document.getElementById('progress');
-
-  function onScroll() {
-    const sh = document.documentElement.scrollHeight - window.innerHeight;
-    const p = sh > 0 ? window.scrollY / sh : 0;
-    progress.style.transform = 'scaleX(' + p + ')';
-    const heroFade = Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.8));
-    hero.style.opacity = heroFade;
-    hero.style.transform = 'scale(' + (0.92 + heroFade * 0.08) + ')';
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  document.getElementById('scroll-down').addEventListener('click', () => {
-    document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
-  });
-  document.getElementById('back-top').addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  /* ═══ LOGO LOOP duplicate ═══ */
-  const loop = document.getElementById('logoloop');
-  loop.innerHTML += loop.innerHTML;
 
   /* ═══ COPY DISCORD ═══ */
   document.getElementById('copy-discord').addEventListener('click', () => {
@@ -2771,65 +2466,6 @@
     }
   }
 
-  /* ═══ SAKURA PETALS ═══ */
-  (function initSakura() {
-    const canvas = document.getElementById('sakura-canvas');
-    const ctx = canvas.getContext('2d');
-    let w, h, petals = [];
-
-    function resize() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
-
-    function spawn() {
-      const fromLeft = Math.random() > 0.5;
-      petals.push({
-        x: fromLeft ? -10 : w + 10,
-        y: Math.random() * h,
-        size: 4 + Math.random() * 8,
-        speedX: (fromLeft ? 1 : -1) * (0.3 + Math.random() * 0.8),
-        speedY: 0.2 + Math.random() * 0.6,
-        rot: Math.random() * Math.PI * 2,
-        rotSpd: (Math.random() - 0.5) * 0.04,
-        opacity: 0.25 + Math.random() * 0.45,
-        hue: 330 + Math.random() * 30
-      });
-    }
-
-    function drawPetal(p) {
-      ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.rot);
-      ctx.globalAlpha = p.opacity;
-      ctx.fillStyle = `hsl(${p.hue}, 75%, 82%)`;
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(p.size * 0.5, -p.size * 0.3, p.size, -p.size * 0.1, 0, p.size);
-      ctx.bezierCurveTo(-p.size, -p.size * 0.1, -p.size * 0.5, -p.size * 0.3, 0, 0);
-      ctx.fill();
-      ctx.restore();
-    }
-
-    function tick() {
-      ctx.clearRect(0, 0, w, h);
-      if (petals.length < 28 && Math.random() < 0.08) spawn();
-      petals = petals.filter(p => {
-        p.x += p.speedX;
-        p.y += p.speedY + Math.sin(p.rot) * 0.3;
-        p.rot += p.rotSpd;
-        drawPetal(p);
-        return p.y < h + 20 && p.x > -30 && p.x < w + 30;
-      });
-      requestAnimationFrame(tick);
-    }
-
-    resize();
-    window.addEventListener('resize', resize);
-    for (let i = 0; i < 12; i++) spawn();
-    tick();
-  })();
-
   /* ═══ AUDIO PLAYER (floating) — громкость 10% ═══ */
   const audio = document.getElementById('bg-audio');
   const floatPlayBtn = document.getElementById('float-play-btn');
@@ -2879,7 +2515,7 @@
   document.addEventListener('touchstart', tryPlay);
 
   /* ═══ INIT ═══ */
-  window.addEventListener('load', () => {
+  document.addEventListener('DOMContentLoaded', () => {
     /*
      * IMPORTANT:
      * The visual/WebGL effects must never be allowed to block the page.
@@ -2895,15 +2531,11 @@
       finishPreloader();
     };
 
-    // Hard fallback: the website becomes visible even if an optional effect fails.
-    setTimeout(safeFinishPreloader, 1800);
-
-    // Background and ASCII effects intentionally disabled.
-    // The hero now uses the supplied static photograph + a clean wordmark.
+    // The background is now a static photograph; no WebGL/ASCII effect is required.
     const asciiContainer = document.getElementById('ascii-container');
     if (asciiContainer) asciiContainer.classList.add('ascii-fallback');
 
-    typeTick();
+    if (typeof typeTick === 'function') typeTick();
 
     // Discord is independent from the page loading animation.
     fetchDiscord();

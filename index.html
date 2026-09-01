@@ -58,7 +58,12 @@
       background: var(--accent-light);
       z-index: 9999; mix-blend-mode: difference;
     }
-    .cursor-outline { display:none !important; }
+    .cursor-outline {
+      width: 32px; height: 32px;
+      border: 1px solid rgba(var(--accent-rgb), 0.8);
+      z-index: 9998; background: transparent;
+      transition: width .3s, height .3s, background-color .3s, border-color .3s;
+    }
     .cursor-outline.hover {
       width: 48px; height: 48px;
       background: rgba(var(--accent-rgb), 0.15);
@@ -1970,63 +1975,57 @@
     }
 
   
-    /* ═══════════════════════════════════════════════════════════════
-       SHIOKAZE — PUBLIC SUPABASE GUESTBOOK
-       ═══════════════════════════════════════════════════════════════ */
-    .guestbook-section{position:relative;z-index:20;width:100vw;padding:7rem 2rem 5rem;display:flex;justify-content:center}
-    .guestbook-content{width:100%;max-width:1040px}
-    .guestbook-header{position:relative}
-    .guestbook-eyebrow{font-size:.68rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--accent-light);font-family:'IBM Plex Mono',monospace;opacity:.78}
-    .guestbook-title{margin:.65rem 0 .7rem;font-size:clamp(2.4rem,6vw,4.1rem);font-weight:600;letter-spacing:-.045em;line-height:1;color:var(--text-main)}
-    .guestbook-accent-bar{height:1px;width:100%;background:linear-gradient(90deg,var(--accent),rgba(124,143,255,.08),transparent)}
-    .guestbook-author-tools{position:absolute;right:0;bottom:.3rem;display:flex;align-items:center;gap:.6rem}
-    .author-login-btn,.author-logout-btn{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.025);color:rgba(255,255,255,.42);padding:.45rem .65rem;border-radius:6px;font:9px 'IBM Plex Mono',monospace;letter-spacing:.08em;transition:.22s}
-    .author-login-btn:hover,.author-logout-btn:hover{border-color:rgba(124,143,255,.38);color:#fff;background:rgba(124,143,255,.06)}
-    .author-session{color:#7ee4a5;font:8px 'IBM Plex Mono',monospace;letter-spacing:.08em}
-    .guestbook-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:1rem;margin-top:2rem}
-    .guestbook-form-card,.guestbook-list-card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.075);border-radius:12px;backdrop-filter:blur(12px)}
-    .guestbook-form-card{padding:1.25rem}
-    .guestbook-fields{display:grid;gap:.65rem}
-    .gb-input{width:100%;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.16);color:var(--text-main);border-radius:7px;padding:.75rem .8rem;outline:none;font:12px Outfit,sans-serif;transition:border-color .2s,background .2s}
-    .gb-input::placeholder{color:rgba(255,255,255,.22)}
-    .gb-input:focus{border-color:rgba(124,143,255,.4);background:rgba(124,143,255,.035)}
-    .gb-textarea{min-height:150px;resize:vertical;line-height:1.65}
-    .gb-form-bottom{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin-top:.75rem}
-    .gb-form-note{font:8px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.23);line-height:1.5}
-    .gb-submit{border:1px solid rgba(124,143,255,.24);background:rgba(124,143,255,.07);color:#fff;border-radius:7px;padding:.67rem .8rem;font:9px 'IBM Plex Mono',monospace;letter-spacing:.08em;white-space:nowrap;transition:.22s}
-    .gb-submit:hover{border-color:rgba(124,143,255,.55);background:rgba(124,143,255,.12);transform:translateY(-1px)}
-    .gb-submit:disabled{opacity:.45;transform:none}
-    .guestbook-list-card{min-height:380px;overflow:hidden}
-    .gb-list-head{display:flex;justify-content:space-between;padding:.8rem 1rem;border-bottom:1px solid rgba(255,255,255,.06);font:8px 'IBM Plex Mono',monospace;letter-spacing:.1em;color:rgba(255,255,255,.32)}
-    .gb-list{max-height:520px;overflow:auto;padding:.7rem}
-    .gb-list::-webkit-scrollbar{width:4px}.gb-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:10px}
-    .gb-loading,.gb-empty{padding:3rem 1rem;text-align:center;color:rgba(255,255,255,.24);font:9px 'IBM Plex Mono',monospace;letter-spacing:.08em}
-    .gb-message{position:relative;padding:.9rem;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.018);border-radius:8px;margin-bottom:.55rem}
-    .gb-message:last-child{margin-bottom:0}
-    .gb-message__top{display:flex;align-items:center;gap:.55rem;justify-content:space-between}
-    .gb-message__identity{display:flex;align-items:center;gap:.5rem;min-width:0}
-    .gb-message__name{font-size:.78rem;font-weight:600;color:rgba(255,255,255,.88);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .gb-author-badge{display:inline-flex;align-items:center;gap:.28rem;padding:.2rem .38rem;border-radius:4px;background:rgba(126,228,165,.08);border:1px solid rgba(126,228,165,.18);color:#8ee7ac;font:7px 'IBM Plex Mono',monospace;letter-spacing:.04em}
-    .gb-message__date{flex:none;color:rgba(255,255,255,.2);font:7px 'IBM Plex Mono',monospace}
-    .gb-message__contact{margin-top:.25rem;color:rgba(255,255,255,.26);font:7px 'IBM Plex Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .gb-message__text{margin-top:.55rem;color:rgba(255,255,255,.62);font-size:.78rem;line-height:1.65;white-space:pre-wrap;word-break:break-word}
-    .gb-message__bottom{display:flex;align-items:center;gap:.55rem;margin-top:.7rem}
-    .gb-like-btn{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.018);color:rgba(255,255,255,.32);border-radius:6px;padding:.3rem .5rem;font:8px 'IBM Plex Mono',monospace;transition:.2s}
-    .gb-like-btn.author-active{color:#8ee7ac;border-color:rgba(126,228,165,.22);background:rgba(126,228,165,.05)}
-    .gb-like-btn.author-ready:hover{color:#fff;border-color:rgba(126,228,165,.35);background:rgba(126,228,165,.06)}
-    .gb-like-btn.author-ready{cursor:none}
-    .gb-liked-note{color:#8ee7ac;font:7px 'IBM Plex Mono',monospace;letter-spacing:.02em}
-    .gb-error{padding:.7rem .8rem;border:1px solid rgba(255,110,110,.18);background:rgba(255,90,90,.04);color:#ffaaa5;border-radius:7px;margin-bottom:.7rem;font:8px 'IBM Plex Mono',monospace}
-    .author-modal[hidden]{display:none}.author-modal{position:fixed;inset:0;z-index:50000;display:grid;place-items:center}
-    .author-modal__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(8px)}
-    .author-modal__box{position:relative;z-index:1;width:min(390px,calc(100vw - 2rem));padding:1.35rem;border:1px solid rgba(255,255,255,.1);background:rgba(8,10,16,.95);border-radius:12px;box-shadow:0 30px 90px rgba(0,0,0,.55)}
-    .author-modal__box h3{margin-top:.55rem;font-size:1.5rem;letter-spacing:-.03em}.author-modal__hint{color:var(--text-muted);font-size:.78rem;line-height:1.6;margin:.55rem 0 1rem}
-    .author-modal__x{position:absolute;right:.65rem;top:.55rem;width:30px;height:30px;border:0;background:rgba(255,255,255,.03);color:rgba(255,255,255,.4);border-radius:5px;font-size:20px}
-    #author-login-form{display:grid;gap:.65rem}.author-login-error{min-height:14px;color:#ffaaa5;font:8px 'IBM Plex Mono',monospace}
-    @media(max-width:800px){.guestbook-grid{grid-template-columns:1fr}.guestbook-author-tools{position:static;margin-top:1rem;justify-content:flex-start}.guestbook-section{padding:5rem 1.5rem 4rem}.guestbook-list-card{min-height:300px}.gb-list{max-height:420px}}
-    @media(max-width:480px){.gb-form-bottom{flex-direction:column;align-items:stretch}.gb-submit{width:100%}.guestbook-title{font-size:2.7rem}}
+/* ═══════════════════════════════════════════════════════════════
+   FINAL POLISH — direct cursor-reactive background + music + guestbook
+   ═══════════════════════════════════════════════════════════════ */
+.cursor-outline{display:none!important}
+.cursor-dot{width:6px!important;height:6px!important;transition:none!important;}
+#bg-wrap{--mouse-x:50vw;--mouse-y:50vh;}
+#bg-wrap::before{
+  content:"";position:absolute;inset:-1px;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(430px 430px at var(--mouse-x) var(--mouse-y),rgba(151,126,255,.18) 0%,rgba(126,105,226,.08) 30%,transparent 70%),
+    radial-gradient(1050px 760px at 50% 50%,rgba(89,61,164,.055),transparent 72%);
+  opacity:1;
+  transition:background-position 0s;
+}
+#bg-wrap::after{
+  display:block!important;content:"";position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.8!important;
+  background-image:linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px)!important;
+  background-size:52px 52px!important;mask-image:radial-gradient(650px 500px at var(--mouse-x) var(--mouse-y),black,transparent 88%)!important;
+}
+#bg-overlay{z-index:2!important;pointer-events:none!important;}
+#dither-mount,.aurora-layer,.edge-bloom,#sakura-canvas{pointer-events:none!important;}
 
-    #bg-wrap::before{content:"";position:absolute;inset:-15%;pointer-events:none;background:radial-gradient(520px 420px at var(--mouse-x,50%) var(--mouse-y,50%),rgba(124,143,255,.11),transparent 70%);transition:opacity .3s;z-index:0}
+/* music */
+.music-section{position:relative;z-index:20;width:100vw;padding:7rem 2rem 8rem;display:flex;justify-content:center}
+.music-content{width:100%;max-width:1040px}
+.music-eyebrow,.guestbook-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(214,204,255,.52)}
+.music-title,.guestbook-title{font-size:clamp(2.6rem,6vw,4.5rem);font-weight:600;letter-spacing:-.055em;line-height:1;color:var(--text-main);margin:.55rem 0 .75rem}
+.music-accent,.guestbook-accent{height:1px;background:linear-gradient(90deg,rgba(155,123,255,.9),rgba(155,123,255,.12),transparent)}
+.music-head-row{display:flex;justify-content:space-between;gap:2rem;align-items:end}
+.music-profile-link{display:inline-flex;align-items:center;gap:.55rem;padding:.6rem .75rem;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:rgba(255,255,255,.025);text-decoration:none;color:rgba(255,255,255,.65);font:8px 'IBM Plex Mono',monospace;letter-spacing:.08em;white-space:nowrap;transition:.22s}
+.music-profile-link:hover{color:#fff;border-color:rgba(124,143,255,.35);background:rgba(124,143,255,.06);transform:translateY(-2px)}
+.track-list{margin-top:1.75rem;border-top:1px solid rgba(255,255,255,.065)}
+.track-row{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:1rem;padding:1rem .2rem;border-bottom:1px solid rgba(255,255,255,.055);text-decoration:none;transition:.22s;background:transparent}
+.track-row:hover{background:rgba(124,143,255,.035);padding-left:.65rem;padding-right:.65rem}
+.track-num{font:8px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.2)}
+.track-main{min-width:0}.track-name{font-size:.9rem;color:rgba(255,255,255,.84);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.track-artist{margin-top:.18rem;font:7px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.27);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track-open{width:32px;height:32px;border:1px solid rgba(255,255,255,.07);border-radius:6px;display:grid;place-items:center;color:rgba(255,255,255,.25);transition:.22s}.track-row:hover .track-open{color:#fff;border-color:rgba(124,143,255,.3)}
+
+/* guestbook */
+.guestbook-section{position:relative;z-index:20;width:100vw;padding:7rem 2rem 8rem;display:flex;justify-content:center}
+.guestbook-content{width:100%;max-width:1040px}.guestbook-head{display:flex;justify-content:space-between;gap:2rem;align-items:end}
+.guestbook-author-tools{display:flex;align-items:center;gap:.55rem}.author-login-btn,.author-logout-btn{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);color:rgba(255,255,255,.4);padding:.45rem .65rem;border-radius:6px;font:8px 'IBM Plex Mono',monospace;letter-spacing:.08em;transition:.2s}.author-login-btn:hover,.author-logout-btn:hover{color:#fff;border-color:rgba(124,143,255,.35)}
+.author-session{color:#8ee7ac;font:7px 'IBM Plex Mono',monospace}.guestbook-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:.8rem;margin-top:1.6rem}
+.guestbook-form-card,.guestbook-list-card{background:rgba(3,4,9,.64);border:1px solid rgba(255,255,255,.065);border-radius:8px;backdrop-filter:blur(10px)}
+.guestbook-form-card{padding:1.15rem}.guestbook-fields{display:grid;gap:.6rem}.gb-input{width:100%;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.14);color:#fff;border-radius:6px;padding:.7rem .75rem;outline:none;font:11px 'Outfit',sans-serif}.gb-input:focus{border-color:rgba(124,143,255,.38);background:rgba(124,143,255,.03)}.gb-input::placeholder{color:rgba(255,255,255,.19)}.gb-textarea{min-height:145px;resize:vertical;line-height:1.6}
+.gb-form-bottom{display:flex;align-items:center;justify-content:flex-end;margin-top:.7rem}.gb-submit{border:1px solid rgba(124,143,255,.22);background:rgba(124,143,255,.06);color:#fff;border-radius:6px;padding:.62rem .72rem;font:8px 'IBM Plex Mono',monospace;letter-spacing:.08em;transition:.2s}.gb-submit:hover{border-color:rgba(124,143,255,.45);background:rgba(124,143,255,.11)}.gb-submit:disabled{opacity:.45}
+.gb-list-head{display:flex;justify-content:space-between;padding:.8rem .9rem;border-bottom:1px solid rgba(255,255,255,.055);font:7px 'IBM Plex Mono',monospace;letter-spacing:.1em;color:rgba(255,255,255,.28)}.gb-list{max-height:500px;overflow:auto;padding:.6rem}.gb-list::-webkit-scrollbar{width:4px}.gb-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:9px}
+.gb-loading,.gb-empty{padding:3rem 1rem;text-align:center;color:rgba(255,255,255,.2);font:8px 'IBM Plex Mono',monospace;letter-spacing:.1em}.gb-message{padding:.8rem;border:1px solid rgba(255,255,255,.055);background:rgba(255,255,255,.015);border-radius:7px;margin-bottom:.5rem}.gb-message__top{display:flex;justify-content:space-between;align-items:center;gap:.5rem}.gb-message__identity{display:flex;align-items:center;gap:.5rem;min-width:0}.gb-message__name{font-size:.76rem;font-weight:600;color:rgba(255,255,255,.82);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gb-author-badge{display:inline-flex;padding:.18rem .35rem;border-radius:4px;background:rgba(126,228,165,.07);border:1px solid rgba(126,228,165,.15);color:#8ee7ac;font:6px 'IBM Plex Mono',monospace;letter-spacing:.04em}.gb-message__date{font:6px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.18)}.gb-message__contact{margin-top:.2rem;font:6px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.22)}.gb-message__text{margin-top:.5rem;color:rgba(255,255,255,.58);font-size:.76rem;line-height:1.62;white-space:pre-wrap;word-break:break-word}.gb-message__bottom{display:flex;align-items:center;gap:.5rem;margin-top:.65rem}.gb-like-btn{border:1px solid rgba(255,255,255,.055);background:rgba(255,255,255,.015);color:rgba(255,255,255,.28);border-radius:5px;padding:.28rem .48rem;font:7px 'IBM Plex Mono',monospace;transition:.2s}.gb-like-btn.author-ready:hover{color:#fff;border-color:rgba(126,228,165,.3);background:rgba(126,228,165,.05)}.gb-like-btn.author-active{color:#8ee7ac;border-color:rgba(126,228,165,.2);background:rgba(126,228,165,.04)}.gb-like-btn:disabled{opacity:.5}.gb-liked-note{color:#8ee7ac;font:6px 'IBM Plex Mono',monospace}.gb-error{padding:.65rem;border:1px solid rgba(255,100,100,.18);border-radius:6px;color:#ffaaa5;font:7px 'IBM Plex Mono',monospace}
+.author-modal[hidden]{display:none}.author-modal{position:fixed;inset:0;z-index:50000;display:grid;place-items:center}.author-modal__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(9px)}.author-modal__box{position:relative;z-index:1;width:min(390px,calc(100vw - 2rem));padding:1.25rem;border:1px solid rgba(255,255,255,.09);background:rgba(7,8,13,.97);border-radius:10px;box-shadow:0 30px 90px rgba(0,0,0,.55)}.author-modal__box h3{margin:.55rem 0;font-size:1.4rem}.author-modal__hint{color:var(--text-muted);font-size:.72rem;line-height:1.6;margin-bottom:.9rem}.author-modal__x{position:absolute;top:.55rem;right:.55rem;width:28px;height:28px;border:0;border-radius:5px;background:rgba(255,255,255,.03);color:rgba(255,255,255,.45);font-size:18px}.author-login-error{min-height:12px;color:#ffaaa5;font:7px 'IBM Plex Mono',monospace}
+@media(max-width:800px){.music-head-row,.guestbook-head{align-items:flex-start;flex-direction:column}.guestbook-grid{grid-template-columns:1fr}.music-section,.guestbook-section{padding-left:1.3rem;padding-right:1.3rem}.track-row{grid-template-columns:30px 1fr auto}}
+@media(max-width:480px){.track-row{gap:.6rem}.music-profile-link{width:100%;justify-content:center}.guestbook-author-tools{margin-top:.2rem}}
 </style>
 </head>
 <body>
@@ -2172,6 +2171,52 @@
 
   <div class="section-divider"><div class="section-divider__line"></div><div class="section-divider__dot"></div><div class="section-divider__line"></div></div>
 
+  <!-- MUSIC -->
+  <section id="music" class="music-section">
+    <div class="music-content">
+      <div class="music-head-row">
+        <div>
+          <span class="music-eyebrow">RECENT TRACKS</span>
+          <div style="margin-top:.55rem"><h2 class="music-title">music i like</h2><div class="music-accent"></div></div>
+        </div>
+        <a class="music-profile-link" href="https://soundcloud.com/lopgg96" target="_blank" rel="noopener"><i class="fab fa-soundcloud"></i> MY SOUNDCLOUD ↗</a>
+      </div>
+      <div class="track-list">
+        <a class="track-row" href="https://soundcloud.com/aleksej-kireev/crxw-despair-hope" target="_blank" rel="noopener"><span class="track-num">01</span><span class="track-main"><span class="track-name">CRXW — Despair / Hope</span><span class="track-artist">Aleksej Kireev · SoundCloud</span></span><span class="track-open">↗</span></a>
+        <a class="track-row" href="https://soundcloud.com/nvrmreee/silent-hill-2-ost-black-fairy-breakcore-remix" target="_blank" rel="noopener"><span class="track-num">02</span><span class="track-main"><span class="track-name">Silent Hill 2 OST — Black Fairy (Breakcore Remix)</span><span class="track-artist">nvrmreee · SoundCloud</span></span><span class="track-open">↗</span></a>
+        <a class="track-row" href="https://soundcloud.com/user-314316920/loli-in-early-20s-slowed" target="_blank" rel="noopener"><span class="track-num">03</span><span class="track-main"><span class="track-name">Loli In Early 20s (Slowed)</span><span class="track-artist">user-314316920 · SoundCloud</span></span><span class="track-open">↗</span></a>
+        <a class="track-row" href="https://soundcloud.com/yaderae/dont-be-afraid" target="_blank" rel="noopener"><span class="track-num">04</span><span class="track-main"><span class="track-name">Don't Be Afraid</span><span class="track-artist">yaderae · SoundCloud</span></span><span class="track-open">↗</span></a>
+        <a class="track-row" href="https://soundcloud.com/svcura_461524869/xtvl" target="_blank" rel="noopener"><span class="track-num">05</span><span class="track-main"><span class="track-name">xtvl</span><span class="track-artist">svcura · SoundCloud</span></span><span class="track-open">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><div class="section-divider__line"></div><div class="section-divider__dot"></div><div class="section-divider__line"></div></div>
+
+  <!-- GUESTBOOK -->
+  <section id="guestbook" class="guestbook-section">
+    <div class="guestbook-content">
+      <div class="guestbook-head">
+        <div><span class="guestbook-eyebrow">GUESTBOOK</span><div style="margin-top:.55rem"><h2 class="guestbook-title">leave a message</h2><div class="guestbook-accent"></div></div></div>
+        <div class="guestbook-author-tools"><button type="button" class="author-login-btn" id="author-login-open">AUTHOR</button><span class="author-session" id="author-session" hidden>● SIGNED IN</span><button type="button" class="author-logout-btn" id="author-logout" hidden>LOG OUT</button></div>
+      </div>
+      <div class="guestbook-grid">
+        <div class="guestbook-form-card">
+          <form id="guestbook-form">
+            <div class="guestbook-fields"><input id="gb-name" class="gb-input" maxlength="32" required placeholder="Name"><input id="gb-contact" class="gb-input" maxlength="80" placeholder="Telegram / Discord (optional)"><textarea id="gb-message" class="gb-input gb-textarea" maxlength="500" required placeholder="Write something..."></textarea></div>
+            <div class="gb-form-bottom"><button class="gb-submit" type="submit" id="gb-submit">POST MESSAGE <span>→</span></button></div>
+          </form>
+        </div>
+        <div class="guestbook-list-card"><div class="gb-list-head"><span>MESSAGES</span><span id="gb-count">0</span></div><div class="gb-list" id="gb-list"><div class="gb-loading">LOADING MESSAGES...</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="author-modal" id="author-modal" hidden>
+    <div class="author-modal__backdrop" id="author-modal-close"></div>
+    <div class="author-modal__box" role="dialog" aria-modal="true"><button class="author-modal__x" type="button" id="author-modal-x">×</button><span class="guestbook-eyebrow">PRIVATE</span><h3>Author access</h3><p class="author-modal__hint">Sign in with the site owner's Supabase account.</p><form id="author-login-form"><input id="author-email" class="gb-input" type="email" required placeholder="Email"><input id="author-password" class="gb-input" type="password" required placeholder="Password"><button class="gb-submit" type="submit" id="author-login-submit">SIGN IN <span>→</span></button><div class="author-login-error" id="author-login-error"></div></form></div>
+  </div>
+
   <!-- CONNECT -->
   <section id="socials" class="connect-section">
     <div class="connect-content">
@@ -2210,64 +2255,6 @@
       </div>
     </div>
   </section>
-
-  <!-- GUESTBOOK / SHIOKAZE -->
-  <section id="guestbook" class="guestbook-section">
-    <div class="guestbook-content">
-      <div class="guestbook-header">
-        <span class="guestbook-eyebrow">GUESTBOOK</span>
-        <div class="guestbook-title-group">
-          <h2 class="guestbook-title">Leave a message</h2>
-          <div class="guestbook-accent-bar"></div>
-        </div>
-        <div class="guestbook-author-tools" id="author-tools">
-          <button type="button" class="author-login-btn" id="author-login-open">AUTHOR</button>
-          <span class="author-session" id="author-session" hidden>● SIGNED IN</span>
-          <button type="button" class="author-logout-btn" id="author-logout" hidden>LOG OUT</button>
-        </div>
-      </div>
-
-      <div class="guestbook-grid">
-        <div class="guestbook-form-card">
-          <form id="guestbook-form">
-            <div class="guestbook-fields">
-              <input id="gb-name" class="gb-input" maxlength="32" autocomplete="name" required placeholder="Name">
-              <input id="gb-contact" class="gb-input" maxlength="80" autocomplete="off" placeholder="Telegram / Discord (optional)">
-              <textarea id="gb-message" class="gb-input gb-textarea" maxlength="500" required placeholder="Write something..."></textarea>
-            </div>
-            <div class="gb-form-bottom">
-              <span class="gb-form-note" id="gb-form-note">Messages are public.</span>
-              <button class="gb-submit" type="submit" id="gb-submit">POST MESSAGE <span>→</span></button>
-            </div>
-          </form>
-        </div>
-
-        <div class="guestbook-list-card">
-          <div class="gb-list-head"><span>MESSAGES</span><span id="gb-count">0</span></div>
-          <div class="gb-list" id="gb-list">
-            <div class="gb-loading" id="gb-loading">LOADING MESSAGES...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Author sign-in modal -->
-  <div class="author-modal" id="author-modal" hidden>
-    <div class="author-modal__backdrop" id="author-modal-close"></div>
-    <div class="author-modal__box" role="dialog" aria-modal="true" aria-labelledby="author-modal-title">
-      <button class="author-modal__x" type="button" id="author-modal-x" aria-label="Close">×</button>
-      <span class="guestbook-eyebrow">PRIVATE</span>
-      <h3 id="author-modal-title">Author access</h3>
-      <p class="author-modal__hint">Sign in with the Supabase account you created for the site owner.</p>
-      <form id="author-login-form">
-        <input id="author-email" class="gb-input" type="email" autocomplete="email" required placeholder="Email">
-        <input id="author-password" class="gb-input" type="password" autocomplete="current-password" required placeholder="Password">
-        <button class="gb-submit" type="submit" id="author-login-submit">SIGN IN <span>→</span></button>
-        <div class="author-login-error" id="author-login-error"></div>
-      </form>
-    </div>
-  </div>
 
   <!-- FOOTER -->
   <footer class="footer-section">
@@ -2317,187 +2304,7 @@
   'use strict';
 
   const DISCORD_ID = '912747427465928754';
-
-
-  /* ═══ PUBLIC SUPABASE GUESTBOOK ═══ */
-  const SUPABASE_URL = 'https://sdqfeycfahemliivrujg.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable_WVjFpsuPNUu8KJ-1UNL8qA_mDYwlUZG';
-  const AUTHOR_EMAIL = 'lopgg96@gmail.com';
-  const AUTHOR_NAME = 'Shiokaze';
-  const GB_LIMIT = 50;
-  let authorSession = null;
-  let guestbookItems = [];
-
-  const gb = {
-    list: document.getElementById('gb-list'),
-    count: document.getElementById('gb-count'),
-    form: document.getElementById('guestbook-form'),
-    submit: document.getElementById('gb-submit'),
-    note: document.getElementById('gb-form-note'),
-    modal: document.getElementById('author-modal'),
-    modalClose: document.getElementById('author-modal-close'),
-    modalX: document.getElementById('author-modal-x'),
-    loginForm: document.getElementById('author-login-form'),
-    loginSubmit: document.getElementById('author-login-submit'),
-    loginError: document.getElementById('author-login-error'),
-    loginOpen: document.getElementById('author-login-open'),
-    sessionLabel: document.getElementById('author-session'),
-    logout: document.getElementById('author-logout')
-  };
-
-  async function supa(path, options = {}, authToken = null) {
-    const headers = {
-      apikey: SUPABASE_KEY,
-      'Content-Type': 'application/json',
-      ...(options.headers || {})
-    };
-    if (authToken) headers.Authorization = 'Bearer ' + authToken;
-    const res = await fetch(SUPABASE_URL + path, {...options, headers});
-    let data = null;
-    try { data = await res.json(); } catch (_) {}
-    if (!res.ok) {
-      const msg = data?.message || data?.error_description || data?.error || 'Supabase request failed';
-      const err = new Error(msg); err.status = res.status; throw err;
-    }
-    return data;
-  }
-
-  function gbEscape(value) {
-    return String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[ch]));
-  }
-  function gbDate(v) {
-    const d = new Date(v);
-    return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'});
-  }
-  function renderGuestbook(items = guestbookItems) {
-    guestbookItems = items || [];
-    gb.count.textContent = guestbookItems.length;
-    if (!guestbookItems.length) {
-      gb.list.innerHTML = '<div class="gb-empty">NO MESSAGES YET — BE THE FIRST.</div>';
-      return;
-    }
-    gb.list.innerHTML = guestbookItems.map(item => {
-      const liked = !!item.author_liked;
-      const canLike = !!authorSession;
-      return `<article class="gb-message" data-id="${gbEscape(item.id)}">
-        <div class="gb-message__top">
-          <div class="gb-message__identity">
-            <span class="gb-message__name">${gbEscape(item.name)}</span>
-            ${item.author_liked ? '<span class="gb-author-badge">♥ AUTHOR</span>' : ''}
-          </div>
-          <span class="gb-message__date">${gbDate(item.created_at)}</span>
-        </div>
-        ${item.contact ? `<div class="gb-message__contact">${gbEscape(item.contact)}</div>` : ''}
-        <div class="gb-message__text">${gbEscape(item.message)}</div>
-        <div class="gb-message__bottom">
-          <button type="button" class="gb-like-btn ${liked ? 'author-active' : ''} ${canLike ? 'author-ready' : ''}" data-like="${gbEscape(item.id)}" ${canLike ? '' : 'disabled'} aria-label="${liked ? 'Unlike' : 'Like'}">♥ <span>${liked ? 'LIKED' : 'LIKE'}</span></button>
-          ${liked ? `<span class="gb-liked-note">Понравилось автору · ${gbEscape(AUTHOR_NAME)}</span>` : ''}
-        </div>
-      </article>`;
-    }).join('');
-  }
-  function setAuthorUI() {
-    const active = !!authorSession;
-    gb.loginOpen.hidden = active;
-    gb.sessionLabel.hidden = !active;
-    gb.logout.hidden = !active;
-    gb.note.textContent = active ? 'Author mode enabled.' : 'Messages are public.';
-    renderGuestbook();
-  }
-  async function loadGuestbook() {
-    try {
-      const data = await supa('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked&order=created_at.desc&limit='+GB_LIMIT);
-      renderGuestbook(Array.isArray(data) ? data : []);
-    } catch (err) {
-      gb.list.innerHTML = `<div class="gb-error">GUESTBOOK ERROR: ${gbEscape(err.message)}</div>`;
-    }
-  }
-  async function postGuestbook(e) {
-    e.preventDefault();
-    const name = document.getElementById('gb-name').value.trim();
-    const contact = document.getElementById('gb-contact').value.trim();
-    const message = document.getElementById('gb-message').value.trim();
-    if (!name || !message) return;
-    gb.submit.disabled = true; gb.submit.textContent = 'POSTING...';
-    try {
-      await supa('/rest/v1/guestbook_comments', {
-        method:'POST',
-        headers:{Prefer:'return=minimal'},
-        body:JSON.stringify({name, contact:contact || null, message})
-      });
-      gb.form.reset();
-      await loadGuestbook();
-    } catch (err) {
-      gb.note.textContent = err.message || 'Could not post message.';
-    } finally {
-      gb.submit.disabled = false; gb.submit.innerHTML = 'POST MESSAGE <span>→</span>';
-    }
-  }
-  async function toggleAuthorLike(id, btn) {
-    if (!authorSession) { openAuthorModal(); return; }
-    btn.disabled = true;
-    try {
-      await supa('/rest/v1/rpc/toggle_author_like', {method:'POST', body:JSON.stringify({p_comment_id:id})}, authorSession.access_token);
-      await loadGuestbook();
-    } catch (err) {
-      if (err.status === 401 || err.status === 403) {
-        authorSession = null; localStorage.removeItem('shiokaze_author_session'); setAuthorUI();
-        gb.note.textContent = 'Author session expired. Please sign in again.';
-      } else {
-        gb.note.textContent = err.message || 'Like failed.';
-      }
-    } finally { btn.disabled = false; }
-  }
-  function openAuthorModal() { gb.modal.hidden = false; document.body.style.overflow='hidden'; setTimeout(()=>document.getElementById('author-email')?.focus(),30); }
-  function closeAuthorModal() { gb.modal.hidden = true; document.body.style.overflow=''; gb.loginError.textContent=''; }
-  async function authorLogin(e) {
-    e.preventDefault();
-    const email = document.getElementById('author-email').value.trim();
-    const password = document.getElementById('author-password').value;
-    gb.loginError.textContent=''; gb.loginSubmit.disabled=true; gb.loginSubmit.textContent='SIGNING IN...';
-    try {
-      const data = await supa('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email,password})});
-      if ((data?.user?.email || email).toLowerCase() !== AUTHOR_EMAIL.toLowerCase()) throw new Error('This account is not the site author.');
-      authorSession = {access_token:data.access_token, refresh_token:data.refresh_token, user:data.user};
-      localStorage.setItem('shiokaze_author_session',JSON.stringify(authorSession));
-      closeAuthorModal(); setAuthorUI();
-    } catch(err) {
-      gb.loginError.textContent = err.message || 'Login failed.';
-    } finally { gb.loginSubmit.disabled=false; gb.loginSubmit.innerHTML='SIGN IN <span>→</span>'; }
-  }
-  async function refreshAuthorSession() {
-    const raw = localStorage.getItem('shiokaze_author_session'); if (!raw) return;
-    try {
-      const saved = JSON.parse(raw); if (!saved?.refresh_token) throw new Error('bad session');
-      const data = await supa('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:JSON.stringify({refresh_token:saved.refresh_token})});
-      authorSession = {access_token:data.access_token,refresh_token:data.refresh_token,user:data.user};
-      localStorage.setItem('shiokaze_author_session',JSON.stringify(authorSession));
-      setAuthorUI();
-    } catch (_) {
-      localStorage.removeItem('shiokaze_author_session'); authorSession=null; setAuthorUI();
-    }
-  }
-  function authorLogout(){authorSession=null;localStorage.removeItem('shiokaze_author_session');setAuthorUI();}
-
-  gb.form?.addEventListener('submit',postGuestbook);
-  gb.list?.addEventListener('click',e=>{
-    const btn=e.target.closest('[data-like]'); if(btn) toggleAuthorLike(btn.dataset.like,btn);
-  });
-  gb.loginOpen?.addEventListener('click',openAuthorModal);
-  gb.logout?.addEventListener('click',authorLogout);
-  gb.modalClose?.addEventListener('click',closeAuthorModal); gb.modalX?.addEventListener('click',closeAuthorModal);
-  gb.loginForm?.addEventListener('submit',authorLogin);
-  refreshAuthorSession();
-  loadGuestbook();
-  // Keep all visitors in sync without requiring a page reload.
-  setInterval(loadGuestbook, 10000);
   const IS_MOBILE = window.matchMedia('(pointer: coarse)').matches;
-
-  const bgWrap = document.getElementById('bg-wrap');
-  if (bgWrap && !IS_MOBILE) window.addEventListener('mousemove', e => {
-    bgWrap.style.setProperty('--mouse-x', e.clientX + 'px');
-    bgWrap.style.setProperty('--mouse-y', e.clientY + 'px');
-  }, {passive:true});
   const ASCII_CHARSET = " .'`^\",:;Il!i~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
 
   /* ═══ PRELOADER ═══ */
@@ -2528,26 +2335,17 @@
     }, 400);
   }
 
-  /* ═══ CURSOR ═══ */
+  /* ═══ CURSOR — exact follow, no lagging ring ═══ */
   const dot = document.getElementById('cursor-dot');
-  const outline = document.getElementById('cursor-outline');
-  let mx = -100, my = -100, rx = -100, ry = -100, oSize = 32;
-
+  const bgWrap = document.getElementById('bg-wrap');
   if (!IS_MOBILE) {
-    window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    document.addEventListener('mouseover', e => {
-      const hover = e.target.closest('a,button,.top-icon,.connect-card,.project-card,#copy-discord,h1,h2,h3');
-      outline.classList.toggle('hover', !!hover);
-    });
-    (function animCursor() {
-      dot.style.transform = `translate3d(${mx - 4}px, ${my - 4}px, 0)`;
-      rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
-      const target = outline.classList.contains('hover') ? 48 : 32;
-      oSize += (target - oSize) * 0.12;
-      outline.style.transform = `translate3d(${rx - oSize / 2}px, ${ry - oSize / 2}px, 0)`;
-      outline.style.width = outline.style.height = oSize + 'px';
-      requestAnimationFrame(animCursor);
-    })();
+    window.addEventListener('mousemove', e => {
+      dot.style.transform = `translate3d(${e.clientX}px,${e.clientY}px,0) translate(-50%,-50%)`;
+      bgWrap.style.setProperty('--mouse-x', `${e.clientX}px`);
+      bgWrap.style.setProperty('--mouse-y', `${e.clientY}px`);
+    }, {passive:true});
+  } else if (dot) {
+    dot.style.display='none';
   }
 
   /* ═══ COPY DISCORD ═══ */
@@ -2852,6 +2650,36 @@
       updateActive();
     })();
 
+</script>
+
+<script>
+(() => {
+  const SUPABASE_URL='https://sdqfeycfahemliivrujg.supabase.co';
+  const SUPABASE_KEY='sb_publishable_WVjFpsuPNUu8KJ-1UNL8qA_mDYwlUZG';
+  const AUTHOR_EMAIL='lopgg96@gmail.com';
+  const AUTHOR_NAME='Shiokaze';
+  let authorSession=null, guestbookItems=[];
+  const $=id=>document.getElementById(id);
+  const gb={list:$('gb-list'),count:$('gb-count'),form:$('guestbook-form'),submit:$('gb-submit'),modal:$('author-modal'),open:$('author-login-open'),session:$('author-session'),logout:$('author-logout'),close:$('author-modal-close'),x:$('author-modal-x'),login:$('author-login-form'),loginBtn:$('author-login-submit'),error:$('author-login-error')};
+  async function api(path, opts={}, token=''){
+    const headers={apikey:SUPABASE_KEY,'Content-Type':'application/json',...(opts.headers||{})}; if(token) headers.Authorization='Bearer '+token;
+    const r=await fetch(SUPABASE_URL+path,{...opts,headers}); let d=null; try{d=await r.json()}catch{}
+    if(!r.ok){const e=new Error(d?.message||d?.error_description||d?.error||'Request failed');e.status=r.status;throw e} return d;
+  }
+  const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
+  const date=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?'':d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'})};
+  function render(items){guestbookItems=items||[];gb.count.textContent=guestbookItems.length;if(!guestbookItems.length){gb.list.innerHTML='<div class="gb-empty">NO MESSAGES YET — BE THE FIRST.</div>';return}gb.list.innerHTML=guestbookItems.map(x=>`<article class="gb-message"><div class="gb-message__top"><div class="gb-message__identity"><span class="gb-message__name">${esc(x.name)}</span>${x.author_liked?'<span class="gb-author-badge">♥ AUTHOR</span>':''}</div><span class="gb-message__date">${date(x.created_at)}</span></div>${x.contact?`<div class="gb-message__contact">${esc(x.contact)}</div>`:''}<div class="gb-message__text">${esc(x.message)}</div><div class="gb-message__bottom"><button type="button" class="gb-like-btn ${authorSession?'author-ready':''} ${x.author_liked?'author-active':''}" data-like="${esc(x.id)}" ${authorSession?'':'disabled'}>♥ ${x.author_liked?'LIKED':'LIKE'}</button>${x.author_liked?`<span class="gb-liked-note">Понравилось автору · ${esc(AUTHOR_NAME)}</span>`:''}</div></article>`).join('')}
+  async function load(){try{render(await api('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked&order=created_at.desc&limit=50'))}catch(e){gb.list.innerHTML=`<div class="gb-error">GUESTBOOK ERROR: ${esc(e.message)}</div>`}}
+  function ui(){const on=!!authorSession;gb.open.hidden=on;gb.session.hidden=!on;gb.logout.hidden=!on;render(guestbookItems)}
+  function open(){gb.modal.hidden=false;document.body.style.overflow='hidden';setTimeout(()=>$('author-email')?.focus(),30)}
+  function close(){gb.modal.hidden=true;document.body.style.overflow='';gb.error.textContent=''}
+  gb.open.onclick=open;gb.close.onclick=close;gb.x.onclick=close;gb.logout.onclick=()=>{authorSession=null;localStorage.removeItem('shiokaze_author_session');ui()};
+  gb.form.addEventListener('submit',async e=>{e.preventDefault();const name=$('gb-name').value.trim(),contact=$('gb-contact').value.trim(),message=$('gb-message').value.trim();if(!name||!message)return;gb.submit.disabled=true;gb.submit.textContent='POSTING...';try{await api('/rest/v1/guestbook_comments',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({name,contact:contact||null,message})});gb.form.reset();await load()}catch(err){alert(err.message)}finally{gb.submit.disabled=false;gb.submit.innerHTML='POST MESSAGE <span>→</span>'}});
+  gb.list.addEventListener('click',async e=>{const b=e.target.closest('[data-like]');if(!b||!authorSession)return;b.disabled=true;try{await api('/rest/v1/rpc/toggle_author_like',{method:'POST',body:JSON.stringify({p_comment_id:b.dataset.like})},authorSession.access_token);await load()}catch(err){if(err.status===401||err.status===403){authorSession=null;localStorage.removeItem('shiokaze_author_session');ui()}else alert(err.message)}finally{b.disabled=false}});
+  gb.login.addEventListener('submit',async e=>{e.preventDefault();gb.error.textContent='';gb.loginBtn.disabled=true;gb.loginBtn.textContent='SIGNING IN...';try{const email=$('author-email').value.trim(),password=$('author-password').value;const d=await api('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email,password})});if((d.user?.email||email).toLowerCase()!==AUTHOR_EMAIL.toLowerCase())throw new Error('This account is not the site author.');authorSession={access_token:d.access_token,refresh_token:d.refresh_token,user:d.user};localStorage.setItem('shiokaze_author_session',JSON.stringify(authorSession));close();ui()}catch(err){gb.error.textContent=err.message||'Login failed.'}finally{gb.loginBtn.disabled=false;gb.loginBtn.innerHTML='SIGN IN <span>→</span>'}});
+  async function restore(){const raw=localStorage.getItem('shiokaze_author_session');if(!raw)return;try{const old=JSON.parse(raw);const d=await api('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:JSON.stringify({refresh_token:old.refresh_token})});authorSession={access_token:d.access_token,refresh_token:d.refresh_token,user:d.user};localStorage.setItem('shiokaze_author_session',JSON.stringify(authorSession));ui()}catch{localStorage.removeItem('shiokaze_author_session')}}
+  load();restore();setInterval(load,10000);
+})();
 </script>
 </body>
 </html>

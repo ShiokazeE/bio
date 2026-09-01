@@ -1976,56 +1976,66 @@
 
   
 /* ═══════════════════════════════════════════════════════════════
-   FINAL POLISH — direct cursor-reactive background + music + guestbook
+   FINAL VISUAL POLISH
    ═══════════════════════════════════════════════════════════════ */
+/* No ring trailing behind the cursor. */
 .cursor-outline{display:none!important}
-.cursor-dot{width:6px!important;height:6px!important;transition:none!important;}
+.cursor-dot{width:6px!important;height:6px!important;transition:none!important}
+/* The hero's old typing caret was the stray "stick" under the name. */
+#type-cursor,.text-type__cursor{display:none!important}
+/* Elegant wordmark: a very slow luminosity shift, no jitter / jumps. */
+.ascii-static-name > span{
+  animation: shiokaze-breathe 7s ease-in-out infinite !important;
+  transform:translateZ(0);
+  will-change:filter,opacity;
+}
+@keyframes shiokaze-breathe{
+  0%,100%{opacity:.94;filter:drop-shadow(0 2px 20px rgba(0,0,0,.20))}
+  50%{opacity:1;filter:drop-shadow(0 2px 28px rgba(185,169,255,.13))}
+}
+.ascii-static-name:hover > span{animation:shiokaze-breathe 7s ease-in-out infinite!important}
+
+/* Cursor follows exactly; the background's glow is centered on the pointer. */
 #bg-wrap{--mouse-x:50vw;--mouse-y:50vh;}
 #bg-wrap::before{
-  content:"";position:absolute;inset:-1px;pointer-events:none;z-index:0;
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
   background:
-    radial-gradient(430px 430px at var(--mouse-x) var(--mouse-y),rgba(151,126,255,.18) 0%,rgba(126,105,226,.08) 30%,transparent 70%),
-    radial-gradient(1050px 760px at 50% 50%,rgba(89,61,164,.055),transparent 72%);
-  opacity:1;
-  transition:background-position 0s;
+    radial-gradient(360px 360px at var(--mouse-x) var(--mouse-y), rgba(174,154,255,.13), rgba(124,104,230,.045) 34%, transparent 70%);
+  mix-blend-mode:screen;
+  opacity:.9;
 }
 #bg-wrap::after{
-  display:block!important;content:"";position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.8!important;
-  background-image:linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px)!important;
-  background-size:52px 52px!important;mask-image:radial-gradient(650px 500px at var(--mouse-x) var(--mouse-y),black,transparent 88%)!important;
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+  background:radial-gradient(520px 420px at var(--mouse-x) var(--mouse-y), transparent 0%, transparent 58%, rgba(5,6,10,.18) 100%);
 }
-#bg-overlay{z-index:2!important;pointer-events:none!important;}
-#dither-mount,.aurora-layer,.edge-bloom,#sakura-canvas{pointer-events:none!important;}
 
-/* music */
-.music-section{position:relative;z-index:20;width:100vw;padding:7rem 2rem 8rem;display:flex;justify-content:center}
-.music-content{width:100%;max-width:1040px}
-.music-eyebrow,.guestbook-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(214,204,255,.52)}
-.music-title,.guestbook-title{font-size:clamp(2.6rem,6vw,4.5rem);font-weight:600;letter-spacing:-.055em;line-height:1;color:var(--text-main);margin:.55rem 0 .75rem}
-.music-accent,.guestbook-accent{height:1px;background:linear-gradient(90deg,rgba(155,123,255,.9),rgba(155,123,255,.12),transparent)}
-.music-head-row{display:flex;justify-content:space-between;gap:2rem;align-items:end}
-.music-profile-link{display:inline-flex;align-items:center;gap:.55rem;padding:.6rem .75rem;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:rgba(255,255,255,.025);text-decoration:none;color:rgba(255,255,255,.65);font:8px 'IBM Plex Mono',monospace;letter-spacing:.08em;white-space:nowrap;transition:.22s}
-.music-profile-link:hover{color:#fff;border-color:rgba(124,143,255,.35);background:rgba(124,143,255,.06);transform:translateY(-2px)}
-.track-list{margin-top:1.75rem;border-top:1px solid rgba(255,255,255,.065)}
-.track-row{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:1rem;padding:1rem .2rem;border-bottom:1px solid rgba(255,255,255,.055);text-decoration:none;transition:.22s;background:transparent}
-.track-row:hover{background:rgba(124,143,255,.035);padding-left:.65rem;padding-right:.65rem}
-.track-num{font:8px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.2)}
-.track-main{min-width:0}.track-name{font-size:.9rem;color:rgba(255,255,255,.84);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.track-artist{margin-top:.18rem;font:7px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.27);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.track-open{width:32px;height:32px;border:1px solid rgba(255,255,255,.07);border-radius:6px;display:grid;place-items:center;color:rgba(255,255,255,.25);transition:.22s}.track-row:hover .track-open{color:#fff;border-color:rgba(124,143,255,.3)}
-
-/* guestbook */
-.guestbook-section{position:relative;z-index:20;width:100vw;padding:7rem 2rem 8rem;display:flex;justify-content:center}
-.guestbook-content{width:100%;max-width:1040px}.guestbook-head{display:flex;justify-content:space-between;gap:2rem;align-items:end}
-.guestbook-author-tools{display:flex;align-items:center;gap:.55rem}.author-login-btn,.author-logout-btn{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);color:rgba(255,255,255,.4);padding:.45rem .65rem;border-radius:6px;font:8px 'IBM Plex Mono',monospace;letter-spacing:.08em;transition:.2s}.author-login-btn:hover,.author-logout-btn:hover{color:#fff;border-color:rgba(124,143,255,.35)}
-.author-session{color:#8ee7ac;font:7px 'IBM Plex Mono',monospace}.guestbook-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:.8rem;margin-top:1.6rem}
-.guestbook-form-card,.guestbook-list-card{background:rgba(3,4,9,.64);border:1px solid rgba(255,255,255,.065);border-radius:8px;backdrop-filter:blur(10px)}
-.guestbook-form-card{padding:1.15rem}.guestbook-fields{display:grid;gap:.6rem}.gb-input{width:100%;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.14);color:#fff;border-radius:6px;padding:.7rem .75rem;outline:none;font:11px 'Outfit',sans-serif}.gb-input:focus{border-color:rgba(124,143,255,.38);background:rgba(124,143,255,.03)}.gb-input::placeholder{color:rgba(255,255,255,.19)}.gb-textarea{min-height:145px;resize:vertical;line-height:1.6}
-.gb-form-bottom{display:flex;align-items:center;justify-content:flex-end;margin-top:.7rem}.gb-submit{border:1px solid rgba(124,143,255,.22);background:rgba(124,143,255,.06);color:#fff;border-radius:6px;padding:.62rem .72rem;font:8px 'IBM Plex Mono',monospace;letter-spacing:.08em;transition:.2s}.gb-submit:hover{border-color:rgba(124,143,255,.45);background:rgba(124,143,255,.11)}.gb-submit:disabled{opacity:.45}
-.gb-list-head{display:flex;justify-content:space-between;padding:.8rem .9rem;border-bottom:1px solid rgba(255,255,255,.055);font:7px 'IBM Plex Mono',monospace;letter-spacing:.1em;color:rgba(255,255,255,.28)}.gb-list{max-height:500px;overflow:auto;padding:.6rem}.gb-list::-webkit-scrollbar{width:4px}.gb-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:9px}
-.gb-loading,.gb-empty{padding:3rem 1rem;text-align:center;color:rgba(255,255,255,.2);font:8px 'IBM Plex Mono',monospace;letter-spacing:.1em}.gb-message{padding:.8rem;border:1px solid rgba(255,255,255,.055);background:rgba(255,255,255,.015);border-radius:7px;margin-bottom:.5rem}.gb-message__top{display:flex;justify-content:space-between;align-items:center;gap:.5rem}.gb-message__identity{display:flex;align-items:center;gap:.5rem;min-width:0}.gb-message__name{font-size:.76rem;font-weight:600;color:rgba(255,255,255,.82);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gb-author-badge{display:inline-flex;padding:.18rem .35rem;border-radius:4px;background:rgba(126,228,165,.07);border:1px solid rgba(126,228,165,.15);color:#8ee7ac;font:6px 'IBM Plex Mono',monospace;letter-spacing:.04em}.gb-message__date{font:6px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.18)}.gb-message__contact{margin-top:.2rem;font:6px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.22)}.gb-message__text{margin-top:.5rem;color:rgba(255,255,255,.58);font-size:.76rem;line-height:1.62;white-space:pre-wrap;word-break:break-word}.gb-message__bottom{display:flex;align-items:center;gap:.5rem;margin-top:.65rem}.gb-like-btn{border:1px solid rgba(255,255,255,.055);background:rgba(255,255,255,.015);color:rgba(255,255,255,.28);border-radius:5px;padding:.28rem .48rem;font:7px 'IBM Plex Mono',monospace;transition:.2s}.gb-like-btn.author-ready:hover{color:#fff;border-color:rgba(126,228,165,.3);background:rgba(126,228,165,.05)}.gb-like-btn.author-active{color:#8ee7ac;border-color:rgba(126,228,165,.2);background:rgba(126,228,165,.04)}.gb-like-btn:disabled{opacity:.5}.gb-liked-note{color:#8ee7ac;font:6px 'IBM Plex Mono',monospace}.gb-error{padding:.65rem;border:1px solid rgba(255,100,100,.18);border-radius:6px;color:#ffaaa5;font:7px 'IBM Plex Mono',monospace}
-.author-modal[hidden]{display:none}.author-modal{position:fixed;inset:0;z-index:50000;display:grid;place-items:center}.author-modal__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(9px)}.author-modal__box{position:relative;z-index:1;width:min(390px,calc(100vw - 2rem));padding:1.25rem;border:1px solid rgba(255,255,255,.09);background:rgba(7,8,13,.97);border-radius:10px;box-shadow:0 30px 90px rgba(0,0,0,.55)}.author-modal__box h3{margin:.55rem 0;font-size:1.4rem}.author-modal__hint{color:var(--text-muted);font-size:.72rem;line-height:1.6;margin-bottom:.9rem}.author-modal__x{position:absolute;top:.55rem;right:.55rem;width:28px;height:28px;border:0;border-radius:5px;background:rgba(255,255,255,.03);color:rgba(255,255,255,.45);font-size:18px}.author-login-error{min-height:12px;color:#ffaaa5;font:7px 'IBM Plex Mono',monospace}
-@media(max-width:800px){.music-head-row,.guestbook-head{align-items:flex-start;flex-direction:column}.guestbook-grid{grid-template-columns:1fr}.music-section,.guestbook-section{padding-left:1.3rem;padding-right:1.3rem}.track-row{grid-template-columns:30px 1fr auto}}
-@media(max-width:480px){.track-row{gap:.6rem}.music-profile-link{width:100%;justify-content:center}.guestbook-author-tools{margin-top:.2rem}}
+/* SoundCloud favorites — same minimal language as the rest of the page. */
+.music-section-final{position:relative;z-index:20;width:100vw;padding:8rem 2rem 5rem;display:flex;justify-content:center}
+.music-content-final{width:100%;max-width:1080px}
+.music-head-final{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem}
+.music-eyebrow-final{font:600 .62rem/1 'IBM Plex Mono',monospace;letter-spacing:.28em;color:rgba(214,204,255,.52);text-transform:uppercase}
+.music-title-final{margin:.55rem 0 0;font-size:clamp(2.5rem,6vw,4.1rem);font-weight:600;letter-spacing:-.055em;line-height:1;color:var(--text-main)}
+.music-profile-final{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;padding:.58rem .72rem;border:1px solid rgba(255,255,255,.075);background:rgba(255,255,255,.022);border-radius:6px;color:rgba(255,255,255,.48);font:8px 'IBM Plex Mono',monospace;letter-spacing:.07em;transition:.22s}
+.music-profile-final:hover{color:#fff;border-color:rgba(155,123,255,.35);background:rgba(124,143,255,.05);transform:translateY(-2px)}
+.track-list-final{margin-top:1.7rem;border-top:1px solid rgba(255,255,255,.06)}
+.track-final{display:grid;grid-template-columns:54px 28px minmax(0,1fr) 30px;align-items:center;gap:.9rem;padding:.7rem .15rem;border-bottom:1px solid rgba(255,255,255,.052);text-decoration:none;transition:background .22s,padding .22s,border-color .22s}
+.track-final:hover{background:rgba(124,143,255,.035);padding-left:.65rem;padding-right:.65rem;border-color:rgba(124,143,255,.13)}
+.track-cover-final{position:relative;width:54px;height:54px;border-radius:6px;overflow:hidden;background:linear-gradient(135deg,rgba(124,143,255,.17),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.07);display:grid;place-items:center}
+.track-cover-final img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;filter:saturate(.7) brightness(.72);transition:opacity .35s,filter .35s,transform .4s}
+.track-cover-final.loaded img{opacity:1}.track-final:hover .track-cover-final img{filter:saturate(.9) brightness(.82);transform:scale(1.04)}
+.track-cover-final span{position:absolute;color:rgba(255,255,255,.22);font-size:14px;z-index:0}.track-cover-final.loaded span{display:none}
+.track-num-final{font:8px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.2)}
+.track-info-final{min-width:0}.track-info-final b{display:block;font-size:.86rem;font-weight:500;color:rgba(255,255,255,.78);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.track-info-final small{display:block;margin-top:.16rem;font:7px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.25);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track-arrow-final{width:30px;height:30px;border:1px solid rgba(255,255,255,.055);border-radius:5px;display:grid;place-items:center;color:rgba(255,255,255,.22);font-size:11px;transition:.2s}.track-final:hover .track-arrow-final{color:#fff;border-color:rgba(155,123,255,.28)}
+@media(max-width:650px){.music-head-final{align-items:flex-start;flex-direction:column}.music-profile-final{width:100%;justify-content:center}.track-final{grid-template-columns:46px 24px minmax(0,1fr) 28px;gap:.65rem}.track-cover-final{width:46px;height:46px}}
 </style>
 </head>
 <body>
@@ -2073,7 +2083,7 @@
         <div class="ascii-wrapper">
           <div class="ascii-text-container ascii-static-name" id="ascii-container"><span>SHIOKAZE</span></div>
         </div>
-        <h2 class="subtitle" id="subtitle"><span id="type-text"></span><span class="text-type__cursor" id="type-cursor">|</span></h2>
+        <h2 class="subtitle" id="subtitle"><span id="type-text"></span></h2>
       </div>
       <div class="scroll-down-indicator" id="scroll-down" aria-label="Scroll down">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
@@ -2171,51 +2181,37 @@
 
   <div class="section-divider"><div class="section-divider__line"></div><div class="section-divider__dot"></div><div class="section-divider__line"></div></div>
 
-  <!-- MUSIC -->
-  <section id="music" class="music-section">
-    <div class="music-content">
-      <div class="music-head-row">
+  <!-- MUSIC / VISUAL ONLY -->
+  <section id="music" class="music-section-final">
+    <div class="music-content-final">
+      <div class="music-head-final">
         <div>
-          <span class="music-eyebrow">RECENT TRACKS</span>
-          <div style="margin-top:.55rem"><h2 class="music-title">music i like</h2><div class="music-accent"></div></div>
+          <span class="music-eyebrow-final">RECENT TRACKS</span>
+          <h2 class="music-title-final">music i like</h2>
         </div>
-        <a class="music-profile-link" href="https://soundcloud.com/lopgg96" target="_blank" rel="noopener"><i class="fab fa-soundcloud"></i> MY SOUNDCLOUD ↗</a>
+        <a class="music-profile-final" href="https://soundcloud.com/lopgg96" target="_blank" rel="noopener"><i class="fab fa-soundcloud"></i> MY SOUNDCLOUD ↗</a>
       </div>
-      <div class="track-list">
-        <a class="track-row" href="https://soundcloud.com/aleksej-kireev/crxw-despair-hope" target="_blank" rel="noopener"><span class="track-num">01</span><span class="track-main"><span class="track-name">CRXW — Despair / Hope</span><span class="track-artist">Aleksej Kireev · SoundCloud</span></span><span class="track-open">↗</span></a>
-        <a class="track-row" href="https://soundcloud.com/nvrmreee/silent-hill-2-ost-black-fairy-breakcore-remix" target="_blank" rel="noopener"><span class="track-num">02</span><span class="track-main"><span class="track-name">Silent Hill 2 OST — Black Fairy (Breakcore Remix)</span><span class="track-artist">nvrmreee · SoundCloud</span></span><span class="track-open">↗</span></a>
-        <a class="track-row" href="https://soundcloud.com/user-314316920/loli-in-early-20s-slowed" target="_blank" rel="noopener"><span class="track-num">03</span><span class="track-main"><span class="track-name">Loli In Early 20s (Slowed)</span><span class="track-artist">user-314316920 · SoundCloud</span></span><span class="track-open">↗</span></a>
-        <a class="track-row" href="https://soundcloud.com/yaderae/dont-be-afraid" target="_blank" rel="noopener"><span class="track-num">04</span><span class="track-main"><span class="track-name">Don't Be Afraid</span><span class="track-artist">yaderae · SoundCloud</span></span><span class="track-open">↗</span></a>
-        <a class="track-row" href="https://soundcloud.com/svcura_461524869/xtvl" target="_blank" rel="noopener"><span class="track-num">05</span><span class="track-main"><span class="track-name">xtvl</span><span class="track-artist">svcura · SoundCloud</span></span><span class="track-open">↗</span></a>
+      <div class="track-list-final">
+        <a class="track-final" data-sc="https://soundcloud.com/aleksej-kireev/crxw-despair-hope" href="https://soundcloud.com/aleksej-kireev/crxw-despair-hope" target="_blank" rel="noopener">
+          <div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">01</span><div class="track-info-final"><b>CRXW — Despair / Hope</b><small>Aleksej Kireev</small></div><span class="track-arrow-final">↗</span>
+        </a>
+        <a class="track-final" data-sc="https://soundcloud.com/nvrmreee/silent-hill-2-ost-black-fairy-breakcore-remix" href="https://soundcloud.com/nvrmreee/silent-hill-2-ost-black-fairy-breakcore-remix" target="_blank" rel="noopener">
+          <div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">02</span><div class="track-info-final"><b>Silent Hill 2 OST — Black Fairy</b><small>Breakcore Remix · nvrmreee</small></div><span class="track-arrow-final">↗</span>
+        </a>
+        <a class="track-final" data-sc="https://soundcloud.com/user-314316920/loli-in-early-20s-slowed" href="https://soundcloud.com/user-314316920/loli-in-early-20s-slowed" target="_blank" rel="noopener">
+          <div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">03</span><div class="track-info-final"><b>Loli In Early 20s (Slowed)</b><small>user-314316920</small></div><span class="track-arrow-final">↗</span>
+        </a>
+        <a class="track-final" data-sc="https://soundcloud.com/yaderae/dont-be-afraid" href="https://soundcloud.com/yaderae/dont-be-afraid" target="_blank" rel="noopener">
+          <div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">04</span><div class="track-info-final"><b>Don't Be Afraid</b><small>yaderae</small></div><span class="track-arrow-final">↗</span>
+        </a>
+        <a class="track-final" data-sc="https://soundcloud.com/svcura_461524869/xtvl" href="https://soundcloud.com/svcura_461524869/xtvl" target="_blank" rel="noopener">
+          <div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">05</span><div class="track-info-final"><b>xtvl</b><small>svcura</small></div><span class="track-arrow-final">↗</span>
+        </a>
       </div>
     </div>
   </section>
 
   <div class="section-divider"><div class="section-divider__line"></div><div class="section-divider__dot"></div><div class="section-divider__line"></div></div>
-
-  <!-- GUESTBOOK -->
-  <section id="guestbook" class="guestbook-section">
-    <div class="guestbook-content">
-      <div class="guestbook-head">
-        <div><span class="guestbook-eyebrow">GUESTBOOK</span><div style="margin-top:.55rem"><h2 class="guestbook-title">leave a message</h2><div class="guestbook-accent"></div></div></div>
-        <div class="guestbook-author-tools"><button type="button" class="author-login-btn" id="author-login-open">AUTHOR</button><span class="author-session" id="author-session" hidden>● SIGNED IN</span><button type="button" class="author-logout-btn" id="author-logout" hidden>LOG OUT</button></div>
-      </div>
-      <div class="guestbook-grid">
-        <div class="guestbook-form-card">
-          <form id="guestbook-form">
-            <div class="guestbook-fields"><input id="gb-name" class="gb-input" maxlength="32" required placeholder="Name"><input id="gb-contact" class="gb-input" maxlength="80" placeholder="Telegram / Discord (optional)"><textarea id="gb-message" class="gb-input gb-textarea" maxlength="500" required placeholder="Write something..."></textarea></div>
-            <div class="gb-form-bottom"><button class="gb-submit" type="submit" id="gb-submit">POST MESSAGE <span>→</span></button></div>
-          </form>
-        </div>
-        <div class="guestbook-list-card"><div class="gb-list-head"><span>MESSAGES</span><span id="gb-count">0</span></div><div class="gb-list" id="gb-list"><div class="gb-loading">LOADING MESSAGES...</div></div></div>
-      </div>
-    </div>
-  </section>
-
-  <div class="author-modal" id="author-modal" hidden>
-    <div class="author-modal__backdrop" id="author-modal-close"></div>
-    <div class="author-modal__box" role="dialog" aria-modal="true"><button class="author-modal__x" type="button" id="author-modal-x">×</button><span class="guestbook-eyebrow">PRIVATE</span><h3>Author access</h3><p class="author-modal__hint">Sign in with the site owner's Supabase account.</p><form id="author-login-form"><input id="author-email" class="gb-input" type="email" required placeholder="Email"><input id="author-password" class="gb-input" type="password" required placeholder="Password"><button class="gb-submit" type="submit" id="author-login-submit">SIGN IN <span>→</span></button><div class="author-login-error" id="author-login-error"></div></form></div>
-  </div>
 
   <!-- CONNECT -->
   <section id="socials" class="connect-section">
@@ -2335,7 +2331,7 @@
     }, 400);
   }
 
-  /* ═══ CURSOR — exact follow, no lagging ring ═══ */
+  /* ═══ CURSOR — exact follow, no lagging outline ═══ */
   const dot = document.getElementById('cursor-dot');
   const bgWrap = document.getElementById('bg-wrap');
   if (!IS_MOBILE) {
@@ -2344,13 +2340,27 @@
       bgWrap.style.setProperty('--mouse-x', `${e.clientX}px`);
       bgWrap.style.setProperty('--mouse-y', `${e.clientY}px`);
     }, {passive:true});
-  } else if (dot) {
-    dot.style.display='none';
-  }
+  } else if (dot) { dot.style.display='none'; }
 
   /* ═══ COPY DISCORD ═══ */
   document.getElementById('copy-discord').addEventListener('click', () => {
     navigator.clipboard.writeText('shiokaze').catch(() => {});
+  });
+
+  /* ═══ SOUNDCLOUD COVER ART ═══ */
+  const favoriteTracks = document.querySelectorAll('.track-final[data-sc]');
+  favoriteTracks.forEach(card => {
+    const image = card.querySelector('.track-cover-final img');
+    const url = card.dataset.sc;
+    fetch('https://soundcloud.com/oembed?format=json&url=' + encodeURIComponent(url), {mode:'cors'})
+      .then(r => { if(!r.ok) throw new Error('oembed'); return r.json(); })
+      .then(data => {
+        if (data && data.thumbnail_url) {
+          image.src = data.thumbnail_url;
+          image.addEventListener('load', () => card.querySelector('.track-cover-final').classList.add('loaded'), {once:true});
+        }
+      })
+      .catch(() => {});
   });
 
   /* ═══ DISCORD LANYARD ═══ */
@@ -2650,36 +2660,6 @@
       updateActive();
     })();
 
-</script>
-
-<script>
-(() => {
-  const SUPABASE_URL='https://sdqfeycfahemliivrujg.supabase.co';
-  const SUPABASE_KEY='sb_publishable_WVjFpsuPNUu8KJ-1UNL8qA_mDYwlUZG';
-  const AUTHOR_EMAIL='lopgg96@gmail.com';
-  const AUTHOR_NAME='Shiokaze';
-  let authorSession=null, guestbookItems=[];
-  const $=id=>document.getElementById(id);
-  const gb={list:$('gb-list'),count:$('gb-count'),form:$('guestbook-form'),submit:$('gb-submit'),modal:$('author-modal'),open:$('author-login-open'),session:$('author-session'),logout:$('author-logout'),close:$('author-modal-close'),x:$('author-modal-x'),login:$('author-login-form'),loginBtn:$('author-login-submit'),error:$('author-login-error')};
-  async function api(path, opts={}, token=''){
-    const headers={apikey:SUPABASE_KEY,'Content-Type':'application/json',...(opts.headers||{})}; if(token) headers.Authorization='Bearer '+token;
-    const r=await fetch(SUPABASE_URL+path,{...opts,headers}); let d=null; try{d=await r.json()}catch{}
-    if(!r.ok){const e=new Error(d?.message||d?.error_description||d?.error||'Request failed');e.status=r.status;throw e} return d;
-  }
-  const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
-  const date=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?'':d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'})};
-  function render(items){guestbookItems=items||[];gb.count.textContent=guestbookItems.length;if(!guestbookItems.length){gb.list.innerHTML='<div class="gb-empty">NO MESSAGES YET — BE THE FIRST.</div>';return}gb.list.innerHTML=guestbookItems.map(x=>`<article class="gb-message"><div class="gb-message__top"><div class="gb-message__identity"><span class="gb-message__name">${esc(x.name)}</span>${x.author_liked?'<span class="gb-author-badge">♥ AUTHOR</span>':''}</div><span class="gb-message__date">${date(x.created_at)}</span></div>${x.contact?`<div class="gb-message__contact">${esc(x.contact)}</div>`:''}<div class="gb-message__text">${esc(x.message)}</div><div class="gb-message__bottom"><button type="button" class="gb-like-btn ${authorSession?'author-ready':''} ${x.author_liked?'author-active':''}" data-like="${esc(x.id)}" ${authorSession?'':'disabled'}>♥ ${x.author_liked?'LIKED':'LIKE'}</button>${x.author_liked?`<span class="gb-liked-note">Понравилось автору · ${esc(AUTHOR_NAME)}</span>`:''}</div></article>`).join('')}
-  async function load(){try{render(await api('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked&order=created_at.desc&limit=50'))}catch(e){gb.list.innerHTML=`<div class="gb-error">GUESTBOOK ERROR: ${esc(e.message)}</div>`}}
-  function ui(){const on=!!authorSession;gb.open.hidden=on;gb.session.hidden=!on;gb.logout.hidden=!on;render(guestbookItems)}
-  function open(){gb.modal.hidden=false;document.body.style.overflow='hidden';setTimeout(()=>$('author-email')?.focus(),30)}
-  function close(){gb.modal.hidden=true;document.body.style.overflow='';gb.error.textContent=''}
-  gb.open.onclick=open;gb.close.onclick=close;gb.x.onclick=close;gb.logout.onclick=()=>{authorSession=null;localStorage.removeItem('shiokaze_author_session');ui()};
-  gb.form.addEventListener('submit',async e=>{e.preventDefault();const name=$('gb-name').value.trim(),contact=$('gb-contact').value.trim(),message=$('gb-message').value.trim();if(!name||!message)return;gb.submit.disabled=true;gb.submit.textContent='POSTING...';try{await api('/rest/v1/guestbook_comments',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({name,contact:contact||null,message})});gb.form.reset();await load()}catch(err){alert(err.message)}finally{gb.submit.disabled=false;gb.submit.innerHTML='POST MESSAGE <span>→</span>'}});
-  gb.list.addEventListener('click',async e=>{const b=e.target.closest('[data-like]');if(!b||!authorSession)return;b.disabled=true;try{await api('/rest/v1/rpc/toggle_author_like',{method:'POST',body:JSON.stringify({p_comment_id:b.dataset.like})},authorSession.access_token);await load()}catch(err){if(err.status===401||err.status===403){authorSession=null;localStorage.removeItem('shiokaze_author_session');ui()}else alert(err.message)}finally{b.disabled=false}});
-  gb.login.addEventListener('submit',async e=>{e.preventDefault();gb.error.textContent='';gb.loginBtn.disabled=true;gb.loginBtn.textContent='SIGNING IN...';try{const email=$('author-email').value.trim(),password=$('author-password').value;const d=await api('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email,password})});if((d.user?.email||email).toLowerCase()!==AUTHOR_EMAIL.toLowerCase())throw new Error('This account is not the site author.');authorSession={access_token:d.access_token,refresh_token:d.refresh_token,user:d.user};localStorage.setItem('shiokaze_author_session',JSON.stringify(authorSession));close();ui()}catch(err){gb.error.textContent=err.message||'Login failed.'}finally{gb.loginBtn.disabled=false;gb.loginBtn.innerHTML='SIGN IN <span>→</span>'}});
-  async function restore(){const raw=localStorage.getItem('shiokaze_author_session');if(!raw)return;try{const old=JSON.parse(raw);const d=await api('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:JSON.stringify({refresh_token:old.refresh_token})});authorSession={access_token:d.access_token,refresh_token:d.refresh_token,user:d.user};localStorage.setItem('shiokaze_author_session',JSON.stringify(authorSession));ui()}catch{localStorage.removeItem('shiokaze_author_session')}}
-  load();restore();setInterval(load,10000);
-})();
 </script>
 </body>
 </html>

@@ -1975,67 +1975,10 @@
     }
 
   
-/* ═══════════════════════════════════════════════════════════════
-   FINAL VISUAL POLISH
-   ═══════════════════════════════════════════════════════════════ */
-/* No ring trailing behind the cursor. */
-.cursor-outline{display:none!important}
-.cursor-dot{width:6px!important;height:6px!important;transition:none!important}
-/* The hero's old typing caret was the stray "stick" under the name. */
-#type-cursor,.text-type__cursor{display:none!important}
-/* Elegant wordmark: a very slow luminosity shift, no jitter / jumps. */
-.ascii-static-name > span{
-  animation: shiokaze-breathe 7s ease-in-out infinite !important;
-  transform:translateZ(0);
-  will-change:filter,opacity;
-}
-@keyframes shiokaze-breathe{
-  0%,100%{opacity:.94;filter:drop-shadow(0 2px 20px rgba(0,0,0,.20))}
-  50%{opacity:1;filter:drop-shadow(0 2px 28px rgba(185,169,255,.13))}
-}
-.ascii-static-name:hover > span{animation:shiokaze-breathe 7s ease-in-out infinite!important}
-
-/* Cursor follows exactly; the background's glow is centered on the pointer. */
-#bg-wrap{--mouse-x:50vw;--mouse-y:50vh;}
-#bg-wrap::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:3;
-  pointer-events:none;
-  background:
-    radial-gradient(360px 360px at var(--mouse-x) var(--mouse-y), rgba(174,154,255,.13), rgba(124,104,230,.045) 34%, transparent 70%);
-  mix-blend-mode:screen;
-  opacity:.9;
-}
-#bg-wrap::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:4;
-  pointer-events:none;
-  background:radial-gradient(520px 420px at var(--mouse-x) var(--mouse-y), transparent 0%, transparent 58%, rgba(5,6,10,.18) 100%);
-}
-
-/* SoundCloud favorites — same minimal language as the rest of the page. */
-.music-section-final{position:relative;z-index:20;width:100vw;padding:8rem 2rem 5rem;display:flex;justify-content:center}
-.music-content-final{width:100%;max-width:1080px}
-.music-head-final{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem}
-.music-eyebrow-final{font:600 .62rem/1 'IBM Plex Mono',monospace;letter-spacing:.28em;color:rgba(214,204,255,.52);text-transform:uppercase}
-.music-title-final{margin:.55rem 0 0;font-size:clamp(2.5rem,6vw,4.1rem);font-weight:600;letter-spacing:-.055em;line-height:1;color:var(--text-main)}
-.music-profile-final{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;padding:.58rem .72rem;border:1px solid rgba(255,255,255,.075);background:rgba(255,255,255,.022);border-radius:6px;color:rgba(255,255,255,.48);font:8px 'IBM Plex Mono',monospace;letter-spacing:.07em;transition:.22s}
-.music-profile-final:hover{color:#fff;border-color:rgba(155,123,255,.35);background:rgba(124,143,255,.05);transform:translateY(-2px)}
-.track-list-final{margin-top:1.7rem;border-top:1px solid rgba(255,255,255,.06)}
-.track-final{display:grid;grid-template-columns:54px 28px minmax(0,1fr) 30px;align-items:center;gap:.9rem;padding:.7rem .15rem;border-bottom:1px solid rgba(255,255,255,.052);text-decoration:none;transition:background .22s,padding .22s,border-color .22s}
-.track-final:hover{background:rgba(124,143,255,.035);padding-left:.65rem;padding-right:.65rem;border-color:rgba(124,143,255,.13)}
-.track-cover-final{position:relative;width:54px;height:54px;border-radius:6px;overflow:hidden;background:linear-gradient(135deg,rgba(124,143,255,.17),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.07);display:grid;place-items:center}
-.track-cover-final img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;filter:saturate(.7) brightness(.72);transition:opacity .35s,filter .35s,transform .4s}
-.track-cover-final.loaded img{opacity:1}.track-final:hover .track-cover-final img{filter:saturate(.9) brightness(.82);transform:scale(1.04)}
-.track-cover-final span{position:absolute;color:rgba(255,255,255,.22);font-size:14px;z-index:0}.track-cover-final.loaded span{display:none}
-.track-num-final{font:8px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.2)}
-.track-info-final{min-width:0}.track-info-final b{display:block;font-size:.86rem;font-weight:500;color:rgba(255,255,255,.78);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.track-info-final small{display:block;margin-top:.16rem;font:7px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.25);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.track-arrow-final{width:30px;height:30px;border:1px solid rgba(255,255,255,.055);border-radius:5px;display:grid;place-items:center;color:rgba(255,255,255,.22);font-size:11px;transition:.2s}.track-final:hover .track-arrow-final{color:#fff;border-color:rgba(155,123,255,.28)}
-@media(max-width:650px){.music-head-final{align-items:flex-start;flex-direction:column}.music-profile-final{width:100%;justify-content:center}.track-final{grid-template-columns:46px 24px minmax(0,1fr) 28px;gap:.65rem}.track-cover-final{width:46px;height:46px}}
+/* FINAL VISUAL POLISH */
+.cursor-outline{display:none!important}.cursor-dot{width:6px!important;height:6px!important;transition:none!important}#type-cursor,.text-type__cursor{display:none!important}.ascii-static-name>span{animation:shiokaze-breathe 7s ease-in-out infinite!important;transform:translateZ(0)}@keyframes shiokaze-breathe{0%,100%{opacity:.94;filter:drop-shadow(0 2px 20px rgba(0,0,0,.2))}50%{opacity:1;filter:drop-shadow(0 2px 28px rgba(185,169,255,.13))}}#bg-wrap{--mouse-x:50vw;--mouse-y:50vh}#bg-wrap::before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(360px 360px at var(--mouse-x) var(--mouse-y),rgba(174,154,255,.13),rgba(124,104,230,.045) 34%,transparent 70%);mix-blend-mode:screen}
+.music-section-final,.guestbook-section-final{position:relative;z-index:20;width:100vw;padding:7rem 2rem 5rem;display:flex;justify-content:center}.music-content-final,.guestbook-content-final{width:100%;max-width:1080px}.music-head-final,.guestbook-head-final{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem}.music-eyebrow-final,.guestbook-eyebrow-final{font:600 .62rem/1 'IBM Plex Mono',monospace;letter-spacing:.28em;color:rgba(214,204,255,.52);text-transform:uppercase}.music-title-final,.guestbook-title-final{margin:.55rem 0 0;font-size:clamp(2.5rem,6vw,4.1rem);font-weight:600;letter-spacing:-.055em;line-height:1;color:var(--text-main)}.music-profile-final{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;padding:.58rem .72rem;border:1px solid rgba(255,255,255,.075);background:rgba(255,255,255,.022);border-radius:6px;color:rgba(255,255,255,.48);font:8px 'IBM Plex Mono',monospace}.track-list-final{margin-top:1.7rem;border-top:1px solid rgba(255,255,255,.06)}.track-final{display:grid;grid-template-columns:54px 28px minmax(0,1fr) 30px;align-items:center;gap:.9rem;padding:.7rem .15rem;border-bottom:1px solid rgba(255,255,255,.052);text-decoration:none;transition:.22s}.track-final:hover{background:rgba(124,143,255,.035);padding-left:.65rem}.track-cover-final{position:relative;width:54px;height:54px;border-radius:6px;overflow:hidden;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);display:grid;place-items:center}.track-cover-final img{width:100%;height:100%;object-fit:cover;opacity:0;filter:saturate(.7) brightness(.72);transition:.35s}.track-cover-final.loaded img{opacity:1}.track-cover-final span{position:absolute;color:rgba(255,255,255,.22)}.track-cover-final.loaded span{display:none}.track-num-final{font:8px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.2)}.track-info-final{min-width:0}.track-info-final b{display:block;font-size:.86rem;font-weight:500;color:rgba(255,255,255,.78);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.track-info-final small{display:block;margin-top:.16rem;font:7px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.25)}.track-arrow-final{color:rgba(255,255,255,.22)}
+.guestbook-grid-final{display:grid;grid-template-columns:.78fr 1.22fr;gap:.8rem;margin-top:1.7rem}.guestbook-form-final,.guestbook-list-final{border:1px solid rgba(255,255,255,.065);background:rgba(3,4,9,.64);border-radius:8px;backdrop-filter:blur(12px)}.guestbook-form-final{padding:1.1rem}.guestbook-form-final input,.guestbook-form-final textarea,.author-modal-box-final input{box-sizing:border-box;width:100%;border:1px solid rgba(255,255,255,.075);background:rgba(0,0,0,.16);color:#fff;border-radius:6px;padding:.7rem .75rem;margin-bottom:.6rem;outline:0;font:11px 'Outfit',sans-serif}.guestbook-form-final textarea{min-height:150px;resize:vertical}.gb-submit-row{text-align:right}.gb-submit-row button,.author-modal-box-final button[type=submit]{border:1px solid rgba(124,143,255,.22);background:rgba(124,143,255,.06);color:#fff;border-radius:6px;padding:.62rem .72rem;font:8px 'IBM Plex Mono',monospace}.gb-list-head-final{display:flex;justify-content:space-between;padding:.8rem .9rem;border-bottom:1px solid rgba(255,255,255,.055);font:7px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.28)}#gb-list{max-height:500px;overflow:auto;padding:.6rem}.gb-loading-final,.gb-empty{padding:3rem 1rem;text-align:center;color:rgba(255,255,255,.2);font:8px 'IBM Plex Mono',monospace}.gb-message{padding:.8rem;border:1px solid rgba(255,255,255,.055);background:rgba(255,255,255,.015);border-radius:7px;margin-bottom:.5rem}.gb-message__top,.gb-message__identity,.gb-message__bottom{display:flex;align-items:center;gap:.5rem}.gb-message__top{justify-content:space-between}.gb-message__name{font-size:.76rem;font-weight:600;color:rgba(255,255,255,.82)}.gb-author-badge,.gb-liked-note{color:#8ee7ac;font:6px 'IBM Plex Mono',monospace}.gb-message__date,.gb-message__contact{font:6px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.2)}.gb-message__text{margin-top:.5rem;color:rgba(255,255,255,.58);font-size:.76rem;line-height:1.62;white-space:pre-wrap;word-break:break-word}.gb-like-btn{border:1px solid rgba(255,255,255,.055);background:transparent;color:rgba(255,255,255,.28);border-radius:5px;padding:.28rem .48rem;font:7px 'IBM Plex Mono',monospace}.gb-like-btn.author-ready:hover,.gb-like-btn.author-active{color:#8ee7ac}.author-modal-final[hidden]{display:none}.author-modal-final{position:fixed;inset:0;z-index:50000;display:grid;place-items:center}.author-modal-backdrop-final{position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(9px)}.author-modal-box-final{position:relative;z-index:1;width:min(390px,calc(100vw - 2rem));padding:1.25rem;border:1px solid rgba(255,255,255,.09);background:rgba(7,8,13,.97);border-radius:10px}.author-modal-box-final input{margin-top:.6rem}.author-modal-box-final h3{margin:.6rem 0}.author-modal-box-final p{color:var(--text-muted);font-size:.72rem}.author-modal-box-final>button:first-child{position:absolute;right:.55rem;top:.55rem;border:0;background:transparent;color:#aaa;font-size:18px}@media(max-width:800px){.guestbook-grid-final{grid-template-columns:1fr}.music-head-final,.guestbook-head-final{align-items:flex-start;flex-direction:column}.track-final{grid-template-columns:46px 24px minmax(0,1fr) 28px}.track-cover-final{width:46px;height:46px}}
 </style>
 </head>
 <body>
@@ -2181,37 +2124,18 @@
 
   <div class="section-divider"><div class="section-divider__line"></div><div class="section-divider__dot"></div><div class="section-divider__line"></div></div>
 
-  <!-- MUSIC / VISUAL ONLY -->
-  <section id="music" class="music-section-final">
-    <div class="music-content-final">
-      <div class="music-head-final">
-        <div>
-          <span class="music-eyebrow-final">RECENT TRACKS</span>
-          <h2 class="music-title-final">music i like</h2>
-        </div>
-        <a class="music-profile-final" href="https://soundcloud.com/lopgg96" target="_blank" rel="noopener"><i class="fab fa-soundcloud"></i> MY SOUNDCLOUD ↗</a>
-      </div>
-      <div class="track-list-final">
-        <a class="track-final" data-sc="https://soundcloud.com/aleksej-kireev/crxw-despair-hope" href="https://soundcloud.com/aleksej-kireev/crxw-despair-hope" target="_blank" rel="noopener">
-          <div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">01</span><div class="track-info-final"><b>CRXW — Despair / Hope</b><small>Aleksej Kireev</small></div><span class="track-arrow-final">↗</span>
-        </a>
-        <a class="track-final" data-sc="https://soundcloud.com/nvrmreee/silent-hill-2-ost-black-fairy-breakcore-remix" href="https://soundcloud.com/nvrmreee/silent-hill-2-ost-black-fairy-breakcore-remix" target="_blank" rel="noopener">
-          <div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">02</span><div class="track-info-final"><b>Silent Hill 2 OST — Black Fairy</b><small>Breakcore Remix · nvrmreee</small></div><span class="track-arrow-final">↗</span>
-        </a>
-        <a class="track-final" data-sc="https://soundcloud.com/user-314316920/loli-in-early-20s-slowed" href="https://soundcloud.com/user-314316920/loli-in-early-20s-slowed" target="_blank" rel="noopener">
-          <div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">03</span><div class="track-info-final"><b>Loli In Early 20s (Slowed)</b><small>user-314316920</small></div><span class="track-arrow-final">↗</span>
-        </a>
-        <a class="track-final" data-sc="https://soundcloud.com/yaderae/dont-be-afraid" href="https://soundcloud.com/yaderae/dont-be-afraid" target="_blank" rel="noopener">
-          <div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">04</span><div class="track-info-final"><b>Don't Be Afraid</b><small>yaderae</small></div><span class="track-arrow-final">↗</span>
-        </a>
-        <a class="track-final" data-sc="https://soundcloud.com/svcura_461524869/xtvl" href="https://soundcloud.com/svcura_461524869/xtvl" target="_blank" rel="noopener">
-          <div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">05</span><div class="track-info-final"><b>xtvl</b><small>svcura</small></div><span class="track-arrow-final">↗</span>
-        </a>
-      </div>
-    </div>
-  </section>
+  <!-- MUSIC -->
+  <section id="music" class="music-section-final"><div class="music-content-final"><div class="music-head-final"><div><span class="music-eyebrow-final">RECENT TRACKS</span><h2 class="music-title-final">music i like</h2></div><a class="music-profile-final" href="https://soundcloud.com/lopgg96" target="_blank" rel="noopener"><i class="fab fa-soundcloud"></i> MY SOUNDCLOUD ↗</a></div><div class="track-list-final">
+<a class="track-final" href="https://soundcloud.com/aleksej-kireev/crxw-despair-hope" target="_blank" rel="noopener" data-sc="https://soundcloud.com/aleksej-kireev/crxw-despair-hope"><div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">01</span><div class="track-info-final"><b>CRXW — Despair / Hope</b><small>Aleksej Kireev</small></div><span class="track-arrow-final">↗</span></a>
+<a class="track-final" href="https://soundcloud.com/nvrmreee/silent-hill-2-ost-black-fairy-breakcore-remix" target="_blank" rel="noopener" data-sc="https://soundcloud.com/nvrmreee/silent-hill-2-ost-black-fairy-breakcore-remix"><div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">02</span><div class="track-info-final"><b>Silent Hill 2 OST — Black Fairy</b><small>Breakcore Remix · nvrmreee</small></div><span class="track-arrow-final">↗</span></a>
+<a class="track-final" href="https://soundcloud.com/user-314316920/loli-in-early-20s-slowed" target="_blank" rel="noopener" data-sc="https://soundcloud.com/user-314316920/loli-in-early-20s-slowed"><div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">03</span><div class="track-info-final"><b>Loli In Early 20s (Slowed)</b><small>user-314316920</small></div><span class="track-arrow-final">↗</span></a>
+<a class="track-final" href="https://soundcloud.com/yaderae/dont-be-afraid" target="_blank" rel="noopener" data-sc="https://soundcloud.com/yaderae/dont-be-afraid"><div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">04</span><div class="track-info-final"><b>Don't Be Afraid</b><small>yaderae</small></div><span class="track-arrow-final">↗</span></a>
+<a class="track-final" href="https://soundcloud.com/svcura_461524869/xtvl" target="_blank" rel="noopener" data-sc="https://soundcloud.com/svcura_461524869/xtvl"><div class="track-cover-final"><img alt="" loading="lazy"><span><i class="fab fa-soundcloud"></i></span></div><span class="track-num-final">05</span><div class="track-info-final"><b>xtvl</b><small>svcura</small></div><span class="track-arrow-final">↗</span></a>
+</div></div></section>
 
-  <div class="section-divider"><div class="section-divider__line"></div><div class="section-divider__dot"></div><div class="section-divider__line"></div></div>
+  <!-- GUESTBOOK -->
+  <section id="guestbook" class="guestbook-section-final"><div class="guestbook-content-final"><div class="guestbook-head-final"><div><span class="guestbook-eyebrow-final">GUESTBOOK</span><h2 class="guestbook-title-final">leave a message</h2></div><div class="guestbook-author-final"><button id="author-login-open" type="button">AUTHOR</button><span id="author-session" hidden>● SIGNED IN</span><button id="author-logout" type="button" hidden>LOG OUT</button></div></div><div class="guestbook-grid-final"><div class="guestbook-form-final"><form id="guestbook-form"><input id="gb-name" maxlength="32" required placeholder="Name"><input id="gb-contact" maxlength="80" placeholder="Telegram / Discord (optional)"><textarea id="gb-message" maxlength="500" required placeholder="Write something..."></textarea><div class="gb-submit-row"><button id="gb-submit" type="submit">POST MESSAGE →</button></div></form></div><div class="guestbook-list-final"><div class="gb-list-head-final"><span>MESSAGES</span><span id="gb-count">0</span></div><div id="gb-list"><div class="gb-loading-final">LOADING MESSAGES...</div></div></div></div></div></section>
+  <div class="author-modal-final" id="author-modal" hidden><div class="author-modal-backdrop-final" id="author-modal-close"></div><div class="author-modal-box-final"><button id="author-modal-x" type="button">×</button><span class="guestbook-eyebrow-final">PRIVATE</span><h3>Author access</h3><p>Sign in with the site owner's account.</p><form id="author-login-form"><input id="author-email" type="email" required placeholder="Email"><input id="author-password" type="password" required placeholder="Password"><button id="author-login-submit" type="submit">SIGN IN →</button><div id="author-login-error"></div></form></div></div>
 
   <!-- CONNECT -->
   <section id="socials" class="connect-section">
@@ -2331,36 +2255,31 @@
     }, 400);
   }
 
-  /* ═══ CURSOR — exact follow, no lagging outline ═══ */
+  /* ═══ CURSOR ═══ */
   const dot = document.getElementById('cursor-dot');
-  const bgWrap = document.getElementById('bg-wrap');
+  const outline = document.getElementById('cursor-outline');
+  let mx = -100, my = -100, rx = -100, ry = -100, oSize = 32;
+
   if (!IS_MOBILE) {
-    window.addEventListener('mousemove', e => {
-      dot.style.transform = `translate3d(${e.clientX}px,${e.clientY}px,0) translate(-50%,-50%)`;
-      bgWrap.style.setProperty('--mouse-x', `${e.clientX}px`);
-      bgWrap.style.setProperty('--mouse-y', `${e.clientY}px`);
-    }, {passive:true});
-  } else if (dot) { dot.style.display='none'; }
+    window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    document.addEventListener('mouseover', e => {
+      const hover = e.target.closest('a,button,.top-icon,.connect-card,.project-card,#copy-discord,h1,h2,h3');
+      outline.classList.toggle('hover', !!hover);
+    });
+    (function animCursor() {
+      dot.style.transform = `translate3d(${mx - 4}px, ${my - 4}px, 0)`;
+      rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+      const target = outline.classList.contains('hover') ? 48 : 32;
+      oSize += (target - oSize) * 0.12;
+      outline.style.transform = `translate3d(${rx - oSize / 2}px, ${ry - oSize / 2}px, 0)`;
+      outline.style.width = outline.style.height = oSize + 'px';
+      requestAnimationFrame(animCursor);
+    })();
+  }
 
   /* ═══ COPY DISCORD ═══ */
   document.getElementById('copy-discord').addEventListener('click', () => {
     navigator.clipboard.writeText('shiokaze').catch(() => {});
-  });
-
-  /* ═══ SOUNDCLOUD COVER ART ═══ */
-  const favoriteTracks = document.querySelectorAll('.track-final[data-sc]');
-  favoriteTracks.forEach(card => {
-    const image = card.querySelector('.track-cover-final img');
-    const url = card.dataset.sc;
-    fetch('https://soundcloud.com/oembed?format=json&url=' + encodeURIComponent(url), {mode:'cors'})
-      .then(r => { if(!r.ok) throw new Error('oembed'); return r.json(); })
-      .then(data => {
-        if (data && data.thumbnail_url) {
-          image.src = data.thumbnail_url;
-          image.addEventListener('load', () => card.querySelector('.track-cover-final').classList.add('loaded'), {once:true});
-        }
-      })
-      .catch(() => {});
   });
 
   /* ═══ DISCORD LANYARD ═══ */
@@ -2660,6 +2579,10 @@
       updateActive();
     })();
 
+</script>
+<script>
+(()=>{const dot=document.getElementById('cursor-dot'),bg=document.getElementById('bg-wrap');if(dot&&!('ontouchstart'in window)){addEventListener('mousemove',e=>{dot.style.transform=`translate3d(${e.clientX}px,${e.clientY}px,0) translate(-50%,-50%)`;bg.style.setProperty('--mouse-x',e.clientX+'px');bg.style.setProperty('--mouse-y',e.clientY+'px')},{passive:true})}document.querySelectorAll('.track-final[data-sc]').forEach(c=>fetch('https://soundcloud.com/oembed?format=json&url='+encodeURIComponent(c.dataset.sc)).then(r=>r.json()).then(d=>{if(d.thumbnail_url){let i=c.querySelector('img');i.src=d.thumbnail_url;i.onload=()=>c.querySelector('.track-cover-final').classList.add('loaded')}}).catch(()=>{}));
+const U='https://sdqfeycfahemliivrujg.supabase.co',K='sb_publishable_WVjFpsuPNUu8KJ-1UNL8qA_mDYwlUZG',EMAIL='lopgg96@gmail.com',NAME='Shiokaze';let session=null,items=[];const $=id=>document.getElementById(id),esc=x=>String(x??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));async function api(path,opt={},token){let h={apikey:K,'Content-Type':'application/json',...(opt.headers||{})};if(token)h.Authorization='Bearer '+token;let r=await fetch(U+path,{...opt,headers:h}),d=await r.json().catch(()=>null);if(!r.ok)throw Error(d?.message||d?.error_description||'Request failed');return d}function render(a){items=a||[];$('gb-count').textContent=items.length;$('gb-list').innerHTML=items.length?items.map(x=>`<article class="gb-message"><div class="gb-message__top"><div class="gb-message__identity"><span class="gb-message__name">${esc(x.name)}</span>${x.author_liked?'<span class="gb-author-badge">♥ AUTHOR</span>':''}</div><span class="gb-message__date">${new Date(x.created_at).toLocaleDateString('ru-RU')}</span></div>${x.contact?`<div class="gb-message__contact">${esc(x.contact)}</div>`:''}<div class="gb-message__text">${esc(x.message)}</div><div class="gb-message__bottom"><button class="gb-like-btn ${session?'author-ready':''} ${x.author_liked?'author-active':''}" data-like="${x.id}" ${session?'':'disabled'}>♥ ${x.author_liked?'LIKED':'LIKE'}</button>${x.author_liked?`<span class="gb-liked-note">Понравилось автору · ${NAME}</span>`:''}</div></article>`).join(''):'<div class="gb-empty">NO MESSAGES YET — BE THE FIRST.</div>'}async function load(){try{render(await api('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked&order=created_at.desc&limit=50'))}catch(e){$('gb-list').innerHTML='<div class="gb-error">GUESTBOOK ERROR</div>'}}function ui(){let on=!!session;$('author-login-open').hidden=on;$('author-session').hidden=!on;$('author-logout').hidden=!on;render(items)}$('author-login-open').onclick=()=>{$('author-modal').hidden=false};$('author-modal-close').onclick=$('author-modal-x').onclick=()=>{$('author-modal').hidden=true};$('author-logout').onclick=()=>{session=null;localStorage.removeItem('shiokaze_author_session');ui()};$('guestbook-form').onsubmit=async e=>{e.preventDefault();let b=$('gb-submit');b.disabled=true;try{await api('/rest/v1/guestbook_comments',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({name:$('gb-name').value.trim(),contact:$('gb-contact').value.trim()||null,message:$('gb-message').value.trim()})});e.target.reset();await load()}catch(x){alert(x.message)}b.disabled=false};$('gb-list').onclick=async e=>{let b=e.target.closest('[data-like]');if(!b||!session)return;b.disabled=true;try{await api('/rest/v1/rpc/toggle_author_like',{method:'POST',body:JSON.stringify({p_comment_id:b.dataset.like})},session.access_token);await load()}catch(x){alert(x.message)}b.disabled=false};$('author-login-form').onsubmit=async e=>{e.preventDefault();try{let d=await api('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email:$('author-email').value.trim(),password:$('author-password').value})});if((d.user?.email||'').toLowerCase()!=EMAIL)throw Error('Wrong author account');session=d;localStorage.setItem('shiokaze_author_session',JSON.stringify(d));$('author-modal').hidden=true;ui()}catch(x){$('author-login-error').textContent=x.message}};load();})();
 </script>
 </body>
 </html>

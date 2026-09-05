@@ -5596,7 +5596,7 @@ body::after {
         current(){return tracks[trackIndex]||tracks[0]},
         setTrackMeta(){const t=this.current();document.querySelectorAll('[data-track-title],#player-track-title,#scene-track-name').forEach(e=>e.textContent=t.name);document.querySelectorAll('[data-track-artist],#player-track-artist,#scene-track-artist').forEach(e=>e.textContent=t.artist);document.querySelectorAll('.tl-item').forEach((e,i)=>e.classList.toggle('active',i===trackIndex));document.body.dataset.trackAvailability=t.url?'available':'unavailable'},
         setIcons(){
-          if(!audio)return;const playing=!audio.paused,icon=playing?'<i class="fas fa-pause"></i>':'<i class="fas fa-play"></i>';
+          if(!audio)return;const playing=!audio.paused,icon=playing?'Ⅱ':'▶';
           if(playBtn)playBtn.innerHTML=icon;if(scenePlay){scenePlay.innerHTML=icon;scenePlay.setAttribute('aria-label',playing?'Pause music':'Play music')}
           const rb=document.getElementById('scene-radio-box'),rs=document.getElementById('radio-track-status');
           if(rb){rb.classList.toggle('is-playing',playing);rb.classList.toggle('pv3-player-playing',playing)}
@@ -5743,21 +5743,34 @@ body::after {
         }
 
         async function loadGuestbook(){
-          try{
-            let data;
-            try {
-              data = await guestbookApi('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked,author_reply,author_reply_at&order=created_at.desc&limit=50');
-            } catch {
-              data = await guestbookApi('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked&order=created_at.desc&limit=50');
-              data = (data || []).map(x => ({...x, author_reply:null, author_reply_at:null}));
+          const requests = [
+            '/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked,author_reply,author_reply_at&order=created_at.desc&limit=50',
+            '/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked&order=created_at.desc&limit=50',
+            '/rest/v1/guestbook_comments?select=id,name,message,created_at&order=created_at.desc&limit=50'
+          ];
+          let lastError = null;
+          for(let attempt=0; attempt<3; attempt++){
+            for(const path of requests){
+              try{
+                const data = await guestbookApi(path);
+                const normalized = (data || []).map(item => ({
+                  ...item,
+                  contact: item.contact ?? null,
+                  author_liked: item.author_liked ?? false,
+                  author_reply: item.author_reply ?? null,
+                  author_reply_at: item.author_reply_at ?? null
+                }));
+                items = normalized;
+                renderGuestbook(normalized);
+                if (status) status.textContent = 'READY';
+                return;
+              }catch(error){ lastError = error; }
             }
-            renderGuestbook(data);
-            if (status) status.textContent = 'READY';
-          } catch(error){
-            list.innerHTML = '<div class="gb-error">GUESTBOOK CONNECTION ERROR</div>';
-            if (status) status.textContent = 'OFFLINE';
-            console.error('[guestbook]', error);
+            await new Promise(resolve => setTimeout(resolve, 500 * (attempt + 1)));
           }
+          list.innerHTML = '<div class="gb-error">GUESTBOOK CONNECTION ERROR</div>';
+          if (status) status.textContent = 'OFFLINE';
+          console.error('[guestbook]', lastError);
         }
 
         loginOpen?.addEventListener('click', () => { if (modal) modal.hidden = false; });
@@ -6309,6 +6322,16 @@ body::after {
   #scene-04 .mp-btn{min-width:0!important;padding:0 7px!important;}
   #scene-05 .guestbook-content-final{max-height:73svh!important;}
 }
+</style>
+
+<style id="final-music-fab-visibility-fix">
+/* Final: FAB is always visible and uses text glyphs, no icon font dependency. */
+#music-fab.music-fab{display:grid!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;position:fixed!important;z-index:10030!important;}
+#music-fab .music-fab__icon{display:grid!important;place-items:center!important;font-family:"IBM Plex Mono",monospace!important;font-weight:900!important;line-height:1!important;}
+#music-fab .music-fab__icon i{font-style:normal!important;font-family:inherit!important;font-size:0!important;}
+#music-fab .music-fab__icon i::before{content:"▶"!important;font-size:11px!important;}
+#music-fab.is-playing .music-fab__icon i::before{content:"Ⅱ"!important;}
+@media(max-width:620px){#music-fab.music-fab{left:10px!important;right:10px!important;bottom:calc(10px + env(safe-area-inset-bottom))!important;width:auto!important;}}
 </style>
 </body>
 </html>

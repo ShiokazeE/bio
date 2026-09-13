@@ -1503,6 +1503,8 @@ body.author-mode .owner-open{background:rgba(53,56,58,.82);color:#fff;}
       dcStatus.className = 'status-dot';
     }
   }
+  
+  fetchDiscord();setInterval(fetchDiscord,30000);
 
   // Guestbook, rating, visits and owner tools.
   const GUESTBOOK_API='https://sdqfeycfahemliivrujg.supabase.co';

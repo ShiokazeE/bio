@@ -1473,16 +1473,36 @@ body.author-mode .owner-open{background:rgba(53,56,58,.82);color:#fff;}
   // Discord
   const DISCORD_ID='912747427465928754';
   const dcAvatar=document.getElementById('dc-avatar'),dcName=document.getElementById('dc-name'),dcActivity=document.getElementById('dc-activity'),dcStatus=document.getElementById('dc-status');
-  async function fetchDiscord(){
-    try{
-      const res=await fetch('https://api.lanyard.rest/v1/users/'+DISCORD_ID,{cache:'no-store'});const json=await res.json();const d=json?.data;if(!d)throw new Error('presence');
-      const u=d.discord_user||{};dcName.textContent=u.global_name||u.username||'shiokaze';
-      dcAvatar.src=u.avatar?`https://cdn.discordapp.com/avatars/${DISCORD_ID}/${u.avatar}.${u.avatar.startsWith('a_')?'gif':'webp'}?size=96`:'https://cdn.discordapp.com/embed/avatars/0.png';
-      const st=d.discord_status||'offline';dcStatus.className='status-dot '+(st==='online'?'online':st==='idle'?'idle':st==='dnd'?'dnd':'');
-      const acts=d.activities||[];const act=acts.find(a=>a.type===0)||acts.find(a=>a.type===2)||acts.find(a=>a.type===1);dcActivity.textContent=act?(act.details||act.name||'active on Discord'):(st==='offline'?'offline':'online / no activity');
-    }catch{dcActivity.textContent='presence unavailable';dcStatus.className='status-dot'}
+    async function fetchDiscord() {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000); // 8 секунд
+    try {
+      const res = await fetch('https://lanyard-proxy.lopgg96.workers.dev/v1/users/' + DISCORD_ID, {
+        cache: 'no-store',
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+      const json = await res.json();
+      const d = json?.data;
+      if (!d) throw new Error('presence');
+      const u = d.discord_user || {};
+      dcName.textContent = u.global_name || u.username || 'shiokaze';
+      dcAvatar.src = u.avatar
+        ? `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${u.avatar}.${u.avatar.startsWith('a_') ? 'gif' : 'webp'}?size=96`
+        : 'https://cdn.discordapp.com/embed/avatars/0.png';
+      const st = d.discord_status || 'offline';
+      dcStatus.className = 'status-dot ' + (st === 'online' ? 'online' : st === 'idle' ? 'idle' : st === 'dnd' ? 'dnd' : '');
+      const acts = d.activities || [];
+      const act = acts.find(a => a.type === 0) || acts.find(a => a.type === 2) || acts.find(a => a.type === 1);
+      dcActivity.textContent = act
+        ? (act.details || act.name || 'active on Discord')
+        : (st === 'offline' ? 'offline' : 'online / no activity');
+    } catch (e) {
+      clearTimeout(timeout);
+      dcActivity.textContent = e.name === 'AbortError' ? 'presence timeout' : 'presence unavailable';
+      dcStatus.className = 'status-dot';
+    }
   }
-  fetchDiscord();setInterval(fetchDiscord,30000);
 
   // Guestbook, rating, visits and owner tools.
   const GUESTBOOK_API='https://sdqfeycfahemliivrujg.supabase.co';

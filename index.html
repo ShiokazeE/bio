@@ -1,14 +1,29 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>SHIOKAZE — SVCURA</title>
 <meta name="theme-color" content="#f3f4f2">
+<meta name="color-scheme" content="light">
+<meta name="description" content="shiokaze — digital creator. quiet interfaces, motion, sound.">
+<link rel="canonical" href="https://shiokazee.github.io/bio/">
+
+<link rel="icon" href="https://i.pinimg.com/736x/1b/e1/ee/1be1ee29223cc22fc48f5a1b2795a44a.jpg" type="image/jpeg">
+
+<meta property="og:type"        content="profile">
+<meta property="og:title"       content="SHIOKAZE — SVCURA">
+<meta property="og:description" content="digital creator · web / motion / sound">
+<meta property="og:image"       content="https://i.ibb.co/NdPg4wfy/Chat-GPT-Image-Sep-13-2026-12-44-03-PM.png">
+<meta property="og:url"         content="https://shiokazee.github.io/bio/">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="SHIOKAZE — SVCURA">
+<meta name="twitter:description" content="digital creator · web / motion / sound">
+<meta name="twitter:image"       content="https://i.ibb.co/NdPg4wfy/Chat-GPT-Image-Sep-13-2026-12-44-03-PM.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 :root{
   --ink:#35383a;
@@ -57,7 +72,6 @@ input{outline:none}
 .title{font:500 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(53,56,58,.64)}
 .rule{height:1px;background:rgba(53,56,58,.10);margin:9px 0}
 
-/* exact-ish composition from the reference image */
 .identity{left:3.0vw;top:3.3vh;width:min(250px,25vw);padding:13px 15px}
 .identity .mark{font:400 10px/1 var(--mono);color:rgba(53,56,58,.38);margin-bottom:10px}
 .identity h1{font:400 clamp(34px,3.4vw,58px)/.86 var(--mono);letter-spacing:-.08em;color:rgba(53,56,58,.72)}
@@ -184,7 +198,6 @@ input{outline:none}
 .right-stack .social{
   order:1;
 }
-/* visually merge the paired cards into two deliberate glass modules */
 .left-stack .music{
   border-radius:20px 20px 12px 12px;
   padding:14px 15px 13px;
@@ -203,7 +216,6 @@ input{outline:none}
   margin-top:-6px;
   background:rgba(248,249,247,.24);
 }
-/* central visual balance: messages becomes the bottom anchor */
 .guestbook{
   right:50%;
   bottom:5.5vh;
@@ -211,7 +223,6 @@ input{outline:none}
   transform:translateX(50%);
   z-index:4;
 }
-/* top corners stay extremely light, framing the figure rather than boxing it */
 .identity{
   left:50%;
   top:4.2vh;
@@ -321,7 +332,6 @@ input{outline:none}
   box-shadow:0 24px 64px rgba(39,43,43,.10), inset 0 1px 0 rgba(255,255,255,.82);
 }
 
-/* top identity: more like the reference, less like a boxed dashboard */
 .identity{
   left:2.9vw;top:3.4vh;width:250px;
   padding:8px 4px 6px;
@@ -339,7 +349,6 @@ input{outline:none}
 .identity nav a{font-size:7px}
 .identity .author{width:190px}
 
-/* top-right system label */
 .system{
   right:2.9vw;top:3.3vh;width:214px;
   padding:10px 11px;
@@ -350,7 +359,6 @@ input{outline:none}
 .system-row{font-size:6.5px}
 .system-live{margin-top:5px;padding-top:7px;font-size:6.5px}
 
-/* left music tile */
 .music{
   left:2.9vw;top:34.2vh;width:300px;
   padding:12px 13px 11px;
@@ -364,7 +372,6 @@ input{outline:none}
 .music-controls button{width:22px;height:22px}
 .music-controls .main-play{width:29px;height:29px}
 
-/* discord: compact status card */
 .discord{
   right:2.9vw;top:27.0vh;width:290px;
   padding:11px 12px;
@@ -376,7 +383,6 @@ input{outline:none}
 .dc-name{font-size:9.5px}
 .dc-activity{font-size:6.5px}
 
-/* social stack beneath discord */
 .social{
   right:2.9vw;top:43.8vh;width:290px;
   padding:10px 12px;
@@ -385,7 +391,6 @@ input{outline:none}
 .social-grid{grid-template-columns:1fr 1fr;gap:5px;margin-top:8px}
 .social-grid a{padding:7px 8px;font-size:6.5px;border-radius:9px}
 
-/* about becomes a quiet floating info tile */
 .about{
   left:2.9vw;bottom:10.5vh;width:286px;
   padding:11px 12px;
@@ -394,7 +399,6 @@ input{outline:none}
 .about p{font-size:6.5px;line-height:1.5}
 .chips{margin-top:7px}
 
-/* messages become one of the main visual anchors, like the reference */
 .guestbook{
   right:2.9vw;bottom:7.2vh;width:360px;
   padding:11px 12px 10px;
@@ -418,7 +422,6 @@ input{outline:none}
 .message-form input{font-size:6.5px}
 .message-form button{font-size:6.5px}
 
-/* lower-left utility */
 .terminal{left:2.9vw;bottom:3.1vh}
 .terminal-thumb{width:90px;height:44px}
 .terminal-text{font-size:6.5px}
@@ -430,7 +433,6 @@ input{outline:none}
   opacity:.55;
 }
 
-/* soft separation around the center figure */
 #surface{
   background:
     radial-gradient(circle at 51% 45%,rgba(255,255,255,.10),transparent 22%),
@@ -491,7 +493,6 @@ input{outline:none}
 .title{font-size:11px;letter-spacing:.13em;color:rgba(40,44,45,.68)}
 .meta{font-size:9px;color:rgba(40,44,45,.48)}
 
-/* Keep the center of the artwork visually open. */
 .identity{
   left:50%; top:4.2vh; width:auto; min-width:330px;
   transform:translateX(-50%); text-align:center;
@@ -509,7 +510,6 @@ input{outline:none}
 .system-row{font-size:8px;line-height:1.8}
 .system-live{font-size:8px}
 
-/* Mid-screen side modules: closer to center, but leave the figure unobstructed. */
 .music{
   left:calc(50% - 430px); top:31vh; width:300px;
 }
@@ -546,7 +546,6 @@ input{outline:none}
 .about p{font-size:9px;line-height:1.6}
 .chips{margin-top:10px}.chip{font-size:8px;padding:5px 7px}
 
-/* Guestbook becomes the main lower-center interaction. */
 .guestbook{
   left:50%; right:auto; bottom:5.4vh; transform:translateX(-50%);
   width:min(560px,46vw); padding:14px 16px 13px;
@@ -569,7 +568,6 @@ input{outline:none}
 .coords{right:calc(50% - 430px);bottom:4vh;font-size:7px}
 .touch-hint{bottom:2.3vh;font-size:7px}
 
-/* Hide decorative terminal thumbnail that was frequently failing; keep clean text utility. */
 .terminal-thumb{display:none}
 
 @media(max-width:1100px){
@@ -613,7 +611,6 @@ input{outline:none}
 </style>
 
 <style id="final-composition">
-/* FINAL COMPOSITION — centered three-column glass layout */
 .identity{
   left:50%; top:5.0vh; transform:translateX(-50%);
   width:auto; min-width:260px; max-width:360px;
@@ -643,7 +640,6 @@ input{outline:none}
 .system-row:first-child span:last-child{font-size:7.5px;font-weight:500}
 .system-live{font-size:6.5px}
 
-/* Three balanced columns around the center */
 .left-stack{
   position:absolute; left:50%; top:33vh; transform:translateX(-50%);
   width:min(980px,78vw); display:grid; grid-template-columns:280px 420px 280px;
@@ -724,14 +720,9 @@ input{outline:none}
 
 
 <style id="fullhd-composition">
-/* =========================================================
-   FULLHD MASTER COMPOSITION — 1920x1080 first pass
-   Three equal-height vertical modules around the figure.
-   ========================================================= */
 html,body{min-width:100vw;min-height:100vh;overflow:hidden}
 #stage{min-width:100vw;min-height:100vh}
 
-/* Identity = nickname only, centered at the top. */
 .identity{
   left:50%!important; top:34px!important; transform:translateX(-50%)!important;
   width:auto!important; min-width:0!important; padding:0!important;
@@ -745,15 +736,12 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
   text-shadow:0 2px 14px rgba(255,255,255,.35);
 }
 
-/* Time / system panel stays fully inside the viewport. */
 .system{
   right:28px!important; top:28px!important; left:auto!important;
   transform:none!important; width:190px!important; box-sizing:border-box;
   z-index:8!important;
 }
 
-/* Side stacks and center message module share exactly the same vertical axis.
-   Desktop FullHD composition is anchored to the bottom edge so the whole lower composition sits at the screen boundary. */
 .left-stack,.right-stack,.guestbook{
   top:81.25%!important; bottom:auto!important; transform:translateY(-50%)!important;
   z-index:6!important;
@@ -772,7 +760,6 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
   gap:0!important;
 }
 
-/* Each side is one continuous glass module with a seam, not two floating cards. */
 .left-stack .card,.right-stack .card{
   width:100%!important; box-sizing:border-box;
   position:relative!important; inset:auto!important;
@@ -783,7 +770,6 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
   width:100%!important;
 }
 
-/* Explicit order: About -> Music | Discord -> Social */
 .left-stack{display:flex!important; flex-direction:column!important}
 .left-stack .about{order:1!important}
 .left-stack .music{order:2!important}
@@ -791,7 +777,6 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
 .right-stack .discord{order:1!important}
 .right-stack .social{order:2!important}
 
-/* Joined modules: 2 parts, one visual column. */
 .left-stack .about,.right-stack .discord{
   border-radius:20px 20px 8px 8px!important;
   border-bottom-color:rgba(53,56,58,.12)!important;
@@ -809,7 +794,6 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
   box-shadow:0 18px 50px rgba(48,54,54,.08)!important;
 }
 
-/* Center message panel is the reference height for both side stacks. */
 .guestbook{
   left:50%!important; right:auto!important; bottom:auto!important;
   width:480px!important; height:405px!important; box-sizing:border-box;
@@ -832,7 +816,6 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
 .message-form input{font-size:8px!important;padding:10px 0!important}
 .message-form button{font-size:8px!important;padding:10px 12px!important}
 
-/* Side card typography tuned to 1920x1080. */
 .left-stack .title,.right-stack .title{font-size:11px!important;letter-spacing:.11em}
 .left-stack .about p{font-size:8px!important;line-height:1.65!important}
 .left-stack .about{padding:17px 18px 15px!important}
@@ -851,17 +834,14 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
 .right-stack .social-grid{gap:7px!important;margin-top:12px!important}
 .right-stack .social-grid a{padding:10px 11px!important;font-size:8px!important;border-radius:10px!important}
 
-/* Hide tiny corner utilities on the first desktop composition — keep focus on the central system. */
 .terminal,.coords,.touch-hint{display:none!important}
 
-/* Preserve the desktop composition down to normal laptop widths. */
 @media (max-width:1300px){
   .left-stack{transform:translate(calc(-50% - 500px),-50%)!important;width:270px!important}
   .right-stack{transform:translate(calc(50% + 230px),-50%)!important;width:270px!important}
   .guestbook{width:440px!important}
 }
 @media (max-width:1100px){
-  /* Temporary compact fallback before the dedicated phone pass. */
   .left-stack{transform:translate(calc(-50% - 405px),-50%)!important;width:230px!important}
   .right-stack{transform:translate(calc(50% + 175px),-50%)!important;width:230px!important}
   .guestbook{width:350px!important;height:390px!important}
@@ -870,16 +850,10 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
 
 
 <style id="fullhd-final-layout">
-/* =========================================================
-   FULLHD FINAL — all content modules sit on the exact same
-   vertical axis as Messages. Only identity + timezone stay up.
-   Target: 1920 x 1080
-   ========================================================= */
 @media (min-width:1201px){
   html,body{width:100%;height:100%;min-width:0;min-height:0;overflow:hidden}
   #stage{position:fixed;inset:0;width:100vw;height:100vh;min-width:0;min-height:0;overflow:hidden}
 
-  /* TOP EXCEPTIONS */
   .identity{
     left:50%!important; top:5.2vh!important; transform:translateX(-50%)!important;
     width:390px!important; min-width:0!important; max-width:calc(100vw - 60px)!important;
@@ -912,7 +886,6 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
     transform:none!important; z-index:20!important;
   }
 
-  /* THREE COLUMNS: LEFT — MESSAGES — RIGHT */
   .left-stack,
   .right-stack,
   .guestbook{
@@ -939,7 +912,6 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
     transform:translate(calc(50% + 104px),-50%)!important;
   }
 
-  /* Each side is one joined module exactly as tall as Messages. */
   .left-stack .card,
   .right-stack .card{
     position:relative!important; inset:auto!important;
@@ -966,13 +938,11 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
     margin-top:-1px!important;
   }
 
-  /* Exact requested order */
   .left-stack .about{order:1!important}
   .left-stack .music{order:2!important}
   .right-stack .discord{order:1!important}
   .right-stack .social{order:2!important}
 
-  /* LEFT: ABOUT */
   .left-stack .about{padding:22px 20px 18px!important}
   .left-stack .about .title,
   .left-stack .music .title,
@@ -985,7 +955,6 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
   .left-stack .about .chips{margin-top:13px!important}
   .left-stack .about .chip{font-size:7px!important;padding:5px 7px!important}
 
-  /* LEFT: MUSIC */
   .left-stack .music{padding:18px 20px!important}
   .left-stack .music .music-body{
     grid-template-columns:62px 1fr!important; gap:12px!important;
@@ -1000,7 +969,6 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
   .left-stack .music .music-controls .main-play{width:33px!important;height:33px!important}
   .left-stack .music .time{font-size:7px!important}
 
-  /* RIGHT: DISCORD */
   .right-stack .discord{padding:20px!important}
   .right-stack .discord .dc-main{margin-top:14px!important;gap:11px!important}
   .right-stack .discord .avatar{width:48px!important;height:48px!important;border-radius:12px!important}
@@ -1008,12 +976,10 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
   .right-stack .discord .dc-activity{font-size:8px!important;line-height:1.45!important;max-width:205px!important}
   .right-stack .discord .status-dot{width:8px!important;height:8px!important}
 
-  /* RIGHT: SOCIAL */
   .right-stack .social{padding:20px!important}
   .right-stack .social .social-grid{margin-top:13px!important;gap:8px!important}
   .right-stack .social .social-grid a{padding:10px 11px!important;font-size:8px!important;border-radius:10px!important}
 
-  /* CENTER: MESSAGES — its position is NOT moved to fit side blocks. */
   .guestbook{
     left:50%!important; right:auto!important;
     width:480px!important; height:405px!important;
@@ -1044,7 +1010,6 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
 
 
 <style id="lower-alignment-fix">
-/* FINAL LOWER POSITION — bottom edge aligned to the FullHD viewport. */
 @media (min-width: 1201px){
   .left-stack,
   .right-stack,
@@ -1064,7 +1029,6 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
 }
 </style>
 <style id="identity-clean-final">
-  /* Clean top identity: keep the liked hierarchy, remove dead buttons and the outline around the name. */
   .identity{
     left:50% !important;
     right:auto !important;
@@ -1129,28 +1093,18 @@ html,body{min-width:100vw;min-height:100vh;overflow:hidden}
 </style>
 
 <style id="final-polish">
-/* stronger readability */
 body{cursor:none}
+body:not(.js-cursor){cursor:auto}
 .card{font-size:1.03rem}
 .card h2,.card h3,.section-title,.about-title{font-size:1.15rem!important}
 .guestbook .gb-list,.guestbook .gb-form input,.guestbook .gb-form textarea,.guestbook .gb-form button{font-size:1rem!important}
 .music .track-title,.discord .activity-name,.social a,.about p{font-size:1.02rem!important}
-/* style cursor */
 #cursor-ring{width:24px!important;height:24px!important;border:1px solid rgba(255,255,255,.9)!important;background:rgba(255,255,255,.06);box-shadow:0 0 0 4px rgba(255,255,255,.04),0 0 22px rgba(255,255,255,.2);mix-blend-mode:difference;pointer-events:none;z-index:99999!important;transition:width .12s ease,height .12s ease,transform .08s ease,background .12s ease}
 #cursor-ring::after{content:"";position:absolute;left:50%;top:50%;width:4px;height:4px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 0 8px rgba(255,255,255,.7)}
 body.cursor-hover #cursor-ring{width:36px!important;height:36px!important;background:rgba(255,255,255,.1)}
 </style>
-<script>
-document.addEventListener('DOMContentLoaded',()=>{
- document.querySelectorAll('a,button,[role="button"],input,textarea').forEach(el=>{
-   el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
-   el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
- });
-});
-</script>
 
 <style id="readability-final">
-/* FINAL READABILITY PASS — FullHD */
 @media (min-width:1201px){
   .left-stack .title,.right-stack .title{font-size:13px!important;letter-spacing:.10em!important}
   .left-stack .about p{font-size:11px!important;line-height:1.65!important}
@@ -1186,10 +1140,10 @@ document.addEventListener('DOMContentLoaded',()=>{
     position:fixed;inset:0;z-index:9999;display:grid;place-items:center;
     background:rgba(245,243,239,.94);backdrop-filter:blur(14px) saturate(.85);
     color:#252629;opacity:1;visibility:visible;
-    transition:opacity .7s cubic-bezier(.16,1,.3,1),visibility .7s;
+    transition:opacity 1.15s cubic-bezier(.16,1,.3,1),visibility 1.15s;
     cursor:none;
   }
-  #entry-screen{transition:opacity 1.15s cubic-bezier(.16,1,.3,1),visibility 1.15s;}
+  body:not(.js-cursor) #entry-screen{cursor:auto}
   #entry-screen.is-leaving{opacity:0;visibility:hidden;pointer-events:none;}
   #ui{opacity:0;transform:translateY(22px) scale(.985);filter:blur(8px);transition:opacity 1.2s cubic-bezier(.16,1,.3,1),transform 1.2s cubic-bezier(.16,1,.3,1),filter 1.2s cubic-bezier(.16,1,.3,1);}
   body.site-entered #ui{opacity:1;transform:none;filter:none;}
@@ -1199,15 +1153,17 @@ document.addEventListener('DOMContentLoaded',()=>{
   .entry-hint{margin-top:24px;font:500 12px/1.4 "IBM Plex Mono",monospace;letter-spacing:.16em;opacity:.65;animation:entryPulse 1.7s ease-in-out infinite}
   .entry-corner{position:absolute;right:26px;bottom:22px;font:600 9px/1.3 "IBM Plex Mono",monospace;letter-spacing:.12em;opacity:.45}
   .entry-line{position:absolute;left:6vw;right:6vw;top:50%;height:1px;background:rgba(37,38,41,.14);transform:translateY(-44px)}
+  #entry-screen .entry-btn{
+    position:absolute;inset:0;width:100%;height:100%;
+    background:transparent;border:0;cursor:inherit;
+  }
   @keyframes entryPulse{0%,100%{opacity:.35}50%{opacity:.9}}
   body.entry-locked #ui{visibility:hidden}
 </style>
 
 
 <style id="final-owner-and-stats">
-/* Final FullHD placement: move the complete lower composition slightly downward. */
 @media(min-width:1101px){
-  /* Keep About/Music + Messages + Discord/Social locked together. */
   .left-stack,.right-stack,.guestbook{
     top:60.5vh!important;
     bottom:auto!important;
@@ -1263,7 +1219,6 @@ body.author-mode .owner-open{background:rgba(53,56,58,.82);color:#fff;}
 </style>
 
 <style id="anti-flicker-glass-fix">
-/* FINAL GLASS STABILITY PASS */
 #bg{
   transition:none!important;
   will-change:transform!important;
@@ -1295,304 +1250,8 @@ body.author-mode .owner-open{background:rgba(53,56,58,.82);color:#fff;}
 }
 </style>
 
-</head>
-<body class="entry-locked">
-<div id="stage">
-<div id="entry-screen" role="dialog" aria-label="Continue to site">
-  <div class="entry-line"></div>
-  <div class="entry-center">
-    <div class="entry-kicker">SVCURA / PERSONAL TRANSMISSION</div>
-    <div class="entry-title">CONTINUE</div>
-    <div class="entry-hint">PRESS ANY KEY TO ENTER</div>
-  </div>
-  <div class="entry-corner">AUDIO 015% &nbsp;·&nbsp; SIGNAL READY</div>
-</div>
-  <div id="bg" aria-hidden="true"></div>
-  <div id="surface" aria-hidden="true"></div>
-  <div id="grain" aria-hidden="true"></div>
-  <div id="cursor-ring" aria-hidden="true"></div>
-
-  <main id="ui" aria-label="Shiokaze personal interface">
-    <section class="card identity">
-      <div class="mark"><img class="identity-avatar" src="https://i.pinimg.com/736x/1b/e1/ee/1be1ee29223cc22fc48f5a1b2795a44a.jpg" alt=""><span>+</span></div>
-      <h1>shiokaze</h1>
-      <div class="sub">digital creator · web / motion / sound</div>
-      <div class="author"><span>author</span><strong>svcura</strong></div>
-    </section>
-
-    <div class="left-stack">
-    <section class="card about" id="about">
-      <div class="title">about me</div>
-      <div class="rule"></div>
-      <p>building small interfaces, visual experiments and music-driven web spaces. quiet surfaces, strange details, things that feel alive.</p>
-      <div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JS</span><span class="chip">MOTION</span></div>
-    </section>
-    <section class="card music" id="music-card">
-      <div class="music-head"><span class="title">music</span><span class="meta">01</span></div>
-      <div class="music-body">
-        <div class="album"><img src="https://i.pinimg.com/736x/1b/e1/ee/1be1ee29223cc22fc48f5a1b2795a44a.jpg" alt="album art"></div>
-        <div class="track"><h2 id="track-title">xtvl</h2><p id="track-meta">SVCURA / LIVE TRANSMISSION</p><div class="progress"><span id="track-progress"></span></div></div>
-      </div>
-      <div class="music-foot">
-        <span class="time" id="track-time">00:00</span>
-        <div class="music-controls">
-          <button id="prev" aria-label="Previous">◀</button><button id="play" class="main-play" aria-label="Play">▶</button><button id="next" aria-label="Next">▶</button>
-        </div>
-        <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      </div>
-    </section>
-
-
-
-
-    </div>
-
-    <div class="right-stack">
-    <section class="card discord">
-      <div class="title">discord presence</div>
-      <div class="rule"></div>
-      <div class="dc-main">
-        <img class="avatar" id="dc-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="">
-        <div><div class="dc-name" id="dc-name">shiokaze</div><div class="dc-activity" id="dc-activity">checking presence...</div></div>
-        <span class="status-dot" id="dc-status"></span>
-      </div>
-
-      <section class="card system site-stats" aria-label="Site statistics">
-        <div class="system-row"><span>time</span><span class="time-value"><span id="tz">GMT+03</span><span id="clock">00:00:00</span></span></div>
-        <div class="system-row rating-row"><span>rating</span><span class="rating-pack"><span class="rating-stars" id="rating-stars" aria-label="Rate this site">
-          <button type="button" data-rating="1" aria-label="1 star">★</button><button type="button" data-rating="2" aria-label="2 stars">★</button><button type="button" data-rating="3" aria-label="3 stars">★</button><button type="button" data-rating="4" aria-label="4 stars">★</button><button type="button" data-rating="5" aria-label="5 stars">★</button>
-        </span><span class="rating-value" id="rating-value">—</span></span></div>
-        <div class="system-row"><span>views</span><span id="visit-count">—</span></div>
-      </section>
-    </section>
-
-    <section class="card social" id="socials">
-      <div class="title">social / links</div>
-      <div class="social-grid">
-        <a href="https://steamcommunity.com/id/shiokazeIII/" target="_blank" rel="noopener">STEAM ↗</a>
-        <a href="mailto:lopgg96@gmail.com">MAIL ↗</a>
-        <a href="https://github.com/ShiokazeE" target="_blank" rel="noopener">GITHUB ↗</a>
-        <a href="https://shiokazee.github.io/bio/" target="_blank" rel="noopener">SITE ↗</a>
-      </div>
-    </section>
-    </div>
-
-    <section class="card guestbook" id="messages">
-      <div class="guestbook-head"><span class="title">messages</span><div class="gb-head-actions"><button type="button" class="owner-open" id="owner-login-open" title="Owner tools">⌁</button><span class="gb-count" id="gb-count">0 / live</span></div></div>
-      <div class="gb-list" id="gb-list"><div class="gb-empty">LOADING TRANSMISSIONS...</div></div>
-      <form class="message-form" id="guestbook-form">
-        <input id="gb-name-input" maxlength="32" autocomplete="name" placeholder="your name" aria-label="Name">
-        <input id="gb-message" maxlength="160" autocomplete="off" placeholder="write a message..." aria-label="Message">
-        <button type="submit" id="gb-submit">SEND ↗</button>
-      </form>
-    </section>
-
-    <div class="terminal"><div class="terminal-text">Terminal v1.6<br><span>&gt; _</span></div></div>
-    <div class="coords"><span>55.7558° N<br>37.6173° E</span><span class="cross">+</span></div>
-    <div class="touch-hint">move the surface · click to wake it</div>
-    <div class="toast" id="toast">SIGNAL SENT</div>
-  </main>
-</div>
-<div class="owner-modal" id="owner-modal" hidden>
-  <div class="owner-modal__backdrop" data-owner-close></div>
-  <form class="owner-modal__panel" id="owner-login-form" autocomplete="on">
-    <div class="owner-modal__head"><span>OWNER ACCESS</span><button type="button" data-owner-close>×</button></div>
-    <input id="author-email" type="email" autocomplete="username" placeholder="email" required>
-    <input id="author-password" type="password" autocomplete="current-password" placeholder="password" required>
-    <button type="submit">ENTER</button>
-    <button type="button" class="owner-logout" id="author-logout" hidden>LOG OUT</button>
-    <div class="owner-session" id="author-session" hidden>OWNER MODE ACTIVE</div>
-    <div class="owner-error" id="author-login-error"></div>
-  </form>
-</div>
-<audio id="audio" src="https://raw.githubusercontent.com/ShiokazeE/bio/main/murasame.mp3" preload="metadata" playsinline></audio>
-<script>
-(() => {
-  'use strict';
-  const root = document.documentElement;
-  const stage = document.getElementById('stage');
-  const ring = document.getElementById('cursor-ring');
-  const toast = document.getElementById('toast');
-  const entryScreen=document.getElementById('entry-screen');
-  document.body.classList.add('entry-locked');
-
-  let tx=.5, ty=.5, mx=.5, my=.5;
-  const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
-  function pointer(x,y){
-    tx=clamp(x/window.innerWidth);ty=clamp(y/window.innerHeight);
-    root.style.setProperty('--mx',String((tx-.5)*2));
-    root.style.setProperty('--my',String((ty-.5)*2));
-    ring.style.opacity='1';
-  }
-  window.addEventListener('pointermove',e=>pointer(e.clientX,e.clientY),{passive:true});
-  window.addEventListener('pointerleave',()=>{ring.style.opacity='0'},{passive:true});
-  window.addEventListener('pointerdown',()=>{stage.animate([{transform:'scale(1)'},{transform:'scale(.9985)'},{transform:'scale(1)'}],{duration:320,easing:'cubic-bezier(.16,1,.3,1)'})},{passive:true});
-  function frame(){mx+=(tx-mx)*.09;my+=(ty-my)*.09;root.style.setProperty('--mx',String((mx-.5)*2));root.style.setProperty('--my',String((my-.5)*2));ring.style.transform=`translate3d(${mx*100}vw,${my*100}vh,0) translate(-50%,-50%)`;requestAnimationFrame(frame)}
-  requestAnimationFrame(frame);
-
-  // Clock
-  const clock=document.getElementById('clock');
-  function updateClock(){clock.textContent=new Date().toLocaleTimeString('ru-RU',{hour12:false})}
-  updateClock();setInterval(updateClock,1000);
-
-  // Music
-  const audio=document.getElementById('audio');
-  const play=document.getElementById('play');
-  const prev=document.getElementById('prev');
-  const next=document.getElementById('next');
-  const musicCard=document.getElementById('music-card');
-  const progress=document.getElementById('track-progress');
-  const trackTime=document.getElementById('track-time');
-  const tracks=[{title:'xtvl',meta:'SVCURA / LIVE TRANSMISSION',url:'https://raw.githubusercontent.com/ShiokazeE/bio/main/murasame.mp3'}];
-  audio.volume=0.15;
-  let entered=false;
-  async function enterInterface(){
-    if(entered)return;
-    entered=true;
-    try{
-      audio.currentTime=0;
-      await audio.play();
-    }catch(err){
-      // Browser should allow this because enterInterface is called from a user gesture.
-    }
-    syncMusic();
-    document.body.classList.remove('entry-locked');
-    document.body.classList.add('site-entered');
-    entryScreen.classList.add('is-leaving');
-    setTimeout(()=>entryScreen.remove(),760);
-  }
-  window.addEventListener('keydown',enterInterface,{once:true});
-  entryScreen.addEventListener('pointerdown',enterInterface,{once:true});
-  let ti=0;
-  function fmt(t){if(!Number.isFinite(t))return '00:00';const m=Math.floor(t/60).toString().padStart(2,'0');const s=Math.floor(t%60).toString().padStart(2,'0');return `${m}:${s}`}
-  function syncMusic(){const d=audio.duration||0,p=d?audio.currentTime/d*100:0;progress.style.width=p+'%';trackTime.textContent=fmt(audio.currentTime);musicCard.classList.toggle('playing',!audio.paused);play.textContent=audio.paused?'▶':'❚❚'}
-  play.addEventListener('click',async()=>{try{if(audio.paused)await audio.play();else audio.pause();syncMusic()}catch{showToast('AUDIO BLOCKED')}});
-  audio.addEventListener('timeupdate',syncMusic);audio.addEventListener('loadedmetadata',syncMusic);audio.addEventListener('pause',syncMusic);audio.addEventListener('play',syncMusic);audio.addEventListener('ended',()=>{audio.currentTime=0;syncMusic()});
-  prev.addEventListener('click',()=>{audio.currentTime=0;syncMusic()});next.addEventListener('click',()=>{audio.currentTime=Math.max(0,(audio.currentTime||0)+7);syncMusic()});
-
-  // Discord
-  const DISCORD_ID='912747427465928754';
-  const dcAvatar=document.getElementById('dc-avatar'),dcName=document.getElementById('dc-name'),dcActivity=document.getElementById('dc-activity'),dcStatus=document.getElementById('dc-status');
-    async function fetchDiscord() {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000); // 8 секунд
-    try {
-      const res = await fetch('https://lanyard-proxy.lopgg96.workers.dev/v1/users/' + DISCORD_ID, {
-        cache: 'no-store',
-        signal: controller.signal
-      });
-      clearTimeout(timeout);
-      const json = await res.json();
-      const d = json?.data;
-      if (!d) throw new Error('presence');
-      const u = d.discord_user || {};
-      dcName.textContent = u.global_name || u.username || 'shiokaze';
-      dcAvatar.src = u.avatar
-        ? `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${u.avatar}.${u.avatar.startsWith('a_') ? 'gif' : 'webp'}?size=96`
-        : 'https://cdn.discordapp.com/embed/avatars/0.png';
-      const st = d.discord_status || 'offline';
-      dcStatus.className = 'status-dot ' + (st === 'online' ? 'online' : st === 'idle' ? 'idle' : st === 'dnd' ? 'dnd' : '');
-      const acts = d.activities || [];
-      const act = acts.find(a => a.type === 0) || acts.find(a => a.type === 2) || acts.find(a => a.type === 1);
-      dcActivity.textContent = act
-        ? (act.details || act.name || 'active on Discord')
-        : (st === 'offline' ? 'offline' : 'online / no activity');
-    } catch (e) {
-      clearTimeout(timeout);
-      dcActivity.textContent = e.name === 'AbortError' ? 'presence timeout' : 'presence unavailable';
-      dcStatus.className = 'status-dot';
-    }
-  }
-  
-  fetchDiscord();setInterval(fetchDiscord,30000);
-
-  // Guestbook, rating, visits and owner tools.
-  const GUESTBOOK_API='https://sdqfeycfahemliivrujg.supabase.co';
-  const GUESTBOOK_KEY='sb_publishable_WVjFpsuPNUu8KJ-1UNL8qA_mDYwlUZG';
-  const AUTHOR_EMAIL='lopgg96@gmail.com';
-  const gbList=document.getElementById('gb-list');
-  const gbCount=document.getElementById('gb-count');
-  const gbForm=document.getElementById('guestbook-form');
-  const gbNameInput=document.getElementById('gb-name-input');
-  const gbInput=document.getElementById('gb-message');
-  const gbSubmit=document.getElementById('gb-submit');
-  const visitCount=document.getElementById('visit-count');
-  const ratingStars=document.getElementById('rating-stars');
-  const ratingValue=document.getElementById('rating-value');
-  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-  let authorSession=null;
-  const ownerModal=document.getElementById('owner-modal');
-  const ownerOpen=document.getElementById('owner-login-open');
-  const ownerForm=document.getElementById('owner-login-form');
-  const authorEmailInput=document.getElementById('author-email');
-  const authorPasswordInput=document.getElementById('author-password');
-  const authorLogout=document.getElementById('author-logout');
-  const authorSessionLabel=document.getElementById('author-session');
-  const authorLoginError=document.getElementById('author-login-error');
-  async function api(path,options={},token=''){
-    const res=await fetch(GUESTBOOK_API+path,{...options,headers:{apikey:GUESTBOOK_KEY,'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{}),...(options.headers||{})}});
-    const data=await res.json().catch(()=>null); if(!res.ok)throw new Error(data?.message||data?.hint||data?.error_description||'Guestbook error'); return data;
-  }
-  function syncOwnerUI(){
-    const on=!!authorSession;
-    document.body.classList.toggle('author-mode',on);
-    authorLogout.hidden=!on; authorSessionLabel.hidden=!on;
-    authorEmailInput.hidden=on; authorPasswordInput.hidden=on;
-    ownerForm.querySelector('button[type="submit"]').hidden=on;
-    if(on) authorSessionLabel.textContent='OWNER MODE ACTIVE';
-  }
-  function renderMessages(items){
-    if(!Array.isArray(items)||!items.length){gbCount.textContent='0 / live';gbList.innerHTML='<div class="gb-empty">NO SIGNALS YET — BE THE FIRST.</div>';return}
-    gbCount.textContent=`${items.length} / live`;
-    gbList.innerHTML=items.map(m=>{
-      const liked=!!m.author_liked;
-      const reply=m.author_reply?`<div class="gb-reply"><div class="gb-reply__label">AUTHOR TRANSMISSION</div><div class="gb-reply__text">${esc(m.author_reply)}</div>${m.author_reply_at?`<div class="gb-reply__date">${new Date(m.author_reply_at).toLocaleDateString('ru-RU')}</div>`:''}</div>`:'';
-      const ownerControls=authorSession?`<div class="gb-author-actions"><button class="gb-like-btn ${liked?'author-active':''}" type="button" data-like="${m.id}">${liked?'♥ LIKED':'♥ LIKE'}</button></div>`:'';
-      const replyEditor=authorSession?`<div class="gb-reply-editor"><textarea data-reply-input="${m.id}" maxlength="500" placeholder="reply...">${esc(m.author_reply||'')}</textarea><button type="button" data-reply="${m.id}">${m.author_reply?'UPDATE':'REPLY'}</button></div>`:'';
-      return `<article class="gb-message"><div class="gb-top"><span class="gb-name">${esc(m.name)}${liked?'<span class="gb-author-badge">♥ AUTHOR</span>':''}</span><span class="gb-date">${new Date(m.created_at).toLocaleDateString('ru-RU')}</span></div><div class="gb-text">${esc(m.message)}</div>${m.contact?`<div class="gb-contact">${esc(m.contact)}</div>`:''}${reply}<div class="gb-message__bottom">${ownerControls}</div>${replyEditor}</article>`;
-    }).join('');
-  }
-  async function loadMessages(){
-    try{
-      let data;
-      try{data=await api('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked,author_reply,author_reply_at&order=created_at.desc&limit=50');}
-      catch{data=await api('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked&order=created_at.desc&limit=50');data=(data||[]).map(x=>({...x,author_reply:null,author_reply_at:null}));}
-      renderMessages(data);
-    }catch{gbList.innerHTML='<div class="gb-error">GUESTBOOK OFFLINE</div>';gbCount.textContent='offline'}
-  }
-  gbForm.addEventListener('submit',async e=>{e.preventDefault();const name=(gbNameInput.value.trim()||'visitor').slice(0,32);const message=gbInput.value.trim();if(!message)return;gbSubmit.disabled=true;try{await api('/rest/v1/guestbook_comments',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({name,contact:null,message})});gbNameInput.value='';gbInput.value='';showToast('SIGNAL SENT');await loadMessages()}catch{showToast('SEND FAILED')}finally{gbSubmit.disabled=false}});
-  gbList.addEventListener('click',async e=>{
-    const like=e.target.closest('[data-like]'); const reply=e.target.closest('[data-reply]'); if(!authorSession)return;
-    if(like){like.disabled=true;try{await api('/rest/v1/rpc/toggle_author_like',{method:'POST',body:JSON.stringify({p_comment_id:like.dataset.like})},authorSession.access_token);await loadMessages()}catch(err){console.error('[like]',err);showToast('LIKE FAILED')}finally{like.disabled=false};return;}
-    if(reply){const id=reply.dataset.reply;const input=gbList.querySelector(`[data-reply-input="${CSS.escape(id)}"]`);const text=input?.value.trim()||'';if(!text)return;reply.disabled=true;try{await api('/rest/v1/rpc/set_author_reply',{method:'POST',body:JSON.stringify({p_comment_id:id,p_reply:text})},authorSession.access_token);await loadMessages();showToast('REPLY SENT')}catch(err){console.error('[reply]',err);showToast('REPLY NOT ENABLED')}finally{reply.disabled=false}}
-  });
-  ownerOpen?.addEventListener('click',()=>{ownerModal.hidden=false;authorLoginError.textContent=''});
-  ownerModal?.addEventListener('click',e=>{if(e.target.matches('[data-owner-close]')||e.target.classList.contains('owner-modal__backdrop'))ownerModal.hidden=true});
-  authorLogout?.addEventListener('click',()=>{authorSession=null;localStorage.removeItem('shiokaze_author_session');syncOwnerUI();loadMessages();ownerModal.hidden=true});
-  ownerForm?.addEventListener('submit',async e=>{e.preventDefault();authorLoginError.textContent='';try{const d=await api('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email:authorEmailInput.value.trim(),password:authorPasswordInput.value||''})});if((d.user?.email||'').toLowerCase()!==AUTHOR_EMAIL)throw new Error('Wrong owner account');authorSession=d;localStorage.setItem('shiokaze_author_session',JSON.stringify(d));ownerModal.hidden=true;syncOwnerUI();await loadMessages()}catch(err){authorLoginError.textContent=err.message||'LOGIN FAILED'}});
-  try{const saved=JSON.parse(localStorage.getItem('shiokaze_author_session')||'null');if(saved?.access_token)authorSession=saved}catch{} syncOwnerUI();
-  async function loadSiteStats(){
-    const visitorKey=localStorage.getItem('shiokaze_visitor_id')||(()=>{const id=(crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random()}`);localStorage.setItem('shiokaze_visitor_id',id);return id})();
-    try{
-      const data=await api('/rest/v1/rpc/register_site_visit',{method:'POST',body:JSON.stringify({p_visitor_id:visitorKey})});
-      if(data && typeof data==='object'){visitCount.textContent=String(data.visits??data.total_visits??'—');ratingValue.textContent=data.average_rating?`${Number(data.average_rating).toFixed(1)}`:'—';}
-      const stats=await api('/rest/v1/rpc/get_site_stats');
-      if(stats){visitCount.textContent=String(stats.total_visits??stats.visits??visitCount.textContent);ratingValue.textContent=stats.average_rating?`${Number(stats.average_rating).toFixed(1)}`:'—';}
-    }catch{visitCount.textContent='—';ratingValue.textContent='—'}
-  }
-  const savedRating=Number(localStorage.getItem('shiokaze_rating')||0);
-  function paintRating(value){ratingStars?.querySelectorAll('button').forEach(b=>b.classList.toggle('is-active',Number(b.dataset.rating)<=value));}
-  paintRating(savedRating);
-  ratingStars?.addEventListener('click',async e=>{const b=e.target.closest('[data-rating]');if(!b)return;const rating=Number(b.dataset.rating);localStorage.setItem('shiokaze_rating',String(rating));paintRating(rating);try{await api('/rest/v1/rpc/submit_site_rating',{method:'POST',body:JSON.stringify({p_visitor_id:localStorage.getItem('shiokaze_visitor_id'),p_rating:rating})});await loadSiteStats();showToast('RATING SAVED')}catch{showToast('RATING OFFLINE')}});
-  loadMessages();setInterval(loadMessages,45000);loadSiteStats();
-
-  function showToast(text){toast.textContent=text;toast.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(()=>toast.classList.remove('show'),1600)}
-})();
-</script>
-
 <style id="stats-under-discord-final">
 @media (min-width:1201px){
-  /* Compact Discord module: presence on top, three stat rows directly under the activity. */
   .right-stack .discord{
     order:1!important; flex:1 1 50%!important; min-height:0!important; height:auto!important;
     padding:15px 18px 12px!important;
@@ -1635,5 +1294,996 @@ body.author-mode .owner-open{background:rgba(53,56,58,.82);color:#fff;}
   .right-stack .system.site-stats .rating-value{min-width:22px!important; font-size:8px!important; text-align:right!important; color:rgba(53,56,58,.72)!important}
 }
 </style>
+
+<style id="mobile-optimization">
+@media (max-width: 900px) {
+  html, body {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: auto;
+    touch-action: pan-y;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  body { cursor: auto; }
+
+  #stage {
+    position: relative;
+    inset: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  #bg {
+    position: fixed;
+    inset: 0;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto !important;
+    backface-visibility: visible;
+    filter: saturate(.84) contrast(.98) brightness(1.02);
+  }
+  #surface, #grain { display: none !important; }
+  #cursor-ring      { display: none !important; }
+
+  #ui {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    box-sizing: border-box;
+    padding: max(14px, env(safe-area-inset-top)) 14px calc(20px + env(safe-area-inset-bottom));
+    pointer-events: none;
+  }
+  #ui > * { pointer-events: auto; }
+
+  .card,
+  .identity, .system, .music, .discord, .social, .about, .guestbook {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;  right: auto !important;
+    top: auto !important;   bottom: auto !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+  }
+
+  .card {
+    border-radius: 14px !important;
+    background: rgba(249,250,248,.60) !important;
+    border-color: rgba(255,255,255,.62) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(.9) !important;
+    backdrop-filter: blur(12px) saturate(.9) !important;
+    box-shadow: 0 10px 28px rgba(48,54,54,.08), inset 0 1px 0 rgba(255,255,255,.7) !important;
+    will-change: auto !important;
+    transition: background .3s ease, box-shadow .3s ease !important;
+    contain: layout style;
+  }
+  .card:hover {
+    background: rgba(249,250,248,.60) !important;
+    transform: none !important;
+    box-shadow: 0 10px 28px rgba(48,54,54,.08), inset 0 1px 0 rgba(255,255,255,.7) !important;
+  }
+
+  .left-stack, .right-stack {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important; right: auto !important;
+    top: auto !important;  bottom: auto !important;
+    transform: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    gap: 10px !important;
+    margin: 0 !important;
+  }
+  .left-stack .card, .right-stack .card {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    border-radius: 14px !important;
+    margin: 0 !important;
+  }
+
+  .identity {
+    text-align: center !important;
+    padding: 16px 14px 14px !important;
+    background: rgba(249,250,248,.42) !important;
+    border: 1px solid rgba(255,255,255,.62) !important;
+    border-radius: 16px !important;
+    -webkit-backdrop-filter: blur(12px) saturate(.9) !important;
+    backdrop-filter: blur(12px) saturate(.9) !important;
+    box-shadow: 0 10px 28px rgba(48,54,54,.07), inset 0 1px 0 rgba(255,255,255,.72) !important;
+  }
+  .identity .mark { margin: 0 0 8px !important; }
+  .identity .identity-avatar { width: 42px !important; height: 42px !important; }
+  .identity h1 { font-size: clamp(36px, 12vw, 54px) !important; }
+  .identity .sub { font-size: 9px !important; letter-spacing: .12em !important; }
+  .identity .author { font-size: 8px !important; margin-top: 9px !important; }
+
+  .title { font-size: 11px !important; letter-spacing: .12em !important; }
+  .meta  { font-size: 9px  !important; }
+  .rule  { margin: 8px 0 !important; }
+
+  .about { padding: 14px 15px !important; }
+  .about p { font-size: 12px !important; line-height: 1.6 !important; margin-top: 0 !important; }
+  .chips { gap: 6px !important; margin-top: 10px !important; }
+  .chip { font-size: 9px !important; padding: 5px 8px !important; }
+
+  .music { padding: 14px 15px !important; }
+  .music-body { grid-template-columns: 56px 1fr !important; gap: 12px !important; margin-top: 10px !important; }
+  .album { width: 56px !important; height: 56px !important; }
+  .track h2 { font-size: 13px !important; }
+  .track p  { font-size: 9px  !important; }
+  .progress { height: 3px !important; margin-top: 10px !important; }
+  .music-foot { margin-top: 12px !important; }
+  .time { font-size: 9px !important; }
+  .wave { height: 16px !important; }
+
+  .music-controls { gap: 14px !important; }
+  .music-controls button {
+    width: 40px !important; height: 40px !important;
+    font-size: 11px !important;
+    background: rgba(255,255,255,.34);
+  }
+  .music-controls .main-play {
+    width: 48px !important; height: 48px !important;
+    font-size: 13px !important;
+    background: rgba(53,56,58,.82) !important;
+    color: #f4f5f3 !important;
+  }
+
+  .discord { padding: 14px 15px !important; }
+  .dc-main { margin-top: 10px !important; gap: 12px !important; }
+  .avatar { width: 44px !important; height: 44px !important; border-radius: 11px !important; }
+  .dc-name { font-size: 13px !important; }
+  .dc-activity { font-size: 10px !important; max-width: none !important; }
+  .status-dot { width: 9px !important; height: 9px !important; }
+
+  .discord > .system.site-stats,
+  .right-stack .discord > .site-stats {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 12px 0 0 !important;
+    padding: 10px 0 0 !important;
+    border: 0 !important;
+    border-top: 1px solid rgba(53,56,58,.10) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+  .system-row { font-size: 10px !important; line-height: 1.7 !important; }
+  .rating-stars { gap: 2px !important; }
+  .rating-stars button { font-size: 16px !important; padding: 0 3px !important; line-height: 1 !important; }
+  .rating-value { font-size: 10px !important; }
+
+  .social { padding: 14px 15px !important; }
+  .social-grid { gap: 8px !important; margin-top: 10px !important; }
+  .social-grid a {
+    font-size: 10px !important;
+    padding: 13px 12px !important;
+    text-align: center;
+    border-radius: 10px !important;
+  }
+
+  .guestbook {
+    padding: 14px 15px !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .guestbook-head { min-height: 20px !important; }
+  .guestbook .title { font-size: 12px !important; }
+  .gb-count { font-size: 9px !important; }
+  .owner-open { width: 28px !important; height: 28px !important; font-size: 14px !important; }
+
+  .guestbook .gb-list,
+  .gb-list {
+    height: auto !important;
+    max-height: 46vh !important;
+    max-height: min(46dvh, 340px) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 10px !important;
+    padding-right: 4px !important;
+    scrollbar-width: none;
+  }
+  .gb-list::-webkit-scrollbar { display: none; }
+
+  .gb-message { padding: 11px 2px !important; }
+  .gb-name { font-size: 12px !important; }
+  .gb-date { font-size: 9px !important; }
+  .gb-text { font-size: 12px !important; line-height: 1.5 !important; -webkit-line-clamp: 4 !important; }
+  .gb-contact { font-size: 9px !important; }
+  .gb-reply { padding: 8px 9px !important; }
+  .gb-reply__label { font-size: 8px !important; }
+  .gb-reply__text { font-size: 11px !important; }
+  .gb-reply__date { font-size: 8px !important; }
+  .gb-like-btn { font-size: 10px !important; padding: 6px 10px !important; }
+  .gb-author-badge { font-size: 8px !important; }
+
+  .message-form {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    margin-top: 12px !important;
+    padding-top: 12px !important;
+  }
+  .message-form input {
+    width: 100% !important;
+    box-sizing: border-box;
+    padding: 13px 13px !important;
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+    border: 1px solid rgba(53,56,58,.14) !important;
+    border-bottom: 1px solid rgba(53,56,58,.14) !important;
+    border-radius: 10px !important;
+    background: rgba(255,255,255,.5) !important;
+  }
+  .message-form button {
+    width: 100% !important;
+    padding: 14px !important;
+    font-size: 12px !important;
+    letter-spacing: .14em;
+    border: 1px solid rgba(53,56,58,.14) !important;
+    border-radius: 10px !important;
+    background: rgba(53,56,58,.84) !important;
+    color: #f4f5f3 !important;
+  }
+
+  .terminal, .coords, .touch-hint { display: none !important; }
+
+  .toast {
+    position: fixed !important;
+    left: 50% !important;
+    bottom: calc(20px + env(safe-area-inset-bottom)) !important;
+    transform: translateX(-50%) !important;
+    font-size: 10px !important;
+    padding: 10px 14px !important;
+    z-index: 9999 !important;
+  }
+  .toast.show { transform: translateX(-50%) !important; }
+
+  #entry-screen { cursor: auto; }
+  .entry-title { font-size: clamp(30px, 11vw, 46px) !important; }
+  .entry-kicker { font-size: 9px !important; margin-bottom: 14px !important; }
+  .entry-hint { font-size: 0 !important; }
+  .entry-hint::after {
+    content: "TAP ANYWHERE TO ENTER";
+    font: 500 12px/1.4 'IBM Plex Mono', ui-monospace, monospace;
+    letter-spacing: .16em;
+  }
+  .entry-corner {
+    right: 16px !important;
+    bottom: calc(14px + env(safe-area-inset-bottom)) !important;
+    font-size: 8px !important;
+  }
+  .entry-line { left: 6vw !important; right: 6vw !important; }
+
+  .owner-modal__panel { width: min(360px, 92vw) !important; padding: 16px !important; gap: 10px !important; }
+  .owner-modal__panel input { font-size: 16px !important; padding: 13px !important; }
+  .owner-modal__panel > button { padding: 13px !important; font-size: 11px !important; }
+  .owner-modal__head { font-size: 10px !important; }
+
+  .wave i { animation-duration: 1.4s !important; }
+}
+
+@media (max-width: 380px) {
+  #ui { padding-left: 10px; padding-right: 10px; gap: 9px; }
+  .identity h1 { font-size: clamp(30px, 11.5vw, 42px) !important; }
+  .about p, .gb-text { font-size: 11px !important; }
+  .social-grid { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+  #ui { max-width: 480px; }
+  .gb-list { max-height: 40vh !important; }
+}
+
+@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
+  .wave i { animation: none !important; }
+}
+</style>
+
+<style id="a11y-and-fallbacks">
+/* Focus visible — не мешает мыши, помогает клавиатуре */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid rgba(53,56,58,.62) !important;
+  outline-offset: 2px !important;
+  border-radius: 4px;
+}
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+a:focus-visible,
+[role="radio"]:focus-visible {
+  outline: 2px solid rgba(53,56,58,.62) !important;
+  outline-offset: 2px !important;
+}
+
+/* Roving focus для рейтинга: активная кнопка видна */
+.rating-stars button:focus-visible { color: rgba(40,44,45,.85) !important; }
+</style>
+</head>
+<body class="entry-locked">
+
+<noscript>
+  <style>
+    #entry-screen { display: none !important; }
+    #ui { opacity: 1 !important; transform: none !important; filter: none !important; visibility: visible !important; }
+    body { cursor: auto !important; }
+    .entry-locked #ui { visibility: visible !important; }
+    #stage { overflow: auto !important; }
+    html, body { overflow-y: auto !important; height: auto !important; }
+  </style>
+</noscript>
+
+<div id="stage">
+<div id="entry-screen" role="dialog" aria-label="Continue to site">
+  <button type="button" class="entry-btn" id="entry-btn" aria-label="Enter site"></button>
+  <div class="entry-line" aria-hidden="true"></div>
+  <div class="entry-center">
+    <div class="entry-kicker">SVCURA / PERSONAL TRANSMISSION</div>
+    <div class="entry-title">CONTINUE</div>
+    <div class="entry-hint">PRESS ANY KEY TO ENTER</div>
+  </div>
+  <div class="entry-corner">AUDIO 015% &nbsp;·&nbsp; SIGNAL READY</div>
+</div>
+  <div id="bg" aria-hidden="true"></div>
+  <div id="surface" aria-hidden="true"></div>
+  <div id="grain" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+
+  <main id="ui" aria-label="Shiokaze personal interface">
+    <section class="card identity">
+      <div class="mark"><img class="identity-avatar" src="https://i.pinimg.com/736x/1b/e1/ee/1be1ee29223cc22fc48f5a1b2795a44a.jpg" alt=""><span>+</span></div>
+      <h1>shiokaze</h1>
+      <div class="sub">digital creator · web / motion / sound</div>
+      <div class="author"><span>author</span><strong>svcura</strong></div>
+    </section>
+
+    <div class="left-stack">
+    <section class="card about" id="about">
+      <div class="title">about me</div>
+      <div class="rule"></div>
+      <p>building small interfaces, visual experiments and music-driven web spaces. quiet surfaces, strange details, things that feel alive.</p>
+      <div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JS</span><span class="chip">MOTION</span></div>
+    </section>
+    <section class="card music" id="music-card">
+      <div class="music-head"><span class="title">music</span><span class="meta">01</span></div>
+      <div class="music-body">
+        <div class="album"><img src="https://i.pinimg.com/736x/1b/e1/ee/1be1ee29223cc22fc48f5a1b2795a44a.jpg" alt="album art"></div>
+        <div class="track"><h2 id="track-title">xtvl</h2><p id="track-meta">SVCURA / LIVE TRANSMISSION</p><div class="progress"><span id="track-progress"></span></div></div>
+      </div>
+      <div class="music-foot">
+        <span class="time" id="track-time">00:00</span>
+        <div class="music-controls">
+          <button id="prev" aria-label="Restart / skip back 10 seconds" title="−10s">◀</button>
+          <button id="play" class="main-play" aria-label="Play">▶</button>
+          <button id="next" aria-label="Skip forward 10 seconds" title="+10s">▶</button>
+        </div>
+        <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </section>
+
+
+
+
+    </div>
+
+    <div class="right-stack">
+    <section class="card discord">
+      <div class="title">discord presence</div>
+      <div class="rule"></div>
+      <div class="dc-main">
+        <img class="avatar" id="dc-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="">
+        <div><div class="dc-name" id="dc-name">shiokaze</div><div class="dc-activity" id="dc-activity">checking presence...</div></div>
+        <span class="status-dot" id="dc-status"></span>
+      </div>
+
+      <section class="card system site-stats" aria-label="Site statistics">
+        <div class="system-row"><span>time</span><span class="time-value"><span id="tz">—</span><span id="clock">00:00:00</span></span></div>
+        <div class="system-row rating-row"><span>rating</span><span class="rating-pack">
+          <span class="rating-stars" id="rating-stars" role="radiogroup" aria-label="Rate this site">
+            <button type="button" data-rating="1" role="radio" aria-checked="false" aria-label="1 star">★</button>
+            <button type="button" data-rating="2" role="radio" aria-checked="false" aria-label="2 stars">★</button>
+            <button type="button" data-rating="3" role="radio" aria-checked="false" aria-label="3 stars">★</button>
+            <button type="button" data-rating="4" role="radio" aria-checked="false" aria-label="4 stars">★</button>
+            <button type="button" data-rating="5" role="radio" aria-checked="false" aria-label="5 stars">★</button>
+          </span>
+          <span class="rating-value" id="rating-value">—</span>
+        </span></div>
+        <div class="system-row"><span>views</span><span id="visit-count">—</span></div>
+      </section>
+    </section>
+
+    <section class="card social" id="socials">
+      <div class="title">social / links</div>
+      <div class="social-grid">
+        <a href="https://steamcommunity.com/id/shiokazeIII/" target="_blank" rel="noopener">STEAM ↗</a>
+        <a href="mailto:lopgg96@gmail.com" data-copy-email="lopgg96@gmail.com">MAIL ↗</a>
+        <a href="https://github.com/ShiokazeE" target="_blank" rel="noopener">GITHUB ↗</a>
+        <a href="https://shiokazee.github.io/bio/" target="_blank" rel="noopener">SITE ↗</a>
+      </div>
+    </section>
+    </div>
+
+    <section class="card guestbook" id="messages">
+      <div class="guestbook-head">
+        <span class="title">messages</span>
+        <div class="gb-head-actions">
+          <button type="button" class="owner-open" id="owner-login-open" title="Owner tools" aria-label="Owner tools">⌁</button>
+          <span class="gb-count" id="gb-count" aria-live="polite">0 / live</span>
+        </div>
+      </div>
+      <div class="gb-list" id="gb-list" aria-live="polite" aria-atomic="false"><div class="gb-empty">LOADING TRANSMISSIONS...</div></div>
+      <form class="message-form" id="guestbook-form">
+        <input id="gb-name-input" maxlength="32" autocomplete="name" placeholder="your name" aria-label="Name" inputmode="text" enterkeyhint="next">
+        <input id="gb-message" maxlength="160" autocomplete="off" placeholder="write a message..." aria-label="Message" inputmode="text" enterkeyhint="send">
+        <button type="submit" id="gb-submit">SEND ↗</button>
+      </form>
+    </section>
+
+    <div class="terminal"><div class="terminal-text">Terminal v1.6<br><span>&gt; _</span></div></div>
+    <div class="coords"><span>55.7558° N<br>37.6173° E</span><span class="cross">+</span></div>
+    <div class="touch-hint">move the surface · click to wake it</div>
+    <div class="toast" id="toast" role="status" aria-live="polite">SIGNAL SENT</div>
+  </main>
+</div>
+<div class="owner-modal" id="owner-modal" hidden>
+  <div class="owner-modal__backdrop" data-owner-close></div>
+  <form class="owner-modal__panel" id="owner-login-form" autocomplete="on">
+    <div class="owner-modal__head"><span>OWNER ACCESS</span><button type="button" data-owner-close aria-label="Close">×</button></div>
+    <input id="author-email" type="email" autocomplete="username" placeholder="email" required>
+    <input id="author-password" type="password" autocomplete="current-password" placeholder="password" required>
+    <button type="submit">ENTER</button>
+    <button type="button" class="owner-logout" id="author-logout" hidden>LOG OUT</button>
+    <div class="owner-session" id="author-session" hidden>OWNER MODE ACTIVE</div>
+    <div class="owner-error" id="author-login-error" role="alert"></div>
+  </form>
+</div>
+<audio id="audio" src="https://cdn.jsdelivr.net/gh/ShiokazeE/bio@main/murasame.mp3" preload="metadata" playsinline></audio>
+<script>
+(() => {
+  'use strict';
+  const root = document.documentElement;
+  const stage = document.getElementById('stage');
+  const ring = document.getElementById('cursor-ring');
+  const toast = document.getElementById('toast');
+  const entryScreen = document.getElementById('entry-screen');
+  const entryBtn = document.getElementById('entry-btn');
+  document.body.classList.add('entry-locked');
+
+  // JS выполнился — можно показать кастомный курсор
+  document.body.classList.add('js-cursor');
+
+  // На мобиле / тач-устройствах — экономим батарею
+  const reduceFx = matchMedia('(max-width: 900px), (hover: none) and (pointer: coarse)').matches;
+
+  // Locale для дат
+  const locale = navigator.language || 'en';
+
+  // Утилита: безопасный toLocaleDateString
+  function fmtDate(value){
+    try { return new Date(value).toLocaleDateString(locale); }
+    catch { return ''; }
+  }
+
+  let tx=.5, ty=.5, mx=.5, my=.5;
+  const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+
+  function pointer(x,y){
+    tx=clamp(x/window.innerWidth);ty=clamp(y/window.innerHeight);
+    root.style.setProperty('--mx',String((tx-.5)*2));
+    root.style.setProperty('--my',String((ty-.5)*2));
+    ring.style.opacity='1';
+  }
+  window.addEventListener('pointermove',e=>pointer(e.clientX,e.clientY),{passive:true});
+  window.addEventListener('pointerleave',()=>{ring.style.opacity='0'},{passive:true});
+  window.addEventListener('pointerdown',()=>{
+    if (reduceFx) return;
+    stage.animate([{transform:'scale(1)'},{transform:'scale(.9985)'},{transform:'scale(1)'}],{duration:320,easing:'cubic-bezier(.16,1,.3,1)'});
+  },{passive:true});
+
+  function frame(){
+    if (reduceFx) return;
+    mx+=(tx-mx)*.09;my+=(ty-my)*.09;
+    root.style.setProperty('--mx',String((mx-.5)*2));
+    root.style.setProperty('--my',String((my-.5)*2));
+    ring.style.transform=`translate3d(${mx*100}vw,${my*100}vh,0) translate(-50%,-50%)`;
+    requestAnimationFrame(frame);
+  }
+  if (!reduceFx) requestAnimationFrame(frame);
+
+  // Toast
+  let toastTimer;
+  function showToast(text){
+    toast.textContent = text;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toast.classList.remove('show'), 1800);
+  }
+
+  // Timezone + clock
+  const clockEl = document.getElementById('clock');
+  const tzEl    = document.getElementById('tz');
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    const city = tz.split('/').pop().replace(/_/g,' ');
+    const offsetMin = -new Date().getTimezoneOffset();
+    const sign = offsetMin >= 0 ? '+' : '−';
+    const hh = String(Math.floor(Math.abs(offsetMin)/60)).padStart(2,'0');
+    const mm = String(Math.abs(offsetMin)%60).padStart(2,'0');
+    tzEl.textContent = `${city} · GMT${sign}${hh}:${mm}`;
+  } catch { tzEl.textContent = 'local'; }
+
+  function updateClock(){
+    try { clockEl.textContent = new Date().toLocaleTimeString(locale,{hour12:false}); }
+    catch { clockEl.textContent = new Date().toTimeString().slice(0,8); }
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Music
+  const audio      = document.getElementById('audio');
+  const playBtn    = document.getElementById('play');
+  const prevBtn    = document.getElementById('prev');
+  const nextBtn    = document.getElementById('next');
+  const musicCard  = document.getElementById('music-card');
+  const progress   = document.getElementById('track-progress');
+  const trackTime  = document.getElementById('track-time');
+
+  audio.volume = 0.15;
+
+  function fmt(t){
+    if (!Number.isFinite(t)) return '00:00';
+    const m = Math.floor(t/60).toString().padStart(2,'0');
+    const s = Math.floor(t%60).toString().padStart(2,'0');
+    return `${m}:${s}`;
+  }
+  function syncMusic(){
+    const d = audio.duration || 0;
+    const p = d ? audio.currentTime/d*100 : 0;
+    progress.style.width = p + '%';
+    trackTime.textContent = fmt(audio.currentTime);
+    musicCard.classList.toggle('playing', !audio.paused);
+    playBtn.textContent = audio.paused ? '▶' : '❚❚';
+    playBtn.setAttribute('aria-label', audio.paused ? 'Play' : 'Pause');
+  }
+
+  playBtn.addEventListener('click', async () => {
+    try {
+      if (audio.paused) await audio.play();
+      else audio.pause();
+      syncMusic();
+    } catch { showToast('AUDIO BLOCKED'); }
+  });
+  prevBtn.addEventListener('click', () => {
+    // restart / −10s
+    if (audio.currentTime > 3) audio.currentTime = Math.max(0, audio.currentTime - 10);
+    else audio.currentTime = 0;
+    syncMusic();
+  });
+  nextBtn.addEventListener('click', () => {
+    if (Number.isFinite(audio.duration)) {
+      audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
+    } else {
+      audio.currentTime = audio.currentTime + 10;
+    }
+    syncMusic();
+  });
+
+  audio.addEventListener('timeupdate', syncMusic);
+  audio.addEventListener('loadedmetadata', syncMusic);
+  audio.addEventListener('pause', syncMusic);
+  audio.addEventListener('play', syncMusic);
+  audio.addEventListener('ended', () => { audio.currentTime = 0; syncMusic(); });
+
+  // Entry screen — вход по кнопке / клавише
+  let entered = false;
+  async function enterInterface(){
+    if (entered) return;
+    entered = true;
+    try {
+      audio.currentTime = 0;
+      await audio.play();
+      sessionStorage.setItem('shiokaze_seen','1');
+    } catch {
+      showToast('TAP PLAY TO START AUDIO');
+    }
+    syncMusic();
+    document.body.classList.remove('entry-locked');
+    document.body.classList.add('site-entered');
+    if (entryScreen) {
+      entryScreen.classList.add('is-leaving');
+      setTimeout(()=>entryScreen.remove(), 1200);
+    }
+  }
+  window.addEventListener('keydown', enterInterface, { once:true });
+  entryBtn?.addEventListener('click', enterInterface, { once:true });
+  entryScreen?.addEventListener('pointerdown', enterInterface, { once:true });
+
+  // Пропустить entry, если уже были в этой сессии
+  if (sessionStorage.getItem('shiokaze_seen') === '1') {
+    entered = true;
+    document.body.classList.remove('entry-locked');
+    document.body.classList.add('site-entered');
+    if (entryScreen) {
+      entryScreen.classList.add('is-leaving');
+      setTimeout(()=>entryScreen.remove(), 400);
+    }
+  }
+
+  // ============ Discord ============
+  const DISCORD_ID = '912747427465928754';
+  const dcAvatar   = document.getElementById('dc-avatar');
+  const dcName     = document.getElementById('dc-name');
+  const dcActivity = document.getElementById('dc-activity');
+  const dcStatus   = document.getElementById('dc-status');
+
+  async function fetchDiscord(){
+    const controller = new AbortController();
+    const timeout = setTimeout(()=>controller.abort(), 8000);
+    try {
+      const res = await fetch('https://lanyard-proxy.lopgg96.workers.dev/v1/users/' + DISCORD_ID, {
+        cache: 'no-store',
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+      const json = await res.json();
+      const d = json?.data;
+      if (!d) throw new Error('presence');
+      const u = d.discord_user || {};
+      dcName.textContent = u.global_name || u.username || 'shiokaze';
+      dcAvatar.src = u.avatar
+        ? `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${u.avatar}.${u.avatar.startsWith('a_') ? 'gif' : 'webp'}?size=96`
+        : 'https://cdn.discordapp.com/embed/avatars/0.png';
+      const st = d.discord_status || 'offline';
+      dcStatus.className = 'status-dot ' + (st === 'online' ? 'online' : st === 'idle' ? 'idle' : st === 'dnd' ? 'dnd' : '');
+      const acts = d.activities || [];
+      const act = acts.find(a=>a.type===0) || acts.find(a=>a.type===2) || acts.find(a=>a.type===1);
+      dcActivity.textContent = act
+        ? (act.details || act.name || 'active on Discord')
+        : (st === 'offline' ? 'offline' : 'online / no activity');
+    } catch (e) {
+      clearTimeout(timeout);
+      dcActivity.textContent = e.name === 'AbortError' ? 'presence timeout' : 'presence unavailable';
+      dcStatus.className = 'status-dot';
+    }
+  }
+  const dcInterval = matchMedia('(max-width: 900px)').matches ? 90000 : 30000;
+  fetchDiscord();
+  setInterval(()=>{ if (!document.hidden) fetchDiscord(); }, dcInterval);
+
+  // ============ Guestbook / rating / stats ============
+  const GUESTBOOK_API = 'https://sdqfeycfahemliivrujg.supabase.co';
+  const GUESTBOOK_KEY = 'sb_publishable_WVjFpsuPNUu8KJ-1UNL8qA_mDYwlUZG';
+  const AUTHOR_EMAIL  = 'lopgg96@gmail.com';
+
+  const gbList       = document.getElementById('gb-list');
+  const gbCount      = document.getElementById('gb-count');
+  const gbForm       = document.getElementById('guestbook-form');
+  const gbNameInput  = document.getElementById('gb-name-input');
+  const gbInput      = document.getElementById('gb-message');
+  const gbSubmit     = document.getElementById('gb-submit');
+  const visitCount   = document.getElementById('visit-count');
+  const ratingStars  = document.getElementById('rating-stars');
+  const ratingValue  = document.getElementById('rating-value');
+
+  const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+  }[c]));
+
+  let authorSession = null;
+  const ownerModal          = document.getElementById('owner-modal');
+  const ownerOpen           = document.getElementById('owner-login-open');
+  const ownerForm           = document.getElementById('owner-login-form');
+  const authorEmailInput    = document.getElementById('author-email');
+  const authorPasswordInput = document.getElementById('author-password');
+  const authorLogout        = document.getElementById('author-logout');
+  const authorSessionLabel  = document.getElementById('author-session');
+  const authorLoginError    = document.getElementById('author-login-error');
+
+  // Общий api() с таймаутом
+  async function api(path, options={}, token=''){
+    const ctrl = new AbortController();
+    const timeout = setTimeout(()=>ctrl.abort(), 8000);
+    try {
+      const res = await fetch(GUESTBOOK_API + path, {
+        ...options,
+        signal: ctrl.signal,
+        headers: {
+          apikey: GUESTBOOK_KEY,
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: 'Bearer ' + token } : {}),
+          ...(options.headers || {})
+        }
+      });
+      const data = await res.json().catch(()=>null);
+      if (!res.ok) throw new Error(data?.message || data?.hint || data?.error_description || 'Guestbook error');
+      return data;
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  function syncOwnerUI(){
+    const on = !!authorSession;
+    document.body.classList.toggle('author-mode', on);
+    if (authorLogout) authorLogout.hidden = !on;
+    if (authorSessionLabel) authorSessionLabel.hidden = !on;
+    if (authorEmailInput) authorEmailInput.hidden = on;
+    if (authorPasswordInput) authorPasswordInput.hidden = on;
+    const submitBtn = ownerForm?.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.hidden = on;
+    if (on && authorSessionLabel) authorSessionLabel.textContent = 'OWNER MODE ACTIVE';
+  }
+
+  function renderMessages(items){
+    if (!Array.isArray(items) || !items.length){
+      gbCount.textContent = '0 / live';
+      gbList.innerHTML = '<div class="gb-empty">NO SIGNALS YET — BE THE FIRST.</div>';
+      return;
+    }
+    gbCount.textContent = `${items.length} / live`;
+    gbList.innerHTML = items.map(m => {
+      const liked = !!m.author_liked;
+      const reply = m.author_reply
+        ? `<div class="gb-reply"><div class="gb-reply__label">AUTHOR TRANSMISSION</div><div class="gb-reply__text">${esc(m.author_reply)}</div>${m.author_reply_at ? `<div class="gb-reply__date">${fmtDate(m.author_reply_at)}</div>` : ''}</div>`
+        : '';
+      const ownerControls = authorSession
+        ? `<div class="gb-author-actions"><button class="gb-like-btn ${liked?'author-active':''}" type="button" data-like="${m.id}" aria-label="${liked ? 'Unlike' : 'Like'}">${liked ? '♥ LIKED' : '♥ LIKE'}</button></div>`
+        : '';
+      const replyEditor = authorSession
+        ? `<div class="gb-reply-editor"><textarea data-reply-input="${m.id}" maxlength="500" placeholder="reply...">${esc(m.author_reply||'')}</textarea><button type="button" data-reply="${m.id}">${m.author_reply ? 'UPDATE' : 'REPLY'}</button></div>`
+        : '';
+      return `<article class="gb-message"><div class="gb-top"><span class="gb-name">${esc(m.name)}${liked?'<span class="gb-author-badge">♥ AUTHOR</span>':''}</span><span class="gb-date">${fmtDate(m.created_at)}</span></div><div class="gb-text">${esc(m.message)}</div>${m.contact?`<div class="gb-contact">${esc(m.contact)}</div>`:''}${reply}<div class="gb-message__bottom">${ownerControls}</div>${replyEditor}</article>`;
+    }).join('');
+  }
+
+  async function loadMessages(){
+    try {
+      let data;
+      try {
+        data = await api('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked,author_reply,author_reply_at&order=created_at.desc&limit=50');
+      } catch {
+        data = await api('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked&order=created_at.desc&limit=50');
+        data = (data||[]).map(x => ({...x, author_reply:null, author_reply_at:null}));
+      }
+      renderMessages(data);
+    } catch {
+      gbList.innerHTML = '<div class="gb-error">GUESTBOOK OFFLINE</div>';
+      gbCount.textContent = 'offline';
+    }
+  }
+
+  gbForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = (gbNameInput.value.trim() || 'visitor').slice(0,32);
+    const message = gbInput.value.trim();
+    if (!message) return;
+    gbSubmit.disabled = true;
+    try {
+      await api('/rest/v1/guestbook_comments', {
+        method: 'POST',
+        headers: { Prefer: 'return=minimal' },
+        body: JSON.stringify({ name, contact: null, message })
+      });
+      gbNameInput.value = '';
+      gbInput.value = '';
+      showToast('SIGNAL SENT');
+      await loadMessages();
+    } catch {
+      showToast('SEND FAILED');
+    } finally {
+      gbSubmit.disabled = false;
+    }
+  });
+
+  gbList.addEventListener('click', async e => {
+    const like  = e.target.closest('[data-like]');
+    const reply = e.target.closest('[data-reply]');
+    if (!authorSession) return;
+
+    if (like) {
+      like.disabled = true;
+      try {
+        await api('/rest/v1/rpc/toggle_author_like', {
+          method: 'POST',
+          body: JSON.stringify({ p_comment_id: like.dataset.like })
+        }, authorSession.access_token);
+        await loadMessages();
+      } catch (err) {
+        console.error('[like]', err);
+        showToast('LIKE FAILED');
+      } finally {
+        like.disabled = false;
+      }
+      return;
+    }
+
+    if (reply) {
+      const id = reply.dataset.reply;
+      // Без CSS.escape — просто ищем совпадение через dataset
+      const input = [...gbList.querySelectorAll('[data-reply-input]')]
+        .find(el => el.dataset.replyInput === id);
+      const text = input?.value.trim() || '';
+      if (!text) return;
+      reply.disabled = true;
+      try {
+        await api('/rest/v1/rpc/set_author_reply', {
+          method: 'POST',
+          body: JSON.stringify({ p_comment_id: id, p_reply: text })
+        }, authorSession.access_token);
+        await loadMessages();
+        showToast('REPLY SENT');
+      } catch (err) {
+        console.error('[reply]', err);
+        showToast('REPLY NOT ENABLED');
+      } finally {
+        reply.disabled = false;
+      }
+    }
+  });
+
+  ownerOpen?.addEventListener('click', () => {
+    ownerModal.hidden = false;
+    if (authorLoginError) authorLoginError.textContent = '';
+  });
+  ownerModal?.addEventListener('click', e => {
+    if (e.target.matches('[data-owner-close]') || e.target.classList.contains('owner-modal__backdrop')) {
+      ownerModal.hidden = true;
+    }
+  });
+  authorLogout?.addEventListener('click', () => {
+    authorSession = null;
+    localStorage.removeItem('shiokaze_author_session');
+    syncOwnerUI();
+    loadMessages();
+    ownerModal.hidden = true;
+  });
+  ownerForm?.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (authorLoginError) authorLoginError.textContent = '';
+    try {
+      const d = await api('/auth/v1/token?grant_type=password', {
+        method: 'POST',
+        body: JSON.stringify({
+          email: authorEmailInput.value.trim(),
+          password: authorPasswordInput.value || ''
+        })
+      });
+      if ((d.user?.email || '').toLowerCase() !== AUTHOR_EMAIL) throw new Error('Wrong owner account');
+      authorSession = d;
+      localStorage.setItem('shiokaze_author_session', JSON.stringify(d));
+      ownerModal.hidden = true;
+      syncOwnerUI();
+      await loadMessages();
+    } catch (err) {
+      if (authorLoginError) authorLoginError.textContent = err.message || 'LOGIN FAILED';
+    }
+  });
+
+  // Восстановление сессии с проверкой TTL
+  try {
+    const saved = JSON.parse(localStorage.getItem('shiokaze_author_session') || 'null');
+    if (saved?.access_token && saved?.expires_at && saved.expires_at * 1000 > Date.now()) {
+      authorSession = saved;
+    } else if (saved) {
+      localStorage.removeItem('shiokaze_author_session');
+    }
+  } catch {}
+  syncOwnerUI();
+
+  async function loadSiteStats(){
+    const visitorKey = localStorage.getItem('shiokaze_visitor_id') || (() => {
+      const id = (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`);
+      localStorage.setItem('shiokaze_visitor_id', id);
+      return id;
+    })();
+    try {
+      const data = await api('/rest/v1/rpc/register_site_visit', {
+        method: 'POST',
+        body: JSON.stringify({ p_visitor_id: visitorKey })
+      });
+      if (data && typeof data === 'object'){
+        visitCount.textContent = String(data.visits ?? data.total_visits ?? '—');
+        ratingValue.textContent = data.average_rating ? `${Number(data.average_rating).toFixed(1)}` : '—';
+      }
+      const stats = await api('/rest/v1/rpc/get_site_stats');
+      if (stats){
+        visitCount.textContent = String(stats.total_visits ?? stats.visits ?? visitCount.textContent);
+        ratingValue.textContent = stats.average_rating ? `${Number(stats.average_rating).toFixed(1)}` : '—';
+      }
+    } catch {
+      visitCount.textContent = '—';
+      ratingValue.textContent = '—';
+    }
+  }
+
+  // Rating
+  const savedRating = Number(localStorage.getItem('shiokaze_rating') || 0);
+  function paintRating(value){
+    ratingStars?.querySelectorAll('button').forEach(b => {
+      const active = Number(b.dataset.rating) <= value;
+      b.classList.toggle('is-active', active);
+      const isChosen = Number(b.dataset.rating) === value;
+      b.setAttribute('aria-checked', isChosen ? 'true' : 'false');
+    });
+  }
+  paintRating(savedRating);
+
+  ratingStars?.addEventListener('click', async e => {
+    const b = e.target.closest('[data-rating]');
+    if (!b) return;
+    const rating = Number(b.dataset.rating);
+    localStorage.setItem('shiokaze_rating', String(rating));
+    paintRating(rating);
+    try {
+      await api('/rest/v1/rpc/submit_site_rating', {
+        method: 'POST',
+        body: JSON.stringify({
+          p_visitor_id: localStorage.getItem('shiokaze_visitor_id'),
+          p_rating: rating
+        })
+      });
+      await loadSiteStats();
+      showToast('RATING SAVED');
+    } catch {
+      showToast('RATING OFFLINE');
+    }
+  });
+
+  // Клавиатура для рейтинга — стрелки
+  ratingStars?.addEventListener('keydown', e => {
+    const buttons = [...ratingStars.querySelectorAll('button')];
+    const idx = buttons.indexOf(document.activeElement);
+    if (idx === -1) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp'){
+      e.preventDefault();
+      buttons[Math.min(buttons.length-1, idx+1)].focus();
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown'){
+      e.preventDefault();
+      buttons[Math.max(0, idx-1)].focus();
+    }
+  });
+
+  // Copy email
+  document.querySelectorAll('[data-copy-email]').forEach(a => {
+    a.addEventListener('click', e => {
+      if (!navigator.clipboard) return;
+      e.preventDefault();
+      navigator.clipboard.writeText(a.dataset.copyEmail)
+        .then(()=>showToast('EMAIL COPIED'))
+        .catch(()=>{ window.location.href = a.href; });
+    });
+  });
+
+  loadMessages();
+  loadSiteStats();
+  setInterval(()=>{ if (!document.hidden) loadMessages(); }, 60000);
+  document.addEventListener('visibilitychange', ()=>{ if (!document.hidden) loadMessages(); });
+
+})();
+</script>
 </body>
 </html>

@@ -1,160 +1,42 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>Phone 3D Test</title>
-<style>
-  body{margin:0;background:#050505;overflow:hidden;font-family:monospace;color:#fff}
-  canvas{display:block}
-  #info{position:fixed;top:20px;left:20px;font-size:12px;color:#888;z-index:10;line-height:1.8;max-width:600px}
-  #err{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);color:#f33;font-size:14px;display:none;text-align:center;max-width:80vw;line-height:1.6}
-</style>
+<head><meta charset="utf-8"><title>Three.js базовый тест</title>
+<style>body{margin:0;background:#050505;overflow:hidden}canvas{display:block}</style>
 </head>
 <body>
-<div id="info">📡 Probing CDNs...</div>
-<div id="err"></div>
-
 <script type="importmap">
-{
-  "imports": {
-    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-  }
-}
+{ "imports": {
+  "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+}}
 </script>
-
 <script type="module">
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-const info = document.getElementById('info');
-const errBox = document.getElementById('err');
-const log = (msg) => { info.innerHTML = msg; console.log('[TEST]', msg.replace(/<br>/g,' | ')); };
-
-// 🎯 Несколько CDN — пробуем по очереди
-const CANDIDATES = [
-  'https://raw.githack.com/ShiokazeE/bio/main/phone.glb',
-  'https://cdn.statically.io/gh/ShiokazeE/bio/main/phone.glb',
-  'https://cdn.jsdelivr.net/gh/ShiokazeE/bio@main/phone.glb',
-  'https://raw.githubusercontent.com/ShiokazeE/bio/main/phone.glb',
-];
-
-// Проверка доступности URL через fetch HEAD с таймаутом
-async function probe(url, ms = 5000){
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), ms);
-  try {
-    const res = await fetch(url, { method: 'HEAD', signal: ctrl.signal, cache: 'no-store' });
-    clearTimeout(t);
-    return res.ok ? url : null;
-  } catch {
-    clearTimeout(t);
-    return null;
-  }
-}
-
-// Найти первый рабочий CDN
-async function pickWorkingUrl(){
-  for (let i = 0; i < CANDIDATES.length; i++){
-    const url = CANDIDATES[i];
-    log(`🔎 Probing CDN ${i+1}/${CANDIDATES.length}<br>${url}`);
-    const ok = await probe(url);
-    if (ok){
-      log(`✅ CDN OK: ${url}<br>Loading model...`);
-      return ok;
-    }
-    log(`❌ CDN failed: ${url.split('/')[2]}`);
-  }
-  return null;
-}
-
-// Сцена
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x050505);
-
-const camera = new THREE.PerspectiveCamera(45, innerWidth/innerHeight, 0.01, 100);
-camera.position.set(0, 0, 3);
+const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 100);
+camera.position.z = 3;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.1;
+renderer.setClearColor(0x050505);
 document.body.appendChild(renderer.domElement);
 
-// Свет Nothing
-const key = new THREE.DirectionalLight(0xffffff, 1.8); key.position.set(2, 3, 4); scene.add(key);
-const rim = new THREE.DirectionalLight(0xffffff, 0.7); rim.position.set(-3, -1, 2); scene.add(rim);
-const accent = new THREE.DirectionalLight(0xff2f24, 0.6); accent.position.set(-2, 2, -3); scene.add(accent);
-scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+const geo = new THREE.BoxGeometry(1, 1, 1);
+const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.8, roughness: 0.2 });
+const cube = new THREE.Mesh(geo, mat);
+scene.add(cube);
 
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.dampingFactor = 0.06;
+scene.add(new THREE.DirectionalLight(0xffffff, 2).translateZ(5));
+scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 
-// Загрузка с таймаутом
-async function loadModel(url){
-  return new Promise((resolve, reject) => {
-    const loader = new GLTFLoader();
-    const timeout = setTimeout(() => reject(new Error('Timeout: model fetch >12s')), 12000);
-    loader.load(
-      url,
-      gltf => { clearTimeout(timeout); resolve(gltf); },
-      p => {
-        const pct = p.total ? ((p.loaded/p.total)*100).toFixed(0) : '?';
-        log(`📥 Loading ${pct}% (${(p.loaded/1024).toFixed(0)} KB)`);
-      },
-      e => { clearTimeout(timeout); reject(e); }
-    );
-  });
-}
-
-(async () => {
-  try {
-    const url = await pickWorkingUrl();
-    if (!url) throw new Error('All CDNs failed. Check that phone.glb is in repo root.');
-
-    const gltf = await loadModel(url);
-    const model = gltf.scene;
-
-    // Автомасштаб
-    const box = new THREE.Box3().setFromObject(model);
-    const size = box.getSize(new THREE.Vector3());
-    const center = box.getCenter(new THREE.Vector3());
-    const maxDim = Math.max(size.x, size.y, size.z);
-    const scale = 2 / maxDim;
-
-    model.scale.setScalar(scale);
-    model.position.sub(center.multiplyScalar(scale));
-    scene.add(model);
-
-    // Логи
-    console.log('✅ LOADED:', url);
-    console.log('📐 Size:', size.toArray().map(v=>v.toFixed(3)).join(' × '));
-    console.log('🧩 Meshes:');
-    model.traverse(o => { if (o.isMesh) console.log('   •', o.name || '(unnamed)', '| mat:', o.material?.name || 'none', '| type:', o.material?.type); });
-
-    log(`✅ Loaded<br>Size: ${size.x.toFixed(2)} × ${size.y.toFixed(2)} × ${size.z.toFixed(2)}<br>Drag to rotate · Scroll to zoom`);
-  } catch (e) {
-    console.error('❌', e);
-    errBox.style.display = 'block';
-    errBox.innerHTML = `❌ ${e.message || e}<br><br><small>Открой F12 → Console для деталей</small>`;
-    log(`❌ Error: ${e.message || e}`);
-  }
-})();
-
-addEventListener('resize', () => {
-  camera.aspect = innerWidth / innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
-});
-
-(function animate(){
-  requestAnimationFrame(animate);
-  controls.update();
+(function loop(){
+  requestAnimationFrame(loop);
+  cube.rotation.x += 0.01;
+  cube.rotation.y += 0.015;
   renderer.render(scene, camera);
 })();
+
+console.log('✅ Three.js works. Cube should be spinning.');
 </script>
 </body>
 </html>

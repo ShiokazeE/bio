@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Phone 3D Test</title>
+<style>
+  body{margin:0;background:#050505;overflow:hidden;font-family:monospace;color:#fff}
+  canvas{display:block}
+  #info{position:fixed;top:20px;left:20px;font-size:12px;color:#888;z-index:10;line-height:1.8}
+  #err{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);color:#f33;font-size:14px;display:none;text-align:center}
+</style>
+</head>
+<body>
+<div id="info">Drag to rotate · Scroll to zoom<br>Loading model...</div>
+<div id="err"></div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// ✅ Твоя модель через jsDelivr
+const MODEL_URL = 'https://cdn.jsdelivr.net/gh/ShiokazeE/bio@main/phone.glb';
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x050505);
+
+const camera = new THREE.PerspectiveCamera(45, innerWidth/innerHeight, 0.01, 100);
+camera.position.set(0, 0, 3);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+document.body.appendChild(renderer.domElement);
+
+// 💡 Свет в стиле Nothing — тёмная сцена, два rim-light + красный акцент
+const key = new THREE.DirectionalLight(0xffffff, 1.8);
+key.position.set(2, 3, 4);
+scene.add(key);
+
+const rim = new THREE.DirectionalLight(0xffffff, 0.7);
+rim.position.set(-3, -1, 2);
+scene.add(rim);
+
+const accent = new THREE.DirectionalLight(0xff2f24, 0.6); // Nothing red
+accent.position.set(-2, 2, -3);
+scene.add(accent);
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+
+// OrbitControls для теста
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+
+// 🚀 Загрузка модели
+const loader = new GLTFLoader();
+loader.load(MODEL_URL, gltf => {
+  const model = gltf.scene;
+
+  // Автомасштаб — подгоняем модель под ~2 юнита высоты
+  const box = new THREE.Box3().setFromObject(model);
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  const maxDim = Math.max(size.x, size.y, size.z);
+  const scale = 2 / maxDim;
+
+  model.scale.setScalar(scale);
+  model.position.sub(center.multiplyScalar(scale));
+  scene.add(model);
+
+  // 📋 Логи для отладки — что внутри модели
+  console.log('✅ Model loaded successfully!');
+  console.log('📐 Original size:', size.x.toFixed(3), '×', size.y.toFixed(3), '×', size.z.toFixed(3));
+  console.log('📏 Auto-scale factor:', scale.toFixed(4));
+  console.log('🧩 Meshes inside:');
+  model.traverse(o => {
+    if (o.isMesh) {
+      console.log('   •', o.name || '(unnamed)', '| material:', o.material?.name || 'none', '| type:', o.material?.type);
+    }
+  });
+
+  document.getElementById('info').innerHTML = 
+    `✅ Loaded · drag to rotate<br>Original size: ${size.x.toFixed(2)} × ${size.y.toFixed(2)} × ${size.z.toFixed(2)}`;
+}, 
+progress => {
+  const pct = progress.total ? ((progress.loaded / progress.total) * 100).toFixed(0) : '?';
+  document.getElementById('info').innerHTML = `Loading... ${pct}%`;
+},
+err => {
+  document.getElementById('err').style.display = 'block';
+  document.getElementById('err').innerHTML = 
+    `❌ Load error<br><small>${err.message || err}</small><br><br>Проверь консоль (F12)`;
+  console.error('Load error:', err);
+});
+
+// Ресайз
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+// Loop
+(function animate(){
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+})();
+</script>
+</body>
+</html>

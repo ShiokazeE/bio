@@ -83,31 +83,37 @@ html.has-custom-cursor textarea{cursor:none}
 
 #cursor-ring{
   position:fixed;left:0;top:0;
-  width:28px;height:28px;
+  width:24px;height:24px;
   z-index:2147483647;
   pointer-events:none;
-  border:1.5px solid rgba(20,22,24,.9);
+  border:2px solid #fff;
   border-radius:50%;
-  background:rgba(255,255,255,.14);
-  box-shadow:0 0 0 1px rgba(255,255,255,.85), 0 2px 14px rgba(0,0,0,.25);
+  background:rgba(0,0,0,.08);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.95),
+    0 0 14px rgba(0,0,0,.45);
+  mix-blend-mode:difference;
   display:none;
   place-items:center;
   transform:translate(-50%,-50%);
-  transition:width .2s ease, height .2s ease,
-             border-radius .2s ease, background .15s ease,
+  will-change:left,top,width,height;
+  transition:width .18s ease, height .18s ease,
+             border-radius .18s ease, background .15s ease,
              border-color .15s ease;
 }
 html.has-custom-cursor #cursor-ring{display:grid}
 
 #cursor-ring .cursor-dot{
   width:5px;height:5px;border-radius:50%;
-  background:rgba(20,22,24,.95);
+  background:#fff;
+  box-shadow:0 0 0 1px #000;
   transition:opacity .15s ease, width .15s ease, height .15s ease;
 }
 #cursor-ring .cursor-glyph{
   position:absolute;
   font:700 13px/1 var(--mono);
-  color:rgba(20,22,24,.95);
+  color:#fff;
+  text-shadow:0 0 0 #000;
   opacity:0;
   transition:opacity .12s ease;
 }
@@ -457,7 +463,20 @@ body.theme-dark #cursor-trail{background:rgba(230,232,230,.4)}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none;transition-duration:.01ms}
-  #cursor-ring,#cursor-trail{display:none !important}
+  html.has-custom-cursor #cursor-ring{display:grid !important}
+  html.has-custom-cursor #cursor-trail{display:block !important}
+}
+
+/* Native cursor: intentionally disable the custom cursor completely.
+   This avoids GitHub Pages / browser differences and always uses the OS cursor. */
+html, body, #stage, #stage * {
+  cursor: auto !important;
+}
+input, textarea {
+  cursor: text !important;
+}
+#cursor-ring, #cursor-trail {
+  display: none !important;
 }
 </style>
 </head>
@@ -639,23 +658,19 @@ body.theme-dark #cursor-trail{background:rgba(230,232,230,.4)}
   }
 
   if(enableCustom && ring){
+    // Включаем кастомный курсор сразу и больше не отключаем
+    // из-за временного отсутствия mousemove.
     root.classList.add('has-custom-cursor');
     placeCursor();
-    // Fail-safe: если 3 сек без mousemove — откат к нативному курсору
-    setTimeout(function(){
-      if(!root.classList.contains('cursor-confirmed')){
-        root.classList.remove('has-custom-cursor');
-      }
-    }, 3000);
   }
 
   window.addEventListener('mousemove', function(e){
     tx = e.clientX;
     ty = e.clientY;
     if(enableCustom && ring){
-      if(!root.classList.contains('cursor-confirmed')){
-        root.classList.add('cursor-confirmed');
-      }
+      // Восстанавливаем класс на случай внешнего вмешательства.
+      root.classList.add('has-custom-cursor');
+      root.classList.add('cursor-confirmed');
       wakeCursor();
       var nx = (tx / window.innerWidth  - .5) * 2;
       var ny = (ty / window.innerHeight - .5) * 2;

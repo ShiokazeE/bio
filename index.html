@@ -53,7 +53,6 @@ button,input,textarea,select{font:inherit;border:0;background:none;color:inherit
 button{cursor:pointer}
 input,textarea{cursor:text}
 
-/* native cursor hidden only when JS confirms custom cursor works */
 @media (hover:hover){
   html.has-custom-cursor,
   html.has-custom-cursor body,
@@ -91,11 +90,10 @@ input,textarea{cursor:text}
 }
 
 /* =========================================================
-   2b. CURSOR — simple, pixel-positioned, always visible
+   2b. CURSOR
    ========================================================= */
 #cursor-ring{
-  position:fixed;
-  left:0;top:0;
+  position:fixed;left:0;top:0;
   width:28px;height:28px;
   z-index:2147483647;
   pointer-events:none;
@@ -111,53 +109,26 @@ input,textarea{cursor:text}
   place-items:center;
 }
 #cursor-ring.is-visible{opacity:1}
-
-#cursor-ring .cursor-dot{
-  width:5px;height:5px;border-radius:50%;
-  background:rgba(20,22,24,.92);
-  transition:opacity .15s ease;
-}
-#cursor-ring .cursor-glyph{
-  position:absolute;
-  font:700 13px/1 var(--mono);
-  color:rgba(20,22,24,.92);
-  opacity:0;
-  transition:opacity .12s ease;
-}
-
+#cursor-ring .cursor-dot{width:5px;height:5px;border-radius:50%;background:rgba(20,22,24,.92);transition:opacity .15s ease}
+#cursor-ring .cursor-glyph{position:absolute;font:700 13px/1 var(--mono);color:rgba(20,22,24,.92);opacity:0;transition:opacity .12s ease}
 #cursor-trail{
-  position:fixed;
-  left:0;top:0;
-  width:6px;height:6px;
-  z-index:2147483646;
-  pointer-events:none;
-  border-radius:50%;
-  background:rgba(20,22,24,.35);
-  opacity:0;
-  transform:translate(-50%,-50%);
+  position:fixed;left:0;top:0;width:6px;height:6px;
+  z-index:2147483646;pointer-events:none;border-radius:50%;
+  background:rgba(20,22,24,.35);opacity:0;transform:translate(-50%,-50%);
   transition:transform .18s cubic-bezier(.16,1,.3,1), opacity .3s ease;
 }
 #cursor-trail.is-visible{opacity:.55}
-
 body.cursor-link #cursor-ring{width:50px;height:50px;background:rgba(255,255,255,.28);border-color:rgba(20,22,24,.68)}
 body.cursor-link #cursor-ring .cursor-dot{opacity:0}
 body.cursor-link #cursor-ring .cursor-glyph{opacity:1}
-
-body.cursor-text #cursor-ring{
-  width:2px;height:26px;border-radius:2px;
-  background:rgba(20,22,24,.9);
-  border-color:rgba(20,22,24,.9);
-}
+body.cursor-text #cursor-ring{width:2px;height:26px;border-radius:2px;background:rgba(20,22,24,.9);border-color:rgba(20,22,24,.9)}
 body.cursor-text #cursor-ring .cursor-dot{opacity:0}
 body.cursor-text #cursor-ring .cursor-glyph{opacity:0}
-
 body.cursor-play #cursor-ring{width:58px;height:58px;background:rgba(255,255,255,.32);border-color:rgba(20,22,24,.68)}
 body.cursor-play #cursor-ring .cursor-dot{opacity:0}
 body.cursor-play #cursor-ring .cursor-glyph{opacity:1;font-size:17px}
-
 body.cursor-star #cursor-ring{width:18px;height:18px;background:rgba(20,22,24,.3)}
 body.cursor-star #cursor-ring .cursor-dot{width:6px;height:6px;background:rgba(20,22,24,.95)}
-
 @media (hover:none),(pointer:coarse){
   #cursor-ring,#cursor-trail{display:none !important}
 }
@@ -170,9 +141,7 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 #ui>*{pointer-events:auto}
 .card{
   border:1px solid var(--line);background:var(--glass);
-  box-shadow:
-    var(--shadow),
-    0 0 calc(var(--audio-bass) * 42px) rgba(255,255,255,calc(var(--audio-bass) * .34));
+  box-shadow:var(--shadow), 0 0 calc(var(--audio-bass) * 42px) rgba(255,255,255,calc(var(--audio-bass) * .34));
   backdrop-filter:blur(12px) saturate(.90);-webkit-backdrop-filter:blur(12px) saturate(.90);
   border-radius:18px;min-width:0;
   transition:background .35s ease, box-shadow .08s linear;
@@ -185,10 +154,7 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 /* =========================================================
    4. IDENTITY
    ========================================================= */
-.identity{
-  position:absolute;left:50%;top:5.2vh;transform:translateX(-50%);width:min(420px,90vw);padding:0;
-  text-align:center;background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;
-}
+.identity{position:absolute;left:50%;top:5.2vh;transform:translateX(-50%);width:min(420px,90vw);padding:0;text-align:center;background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 .identity .mark{display:flex;justify-content:center;align-items:center;margin-bottom:8px}
 .identity-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;filter:grayscale(.85) contrast(.95);opacity:.86;border:1px solid rgba(255,255,255,.76)}
 .identity h1{font:500 clamp(44px,4.6vw,72px)/.9 var(--mono);letter-spacing:-.085em;color:rgba(24,26,28,.82);text-shadow:none}
@@ -201,11 +167,7 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 /* =========================================================
    5. MAIN COMPOSITION
    ========================================================= */
-.main-grid{
-  position:absolute;left:50%;top:60.2vh;transform:translate(-50%,-50%);
-  width:min(1160px,calc(100vw - 40px));height:405px;
-  display:grid;grid-template-columns:300px 480px 300px;gap:40px;align-items:stretch;
-}
+.main-grid{position:absolute;left:50%;top:60.2vh;transform:translate(-50%,-50%);width:min(1160px,calc(100vw - 40px));height:405px;display:grid;grid-template-columns:300px 480px 300px;gap:40px;align-items:stretch}
 .left-stack,.right-stack{min-width:0;height:405px;display:grid;gap:0}
 .left-stack{grid-template-rows:1fr 1fr}
 .right-stack{grid-template-rows:1fr auto 1fr}
@@ -213,13 +175,11 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .left-stack .about,.right-stack .discord{border-radius:18px 18px 0 0;border-bottom-color:var(--line-dark)}
 .left-stack .music,.right-stack .social{border-radius:0 0 18px 18px;margin-top:-1px}
 
-/* ABOUT */
 .about{padding:18px}
 .about p{margin-top:14px;font:400 12px/1.62 var(--sans);color:rgba(47,50,52,.72);max-width:34ch}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
 .chip{padding:5px 8px;border:1px solid rgba(47,50,52,.14);border-radius:999px;background:rgba(255,255,255,.18);font:600 10px/1 var(--mono);color:rgba(47,50,52,.62)}
 
-/* MUSIC */
 .music{padding:16px 18px}
 .music-head{display:flex;justify-content:space-between;align-items:center}
 .music-body{display:grid;grid-template-columns:64px 1fr;gap:13px;align-items:center;margin-top:13px}
@@ -236,13 +196,7 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .music-controls button:hover{transform:scale(1.08);background:rgba(255,255,255,.46)}
 .music-controls .main-play{width:36px;height:36px;background:rgba(47,50,52,.78);color:#f4f5f3;font-size:11px}
 .wave{display:flex;gap:3px;align-items:flex-end;justify-content:flex-end;height:22px}
-.wave i{
-  width:2px;
-  height:calc((5px + var(--audio-mid) * 17px) * var(--s,1));
-  background:rgba(47,50,52,calc(.24 + var(--audio-mid) * .5));
-  border-radius:99px;
-  transition:height .08s linear, background .08s linear;
-}
+.wave i{width:2px;height:calc((5px + var(--audio-mid) * 17px) * var(--s,1));background:rgba(47,50,52,calc(.24 + var(--audio-mid) * .5));border-radius:99px;transition:height .08s linear, background .08s linear}
 .wave i:nth-child(1){--s:.65}
 .wave i:nth-child(2){--s:1}
 .wave i:nth-child(3){--s:.8}
@@ -251,7 +205,6 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .wave i:nth-child(6){--s:1.05}
 .wave i:nth-child(7){--s:.6}
 
-/* DISCORD */
 .discord{padding:16px 18px}
 .dc-main{display:flex;align-items:center;gap:11px;margin-top:11px}
 .avatar{width:48px;height:48px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,.84)}
@@ -259,7 +212,6 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .dc-activity{margin-top:5px;max-width:195px;font:500 11px/1.45 var(--mono);color:rgba(47,50,52,.64);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .status-dot{margin-left:auto;width:8px;height:8px;border-radius:50%;background:#8a8f8b}.status-dot.online{background:#5a9b70;box-shadow:0 0 0 5px rgba(90,155,112,.08)}.status-dot.idle{background:#b59550}.status-dot.dnd{background:#b65b5b}
 
-/* STATS */
 .site-stats{padding:8px 16px;background:rgba(248,249,247,.24);border-radius:0;border-top:0;border-bottom:0;box-shadow:none;backdrop-filter:blur(10px) saturate(.86);-webkit-backdrop-filter:blur(10px) saturate(.86)}
 .system-row{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:20px;font:500 10px/1.35 var(--mono);letter-spacing:.05em;color:var(--faint)}
 .system-row + .system-row{margin-top:2px}
@@ -271,13 +223,11 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .rating-stars button:hover,.rating-stars button.is-active{color:rgba(47,50,52,.78);transform:translateY(-1px)}
 .rating-value{min-width:28px;text-align:right;font:500 10px/1 var(--mono);color:rgba(47,50,52,.72)}
 
-/* SOCIAL */
 .social{padding:16px 18px}
 .social-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:11px}
 .social-grid a{padding:10px 11px;border:1px solid rgba(47,50,52,.12);border-radius:10px;background:rgba(255,255,255,.18);font:600 11px/1 var(--mono);text-align:center;color:rgba(47,50,52,.64);transition:transform .18s ease,background .18s ease,border-color .18s ease}
 .social-grid a:hover{transform:translateY(-2px);background:rgba(255,255,255,.34);border-color:rgba(47,50,52,.20)}
 
-/* GUESTBOOK */
 .guestbook{height:405px;padding:18px 18px 16px;display:flex;flex-direction:column}
 .guestbook-head{display:flex;justify-content:space-between;align-items:center;min-height:24px}
 .gb-head-actions{display:flex;align-items:center;gap:8px}
@@ -315,6 +265,58 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .honeypot{position:absolute;left:-9999px;top:auto;width:1px;height:1px;opacity:0;pointer-events:none}
 
 /* =========================================================
+   6. CONSOLE OVERLAY  (~  to open)
+   ========================================================= */
+#console-overlay{
+  position:fixed;
+  left:50%;bottom:40px;
+  transform:translateX(-50%) translateY(20px) scale(.98);
+  width:min(620px,92vw);
+  max-height:62vh;
+  z-index:2147483640;
+  background:rgba(18,20,22,.94);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:14px;
+  padding:18px 20px 16px;
+  font:500 13px/1.55 var(--mono);
+  color:rgba(255,255,255,.92);
+  opacity:0;pointer-events:none;
+  backdrop-filter:blur(24px) saturate(.9);
+  -webkit-backdrop-filter:blur(24px) saturate(.9);
+  box-shadow:0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);
+  display:flex;flex-direction:column;gap:10px;
+  transition:opacity .22s ease, transform .32s cubic-bezier(.16,1,.3,1);
+}
+#console-overlay.is-open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0) scale(1)}
+#console-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:10px;letter-spacing:.18em;color:rgba(255,255,255,.46)}
+#console-head .dash{display:flex;gap:6px}
+#console-head .dash i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.15)}
+#console-output{
+  flex:1;min-height:120px;max-height:38vh;overflow-y:auto;
+  padding-right:6px;font-size:12.5px;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent;
+}
+#console-output::-webkit-scrollbar{width:5px}
+#console-output::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:99px}
+#console-output .line{margin-bottom:4px;word-break:break-word}
+#console-output .line.cmd{color:#fff;font-weight:600}
+#console-output .line.cmd::before{content:'> ';color:rgba(255,255,255,.4);margin-right:2px}
+#console-output .line.ok{color:rgba(140,220,180,.94)}
+#console-output .line.err{color:rgba(230,140,140,.94)}
+#console-output .line.dim{color:rgba(255,255,255,.42)}
+#console-output .line.accent{color:rgba(180,200,255,.9)}
+#console-input-row{display:flex;gap:8px;align-items:center;padding-top:10px;border-top:1px solid rgba(255,255,255,.08)}
+#console-input-row span{color:rgba(255,255,255,.36);font-size:13px}
+#console-input{
+  flex:1;background:transparent;border:0;color:#fff;
+  font:600 13px/1 var(--mono);padding:4px 0;
+  caret-color:#fff;
+}
+#console-input::placeholder{color:rgba(255,255,255,.28)}
+#console-hint{padding-top:8px;font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.32);text-align:right}
+body.console-open #cursor-ring{opacity:0 !important}
+
+/* =========================================================
    7. ENTRY SCREEN
    ========================================================= */
 #entry-screen{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:rgba(245,243,239,.96);backdrop-filter:blur(14px) saturate(.84);-webkit-backdrop-filter:blur(14px) saturate(.84);color:#252629;transition:opacity 1.15s cubic-bezier(.16,1,.3,1),visibility 1.15s}
@@ -327,15 +329,9 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .entry-title{font:500 clamp(38px,5vw,72px)/.95 var(--mono);letter-spacing:.10em;text-transform:uppercase}
 .entry-hint{margin-top:23px;font:600 12px/1.4 var(--mono);letter-spacing:.16em;opacity:.62;animation:entryPulse 1.8s ease-in-out infinite}
 .entry-progress{width:240px;height:2px;margin:24px auto 0;background:rgba(37,38,41,.11);overflow:hidden}
-.entry-progress span{
-  display:block;height:100%;background:rgba(37,38,41,.58);
-  transform-origin:left center;transform:scaleX(0);
-  animation:entryFill 2s ease-out .2s forwards;
-}
+.entry-progress span{display:block;height:100%;background:rgba(37,38,41,.58);transform-origin:left center;transform:scaleX(0);animation:entryFill 2s ease-out .2s forwards}
 @keyframes entryFill{to{transform:scaleX(1)}}
-@media (prefers-reduced-motion:reduce){
-  .entry-progress span{animation:none;transform:scaleX(1)}
-}
+@media (prefers-reduced-motion:reduce){.entry-progress span{animation:none;transform:scaleX(1)}}
 .entry-corner{position:absolute;right:26px;bottom:22px;font:600 9px/1.3 var(--mono);letter-spacing:.12em;opacity:.44;pointer-events:none}
 .hint-mobile{display:none}
 @keyframes entryPulse{0%,100%{opacity:.35}50%{opacity:.88}}
@@ -364,7 +360,60 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
 /* =========================================================
-   10. MEDIA QUERIES
+   10. DARK THEME (via `theme dark`)
+   ========================================================= */
+body.theme-dark{
+  --ink:#e6e8e6;
+  --muted:rgba(230,232,230,.72);
+  --faint:rgba(230,232,230,.52);
+  --glass:rgba(20,22,24,.42);
+  --glass-strong:rgba(30,32,34,.55);
+  --line:rgba(255,255,255,.14);
+  --line-dark:rgba(255,255,255,.10);
+  --shadow:0 18px 52px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06);
+  background:#111315;
+}
+body.theme-dark #stage{background:#111315}
+body.theme-dark .identity h1{color:rgba(240,242,240,.92)}
+body.theme-dark .identity .sub{color:rgba(230,232,230,.68)}
+body.theme-dark .title{color:rgba(230,232,230,.72)}
+body.theme-dark .meta,
+body.theme-dark .time,
+body.theme-dark .gb-count,
+body.theme-dark .system-row{color:rgba(230,232,230,.56)}
+body.theme-dark .system-row>span:first-child{color:rgba(230,232,230,.5)}
+body.theme-dark .system-row>span:last-child{color:rgba(230,232,230,.78)}
+body.theme-dark .about p{color:rgba(230,232,230,.78)}
+body.theme-dark .chip{background:rgba(255,255,255,.06);color:rgba(230,232,230,.72);border-color:rgba(255,255,255,.1)}
+body.theme-dark .rule{background:rgba(255,255,255,.08)}
+body.theme-dark .track h2{color:rgba(230,232,230,.88)}
+body.theme-dark .track p,
+body.theme-dark .dc-name,
+body.theme-dark .dc-activity{color:rgba(230,232,230,.72)}
+body.theme-dark .dc-activity{color:rgba(230,232,230,.6)}
+body.theme-dark .gb-name{color:rgba(230,232,230,.9)}
+body.theme-dark .gb-date,
+body.theme-dark .gb-contact{color:rgba(230,232,230,.52)}
+body.theme-dark .gb-text{color:rgba(230,232,230,.82)}
+body.theme-dark .social-grid a{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:rgba(230,232,230,.78)}
+body.theme-dark .social-grid a:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+body.theme-dark .message-form input{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:rgba(230,232,230,.92)}
+body.theme-dark .message-form input::placeholder{color:rgba(230,232,230,.4)}
+body.theme-dark .message-form button{background:rgba(255,255,255,.08);color:rgba(230,232,230,.82);border-color:rgba(255,255,255,.1)}
+body.theme-dark .music-controls .main-play{background:rgba(230,232,230,.9);color:#141616}
+body.theme-dark .music-controls button{color:rgba(230,232,230,.7)}
+body.theme-dark .music-controls button:hover{background:rgba(255,255,255,.1)}
+body.theme-dark .wave i{background:rgba(230,232,230,calc(.3 + var(--audio-mid) * .5))}
+body.theme-dark .progress{background:rgba(255,255,255,.1)}
+body.theme-dark .progress span{background:rgba(230,232,230,.7)}
+body.theme-dark .owner-open{background:rgba(255,255,255,.06);color:rgba(230,232,230,.7);border-color:rgba(255,255,255,.1)}
+body.theme-dark .rating-stars button{color:rgba(230,232,230,.24)}
+body.theme-dark .rating-stars button.is-active{color:rgba(230,232,230,.9)}
+body.theme-dark .toast{background:rgba(20,22,24,.9);color:rgba(230,232,230,.82);border-color:rgba(255,255,255,.14)}
+body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
+
+/* =========================================================
+   11. MEDIA QUERIES
    ========================================================= */
 @media (max-width:1180px){
   .main-grid{width:calc(100vw - 32px);grid-template-columns:250px minmax(360px,1fr) 250px;gap:16px}
@@ -393,6 +442,7 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   .message-form{grid-template-columns:1fr;gap:8px}.message-form button{justify-self:end;padding:10px 16px}
   .toast{position:fixed}
   .owner-modal__panel input{font-size:16px}
+  #console-overlay{width:92vw;font-size:12px}
 }
 @media (max-width:520px){
   #ui{padding-left:12px;padding-right:12px}
@@ -491,6 +541,19 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
 
     <div class="toast" id="toast" role="status" aria-live="polite">SIGNAL SENT</div>
   </main>
+
+  <div id="console-overlay" aria-hidden="true">
+    <div id="console-head">
+      <span>SVCURA / TERMINAL</span>
+      <span class="dash"><i></i><i></i><i></i></span>
+    </div>
+    <div id="console-output"></div>
+    <div id="console-input-row">
+      <span>&gt;</span>
+      <input id="console-input" type="text" autocomplete="off" spellcheck="false" placeholder="type a command... (help)">
+    </div>
+    <div id="console-hint">~ OR ESC TO CLOSE · TYPE "HELP" FOR COMMANDS</div>
+  </div>
 </div>
 
 <div class="owner-modal" id="owner-modal" hidden>
@@ -526,7 +589,7 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   body.classList.add('entry-locked');
 
   /* =========================================================
-     CURSOR — init
+     CURSOR
      ========================================================= */
   const ring  = document.getElementById('cursor-ring');
   const trail = document.getElementById('cursor-trail');
@@ -538,11 +601,9 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
 
   console.log('[cursor] hasHover:', hasHover, 'isCoarse:', isCoarse, '→ custom:', enableCustom);
 
-  let mx = window.innerWidth / 2;
-  let my = window.innerHeight / 2;
+  let mx = window.innerWidth / 2, my = window.innerHeight / 2;
   let tx = mx, ty = my;
-  let rafId = null;
-  let idleTimer = null;
+  let rafId = null, idleTimer = null;
 
   function placeCursor(){
     if(!ring) return;
@@ -580,12 +641,10 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
     ring.classList.add('is-visible');
     if(trail) trail.classList.add('is-visible');
     placeCursor();
-    console.log('[cursor] visible from init');
   }
 
   window.addEventListener('mousemove', (e) => {
-    tx = e.clientX;
-    ty = e.clientY;
+    tx = e.clientX; ty = e.clientY;
     if(enableCustom && ring){
       if(!ring.classList.contains('is-visible')) ring.classList.add('is-visible');
       if(trail) trail.classList.add('is-visible');
@@ -605,16 +664,12 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
     if(enableCustom && ring) ring.classList.add('is-visible');
     if(enableCustom && trail) trail.classList.add('is-visible');
   });
-
   document.addEventListener('visibilitychange', () => {
     if(document.hidden){
       if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
-    } else if(enableCustom){
-      wakeCursor();
-    }
+    } else if(enableCustom){ wakeCursor(); }
   });
 
-  /* context states */
   const CURSOR_CLASSES = ['cursor-link','cursor-text','cursor-play','cursor-star'];
   function setCursorState(el){
     if(!enableCustom) return;
@@ -656,7 +711,6 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
     el.addEventListener('pointerleave', () => setCursorState(null));
   });
 
-  /* stage pulse on click */
   window.addEventListener('pointerdown', () => {
     if(!stage.animate) return;
     stage.animate(
@@ -664,6 +718,87 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
       {duration:260,easing:'cubic-bezier(.16,1,.3,1)'}
     );
   }, {passive:true});
+
+  /* =========================================================
+     MAGNETIC BUTTONS (play / prev / next)
+     ========================================================= */
+  const magnetTargets = [
+    document.getElementById('play'),
+    document.getElementById('prev'),
+    document.getElementById('next')
+  ].filter(Boolean);
+  const MAGNET_RADIUS = 48;
+  const MAGNET_STRENGTH = 0.35;
+
+  window.addEventListener('mousemove', (e) => {
+    if(!enableCustom) return;
+    magnetTargets.forEach(btn => {
+      const r = btn.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top  + r.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.hypot(dx, dy);
+      if(dist < MAGNET_RADIUS + Math.max(r.width, r.height) / 2){
+        const pull = Math.max(0, 1 - dist / (MAGNET_RADIUS + r.width));
+        btn.style.transform = `translate(${dx * pull * MAGNET_STRENGTH}px, ${dy * pull * MAGNET_STRENGTH}px)`;
+      } else {
+        btn.style.transform = '';
+      }
+    });
+  }, {passive:true});
+
+  /* =========================================================
+     MICRO-SOUNDS (Web Audio, no files)
+     ========================================================= */
+  let soundCtx = null;
+  let soundEnabled = localStorage.getItem('shiokaze_sound') === '1';
+
+  function ensureSoundCtx(){
+    if(!soundCtx){
+      try{
+        soundCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }catch{ soundCtx = null; }
+    }
+    if(soundCtx && soundCtx.state === 'suspended') soundCtx.resume();
+    return soundCtx;
+  }
+
+  function playTone(freq, duration, gainVal, type='sine'){
+    if(!soundEnabled) return;
+    const ctx = ensureSoundCtx();
+    if(!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(gainVal, ctx.currentTime + 0.005);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + duration + 0.02);
+  }
+
+  const sounds = {
+    hover:    () => playTone(880, 0.04, 0.02, 'sine'),
+    click:    () => playTone(420, 0.06, 0.03, 'triangle'),
+    signal:   () => {
+      playTone(600, 0.08, 0.04, 'sine');
+      setTimeout(() => playTone(900, 0.10, 0.03, 'sine'), 70);
+    },
+    open:     () => playTone(320, 0.10, 0.03, 'sine'),
+    close:    () => playTone(220, 0.10, 0.03, 'sine'),
+    error:    () => playTone(180, 0.14, 0.04, 'sawtooth')
+  };
+
+  if(soundEnabled){
+    document.querySelectorAll('a, button, input, textarea').forEach(el => {
+      el.addEventListener('pointerenter', sounds.hover, {passive:true});
+      el.addEventListener('click', sounds.click, {passive:true});
+    });
+  }
 
   /* =========================================================
      TOAST
@@ -677,7 +812,7 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   }
 
   /* =========================================================
-     CLOCK / TIMEZONE
+     CLOCK / TZ
      ========================================================= */
   const clockEl=document.getElementById('clock');
   const tzEl=document.getElementById('tz');
@@ -697,18 +832,16 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   /* =========================================================
      TIME-OF-DAY PALETTE
      ========================================================= */
+  let manualTheme = null; // null | 'dark' | 'light'
   function applyTimeTheme(){
+    if(manualTheme === 'dark'){ body.classList.add('theme-dark'); return; }
+    if(manualTheme === 'light'){ body.classList.remove('theme-dark'); return; }
     const h = new Date().getHours();
     let sat, bright, hue, tint, alpha;
-    if(h >= 22 || h < 6){
-      sat='.52'; bright='.88'; hue='-14deg'; tint='30,40,60'; alpha='.14';
-    } else if(h < 11){
-      sat='.88'; bright='1.06'; hue='8deg'; tint='255,240,220'; alpha='.10';
-    } else if(h < 17){
-      sat='.78'; bright='1.015'; hue='0deg'; tint='255,255,255'; alpha='.10';
-    } else {
-      sat='.72'; bright='.96'; hue='14deg'; tint='255,225,190'; alpha='.12';
-    }
+    if(h >= 22 || h < 6){ sat='.52'; bright='.88'; hue='-14deg'; tint='30,40,60'; alpha='.14'; }
+    else if(h < 11){ sat='.88'; bright='1.06'; hue='8deg'; tint='255,240,220'; alpha='.10'; }
+    else if(h < 17){ sat='.78'; bright='1.015'; hue='0deg'; tint='255,255,255'; alpha='.10'; }
+    else { sat='.72'; bright='.96'; hue='14deg'; tint='255,225,190'; alpha='.12'; }
     root.style.setProperty('--bg-saturate', sat);
     root.style.setProperty('--bg-brightness', bright);
     root.style.setProperty('--bg-hue', hue);
@@ -744,9 +877,7 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
     musicCard.classList.toggle('playing',playing);
     playBtn.textContent=playing?'❚❚':'▶';
     playBtn.setAttribute('aria-label',playing?'Pause':'Play');
-    if(body.classList.contains('cursor-play') && glyph){
-      glyph.textContent = playing ? '❚❚' : '▶';
-    }
+    if(body.classList.contains('cursor-play') && glyph) glyph.textContent = playing ? '❚❚' : '▶';
   }
   playBtn.addEventListener('click',async()=>{
     try{ if(audio.paused) await audio.play(); else audio.pause(); syncMusic(); }
@@ -761,7 +892,7 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   audio.addEventListener('ended',()=>{audio.currentTime=0;syncMusic();});
 
   /* =========================================================
-     AUDIO-REACTIVE ENGINE
+     AUDIO-REACTIVE
      ========================================================= */
   let audioCtx=null, analyser=null, freqData=null, audioRAF=null, audioInitFailed=false;
   function initAudioEngine(){
@@ -775,10 +906,7 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
       freqData=new Uint8Array(analyser.frequencyBinCount);
-    }catch(e){
-      audioInitFailed=true;
-      console.warn('[audio-reactive] disabled:',e.message);
-    }
+    }catch(e){ audioInitFailed=true; console.warn('[audio-reactive] disabled:', e.message); }
   }
   function tickAudio(){
     audioRAF=null;
@@ -833,7 +961,7 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
         new Promise((_,rej)=>setTimeout(()=>rej(new Error('audio timeout')),400))
       ]);
       startAudioEngine();
-    }catch{ /* тихо продолжаем */ }
+    }catch{}
     syncMusic();
     body.classList.remove('entry-locked');
     body.classList.add('site-entered');
@@ -842,6 +970,198 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   }
   window.addEventListener('keydown',enterInterface,{once:true});
   entryBtn.addEventListener('click',enterInterface,{once:true});
+
+  /* =========================================================
+     CONSOLE ( ~ to open )
+     ========================================================= */
+  const consoleOverlay = document.getElementById('console-overlay');
+  const consoleOutput  = document.getElementById('console-output');
+  const consoleInput   = document.getElementById('console-input');
+  let consoleOpen = false;
+
+  function cLog(text, cls=''){
+    const line = document.createElement('div');
+    line.className = 'line' + (cls ? ' ' + cls : '');
+    line.textContent = text;
+    consoleOutput.appendChild(line);
+    consoleOutput.scrollTop = consoleOutput.scrollHeight;
+  }
+  function cLogHTML(html, cls=''){
+    const line = document.createElement('div');
+    line.className = 'line' + (cls ? ' ' + cls : '');
+    line.innerHTML = html;
+    consoleOutput.appendChild(line);
+    consoleOutput.scrollTop = consoleOutput.scrollHeight;
+  }
+
+  function openConsole(){
+    if(consoleOpen) return;
+    consoleOpen = true;
+    consoleOverlay.classList.add('is-open');
+    consoleOverlay.setAttribute('aria-hidden','false');
+    body.classList.add('console-open');
+    if(sounds.open) sounds.open();
+    setTimeout(()=>consoleInput.focus(), 80);
+    if(!consoleOutput.children.length){
+      cLog('SVCURA / TERMINAL v1.0', 'accent');
+      cLog('type "help" for available commands', 'dim');
+    }
+  }
+  function closeConsole(){
+    if(!consoleOpen) return;
+    consoleOpen = false;
+    consoleOverlay.classList.remove('is-open');
+    consoleOverlay.setAttribute('aria-hidden','true');
+    body.classList.remove('console-open');
+    if(sounds.close) sounds.close();
+  }
+
+  function processCommand(raw){
+    const input = raw.trim();
+    if(!input) return;
+    cLog(input, 'cmd');
+    const parts = input.toLowerCase().split(/\s+/);
+    const cmd = parts[0];
+    const arg = parts.slice(1).join(' ');
+
+    switch(cmd){
+      case 'help':
+        cLogHTML('<b>available commands:</b>', 'accent');
+        cLog('  help              — this list');
+        cLog('  music play        — start playback');
+        cLog('  music pause       — pause playback');
+        cLog('  music next        — +10 seconds');
+        cLog('  music prev        — −10 seconds');
+        cLog('  theme dark        — switch to dark theme');
+        cLog('  theme light       — switch to light theme');
+        cLog('  theme auto        — follow time of day');
+        cLog('  sound on          — enable UI sounds');
+        cLog('  sound off         — disable UI sounds');
+        cLog('  cursor debug      — show cursor diagnostics');
+        cLog('  cursor on/off     — toggle custom cursor');
+        cLog('  stats             — show site stats');
+        cLog('  whoami            — info about visitor');
+        cLog('  time              — current local time');
+        cLog('  clear             — clear terminal');
+        cLog('  close / exit      — close terminal');
+        break;
+
+      case 'music':
+        if(arg === 'play'){ audio.play().then(()=>cLog('playing', 'ok')).catch(()=>cLog('playback blocked','err')); syncMusic(); }
+        else if(arg === 'pause'){ audio.pause(); cLog('paused', 'ok'); syncMusic(); }
+        else if(arg === 'next'){ audio.currentTime += 10; cLog('skipped +10s', 'ok'); syncMusic(); }
+        else if(arg === 'prev'){ audio.currentTime = Math.max(0, audio.currentTime - 10); cLog('skipped −10s', 'ok'); syncMusic(); }
+        else cLog('usage: music play | pause | next | prev', 'err');
+        break;
+
+      case 'theme':
+        if(arg === 'dark'){ manualTheme = 'dark'; applyTimeTheme(); cLog('theme: dark', 'ok'); }
+        else if(arg === 'light'){ manualTheme = 'light'; applyTimeTheme(); cLog('theme: light', 'ok'); }
+        else if(arg === 'auto'){ manualTheme = null; applyTimeTheme(); cLog('theme: auto (time-of-day)', 'ok'); }
+        else cLog('usage: theme dark | light | auto', 'err');
+        break;
+
+      case 'sound':
+        if(arg === 'on'){
+          soundEnabled = true;
+          localStorage.setItem('shiokaze_sound','1');
+          ensureSoundCtx();
+          cLog('sound enabled', 'ok');
+          setTimeout(()=>playTone(880, 0.06, 0.04), 50);
+        }
+        else if(arg === 'off'){
+          soundEnabled = false;
+          localStorage.setItem('shiokaze_sound','0');
+          cLog('sound disabled', 'ok');
+        }
+        else cLog('usage: sound on | off', 'err');
+        break;
+
+      case 'cursor':
+        if(arg === 'debug'){
+          cLog('— cursor diagnostics —', 'accent');
+          cLog('hasHover: ' + hasHover);
+          cLog('isCoarse: ' + isCoarse);
+          cLog('enableCustom: ' + enableCustom);
+          cLog('ring element: ' + (ring ? 'found' : 'MISSING'));
+          cLog('ring computed opacity: ' + (ring ? getComputedStyle(ring).opacity : 'n/a'));
+          cLog('ring computed display: ' + (ring ? getComputedStyle(ring).display : 'n/a'));
+          cLog('ring left/top: ' + (ring ? getComputedStyle(ring).left + ' / ' + getComputedStyle(ring).top : 'n/a'));
+          cLog('html.has-custom-cursor: ' + document.documentElement.classList.contains('has-custom-cursor'));
+        }
+        else if(arg === 'on'){
+          document.documentElement.classList.add('has-custom-cursor');
+          if(ring) ring.classList.add('is-visible');
+          if(trail) trail.classList.add('is-visible');
+          cLog('cursor: on', 'ok');
+        }
+        else if(arg === 'off'){
+          document.documentElement.classList.remove('has-custom-cursor');
+          if(ring) ring.classList.remove('is-visible');
+          if(trail) trail.classList.remove('is-visible');
+          cLog('cursor: off (native)', 'ok');
+        }
+        else cLog('usage: cursor on | off | debug', 'err');
+        break;
+
+      case 'stats':
+        cLog('— site statistics —', 'accent');
+        cLog('views:  ' + (document.getElementById('visit-count').textContent || '—'));
+        cLog('rating: ' + (document.getElementById('rating-value').textContent || '—'));
+        cLog('time:   ' + new Date().toLocaleString());
+        break;
+
+      case 'whoami':
+        cLog('— visitor info —', 'accent');
+        cLog('browser: ' + navigator.userAgent.split(') ')[0].split(' (')[0]);
+        cLog('language: ' + (navigator.language || '—'));
+        cLog('screen: ' + window.screen.width + '×' + window.screen.height);
+        cLog('viewport: ' + window.innerWidth + '×' + window.innerHeight);
+        cLog('timezone: ' + (Intl.DateTimeFormat().resolvedOptions().timeZone || '—'));
+        break;
+
+      case 'time':
+        cLog(new Date().toString(), 'accent');
+        break;
+
+      case 'clear':
+        consoleOutput.innerHTML = '';
+        break;
+
+      case 'close':
+      case 'exit':
+        closeConsole();
+        break;
+
+      default:
+        cLog('unknown command: ' + cmd + ' — try "help"', 'err');
+        if(sounds.error) sounds.error();
+    }
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if(e.key === '~' || e.key === '`'){
+      const ae = document.activeElement;
+      const typing = ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA');
+      if(typing && ae !== consoleInput) return;
+      e.preventDefault();
+      if(consoleOpen) closeConsole(); else openConsole();
+      return;
+    }
+    if(e.key === 'Escape' && consoleOpen){
+      e.preventDefault();
+      closeConsole();
+    }
+  });
+
+  consoleInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      const val = consoleInput.value;
+      consoleInput.value = '';
+      processCommand(val);
+    }
+  });
 
   /* =========================================================
      DISCORD
@@ -960,7 +1280,9 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
     try{
       await api('/rest/v1/guestbook_comments',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({name,contact:null,message})});
       localStorage.setItem('gb_last_send',String(Date.now()));
-      gbNameInput.value='';gbInput.value='';showToast('SIGNAL SENT');await loadMessages();
+      gbNameInput.value='';gbInput.value='';showToast('SIGNAL SENT');
+      if(sounds.signal) sounds.signal();
+      await loadMessages();
     }catch{showToast('SEND FAILED');}
     finally{gbSubmit.disabled=false;}
   });
@@ -1039,9 +1361,6 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
     if(e.key==='ArrowLeft'||e.key==='ArrowDown'){e.preventDefault();buttons[Math.max(0,i-1)].focus();}
   });
 
-  /* =========================================================
-     COPY EMAIL
-     ========================================================= */
   document.querySelectorAll('[data-copy-email]').forEach(a=>a.addEventListener('click',e=>{
     if(!navigator.clipboard)return;
     e.preventDefault();navigator.clipboard.writeText(a.dataset.copyEmail).then(()=>showToast('EMAIL COPIED')).catch(()=>{window.location.href=a.href;});

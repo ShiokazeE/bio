@@ -53,20 +53,17 @@ button,input,textarea,select{font:inherit;border:0;background:none;color:inherit
 button{cursor:pointer}
 input,textarea{cursor:text}
 
-@media (hover:hover) and (pointer:fine){
-  body.js-cursor.cursor-ready{cursor:none}
-  body.js-cursor.cursor-ready a,
-  body.js-cursor.cursor-ready button,
-  body.js-cursor.cursor-ready [role="button"],
-  body.js-cursor.cursor-ready select,
-  body.js-cursor.cursor-ready label{cursor:pointer}
-  body.js-cursor.cursor-ready input,
-  body.js-cursor.cursor-ready textarea{cursor:text}
-}
-@media (hover:none),(pointer:coarse){
-  body{cursor:auto}
-  #cursor-ring{display:none}
-  #cursor-trail{display:none}
+/* native cursor hidden only when JS confirms custom cursor works */
+@media (hover:hover){
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor [role="button"],
+  html.has-custom-cursor label,
+  html.has-custom-cursor select,
+  html.has-custom-cursor input,
+  html.has-custom-cursor textarea{cursor:none}
 }
 
 /* =========================================================
@@ -94,57 +91,76 @@ input,textarea{cursor:text}
 }
 
 /* =========================================================
-   2b. CURSOR V2 — visible everywhere
+   2b. CURSOR — simple, pixel-positioned, always visible
    ========================================================= */
 #cursor-ring{
-  position:fixed;left:0;top:0;z-index:100000;pointer-events:none;
-  width:26px;height:26px;border:1.5px solid rgba(35,38,40,.78);border-radius:50%;
-  background:rgba(255,255,255,.06);
-  box-shadow:0 0 0 1px rgba(255,255,255,.55), 0 0 14px rgba(0,0,0,.14);
-  transform:translate3d(-50%,-50%,0);opacity:0;
-  display:grid;place-items:center;
-  transition:width .22s cubic-bezier(.16,1,.3,1),
-             height .22s cubic-bezier(.16,1,.3,1),
-             opacity .18s ease,
-             background .18s ease,
-             border-radius .22s cubic-bezier(.16,1,.3,1),
-             border-color .18s ease;
-}
-#cursor-ring::after{
-  content:"";position:absolute;left:50%;top:50%;
-  width:4px;height:4px;border-radius:50%;background:rgba(35,38,40,.85);
+  position:fixed;
+  left:0;top:0;
+  width:28px;height:28px;
+  z-index:2147483647;
+  pointer-events:none;
+  border:1.5px solid rgba(20,22,24,.85);
+  border-radius:50%;
+  background:rgba(255,255,255,.10);
+  box-shadow:0 0 0 1px rgba(255,255,255,.7), 0 2px 12px rgba(0,0,0,.2);
+  opacity:0;
   transform:translate(-50%,-50%);
-  transition:opacity .15s ease,width .2s ease,height .2s ease;
+  transition:width .2s ease, height .2s ease, opacity .15s ease,
+             border-radius .2s ease, background .15s ease;
+  display:grid;
+  place-items:center;
+}
+#cursor-ring.is-visible{opacity:1}
+
+#cursor-ring .cursor-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:rgba(20,22,24,.92);
+  transition:opacity .15s ease;
 }
 #cursor-ring .cursor-glyph{
-  font:700 12px/1 var(--mono);color:rgba(35,38,40,.88);opacity:0;transform:scale(.5);
-  transition:opacity .15s ease,transform .22s cubic-bezier(.16,1,.3,1);
-}
-#cursor-trail{
-  position:fixed;left:0;top:0;z-index:99999;pointer-events:none;
-  width:5px;height:5px;border-radius:50%;
-  background:rgba(35,38,40,.42);
-  transform:translate3d(-50%,-50%,0);opacity:0;
-  transition:transform .14s cubic-bezier(.16,1,.3,1),opacity .3s ease;
+  position:absolute;
+  font:700 13px/1 var(--mono);
+  color:rgba(20,22,24,.92);
+  opacity:0;
+  transition:opacity .12s ease;
 }
 
-body.cursor-link #cursor-ring{width:48px;height:48px;background:rgba(255,255,255,.22);border-color:rgba(35,38,40,.62)}
-body.cursor-link #cursor-ring::after{opacity:0}
-body.cursor-link #cursor-ring .cursor-glyph{opacity:1;transform:scale(1)}
+#cursor-trail{
+  position:fixed;
+  left:0;top:0;
+  width:6px;height:6px;
+  z-index:2147483646;
+  pointer-events:none;
+  border-radius:50%;
+  background:rgba(20,22,24,.35);
+  opacity:0;
+  transform:translate(-50%,-50%);
+  transition:transform .18s cubic-bezier(.16,1,.3,1), opacity .3s ease;
+}
+#cursor-trail.is-visible{opacity:.55}
+
+body.cursor-link #cursor-ring{width:50px;height:50px;background:rgba(255,255,255,.28);border-color:rgba(20,22,24,.68)}
+body.cursor-link #cursor-ring .cursor-dot{opacity:0}
+body.cursor-link #cursor-ring .cursor-glyph{opacity:1}
 
 body.cursor-text #cursor-ring{
-  width:2px;height:26px;border-radius:1px;
-  background:rgba(35,38,40,.85);border-color:rgba(35,38,40,.85);
+  width:2px;height:26px;border-radius:2px;
+  background:rgba(20,22,24,.9);
+  border-color:rgba(20,22,24,.9);
 }
-body.cursor-text #cursor-ring::after{opacity:0}
+body.cursor-text #cursor-ring .cursor-dot{opacity:0}
 body.cursor-text #cursor-ring .cursor-glyph{opacity:0}
 
-body.cursor-play #cursor-ring{width:58px;height:58px;background:rgba(255,255,255,.28);border-color:rgba(35,38,40,.62)}
-body.cursor-play #cursor-ring::after{opacity:0}
-body.cursor-play #cursor-ring .cursor-glyph{opacity:1;font-size:16px}
+body.cursor-play #cursor-ring{width:58px;height:58px;background:rgba(255,255,255,.32);border-color:rgba(20,22,24,.68)}
+body.cursor-play #cursor-ring .cursor-dot{opacity:0}
+body.cursor-play #cursor-ring .cursor-glyph{opacity:1;font-size:17px}
 
-body.cursor-star #cursor-ring{width:16px;height:16px;background:rgba(35,38,40,.28)}
-body.cursor-star #cursor-ring::after{width:5px;height:5px;background:rgba(35,38,40,.92)}
+body.cursor-star #cursor-ring{width:18px;height:18px;background:rgba(20,22,24,.3)}
+body.cursor-star #cursor-ring .cursor-dot{width:6px;height:6px;background:rgba(20,22,24,.95)}
+
+@media (hover:none),(pointer:coarse){
+  #cursor-ring,#cursor-trail{display:none !important}
+}
 
 /* =========================================================
    3. UI / CARDS
@@ -391,8 +407,7 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none;transition-duration:.01ms}
-  #cursor-ring{display:none}
-  #cursor-trail{display:none}
+  #cursor-ring,#cursor-trail{display:none}
 }
 </style>
 </head>
@@ -412,7 +427,7 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
 
   <img id="bg-image" src="bg.jpg" alt="" aria-hidden="true">
   <div id="bg-overlay" aria-hidden="true"></div>
-  <div id="cursor-ring" aria-hidden="true"><span class="cursor-glyph"></span></div>
+  <div id="cursor-ring" aria-hidden="true"><span class="cursor-dot"></span><span class="cursor-glyph"></span></div>
   <div id="cursor-trail" aria-hidden="true"></div>
 
   <main id="ui" aria-label="Shiokaze personal interface">
@@ -503,81 +518,108 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   const root = document.documentElement;
   const body = document.body;
   const stage = document.getElementById('stage');
-  const ring = document.getElementById('cursor-ring');
-  const trail = document.getElementById('cursor-trail');
-  const glyph = ring ? ring.querySelector('.cursor-glyph') : null;
   const toast = document.getElementById('toast');
   const entryScreen = document.getElementById('entry-screen');
   const entryBtn = document.getElementById('entry-btn');
   const entryProgress = document.getElementById('entry-progress-bar');
 
   body.classList.add('entry-locked');
-  const finePointer = matchMedia('(hover:hover) and (pointer:fine)').matches;
-  if (finePointer) body.classList.add('js-cursor');
 
-  /* ---------------- cursor + parallax ---------------- */
-  let tx=.5,ty=.5,mx=.5,my=.5,rafId=null,idleTimer=null;
-  const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
-  function applyPointer(){
-    root.style.setProperty('--mx',String((mx-.5)*2));
-    root.style.setProperty('--my',String((my-.5)*2));
-    if(ring && finePointer) ring.style.transform = `translate3d(${mx*100}vw,${my*100}vh,0) translate(-50%,-50%)`;
-    if(trail && finePointer){
-      trail.style.transform = `translate3d(${tx*100}vw,${ty*100}vh,0) translate(-50%,-50%)`;
-      trail.style.opacity = '1';
+  /* =========================================================
+     CURSOR — init
+     ========================================================= */
+  const ring  = document.getElementById('cursor-ring');
+  const trail = document.getElementById('cursor-trail');
+  const glyph = ring ? ring.querySelector('.cursor-glyph') : null;
+
+  const hasHover = matchMedia('(hover:hover)').matches;
+  const isCoarse = matchMedia('(pointer:coarse)').matches;
+  const enableCustom = hasHover && !isCoarse;
+
+  console.log('[cursor] hasHover:', hasHover, 'isCoarse:', isCoarse, '→ custom:', enableCustom);
+
+  let mx = window.innerWidth / 2;
+  let my = window.innerHeight / 2;
+  let tx = mx, ty = my;
+  let rafId = null;
+  let idleTimer = null;
+
+  function placeCursor(){
+    if(!ring) return;
+    ring.style.left = mx + 'px';
+    ring.style.top  = my + 'px';
+    if(trail){
+      trail.style.left = tx + 'px';
+      trail.style.top  = ty + 'px';
     }
   }
+
   function frame(){
-    rafId=null;
-    if(document.hidden || !finePointer) return;
-    mx+=(tx-mx)*.12; my+=(ty-my)*.12; applyPointer();
-    if(Math.abs(tx-mx)>.001 || Math.abs(ty-my)>.001) rafId=requestAnimationFrame(frame);
-  }
-  function wakeParallax(){
-    if(document.hidden || !finePointer) return;
-    if(!rafId) rafId=requestAnimationFrame(frame);
-    clearTimeout(idleTimer);
-    idleTimer=setTimeout(()=>{ mx=tx; my=ty; applyPointer(); if(rafId){cancelAnimationFrame(rafId);rafId=null;} },220);
-  }
-  function pointerMove(x,y){
-    tx=clamp(x/innerWidth); ty=clamp(y/innerHeight);
-    if(ring && finePointer){
-      ring.style.opacity='1';
-      body.classList.add('cursor-ready');
+    rafId = null;
+    if(!enableCustom) return;
+    mx += (tx - mx) * 0.35;
+    my += (ty - my) * 0.35;
+    placeCursor();
+    if(Math.abs(tx - mx) > 0.3 || Math.abs(ty - my) > 0.3){
+      rafId = requestAnimationFrame(frame);
     }
-    if(trail && finePointer) trail.style.opacity='1';
-    wakeParallax();
   }
-  window.addEventListener('pointermove',e=>pointerMove(e.clientX,e.clientY),{passive:true});
-  window.addEventListener('pointerleave',()=>{
-    if(ring && finePointer) ring.style.opacity='0';
-    if(trail && finePointer) trail.style.opacity='0';
-    setCursorState(null);
-  },{passive:true});
-  window.addEventListener('pointerdown',()=>{
-    if(!stage.animate) return;
-    stage.animate([{transform:'scale(1)'},{transform:'scale(.9985)'},{transform:'scale(1)'}],{duration:260,easing:'cubic-bezier(.16,1,.3,1)'});
-  },{passive:true});
-  document.addEventListener('visibilitychange',()=>{
-    if(document.hidden && rafId){cancelAnimationFrame(rafId);rafId=null;}
-    if(!document.hidden) wakeParallax();
+
+  function wakeCursor(){
+    if(document.hidden || !enableCustom) return;
+    if(!rafId) rafId = requestAnimationFrame(frame);
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      mx = tx; my = ty; placeCursor();
+      if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
+    }, 200);
+  }
+
+  if(enableCustom && ring){
+    document.documentElement.classList.add('has-custom-cursor');
+    ring.classList.add('is-visible');
+    if(trail) trail.classList.add('is-visible');
+    placeCursor();
+    console.log('[cursor] visible from init');
+  }
+
+  window.addEventListener('mousemove', (e) => {
+    tx = e.clientX;
+    ty = e.clientY;
+    if(enableCustom && ring){
+      if(!ring.classList.contains('is-visible')) ring.classList.add('is-visible');
+      if(trail) trail.classList.add('is-visible');
+      wakeCursor();
+      const nx = (tx / window.innerWidth  - .5) * 2;
+      const ny = (ty / window.innerHeight - .5) * 2;
+      root.style.setProperty('--mx', String(nx));
+      root.style.setProperty('--my', String(ny));
+    }
+  }, {passive:true});
+
+  document.addEventListener('mouseleave', () => {
+    if(ring) ring.classList.remove('is-visible');
+    if(trail) trail.classList.remove('is-visible');
+  });
+  document.addEventListener('mouseenter', () => {
+    if(enableCustom && ring) ring.classList.add('is-visible');
+    if(enableCustom && trail) trail.classList.add('is-visible');
   });
 
-  // Показать кольцо сразу — не ждать движения мыши
-  if (finePointer) {
-    applyPointer();
-    if (ring)  ring.style.opacity  = '1';
-    if (trail) trail.style.opacity = '1';
-    body.classList.add('cursor-ready');
-  }
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden){
+      if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
+    } else if(enableCustom){
+      wakeCursor();
+    }
+  });
 
-  /* ---------------- context cursor ---------------- */
+  /* context states */
   const CURSOR_CLASSES = ['cursor-link','cursor-text','cursor-play','cursor-star'];
   function setCursorState(el){
-    if(!finePointer) return;
+    if(!enableCustom) return;
     body.classList.remove(...CURSOR_CLASSES);
     if(!el){ if(glyph) glyph.textContent=''; return; }
-
     if(el.matches('input:not(.honeypot), textarea')){
       body.classList.add('cursor-text');
       if(glyph) glyph.textContent='';
@@ -614,7 +656,18 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
     el.addEventListener('pointerleave', () => setCursorState(null));
   });
 
-  /* ---------------- toast ---------------- */
+  /* stage pulse on click */
+  window.addEventListener('pointerdown', () => {
+    if(!stage.animate) return;
+    stage.animate(
+      [{transform:'scale(1)'},{transform:'scale(.9985)'},{transform:'scale(1)'}],
+      {duration:260,easing:'cubic-bezier(.16,1,.3,1)'}
+    );
+  }, {passive:true});
+
+  /* =========================================================
+     TOAST
+     ========================================================= */
   let toastTimer;
   function showToast(text){
     toast.textContent=text;
@@ -623,7 +676,9 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
     toastTimer=setTimeout(()=>toast.classList.remove('show'),1800);
   }
 
-  /* ---------------- clock / timezone ---------------- */
+  /* =========================================================
+     CLOCK / TIMEZONE
+     ========================================================= */
   const clockEl=document.getElementById('clock');
   const tzEl=document.getElementById('tz');
   try{
@@ -639,7 +694,9 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   updateClock();
   setInterval(updateClock,1000);
 
-  /* ---------------- time-of-day palette ---------------- */
+  /* =========================================================
+     TIME-OF-DAY PALETTE
+     ========================================================= */
   function applyTimeTheme(){
     const h = new Date().getHours();
     let sat, bright, hue, tint, alpha;
@@ -661,7 +718,9 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   applyTimeTheme();
   setInterval(applyTimeTheme, 60000);
 
-  /* ---------------- music ---------------- */
+  /* =========================================================
+     MUSIC
+     ========================================================= */
   const audio=document.getElementById('audio');
   const playBtn=document.getElementById('play');
   const prevBtn=document.getElementById('prev');
@@ -701,7 +760,9 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   audio.addEventListener('play',syncMusic);
   audio.addEventListener('ended',()=>{audio.currentTime=0;syncMusic();});
 
-  /* ---------------- audio-reactive engine ---------------- */
+  /* =========================================================
+     AUDIO-REACTIVE ENGINE
+     ========================================================= */
   let audioCtx=null, analyser=null, freqData=null, audioRAF=null, audioInitFailed=false;
   function initAudioEngine(){
     if(audioCtx||audioInitFailed) return;
@@ -721,7 +782,7 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   }
   function tickAudio(){
     audioRAF=null;
-    if(!analyser || document.hidden){ return; }
+    if(!analyser || document.hidden) return;
     analyser.getByteFrequencyData(freqData);
     let bass=0,mid=0,treble=0;
     for(let i=1;i<=4;i++) bass+=freqData[i];
@@ -752,7 +813,9 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
     else if(!audio.paused) startAudioEngine();
   });
 
-  /* ---------------- entry ---------------- */
+  /* =========================================================
+     ENTRY
+     ========================================================= */
   let entered=false;
   function finishEntry(){
     entryProgress.style.animation='none';
@@ -780,7 +843,9 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   window.addEventListener('keydown',enterInterface,{once:true});
   entryBtn.addEventListener('click',enterInterface,{once:true});
 
-  /* ---------------- discord ---------------- */
+  /* =========================================================
+     DISCORD
+     ========================================================= */
   const DISCORD_ID='912747427465928754';
   const dcAvatar=document.getElementById('dc-avatar');
   const dcName=document.getElementById('dc-name');
@@ -812,7 +877,9 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   fetchDiscord();
   setInterval(()=>{if(!document.hidden)fetchDiscord();},matchMedia('(max-width:900px)').matches?90000:30000);
 
-  /* ---------------- Supabase / guestbook / owner ---------------- */
+  /* =========================================================
+     SUPABASE / GUESTBOOK / OWNER
+     ========================================================= */
   const GUESTBOOK_API='https://sdqfeycfahemliivrujg.supabase.co';
   const GUESTBOOK_KEY='sb_publishable_WVjFpsuPNUu8KJ-1UNL8qA_mDYwlUZG';
   const gbList=document.getElementById('gb-list');
@@ -944,7 +1011,9 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
     }
   },60000);
 
-  /* ---------------- visits / rating ---------------- */
+  /* =========================================================
+     VISITS / RATING
+     ========================================================= */
   const visitorKey=()=>localStorage.getItem('shiokaze_visitor_id')||(()=>{const id=crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random()}`;localStorage.setItem('shiokaze_visitor_id',id);return id})();
   async function loadSiteStats(){
     const id=visitorKey();
@@ -970,7 +1039,9 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
     if(e.key==='ArrowLeft'||e.key==='ArrowDown'){e.preventDefault();buttons[Math.max(0,i-1)].focus();}
   });
 
-  /* ---------------- copy email ---------------- */
+  /* =========================================================
+     COPY EMAIL
+     ========================================================= */
   document.querySelectorAll('[data-copy-email]').forEach(a=>a.addEventListener('click',e=>{
     if(!navigator.clipboard)return;
     e.preventDefault();navigator.clipboard.writeText(a.dataset.copyEmail).then(()=>showToast('EMAIL COPIED')).catch(()=>{window.location.href=a.href;});
@@ -979,7 +1050,7 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   loadMessages();
   loadSiteStats();
   setInterval(()=>{if(!document.hidden)loadMessages();},60000);
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden){loadMessages();loadSiteStats();wakeParallax();}});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden){loadMessages();loadSiteStats();wakeCursor();}});
 })();
 </script>
 </body>

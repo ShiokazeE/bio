@@ -54,14 +54,14 @@ button{cursor:pointer}
 input,textarea{cursor:text}
 
 @media (hover:hover) and (pointer:fine){
-  body.js-cursor{cursor:none}
-  body.js-cursor a,
-  body.js-cursor button,
-  body.js-cursor [role="button"],
-  body.js-cursor select,
-  body.js-cursor label{cursor:pointer}
-  body.js-cursor input,
-  body.js-cursor textarea{cursor:text}
+  body.js-cursor.cursor-ready{cursor:none}
+  body.js-cursor.cursor-ready a,
+  body.js-cursor.cursor-ready button,
+  body.js-cursor.cursor-ready [role="button"],
+  body.js-cursor.cursor-ready select,
+  body.js-cursor.cursor-ready label{cursor:pointer}
+  body.js-cursor.cursor-ready input,
+  body.js-cursor.cursor-ready textarea{cursor:text}
 }
 @media (hover:none),(pointer:coarse){
   body{cursor:auto}
@@ -94,12 +94,14 @@ input,textarea{cursor:text}
 }
 
 /* =========================================================
-   2b. CURSOR V2
+   2b. CURSOR V2 — visible everywhere
    ========================================================= */
 #cursor-ring{
-  position:fixed;left:0;top:0;z-index:100;pointer-events:none;
-  width:26px;height:26px;border:1px solid rgba(255,255,255,.9);border-radius:50%;
-  transform:translate3d(-50%,-50%,0);opacity:0;mix-blend-mode:difference;
+  position:fixed;left:0;top:0;z-index:100000;pointer-events:none;
+  width:26px;height:26px;border:1.5px solid rgba(35,38,40,.78);border-radius:50%;
+  background:rgba(255,255,255,.06);
+  box-shadow:0 0 0 1px rgba(255,255,255,.55), 0 0 14px rgba(0,0,0,.14);
+  transform:translate3d(-50%,-50%,0);opacity:0;
   display:grid;place-items:center;
   transition:width .22s cubic-bezier(.16,1,.3,1),
              height .22s cubic-bezier(.16,1,.3,1),
@@ -110,39 +112,39 @@ input,textarea{cursor:text}
 }
 #cursor-ring::after{
   content:"";position:absolute;left:50%;top:50%;
-  width:4px;height:4px;border-radius:50%;background:#fff;
+  width:4px;height:4px;border-radius:50%;background:rgba(35,38,40,.85);
   transform:translate(-50%,-50%);
   transition:opacity .15s ease,width .2s ease,height .2s ease;
 }
 #cursor-ring .cursor-glyph{
-  font:700 11px/1 var(--mono);color:#fff;opacity:0;transform:scale(.5);
+  font:700 12px/1 var(--mono);color:rgba(35,38,40,.88);opacity:0;transform:scale(.5);
   transition:opacity .15s ease,transform .22s cubic-bezier(.16,1,.3,1);
 }
 #cursor-trail{
-  position:fixed;left:0;top:0;z-index:99;pointer-events:none;
+  position:fixed;left:0;top:0;z-index:99999;pointer-events:none;
   width:5px;height:5px;border-radius:50%;
-  background:rgba(255,255,255,.45);mix-blend-mode:difference;
+  background:rgba(35,38,40,.42);
   transform:translate3d(-50%,-50%,0);opacity:0;
   transition:transform .14s cubic-bezier(.16,1,.3,1),opacity .3s ease;
 }
 
-body.cursor-link #cursor-ring{width:48px;height:48px;background:rgba(255,255,255,.08)}
+body.cursor-link #cursor-ring{width:48px;height:48px;background:rgba(255,255,255,.22);border-color:rgba(35,38,40,.62)}
 body.cursor-link #cursor-ring::after{opacity:0}
 body.cursor-link #cursor-ring .cursor-glyph{opacity:1;transform:scale(1)}
 
 body.cursor-text #cursor-ring{
   width:2px;height:26px;border-radius:1px;
-  background:#fff;border-color:#fff;
+  background:rgba(35,38,40,.85);border-color:rgba(35,38,40,.85);
 }
 body.cursor-text #cursor-ring::after{opacity:0}
 body.cursor-text #cursor-ring .cursor-glyph{opacity:0}
 
-body.cursor-play #cursor-ring{width:58px;height:58px;background:rgba(255,255,255,.10)}
+body.cursor-play #cursor-ring{width:58px;height:58px;background:rgba(255,255,255,.28);border-color:rgba(35,38,40,.62)}
 body.cursor-play #cursor-ring::after{opacity:0}
-body.cursor-play #cursor-ring .cursor-glyph{opacity:1;font-size:14px}
+body.cursor-play #cursor-ring .cursor-glyph{opacity:1;font-size:16px}
 
-body.cursor-star #cursor-ring{width:16px;height:16px;background:rgba(255,255,255,.16)}
-body.cursor-star #cursor-ring::after{width:5px;height:5px}
+body.cursor-star #cursor-ring{width:16px;height:16px;background:rgba(35,38,40,.28)}
+body.cursor-star #cursor-ring::after{width:5px;height:5px;background:rgba(35,38,40,.92)}
 
 /* =========================================================
    3. UI / CARDS
@@ -539,7 +541,11 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
   }
   function pointerMove(x,y){
     tx=clamp(x/innerWidth); ty=clamp(y/innerHeight);
-    if(ring && finePointer) ring.style.opacity='1';
+    if(ring && finePointer){
+      ring.style.opacity='1';
+      body.classList.add('cursor-ready');
+    }
+    if(trail && finePointer) trail.style.opacity='1';
     wakeParallax();
   }
   window.addEventListener('pointermove',e=>pointerMove(e.clientX,e.clientY),{passive:true});
@@ -556,6 +562,14 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
     if(document.hidden && rafId){cancelAnimationFrame(rafId);rafId=null;}
     if(!document.hidden) wakeParallax();
   });
+
+  // Показать кольцо сразу — не ждать движения мыши
+  if (finePointer) {
+    applyPointer();
+    if (ring)  ring.style.opacity  = '1';
+    if (trail) trail.style.opacity = '1';
+    body.classList.add('cursor-ready');
+  }
 
   /* ---------------- context cursor ---------------- */
   const CURSOR_CLASSES = ['cursor-link','cursor-text','cursor-play','cursor-star'];
@@ -671,7 +685,7 @@ body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
     musicCard.classList.toggle('playing',playing);
     playBtn.textContent=playing?'❚❚':'▶';
     playBtn.setAttribute('aria-label',playing?'Pause':'Play');
-    if(body.classList.contains('cursor-play') && glyph && document.activeElement === playBtn){
+    if(body.classList.contains('cursor-play') && glyph){
       glyph.textContent = playing ? '❚❚' : '▶';
     }
   }

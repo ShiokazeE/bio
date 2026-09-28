@@ -81,9 +81,6 @@ html.has-custom-cursor textarea{cursor:none}
   transition:background 2.4s ease;
 }
 
-/* =========================================================
-   CURSOR — dark ring with white glow
-   ========================================================= */
 #cursor-ring{
   position:fixed;left:0;top:0;
   width:28px;height:28px;
@@ -124,7 +121,6 @@ html.has-custom-cursor #cursor-ring{display:grid}
 }
 html.has-custom-cursor #cursor-trail{display:block}
 
-/* states */
 body.cursor-link #cursor-ring{width:52px;height:52px;background:rgba(255,255,255,.32);border-color:rgba(20,22,24,.7)}
 body.cursor-link #cursor-ring .cursor-dot{opacity:0}
 body.cursor-link #cursor-ring .cursor-glyph{opacity:1}
@@ -144,7 +140,6 @@ body.cursor-play #cursor-ring .cursor-glyph{opacity:1;font-size:17px}
 body.cursor-star #cursor-ring{width:18px;height:18px;background:rgba(20,22,24,.34)}
 body.cursor-star #cursor-ring .cursor-dot{width:6px;height:6px;background:rgba(20,22,24,.95)}
 
-/* console trigger */
 #console-trigger{
   position:fixed;right:20px;top:20px;
   z-index:2147483640;
@@ -168,7 +163,6 @@ body.cursor-star #cursor-ring .cursor-dot{width:6px;height:6px;background:rgba(2
 }
 body.console-open #console-trigger{background:rgba(20,22,24,.9);color:#fff;border-color:rgba(255,255,255,.14)}
 
-/* console overlay */
 #console-overlay{
   position:fixed;left:50%;bottom:40px;
   transform:translateX(-50%) translateY(24px) scale(.98);
@@ -210,9 +204,6 @@ body.console-open #cursor-ring{display:none !important}
 body.console-open,body.console-open *{cursor:auto !important}
 body.console-open #console-input{cursor:text !important}
 
-/* =========================================================
-   UI
-   ========================================================= */
 #ui{position:relative;z-index:10;width:100%;height:100%;pointer-events:none;opacity:0;visibility:hidden;transform:translateY(16px) scale(.988);filter:blur(6px);transition:opacity 1.2s cubic-bezier(.16,1,.3,1),transform 1.2s cubic-bezier(.16,1,.3,1),filter 1.2s cubic-bezier(.16,1,.3,1)}
 body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform:none;filter:none}
 #ui>*{pointer-events:auto}
@@ -486,8 +477,6 @@ body.theme-dark #cursor-trail{background:rgba(230,232,230,.4)}
 
   <img id="bg-image" src="bg.jpg" alt="" aria-hidden="true">
   <div id="bg-overlay" aria-hidden="true"></div>
-  <div id="cursor-ring" aria-hidden="true"><span class="cursor-dot"></span><span class="cursor-glyph"></span></div>
-  <div id="cursor-trail" aria-hidden="true"></div>
 
   <button id="console-trigger" type="button" title="Open terminal (~)" aria-label="Open terminal">~</button>
 
@@ -567,6 +556,9 @@ body.theme-dark #cursor-trail{background:rgba(230,232,230,.4)}
   </div>
 </div>
 
+<div id="cursor-ring" aria-hidden="true"><span class="cursor-dot"></span><span class="cursor-glyph"></span></div>
+<div id="cursor-trail" aria-hidden="true"></div>
+
 <div class="owner-modal" id="owner-modal" hidden>
   <div class="owner-modal__backdrop" data-owner-close></div>
   <form class="owner-modal__panel" id="owner-login-form" autocomplete="on">
@@ -600,14 +592,16 @@ body.theme-dark #cursor-trail{background:rgba(230,232,230,.4)}
   body.classList.add('entry-locked');
 
   /* =========================================================
-     CURSOR
+     CURSOR — robust detection + fail-safe
      ========================================================= */
   var ring  = document.getElementById('cursor-ring');
   var trail = document.getElementById('cursor-trail');
   var glyph = ring ? ring.querySelector('.cursor-glyph') : null;
 
-  var isTouchOnly = matchMedia('(pointer:coarse)').matches && !matchMedia('(any-pointer:fine)').matches;
-  var enableCustom = !isTouchOnly;
+  var hasHover = matchMedia('(hover:hover)').matches;
+  var isCoarse = matchMedia('(pointer:coarse)').matches;
+  var anyFine  = matchMedia('(any-pointer:fine)').matches;
+  var enableCustom = hasHover || anyFine;
 
   var mx = window.innerWidth / 2, my = window.innerHeight / 2;
   var tx = mx, ty = my;
@@ -647,12 +641,21 @@ body.theme-dark #cursor-trail{background:rgba(230,232,230,.4)}
   if(enableCustom && ring){
     root.classList.add('has-custom-cursor');
     placeCursor();
+    // Fail-safe: если 3 сек без mousemove — откат к нативному курсору
+    setTimeout(function(){
+      if(!root.classList.contains('cursor-confirmed')){
+        root.classList.remove('has-custom-cursor');
+      }
+    }, 3000);
   }
 
   window.addEventListener('mousemove', function(e){
     tx = e.clientX;
     ty = e.clientY;
     if(enableCustom && ring){
+      if(!root.classList.contains('cursor-confirmed')){
+        root.classList.add('cursor-confirmed');
+      }
       wakeCursor();
       var nx = (tx / window.innerWidth  - .5) * 2;
       var ny = (ty / window.innerHeight - .5) * 2;
@@ -1059,7 +1062,7 @@ body.theme-dark #cursor-trail{background:rgba(230,232,230,.4)}
         } else cLog('usage: sound on | off', 'err');
         break;
       case 'cursor':
-        if(arg === 'on'){ root.classList.add('has-custom-cursor'); cLog('cursor: on', 'ok'); }
+        if(arg === 'on'){ root.classList.add('has-custom-cursor', 'cursor-confirmed'); cLog('cursor: on', 'ok'); }
         else if(arg === 'off'){ root.classList.remove('has-custom-cursor'); cLog('cursor: off (native)', 'ok'); }
         else cLog('usage: cursor on | off', 'err');
         break;

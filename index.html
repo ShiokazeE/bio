@@ -20,9 +20,6 @@
 <meta name="twitter:image" content="https://shiokazee.github.io/bio/bg.jpg">
 
 <style id="main">
-/* =========================================================
-   1. RESET + ROOT
-   ========================================================= */
 :root{
   --ink:#2f3234;
   --muted:rgba(47,50,52,.70);
@@ -53,21 +50,17 @@ button,input,textarea,select{font:inherit;border:0;background:none;color:inherit
 button{cursor:pointer}
 input,textarea{cursor:text}
 
-@media (hover:hover){
-  html.has-custom-cursor,
-  html.has-custom-cursor body,
-  html.has-custom-cursor a,
-  html.has-custom-cursor button,
-  html.has-custom-cursor [role="button"],
-  html.has-custom-cursor label,
-  html.has-custom-cursor select,
-  html.has-custom-cursor input,
-  html.has-custom-cursor textarea{cursor:none}
-}
+/* native cursor hidden ONLY when custom cursor confirmed working */
+html.has-custom-cursor,
+html.has-custom-cursor body,
+html.has-custom-cursor a,
+html.has-custom-cursor button,
+html.has-custom-cursor [role="button"],
+html.has-custom-cursor label,
+html.has-custom-cursor select,
+html.has-custom-cursor input,
+html.has-custom-cursor textarea{cursor:none}
 
-/* =========================================================
-   2. STAGE / BACKGROUND
-   ========================================================= */
 #stage{position:fixed;inset:0;overflow:hidden;background:#eef0ee;isolation:isolate}
 #bg-image{
   position:absolute;inset:-3%;z-index:0;width:106%;height:106%;object-fit:cover;object-position:center;
@@ -90,52 +83,89 @@ input,textarea{cursor:text}
 }
 
 /* =========================================================
-   2b. CURSOR
+   CURSOR — hidden by default, shown only via .has-custom-cursor
    ========================================================= */
 #cursor-ring{
   position:fixed;left:0;top:0;
   width:28px;height:28px;
   z-index:2147483647;
   pointer-events:none;
-  border:1.5px solid rgba(20,22,24,.85);
+  border:1.5px solid rgba(20,22,24,.9);
   border-radius:50%;
-  background:rgba(255,255,255,.10);
-  box-shadow:0 0 0 1px rgba(255,255,255,.7), 0 2px 12px rgba(0,0,0,.2);
+  background:rgba(255,255,255,.14);
+  box-shadow:0 0 0 1px rgba(255,255,255,.85), 0 2px 14px rgba(0,0,0,.25);
   opacity:0;
+  display:none;
+  place-items:center;
   transform:translate(-50%,-50%);
   transition:width .2s ease, height .2s ease, opacity .15s ease,
              border-radius .2s ease, background .15s ease;
-  display:grid;
-  place-items:center;
 }
-#cursor-ring.is-visible{opacity:1}
-#cursor-ring .cursor-dot{width:5px;height:5px;border-radius:50%;background:rgba(20,22,24,.92);transition:opacity .15s ease}
-#cursor-ring .cursor-glyph{position:absolute;font:700 13px/1 var(--mono);color:rgba(20,22,24,.92);opacity:0;transition:opacity .12s ease}
+html.has-custom-cursor #cursor-ring{display:grid;opacity:1}
+#cursor-ring .cursor-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:rgba(20,22,24,.95);
+  transition:opacity .15s ease;
+}
+#cursor-ring .cursor-glyph{
+  position:absolute;font:700 13px/1 var(--mono);
+  color:rgba(20,22,24,.95);opacity:0;
+  transition:opacity .12s ease;
+}
+
 #cursor-trail{
   position:fixed;left:0;top:0;width:6px;height:6px;
   z-index:2147483646;pointer-events:none;border-radius:50%;
-  background:rgba(20,22,24,.35);opacity:0;transform:translate(-50%,-50%);
-  transition:transform .18s cubic-bezier(.16,1,.3,1), opacity .3s ease;
+  background:rgba(20,22,24,.4);opacity:0;
+  display:none;
+  transform:translate(-50%,-50%);
+  transition:transform .18s cubic-bezier(.16,1,.3,1);
 }
-#cursor-trail.is-visible{opacity:.55}
-body.cursor-link #cursor-ring{width:50px;height:50px;background:rgba(255,255,255,.28);border-color:rgba(20,22,24,.68)}
+html.has-custom-cursor #cursor-trail{display:block;opacity:.6}
+
+body.cursor-link #cursor-ring{width:50px;height:50px;background:rgba(255,255,255,.32);border-color:rgba(20,22,24,.7)}
 body.cursor-link #cursor-ring .cursor-dot{opacity:0}
 body.cursor-link #cursor-ring .cursor-glyph{opacity:1}
-body.cursor-text #cursor-ring{width:2px;height:26px;border-radius:2px;background:rgba(20,22,24,.9);border-color:rgba(20,22,24,.9)}
+
+body.cursor-text #cursor-ring{width:2px;height:26px;border-radius:2px;background:rgba(20,22,24,.92);border-color:rgba(20,22,24,.92)}
 body.cursor-text #cursor-ring .cursor-dot{opacity:0}
 body.cursor-text #cursor-ring .cursor-glyph{opacity:0}
-body.cursor-play #cursor-ring{width:58px;height:58px;background:rgba(255,255,255,.32);border-color:rgba(20,22,24,.68)}
+
+body.cursor-play #cursor-ring{width:58px;height:58px;background:rgba(255,255,255,.34);border-color:rgba(20,22,24,.7)}
 body.cursor-play #cursor-ring .cursor-dot{opacity:0}
 body.cursor-play #cursor-ring .cursor-glyph{opacity:1;font-size:17px}
-body.cursor-star #cursor-ring{width:18px;height:18px;background:rgba(20,22,24,.3)}
+
+body.cursor-star #cursor-ring{width:18px;height:18px;background:rgba(20,22,24,.34)}
 body.cursor-star #cursor-ring .cursor-dot{width:6px;height:6px;background:rgba(20,22,24,.95)}
-@media (hover:none),(pointer:coarse){
-  #cursor-ring,#cursor-trail{display:none !important}
-}
 
 /* =========================================================
-   3. UI / CARDS
+   OPEN CONSOLE BUTTON (always visible, top-right)
    ========================================================= */
+#console-trigger{
+  position:fixed;
+  right:18px;top:18px;
+  z-index:2147483640;
+  width:36px;height:36px;
+  border:1px solid rgba(47,50,52,.14);
+  border-radius:10px;
+  background:rgba(248,249,247,.5);
+  backdrop-filter:blur(10px) saturate(.9);
+  -webkit-backdrop-filter:blur(10px) saturate(.9);
+  color:rgba(47,50,52,.6);
+  font:700 15px/1 var(--mono);
+  cursor:pointer;
+  display:grid;place-items:center;
+  transition:background .2s ease, color .2s ease, transform .2s ease, border-color .2s ease;
+  box-shadow:0 8px 24px rgba(40,44,44,.08);
+}
+#console-trigger:hover{
+  background:rgba(248,249,247,.85);
+  color:rgba(47,50,52,.92);
+  border-color:rgba(47,50,52,.24);
+  transform:translateY(-1px);
+}
+body.console-open #console-trigger{background:rgba(20,22,24,.9);color:#fff;border-color:rgba(255,255,255,.14)}
+
 #ui{position:relative;z-index:10;width:100%;height:100%;pointer-events:none;opacity:0;visibility:hidden;transform:translateY(16px) scale(.988);filter:blur(6px);transition:opacity 1.2s cubic-bezier(.16,1,.3,1),transform 1.2s cubic-bezier(.16,1,.3,1),filter 1.2s cubic-bezier(.16,1,.3,1)}
 body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform:none;filter:none}
 #ui>*{pointer-events:auto}
@@ -151,9 +181,6 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .meta{font:500 10px/1.35 var(--mono);letter-spacing:.10em;color:var(--faint)}
 .rule{height:1px;background:rgba(47,50,52,.10);margin:9px 0}
 
-/* =========================================================
-   4. IDENTITY
-   ========================================================= */
 .identity{position:absolute;left:50%;top:5.2vh;transform:translateX(-50%);width:min(420px,90vw);padding:0;text-align:center;background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 .identity .mark{display:flex;justify-content:center;align-items:center;margin-bottom:8px}
 .identity-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;filter:grayscale(.85) contrast(.95);opacity:.86;border:1px solid rgba(255,255,255,.76)}
@@ -164,9 +191,6 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .identity .author strong{font:600 10px/1 var(--mono);letter-spacing:.08em;color:var(--muted)}
 .system{padding:12px 13px}
 
-/* =========================================================
-   5. MAIN COMPOSITION
-   ========================================================= */
 .main-grid{position:absolute;left:50%;top:60.2vh;transform:translate(-50%,-50%);width:min(1160px,calc(100vw - 40px));height:405px;display:grid;grid-template-columns:300px 480px 300px;gap:40px;align-items:stretch}
 .left-stack,.right-stack{min-width:0;height:405px;display:grid;gap:0}
 .left-stack{grid-template-rows:1fr 1fr}
@@ -265,16 +289,16 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .honeypot{position:absolute;left:-9999px;top:auto;width:1px;height:1px;opacity:0;pointer-events:none}
 
 /* =========================================================
-   6. CONSOLE OVERLAY  (~  to open)
+   CONSOLE OVERLAY
    ========================================================= */
 #console-overlay{
   position:fixed;
   left:50%;bottom:40px;
-  transform:translateX(-50%) translateY(20px) scale(.98);
-  width:min(620px,92vw);
-  max-height:62vh;
+  transform:translateX(-50%) translateY(24px) scale(.98);
+  width:min(640px,92vw);
+  max-height:64vh;
   z-index:2147483640;
-  background:rgba(18,20,22,.94);
+  background:rgba(16,18,20,.95);
   border:1px solid rgba(255,255,255,.14);
   border-radius:14px;
   padding:18px 20px 16px;
@@ -283,7 +307,7 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
   opacity:0;pointer-events:none;
   backdrop-filter:blur(24px) saturate(.9);
   -webkit-backdrop-filter:blur(24px) saturate(.9);
-  box-shadow:0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);
+  box-shadow:0 30px 80px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08);
   display:flex;flex-direction:column;gap:10px;
   transition:opacity .22s ease, transform .32s cubic-bezier(.16,1,.3,1);
 }
@@ -292,13 +316,13 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 #console-head .dash{display:flex;gap:6px}
 #console-head .dash i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.15)}
 #console-output{
-  flex:1;min-height:120px;max-height:38vh;overflow-y:auto;
+  flex:1;min-height:140px;max-height:40vh;overflow-y:auto;
   padding-right:6px;font-size:12.5px;
   scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent;
 }
 #console-output::-webkit-scrollbar{width:5px}
 #console-output::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:99px}
-#console-output .line{margin-bottom:4px;word-break:break-word}
+#console-output .line{margin-bottom:4px;word-break:break-word;white-space:pre-wrap}
 #console-output .line.cmd{color:#fff;font-weight:600}
 #console-output .line.cmd::before{content:'> ';color:rgba(255,255,255,.4);margin-right:2px}
 #console-output .line.ok{color:rgba(140,220,180,.94)}
@@ -309,16 +333,15 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 #console-input-row span{color:rgba(255,255,255,.36);font-size:13px}
 #console-input{
   flex:1;background:transparent;border:0;color:#fff;
-  font:600 13px/1 var(--mono);padding:4px 0;
-  caret-color:#fff;
+  font:600 13px/1 var(--mono);padding:4px 0;caret-color:#fff;
 }
 #console-input::placeholder{color:rgba(255,255,255,.28)}
 #console-hint{padding-top:8px;font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.32);text-align:right}
 body.console-open #cursor-ring{opacity:0 !important}
+body.console-open{cursor:auto !important}
+body.console-open *{cursor:auto !important}
+body.console-open #console-input{cursor:text !important}
 
-/* =========================================================
-   7. ENTRY SCREEN
-   ========================================================= */
 #entry-screen{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:rgba(245,243,239,.96);backdrop-filter:blur(14px) saturate(.84);-webkit-backdrop-filter:blur(14px) saturate(.84);color:#252629;transition:opacity 1.15s cubic-bezier(.16,1,.3,1),visibility 1.15s}
 #entry-screen.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
 #entry-screen::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(37,38,41,.025) 3px 4px)}
@@ -337,9 +360,6 @@ body.console-open #cursor-ring{opacity:0 !important}
 @keyframes entryPulse{0%,100%{opacity:.35}50%{opacity:.88}}
 body.entry-locked #ui{visibility:hidden}
 
-/* =========================================================
-   8. OWNER MODAL
-   ========================================================= */
 .owner-modal{position:fixed;inset:0;z-index:10001;display:grid;place-items:center}
 .owner-modal[hidden]{display:none}
 .owner-modal__backdrop{position:absolute;inset:0;background:rgba(33,35,36,.20);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
@@ -353,15 +373,9 @@ body.entry-locked #ui{visibility:hidden}
 .owner-error{min-height:13px;font:500 9px/1.35 var(--mono);color:#8a3e3e}
 body.author-mode .owner-open{background:rgba(47,50,52,.82);color:#fff}
 
-/* =========================================================
-   9. TOAST
-   ========================================================= */
 .toast{position:absolute;left:50%;bottom:4vh;transform:translate(-50%,12px);padding:9px 12px;border:1px solid rgba(255,255,255,.78);border-radius:999px;background:rgba(248,249,247,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font:600 9px/1 var(--mono);color:rgba(47,50,52,.62);opacity:0;pointer-events:none;transition:opacity .25s,transform .30s;z-index:200}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
-/* =========================================================
-   10. DARK THEME (via `theme dark`)
-   ========================================================= */
 body.theme-dark{
   --ink:#e6e8e6;
   --muted:rgba(230,232,230,.72);
@@ -390,19 +404,16 @@ body.theme-dark .track h2{color:rgba(230,232,230,.88)}
 body.theme-dark .track p,
 body.theme-dark .dc-name,
 body.theme-dark .dc-activity{color:rgba(230,232,230,.72)}
-body.theme-dark .dc-activity{color:rgba(230,232,230,.6)}
 body.theme-dark .gb-name{color:rgba(230,232,230,.9)}
 body.theme-dark .gb-date,
 body.theme-dark .gb-contact{color:rgba(230,232,230,.52)}
 body.theme-dark .gb-text{color:rgba(230,232,230,.82)}
 body.theme-dark .social-grid a{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:rgba(230,232,230,.78)}
-body.theme-dark .social-grid a:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
 body.theme-dark .message-form input{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:rgba(230,232,230,.92)}
 body.theme-dark .message-form input::placeholder{color:rgba(230,232,230,.4)}
 body.theme-dark .message-form button{background:rgba(255,255,255,.08);color:rgba(230,232,230,.82);border-color:rgba(255,255,255,.1)}
 body.theme-dark .music-controls .main-play{background:rgba(230,232,230,.9);color:#141616}
 body.theme-dark .music-controls button{color:rgba(230,232,230,.7)}
-body.theme-dark .music-controls button:hover{background:rgba(255,255,255,.1)}
 body.theme-dark .wave i{background:rgba(230,232,230,calc(.3 + var(--audio-mid) * .5))}
 body.theme-dark .progress{background:rgba(255,255,255,.1)}
 body.theme-dark .progress span{background:rgba(230,232,230,.7)}
@@ -410,11 +421,8 @@ body.theme-dark .owner-open{background:rgba(255,255,255,.06);color:rgba(230,232,
 body.theme-dark .rating-stars button{color:rgba(230,232,230,.24)}
 body.theme-dark .rating-stars button.is-active{color:rgba(230,232,230,.9)}
 body.theme-dark .toast{background:rgba(20,22,24,.9);color:rgba(230,232,230,.82);border-color:rgba(255,255,255,.14)}
-body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
+body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232,230,.7);border-color:rgba(255,255,255,.14)}
 
-/* =========================================================
-   11. MEDIA QUERIES
-   ========================================================= */
 @media (max-width:1180px){
   .main-grid{width:calc(100vw - 32px);grid-template-columns:250px minmax(360px,1fr) 250px;gap:16px}
   .identity h1{font-size:clamp(40px,5.2vw,64px)}
@@ -428,7 +436,6 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
   .identity,.guestbook,.left-stack,.right-stack{position:relative;left:auto;right:auto;top:auto;bottom:auto;transform:none;width:100%;height:auto;max-width:none}
   .identity{padding:12px 14px 14px;background:rgba(249,250,248,.42);border:1px solid rgba(255,255,255,.62);border-radius:16px;box-shadow:0 10px 28px rgba(48,54,54,.07);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
   .identity h1{font-size:clamp(36px,12vw,54px)}
-  .identity .sub{font-size:10px}
   .left-stack,.right-stack{display:flex;flex-direction:column;gap:10px;height:auto}
   .left-stack .card,.right-stack .card{height:auto;min-height:0;border-radius:14px;margin:0}
   .site-stats{order:2;height:auto}
@@ -442,7 +449,8 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
   .message-form{grid-template-columns:1fr;gap:8px}.message-form button{justify-self:end;padding:10px 16px}
   .toast{position:fixed}
   .owner-modal__panel input{font-size:16px}
-  #console-overlay{width:92vw;font-size:12px}
+  #console-overlay{width:94vw;font-size:12px}
+  #console-trigger{top:14px;right:14px}
 }
 @media (max-width:520px){
   #ui{padding-left:12px;padding-right:12px}
@@ -457,7 +465,7 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none;transition-duration:.01ms}
-  #cursor-ring,#cursor-trail{display:none}
+  #cursor-ring,#cursor-trail{display:none !important}
 }
 </style>
 </head>
@@ -479,6 +487,8 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
   <div id="bg-overlay" aria-hidden="true"></div>
   <div id="cursor-ring" aria-hidden="true"><span class="cursor-dot"></span><span class="cursor-glyph"></span></div>
   <div id="cursor-trail" aria-hidden="true"></div>
+
+  <button id="console-trigger" type="button" title="Open terminal (~)" aria-label="Open terminal">~</button>
 
   <main id="ui" aria-label="Shiokaze personal interface">
     <section class="card identity">
@@ -578,6 +588,8 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
 (() => {
   'use strict';
 
+  console.log('[boot] script starting');
+
   const root = document.documentElement;
   const body = document.body;
   const stage = document.getElementById('stage');
@@ -589,21 +601,22 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
   body.classList.add('entry-locked');
 
   /* =========================================================
-     CURSOR
+     CURSOR — simpler, more reliable
      ========================================================= */
   const ring  = document.getElementById('cursor-ring');
   const trail = document.getElementById('cursor-trail');
   const glyph = ring ? ring.querySelector('.cursor-glyph') : null;
 
-  const hasHover = matchMedia('(hover:hover)').matches;
-  const isCoarse = matchMedia('(pointer:coarse)').matches;
-  const enableCustom = hasHover && !isCoarse;
+  const isTouchOnly = matchMedia('(pointer:coarse)').matches && !matchMedia('(any-pointer:fine)').matches;
+  const enableCustom = !isTouchOnly;
 
-  console.log('[cursor] hasHover:', hasHover, 'isCoarse:', isCoarse, '→ custom:', enableCustom);
+  console.log('[cursor] touchOnly:', isTouchOnly, '→ custom:', enableCustom);
 
   let mx = window.innerWidth / 2, my = window.innerHeight / 2;
   let tx = mx, ty = my;
-  let rafId = null, idleTimer = null;
+  let rafId = null;
+  let idleTimer = null;
+  let cursorMovedOnce = false;
 
   function placeCursor(){
     if(!ring) return;
@@ -618,8 +631,8 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
   function frame(){
     rafId = null;
     if(!enableCustom) return;
-    mx += (tx - mx) * 0.35;
-    my += (ty - my) * 0.35;
+    mx += (tx - mx) * 0.4;
+    my += (ty - my) * 0.4;
     placeCursor();
     if(Math.abs(tx - mx) > 0.3 || Math.abs(ty - my) > 0.3){
       rafId = requestAnimationFrame(frame);
@@ -636,18 +649,31 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
     }, 200);
   }
 
+  // Надёжная активация курсара
   if(enableCustom && ring){
     document.documentElement.classList.add('has-custom-cursor');
-    ring.classList.add('is-visible');
-    if(trail) trail.classList.add('is-visible');
     placeCursor();
+    // Защита: если через 800мс после init мышь так и не двинулась и ring не виден,
+    // или если что-то упало — откатываем к нативному курсору.
+    setTimeout(() => {
+      if(!cursorMovedOnce){
+        console.log('[cursor] waiting for first mousemove');
+      }
+    }, 800);
+  } else {
+    console.log('[cursor] custom cursor disabled (touch device)');
   }
 
   window.addEventListener('mousemove', (e) => {
-    tx = e.clientX; ty = e.clientY;
+    tx = e.clientX;
+    ty = e.clientY;
     if(enableCustom && ring){
-      if(!ring.classList.contains('is-visible')) ring.classList.add('is-visible');
-      if(trail) trail.classList.add('is-visible');
+      if(!cursorMovedOnce){
+        cursorMovedOnce = true;
+        mx = tx; my = ty;
+        placeCursor();
+        console.log('[cursor] first move at', tx, ty);
+      }
       wakeCursor();
       const nx = (tx / window.innerWidth  - .5) * 2;
       const ny = (ty / window.innerHeight - .5) * 2;
@@ -656,18 +682,12 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
     }
   }, {passive:true});
 
-  document.addEventListener('mouseleave', () => {
-    if(ring) ring.classList.remove('is-visible');
-    if(trail) trail.classList.remove('is-visible');
-  });
-  document.addEventListener('mouseenter', () => {
-    if(enableCustom && ring) ring.classList.add('is-visible');
-    if(enableCustom && trail) trail.classList.add('is-visible');
-  });
   document.addEventListener('visibilitychange', () => {
     if(document.hidden){
       if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
-    } else if(enableCustom){ wakeCursor(); }
+    } else if(enableCustom){
+      wakeCursor();
+    }
   });
 
   const CURSOR_CLASSES = ['cursor-link','cursor-text','cursor-play','cursor-star'];
@@ -720,7 +740,7 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
   }, {passive:true});
 
   /* =========================================================
-     MAGNETIC BUTTONS (play / prev / next)
+     MAGNETIC BUTTONS
      ========================================================= */
   const magnetTargets = [
     document.getElementById('play'),
@@ -749,21 +769,19 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
   }, {passive:true});
 
   /* =========================================================
-     MICRO-SOUNDS (Web Audio, no files)
+     MICRO-SOUNDS
      ========================================================= */
   let soundCtx = null;
   let soundEnabled = localStorage.getItem('shiokaze_sound') === '1';
 
   function ensureSoundCtx(){
     if(!soundCtx){
-      try{
-        soundCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }catch{ soundCtx = null; }
+      try{ soundCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+      catch{ soundCtx = null; }
     }
     if(soundCtx && soundCtx.state === 'suspended') soundCtx.resume();
     return soundCtx;
   }
-
   function playTone(freq, duration, gainVal, type='sine'){
     if(!soundEnabled) return;
     const ctx = ensureSoundCtx();
@@ -780,25 +798,14 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
     osc.start();
     osc.stop(ctx.currentTime + duration + 0.02);
   }
-
   const sounds = {
-    hover:    () => playTone(880, 0.04, 0.02, 'sine'),
-    click:    () => playTone(420, 0.06, 0.03, 'triangle'),
-    signal:   () => {
-      playTone(600, 0.08, 0.04, 'sine');
-      setTimeout(() => playTone(900, 0.10, 0.03, 'sine'), 70);
-    },
-    open:     () => playTone(320, 0.10, 0.03, 'sine'),
-    close:    () => playTone(220, 0.10, 0.03, 'sine'),
-    error:    () => playTone(180, 0.14, 0.04, 'sawtooth')
+    hover:  () => playTone(880, 0.04, 0.02, 'sine'),
+    click:  () => playTone(420, 0.06, 0.03, 'triangle'),
+    signal: () => { playTone(600, 0.08, 0.04, 'sine'); setTimeout(()=>playTone(900, 0.10, 0.03, 'sine'), 70); },
+    open:   () => playTone(320, 0.10, 0.03, 'sine'),
+    close:  () => playTone(220, 0.10, 0.03, 'sine'),
+    error:  () => playTone(180, 0.14, 0.04, 'sawtooth')
   };
-
-  if(soundEnabled){
-    document.querySelectorAll('a, button, input, textarea').forEach(el => {
-      el.addEventListener('pointerenter', sounds.hover, {passive:true});
-      el.addEventListener('click', sounds.click, {passive:true});
-    });
-  }
 
   /* =========================================================
      TOAST
@@ -832,7 +839,7 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
   /* =========================================================
      TIME-OF-DAY PALETTE
      ========================================================= */
-  let manualTheme = null; // null | 'dark' | 'light'
+  let manualTheme = null;
   function applyTimeTheme(){
     if(manualTheme === 'dark'){ body.classList.add('theme-dark'); return; }
     if(manualTheme === 'light'){ body.classList.remove('theme-dark'); return; }
@@ -958,7 +965,7 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
       initAudioEngine();
       await Promise.race([
         audio.play(),
-        new Promise((_,rej)=>setTimeout(()=>rej(new Error('audio timeout')),400))
+        new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),400))
       ]);
       startAudioEngine();
     }catch{}
@@ -972,24 +979,18 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
   entryBtn.addEventListener('click',enterInterface,{once:true});
 
   /* =========================================================
-     CONSOLE ( ~ to open )
+     CONSOLE
      ========================================================= */
   const consoleOverlay = document.getElementById('console-overlay');
   const consoleOutput  = document.getElementById('console-output');
   const consoleInput   = document.getElementById('console-input');
+  const consoleTrigger = document.getElementById('console-trigger');
   let consoleOpen = false;
 
   function cLog(text, cls=''){
     const line = document.createElement('div');
     line.className = 'line' + (cls ? ' ' + cls : '');
     line.textContent = text;
-    consoleOutput.appendChild(line);
-    consoleOutput.scrollTop = consoleOutput.scrollHeight;
-  }
-  function cLogHTML(html, cls=''){
-    const line = document.createElement('div');
-    line.className = 'line' + (cls ? ' ' + cls : '');
-    line.innerHTML = html;
     consoleOutput.appendChild(line);
     consoleOutput.scrollTop = consoleOutput.scrollHeight;
   }
@@ -1005,6 +1006,7 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
     if(!consoleOutput.children.length){
       cLog('SVCURA / TERMINAL v1.0', 'accent');
       cLog('type "help" for available commands', 'dim');
+      cLog('—', 'dim');
     }
   }
   function closeConsole(){
@@ -1016,6 +1018,10 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
     if(sounds.close) sounds.close();
   }
 
+  consoleTrigger.addEventListener('click', () => {
+    if(consoleOpen) closeConsole(); else openConsole();
+  });
+
   function processCommand(raw){
     const input = raw.trim();
     if(!input) return;
@@ -1026,7 +1032,7 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
 
     switch(cmd){
       case 'help':
-        cLogHTML('<b>available commands:</b>', 'accent');
+        cLog('available commands:', 'accent');
         cLog('  help              — this list');
         cLog('  music play        — start playback');
         cLog('  music pause       — pause playback');
@@ -1037,7 +1043,7 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
         cLog('  theme auto        — follow time of day');
         cLog('  sound on          — enable UI sounds');
         cLog('  sound off         — disable UI sounds');
-        cLog('  cursor debug      — show cursor diagnostics');
+        cLog('  cursor debug      — cursor diagnostics');
         cLog('  cursor on/off     — toggle custom cursor');
         cLog('  stats             — show site stats');
         cLog('  whoami            — info about visitor');
@@ -1045,102 +1051,89 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
         cLog('  clear             — clear terminal');
         cLog('  close / exit      — close terminal');
         break;
-
       case 'music':
-        if(arg === 'play'){ audio.play().then(()=>cLog('playing', 'ok')).catch(()=>cLog('playback blocked','err')); syncMusic(); }
-        else if(arg === 'pause'){ audio.pause(); cLog('paused', 'ok'); syncMusic(); }
-        else if(arg === 'next'){ audio.currentTime += 10; cLog('skipped +10s', 'ok'); syncMusic(); }
-        else if(arg === 'prev'){ audio.currentTime = Math.max(0, audio.currentTime - 10); cLog('skipped −10s', 'ok'); syncMusic(); }
+        if(arg === 'play'){ audio.play().then(()=>cLog('playing','ok')).catch(()=>cLog('playback blocked','err')); syncMusic(); }
+        else if(arg === 'pause'){ audio.pause(); cLog('paused','ok'); syncMusic(); }
+        else if(arg === 'next'){ audio.currentTime += 10; cLog('skipped +10s','ok'); syncMusic(); }
+        else if(arg === 'prev'){ audio.currentTime = Math.max(0, audio.currentTime - 10); cLog('skipped −10s','ok'); syncMusic(); }
         else cLog('usage: music play | pause | next | prev', 'err');
         break;
-
       case 'theme':
-        if(arg === 'dark'){ manualTheme = 'dark'; applyTimeTheme(); cLog('theme: dark', 'ok'); }
-        else if(arg === 'light'){ manualTheme = 'light'; applyTimeTheme(); cLog('theme: light', 'ok'); }
-        else if(arg === 'auto'){ manualTheme = null; applyTimeTheme(); cLog('theme: auto (time-of-day)', 'ok'); }
+        if(arg === 'dark'){ manualTheme = 'dark'; applyTimeTheme(); cLog('theme: dark','ok'); }
+        else if(arg === 'light'){ manualTheme = 'light'; applyTimeTheme(); cLog('theme: light','ok'); }
+        else if(arg === 'auto'){ manualTheme = null; applyTimeTheme(); cLog('theme: auto (time-of-day)','ok'); }
         else cLog('usage: theme dark | light | auto', 'err');
         break;
-
       case 'sound':
         if(arg === 'on'){
           soundEnabled = true;
           localStorage.setItem('shiokaze_sound','1');
           ensureSoundCtx();
-          cLog('sound enabled', 'ok');
+          cLog('sound enabled','ok');
           setTimeout(()=>playTone(880, 0.06, 0.04), 50);
         }
         else if(arg === 'off'){
           soundEnabled = false;
           localStorage.setItem('shiokaze_sound','0');
-          cLog('sound disabled', 'ok');
+          cLog('sound disabled','ok');
         }
         else cLog('usage: sound on | off', 'err');
         break;
-
       case 'cursor':
         if(arg === 'debug'){
-          cLog('— cursor diagnostics —', 'accent');
-          cLog('hasHover: ' + hasHover);
-          cLog('isCoarse: ' + isCoarse);
+          cLog('— cursor diagnostics —','accent');
+          cLog('touchOnly: ' + isTouchOnly);
           cLog('enableCustom: ' + enableCustom);
+          cLog('cursorMovedOnce: ' + cursorMovedOnce);
           cLog('ring element: ' + (ring ? 'found' : 'MISSING'));
-          cLog('ring computed opacity: ' + (ring ? getComputedStyle(ring).opacity : 'n/a'));
-          cLog('ring computed display: ' + (ring ? getComputedStyle(ring).display : 'n/a'));
+          cLog('ring opacity: ' + (ring ? getComputedStyle(ring).opacity : 'n/a'));
+          cLog('ring display: ' + (ring ? getComputedStyle(ring).display : 'n/a'));
           cLog('ring left/top: ' + (ring ? getComputedStyle(ring).left + ' / ' + getComputedStyle(ring).top : 'n/a'));
           cLog('html.has-custom-cursor: ' + document.documentElement.classList.contains('has-custom-cursor'));
         }
         else if(arg === 'on'){
           document.documentElement.classList.add('has-custom-cursor');
-          if(ring) ring.classList.add('is-visible');
-          if(trail) trail.classList.add('is-visible');
-          cLog('cursor: on', 'ok');
+          cLog('cursor: on','ok');
         }
         else if(arg === 'off'){
           document.documentElement.classList.remove('has-custom-cursor');
-          if(ring) ring.classList.remove('is-visible');
-          if(trail) trail.classList.remove('is-visible');
-          cLog('cursor: off (native)', 'ok');
+          cLog('cursor: off (native)','ok');
         }
         else cLog('usage: cursor on | off | debug', 'err');
         break;
-
       case 'stats':
-        cLog('— site statistics —', 'accent');
+        cLog('— site statistics —','accent');
         cLog('views:  ' + (document.getElementById('visit-count').textContent || '—'));
         cLog('rating: ' + (document.getElementById('rating-value').textContent || '—'));
         cLog('time:   ' + new Date().toLocaleString());
         break;
-
       case 'whoami':
-        cLog('— visitor info —', 'accent');
+        cLog('— visitor info —','accent');
         cLog('browser: ' + navigator.userAgent.split(') ')[0].split(' (')[0]);
         cLog('language: ' + (navigator.language || '—'));
         cLog('screen: ' + window.screen.width + '×' + window.screen.height);
         cLog('viewport: ' + window.innerWidth + '×' + window.innerHeight);
         cLog('timezone: ' + (Intl.DateTimeFormat().resolvedOptions().timeZone || '—'));
         break;
-
       case 'time':
         cLog(new Date().toString(), 'accent');
         break;
-
       case 'clear':
         consoleOutput.innerHTML = '';
         break;
-
       case 'close':
       case 'exit':
         closeConsole();
         break;
-
       default:
         cLog('unknown command: ' + cmd + ' — try "help"', 'err');
         if(sounds.error) sounds.error();
     }
   }
 
+  // Global hotkey: Backquote (тильда) — работает в любой раскладке
   window.addEventListener('keydown', (e) => {
-    if(e.key === '~' || e.key === '`'){
+    if(e.code === 'Backquote' || e.key === '~' || e.key === '`' || e.key === 'Ё' || e.key === 'ё'){
       const ae = document.activeElement;
       const typing = ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA');
       if(typing && ae !== consoleInput) return;
@@ -1160,6 +1153,10 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
       const val = consoleInput.value;
       consoleInput.value = '';
       processCommand(val);
+    }
+    if(e.key === 'Escape'){
+      e.preventDefault();
+      closeConsole();
     }
   });
 
@@ -1370,6 +1367,8 @@ body.theme-dark .identity-avatar{filter:grayscale(.5) contrast(1)}
   loadSiteStats();
   setInterval(()=>{if(!document.hidden)loadMessages();},60000);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden){loadMessages();loadSiteStats();wakeCursor();}});
+
+  console.log('[boot] ready');
 })();
 </script>
 </body>

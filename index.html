@@ -50,7 +50,6 @@ button,input,textarea,select{font:inherit;border:0;background:none;color:inherit
 button{cursor:pointer}
 input,textarea{cursor:text}
 
-/* native cursor hidden ONLY when custom cursor confirmed working */
 html.has-custom-cursor,
 html.has-custom-cursor body,
 html.has-custom-cursor a,
@@ -83,7 +82,7 @@ html.has-custom-cursor textarea{cursor:none}
 }
 
 /* =========================================================
-   CURSOR — hidden by default, shown only via .has-custom-cursor
+   CURSOR — dark ring with white glow
    ========================================================= */
 #cursor-ring{
   position:fixed;left:0;top:0;
@@ -94,40 +93,47 @@ html.has-custom-cursor textarea{cursor:none}
   border-radius:50%;
   background:rgba(255,255,255,.14);
   box-shadow:0 0 0 1px rgba(255,255,255,.85), 0 2px 14px rgba(0,0,0,.25);
-  opacity:0;
   display:none;
   place-items:center;
   transform:translate(-50%,-50%);
-  transition:width .2s ease, height .2s ease, opacity .15s ease,
-             border-radius .2s ease, background .15s ease;
+  transition:width .2s ease, height .2s ease,
+             border-radius .2s ease, background .15s ease,
+             border-color .15s ease;
 }
-html.has-custom-cursor #cursor-ring{display:grid;opacity:1}
+html.has-custom-cursor #cursor-ring{display:grid}
+
 #cursor-ring .cursor-dot{
   width:5px;height:5px;border-radius:50%;
   background:rgba(20,22,24,.95);
-  transition:opacity .15s ease;
+  transition:opacity .15s ease, width .15s ease, height .15s ease;
 }
 #cursor-ring .cursor-glyph{
-  position:absolute;font:700 13px/1 var(--mono);
-  color:rgba(20,22,24,.95);opacity:0;
+  position:absolute;
+  font:700 13px/1 var(--mono);
+  color:rgba(20,22,24,.95);
+  opacity:0;
   transition:opacity .12s ease;
 }
 
 #cursor-trail{
   position:fixed;left:0;top:0;width:6px;height:6px;
   z-index:2147483646;pointer-events:none;border-radius:50%;
-  background:rgba(20,22,24,.4);opacity:0;
+  background:rgba(20,22,24,.4);
   display:none;
   transform:translate(-50%,-50%);
-  transition:transform .18s cubic-bezier(.16,1,.3,1);
 }
-html.has-custom-cursor #cursor-trail{display:block;opacity:.6}
+html.has-custom-cursor #cursor-trail{display:block}
 
-body.cursor-link #cursor-ring{width:50px;height:50px;background:rgba(255,255,255,.32);border-color:rgba(20,22,24,.7)}
+/* states */
+body.cursor-link #cursor-ring{width:52px;height:52px;background:rgba(255,255,255,.32);border-color:rgba(20,22,24,.7)}
 body.cursor-link #cursor-ring .cursor-dot{opacity:0}
 body.cursor-link #cursor-ring .cursor-glyph{opacity:1}
 
-body.cursor-text #cursor-ring{width:2px;height:26px;border-radius:2px;background:rgba(20,22,24,.92);border-color:rgba(20,22,24,.92)}
+body.cursor-text #cursor-ring{
+  width:2px;height:26px;border-radius:2px;
+  background:rgba(20,22,24,.92);border-color:rgba(20,22,24,.92);
+  box-shadow:none;
+}
 body.cursor-text #cursor-ring .cursor-dot{opacity:0}
 body.cursor-text #cursor-ring .cursor-glyph{opacity:0}
 
@@ -138,34 +144,75 @@ body.cursor-play #cursor-ring .cursor-glyph{opacity:1;font-size:17px}
 body.cursor-star #cursor-ring{width:18px;height:18px;background:rgba(20,22,24,.34)}
 body.cursor-star #cursor-ring .cursor-dot{width:6px;height:6px;background:rgba(20,22,24,.95)}
 
-/* =========================================================
-   OPEN CONSOLE BUTTON (always visible, top-right)
-   ========================================================= */
+/* console trigger */
 #console-trigger{
-  position:fixed;
-  right:18px;top:18px;
+  position:fixed;right:20px;top:20px;
   z-index:2147483640;
-  width:36px;height:36px;
+  width:38px;height:38px;
   border:1px solid rgba(47,50,52,.14);
   border-radius:10px;
   background:rgba(248,249,247,.5);
   backdrop-filter:blur(10px) saturate(.9);
   -webkit-backdrop-filter:blur(10px) saturate(.9);
-  color:rgba(47,50,52,.6);
-  font:700 15px/1 var(--mono);
-  cursor:pointer;
+  color:rgba(47,50,52,.62);
+  font:700 16px/1 var(--mono);
   display:grid;place-items:center;
   transition:background .2s ease, color .2s ease, transform .2s ease, border-color .2s ease;
   box-shadow:0 8px 24px rgba(40,44,44,.08);
 }
 #console-trigger:hover{
   background:rgba(248,249,247,.85);
-  color:rgba(47,50,52,.92);
+  color:rgba(47,50,52,.94);
   border-color:rgba(47,50,52,.24);
   transform:translateY(-1px);
 }
 body.console-open #console-trigger{background:rgba(20,22,24,.9);color:#fff;border-color:rgba(255,255,255,.14)}
 
+/* console overlay */
+#console-overlay{
+  position:fixed;left:50%;bottom:40px;
+  transform:translateX(-50%) translateY(24px) scale(.98);
+  width:min(640px,92vw);max-height:64vh;
+  z-index:2147483641;
+  background:rgba(16,18,20,.95);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:14px;
+  padding:18px 20px 16px;
+  font:500 13px/1.55 var(--mono);
+  color:rgba(255,255,255,.92);
+  opacity:0;pointer-events:none;
+  backdrop-filter:blur(24px) saturate(.9);
+  -webkit-backdrop-filter:blur(24px) saturate(.9);
+  box-shadow:0 30px 80px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08);
+  display:flex;flex-direction:column;gap:10px;
+  transition:opacity .22s ease, transform .32s cubic-bezier(.16,1,.3,1);
+}
+#console-overlay.is-open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0) scale(1)}
+#console-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:10px;letter-spacing:.18em;color:rgba(255,255,255,.46)}
+#console-head .dash{display:flex;gap:6px}
+#console-head .dash i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.15)}
+#console-output{flex:1;min-height:140px;max-height:40vh;overflow-y:auto;padding-right:6px;font-size:12.5px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
+#console-output::-webkit-scrollbar{width:5px}
+#console-output::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:99px}
+#console-output .line{margin-bottom:4px;word-break:break-word;white-space:pre-wrap}
+#console-output .line.cmd{color:#fff;font-weight:600}
+#console-output .line.cmd::before{content:'> ';color:rgba(255,255,255,.4);margin-right:2px}
+#console-output .line.ok{color:rgba(140,220,180,.94)}
+#console-output .line.err{color:rgba(230,140,140,.94)}
+#console-output .line.dim{color:rgba(255,255,255,.42)}
+#console-output .line.accent{color:rgba(180,200,255,.9)}
+#console-input-row{display:flex;gap:8px;align-items:center;padding-top:10px;border-top:1px solid rgba(255,255,255,.08)}
+#console-input-row span{color:rgba(255,255,255,.36);font-size:13px}
+#console-input{flex:1;background:transparent;border:0;color:#fff;font:600 13px/1 var(--mono);padding:4px 0;caret-color:#fff}
+#console-input::placeholder{color:rgba(255,255,255,.28)}
+#console-hint{padding-top:8px;font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.32);text-align:right}
+body.console-open #cursor-ring{display:none !important}
+body.console-open,body.console-open *{cursor:auto !important}
+body.console-open #console-input{cursor:text !important}
+
+/* =========================================================
+   UI
+   ========================================================= */
 #ui{position:relative;z-index:10;width:100%;height:100%;pointer-events:none;opacity:0;visibility:hidden;transform:translateY(16px) scale(.988);filter:blur(6px);transition:opacity 1.2s cubic-bezier(.16,1,.3,1),transform 1.2s cubic-bezier(.16,1,.3,1),filter 1.2s cubic-bezier(.16,1,.3,1)}
 body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform:none;filter:none}
 #ui>*{pointer-events:auto}
@@ -216,8 +263,8 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .music-foot{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:13px}
 .time{font:500 10px/1 var(--mono);color:var(--faint)}
 .music-controls{display:flex;gap:10px;align-items:center;justify-content:center}
-.music-controls button{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:rgba(47,50,52,.60);font-size:10px;transition:transform .18s ease,background .18s ease}
-.music-controls button:hover{transform:scale(1.08);background:rgba(255,255,255,.46)}
+.music-controls button{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:rgba(47,50,52,.60);font-size:10px;transition:background .18s ease}
+.music-controls button:hover{background:rgba(255,255,255,.46)}
 .music-controls .main-play{width:36px;height:36px;background:rgba(47,50,52,.78);color:#f4f5f3;font-size:11px}
 .wave{display:flex;gap:3px;align-items:flex-end;justify-content:flex-end;height:22px}
 .wave i{width:2px;height:calc((5px + var(--audio-mid) * 17px) * var(--s,1));background:rgba(47,50,52,calc(.24 + var(--audio-mid) * .5));border-radius:99px;transition:height .08s linear, background .08s linear}
@@ -234,7 +281,10 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .avatar{width:48px;height:48px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,.84)}
 .dc-name{font:600 14px/1 var(--mono);color:rgba(47,50,52,.78)}
 .dc-activity{margin-top:5px;max-width:195px;font:500 11px/1.45 var(--mono);color:rgba(47,50,52,.64);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.status-dot{margin-left:auto;width:8px;height:8px;border-radius:50%;background:#8a8f8b}.status-dot.online{background:#5a9b70;box-shadow:0 0 0 5px rgba(90,155,112,.08)}.status-dot.idle{background:#b59550}.status-dot.dnd{background:#b65b5b}
+.status-dot{margin-left:auto;width:8px;height:8px;border-radius:50%;background:#8a8f8b}
+.status-dot.online{background:#5a9b70;box-shadow:0 0 0 5px rgba(90,155,112,.08)}
+.status-dot.idle{background:#b59550}
+.status-dot.dnd{background:#b65b5b}
 
 .site-stats{padding:8px 16px;background:rgba(248,249,247,.24);border-radius:0;border-top:0;border-bottom:0;box-shadow:none;backdrop-filter:blur(10px) saturate(.86);-webkit-backdrop-filter:blur(10px) saturate(.86)}
 .system-row{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:20px;font:500 10px/1.35 var(--mono);letter-spacing:.05em;color:var(--faint)}
@@ -259,7 +309,8 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .owner-open{width:26px;height:26px;border:1px solid rgba(47,50,52,.12);border-radius:8px;background:rgba(255,255,255,.16);font:700 13px/1 var(--mono);color:rgba(47,50,52,.52);transition:background .18s ease,color .18s ease,border-color .18s ease}
 .owner-open:hover{background:rgba(255,255,255,.36);border-color:rgba(47,50,52,.20);color:rgba(47,50,52,.82)}
 .gb-list{flex:1;min-height:0;margin-top:10px;overflow-y:auto;overflow-x:hidden;padding-right:7px;scrollbar-width:thin;scrollbar-color:rgba(47,50,52,.18) transparent}
-.gb-list::-webkit-scrollbar{width:5px}.gb-list::-webkit-scrollbar-thumb{background:rgba(47,50,52,.18);border-radius:999px}
+.gb-list::-webkit-scrollbar{width:5px}
+.gb-list::-webkit-scrollbar-thumb{background:rgba(47,50,52,.18);border-radius:999px}
 .gb-empty,.gb-error{height:100%;display:grid;place-items:center;text-align:center;font:500 10px/1.5 var(--mono);letter-spacing:.08em;color:var(--faint)}
 .gb-message{padding:10px 3px;border-bottom:1px solid rgba(47,50,52,.08)}
 .gb-message:last-child{border-bottom:0}
@@ -287,60 +338,6 @@ body.site-entered #ui{opacity:1;visibility:visible;pointer-events:none;transform
 .message-form button:hover{background:rgba(255,255,255,.42);border-color:rgba(47,50,52,.20)}
 .message-form button:disabled{opacity:.45}
 .honeypot{position:absolute;left:-9999px;top:auto;width:1px;height:1px;opacity:0;pointer-events:none}
-
-/* =========================================================
-   CONSOLE OVERLAY
-   ========================================================= */
-#console-overlay{
-  position:fixed;
-  left:50%;bottom:40px;
-  transform:translateX(-50%) translateY(24px) scale(.98);
-  width:min(640px,92vw);
-  max-height:64vh;
-  z-index:2147483640;
-  background:rgba(16,18,20,.95);
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:14px;
-  padding:18px 20px 16px;
-  font:500 13px/1.55 var(--mono);
-  color:rgba(255,255,255,.92);
-  opacity:0;pointer-events:none;
-  backdrop-filter:blur(24px) saturate(.9);
-  -webkit-backdrop-filter:blur(24px) saturate(.9);
-  box-shadow:0 30px 80px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08);
-  display:flex;flex-direction:column;gap:10px;
-  transition:opacity .22s ease, transform .32s cubic-bezier(.16,1,.3,1);
-}
-#console-overlay.is-open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0) scale(1)}
-#console-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:10px;letter-spacing:.18em;color:rgba(255,255,255,.46)}
-#console-head .dash{display:flex;gap:6px}
-#console-head .dash i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.15)}
-#console-output{
-  flex:1;min-height:140px;max-height:40vh;overflow-y:auto;
-  padding-right:6px;font-size:12.5px;
-  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent;
-}
-#console-output::-webkit-scrollbar{width:5px}
-#console-output::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:99px}
-#console-output .line{margin-bottom:4px;word-break:break-word;white-space:pre-wrap}
-#console-output .line.cmd{color:#fff;font-weight:600}
-#console-output .line.cmd::before{content:'> ';color:rgba(255,255,255,.4);margin-right:2px}
-#console-output .line.ok{color:rgba(140,220,180,.94)}
-#console-output .line.err{color:rgba(230,140,140,.94)}
-#console-output .line.dim{color:rgba(255,255,255,.42)}
-#console-output .line.accent{color:rgba(180,200,255,.9)}
-#console-input-row{display:flex;gap:8px;align-items:center;padding-top:10px;border-top:1px solid rgba(255,255,255,.08)}
-#console-input-row span{color:rgba(255,255,255,.36);font-size:13px}
-#console-input{
-  flex:1;background:transparent;border:0;color:#fff;
-  font:600 13px/1 var(--mono);padding:4px 0;caret-color:#fff;
-}
-#console-input::placeholder{color:rgba(255,255,255,.28)}
-#console-hint{padding-top:8px;font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.32);text-align:right}
-body.console-open #cursor-ring{opacity:0 !important}
-body.console-open{cursor:auto !important}
-body.console-open *{cursor:auto !important}
-body.console-open #console-input{cursor:text !important}
 
 #entry-screen{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:rgba(245,243,239,.96);backdrop-filter:blur(14px) saturate(.84);-webkit-backdrop-filter:blur(14px) saturate(.84);color:#252629;transition:opacity 1.15s cubic-bezier(.16,1,.3,1),visibility 1.15s}
 #entry-screen.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
@@ -422,6 +419,10 @@ body.theme-dark .rating-stars button{color:rgba(230,232,230,.24)}
 body.theme-dark .rating-stars button.is-active{color:rgba(230,232,230,.9)}
 body.theme-dark .toast{background:rgba(20,22,24,.9);color:rgba(230,232,230,.82);border-color:rgba(255,255,255,.14)}
 body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232,230,.7);border-color:rgba(255,255,255,.14)}
+body.theme-dark #cursor-ring{border-color:rgba(230,232,230,.9);box-shadow:0 0 0 1px rgba(20,22,24,.6),0 2px 14px rgba(0,0,0,.5)}
+body.theme-dark #cursor-ring .cursor-dot{background:rgba(230,232,230,.95)}
+body.theme-dark #cursor-ring .cursor-glyph{color:rgba(230,232,230,.95)}
+body.theme-dark #cursor-trail{background:rgba(230,232,230,.4)}
 
 @media (max-width:1180px){
   .main-grid{width:calc(100vw - 32px);grid-template-columns:250px minmax(360px,1fr) 250px;gap:16px}
@@ -585,38 +586,32 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
 </audio>
 
 <script>
-(() => {
+(function(){
   'use strict';
 
-  console.log('[boot] script starting');
-
-  const root = document.documentElement;
-  const body = document.body;
-  const stage = document.getElementById('stage');
-  const toast = document.getElementById('toast');
-  const entryScreen = document.getElementById('entry-screen');
-  const entryBtn = document.getElementById('entry-btn');
-  const entryProgress = document.getElementById('entry-progress-bar');
+  var root = document.documentElement;
+  var body = document.body;
+  var stage = document.getElementById('stage');
+  var toast = document.getElementById('toast');
+  var entryScreen = document.getElementById('entry-screen');
+  var entryBtn = document.getElementById('entry-btn');
+  var entryProgress = document.getElementById('entry-progress-bar');
 
   body.classList.add('entry-locked');
 
   /* =========================================================
-     CURSOR — simpler, more reliable
+     CURSOR
      ========================================================= */
-  const ring  = document.getElementById('cursor-ring');
-  const trail = document.getElementById('cursor-trail');
-  const glyph = ring ? ring.querySelector('.cursor-glyph') : null;
+  var ring  = document.getElementById('cursor-ring');
+  var trail = document.getElementById('cursor-trail');
+  var glyph = ring ? ring.querySelector('.cursor-glyph') : null;
 
-  const isTouchOnly = matchMedia('(pointer:coarse)').matches && !matchMedia('(any-pointer:fine)').matches;
-  const enableCustom = !isTouchOnly;
+  var isTouchOnly = matchMedia('(pointer:coarse)').matches && !matchMedia('(any-pointer:fine)').matches;
+  var enableCustom = !isTouchOnly;
 
-  console.log('[cursor] touchOnly:', isTouchOnly, '→ custom:', enableCustom);
-
-  let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-  let tx = mx, ty = my;
-  let rafId = null;
-  let idleTimer = null;
-  let cursorMovedOnce = false;
+  var mx = window.innerWidth / 2, my = window.innerHeight / 2;
+  var tx = mx, ty = my;
+  var rafId = null, idleTimer = null;
 
   function placeCursor(){
     if(!ring) return;
@@ -631,8 +626,8 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
   function frame(){
     rafId = null;
     if(!enableCustom) return;
-    mx += (tx - mx) * 0.4;
-    my += (ty - my) * 0.4;
+    mx += (tx - mx) * 0.35;
+    my += (ty - my) * 0.35;
     placeCursor();
     if(Math.abs(tx - mx) > 0.3 || Math.abs(ty - my) > 0.3){
       rafId = requestAnimationFrame(frame);
@@ -643,46 +638,30 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
     if(document.hidden || !enableCustom) return;
     if(!rafId) rafId = requestAnimationFrame(frame);
     clearTimeout(idleTimer);
-    idleTimer = setTimeout(() => {
+    idleTimer = setTimeout(function(){
       mx = tx; my = ty; placeCursor();
       if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
     }, 200);
   }
 
-  // Надёжная активация курсара
   if(enableCustom && ring){
-    document.documentElement.classList.add('has-custom-cursor');
+    root.classList.add('has-custom-cursor');
     placeCursor();
-    // Защита: если через 800мс после init мышь так и не двинулась и ring не виден,
-    // или если что-то упало — откатываем к нативному курсору.
-    setTimeout(() => {
-      if(!cursorMovedOnce){
-        console.log('[cursor] waiting for first mousemove');
-      }
-    }, 800);
-  } else {
-    console.log('[cursor] custom cursor disabled (touch device)');
   }
 
-  window.addEventListener('mousemove', (e) => {
+  window.addEventListener('mousemove', function(e){
     tx = e.clientX;
     ty = e.clientY;
     if(enableCustom && ring){
-      if(!cursorMovedOnce){
-        cursorMovedOnce = true;
-        mx = tx; my = ty;
-        placeCursor();
-        console.log('[cursor] first move at', tx, ty);
-      }
       wakeCursor();
-      const nx = (tx / window.innerWidth  - .5) * 2;
-      const ny = (ty / window.innerHeight - .5) * 2;
+      var nx = (tx / window.innerWidth  - .5) * 2;
+      var ny = (ty / window.innerHeight - .5) * 2;
       root.style.setProperty('--mx', String(nx));
       root.style.setProperty('--my', String(ny));
     }
   }, {passive:true});
 
-  document.addEventListener('visibilitychange', () => {
+  document.addEventListener('visibilitychange', function(){
     if(document.hidden){
       if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
     } else if(enableCustom){
@@ -690,11 +669,12 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
     }
   });
 
-  const CURSOR_CLASSES = ['cursor-link','cursor-text','cursor-play','cursor-star'];
+  var CURSOR_CLASSES = ['cursor-link','cursor-text','cursor-play','cursor-star'];
   function setCursorState(el){
     if(!enableCustom) return;
-    body.classList.remove(...CURSOR_CLASSES);
+    body.classList.remove.apply(body, CURSOR_CLASSES);
     if(!el){ if(glyph) glyph.textContent=''; return; }
+
     if(el.matches('input:not(.honeypot), textarea')){
       body.classList.add('cursor-text');
       if(glyph) glyph.textContent='';
@@ -726,12 +706,12 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
       return;
     }
   }
-  document.querySelectorAll('a, button, input, textarea, [data-rating], .card').forEach(el => {
-    el.addEventListener('pointerenter', () => setCursorState(el));
-    el.addEventListener('pointerleave', () => setCursorState(null));
+  document.querySelectorAll('a, button, input, textarea, [data-rating], .card').forEach(function(el){
+    el.addEventListener('pointerenter', function(){ setCursorState(el); });
+    el.addEventListener('pointerleave', function(){ setCursorState(null); });
   });
 
-  window.addEventListener('pointerdown', () => {
+  window.addEventListener('pointerdown', function(){
     if(!stage.animate) return;
     stage.animate(
       [{transform:'scale(1)'},{transform:'scale(.9985)'},{transform:'scale(1)'}],
@@ -742,26 +722,26 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
   /* =========================================================
      MAGNETIC BUTTONS
      ========================================================= */
-  const magnetTargets = [
+  var magnetTargets = [
     document.getElementById('play'),
     document.getElementById('prev'),
     document.getElementById('next')
   ].filter(Boolean);
-  const MAGNET_RADIUS = 48;
-  const MAGNET_STRENGTH = 0.35;
+  var MAGNET_RADIUS = 48;
+  var MAGNET_STRENGTH = 0.32;
 
-  window.addEventListener('mousemove', (e) => {
+  window.addEventListener('mousemove', function(e){
     if(!enableCustom) return;
-    magnetTargets.forEach(btn => {
-      const r = btn.getBoundingClientRect();
-      const cx = r.left + r.width / 2;
-      const cy = r.top  + r.height / 2;
-      const dx = e.clientX - cx;
-      const dy = e.clientY - cy;
-      const dist = Math.hypot(dx, dy);
+    magnetTargets.forEach(function(btn){
+      var r = btn.getBoundingClientRect();
+      var cx = r.left + r.width / 2;
+      var cy = r.top  + r.height / 2;
+      var dx = e.clientX - cx;
+      var dy = e.clientY - cy;
+      var dist = Math.sqrt(dx*dx + dy*dy);
       if(dist < MAGNET_RADIUS + Math.max(r.width, r.height) / 2){
-        const pull = Math.max(0, 1 - dist / (MAGNET_RADIUS + r.width));
-        btn.style.transform = `translate(${dx * pull * MAGNET_STRENGTH}px, ${dy * pull * MAGNET_STRENGTH}px)`;
+        var pull = Math.max(0, 1 - dist / (MAGNET_RADIUS + r.width));
+        btn.style.transform = 'translate(' + (dx * pull * MAGNET_STRENGTH) + 'px,' + (dy * pull * MAGNET_STRENGTH) + 'px)';
       } else {
         btn.style.transform = '';
       }
@@ -771,23 +751,24 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
   /* =========================================================
      MICRO-SOUNDS
      ========================================================= */
-  let soundCtx = null;
-  let soundEnabled = localStorage.getItem('shiokaze_sound') === '1';
+  var soundCtx = null;
+  var soundEnabled = localStorage.getItem('shiokaze_sound') === '1';
 
   function ensureSoundCtx(){
     if(!soundCtx){
       try{ soundCtx = new (window.AudioContext || window.webkitAudioContext)(); }
-      catch{ soundCtx = null; }
+      catch(e){ soundCtx = null; }
     }
     if(soundCtx && soundCtx.state === 'suspended') soundCtx.resume();
     return soundCtx;
   }
-  function playTone(freq, duration, gainVal, type='sine'){
+  function playTone(freq, duration, gainVal, type){
     if(!soundEnabled) return;
-    const ctx = ensureSoundCtx();
+    var ctx = ensureSoundCtx();
     if(!ctx) return;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+    type = type || 'sine';
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
     osc.type = type;
     osc.frequency.value = freq;
     gain.gain.setValueAtTime(0, ctx.currentTime);
@@ -798,53 +779,53 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
     osc.start();
     osc.stop(ctx.currentTime + duration + 0.02);
   }
-  const sounds = {
-    hover:  () => playTone(880, 0.04, 0.02, 'sine'),
-    click:  () => playTone(420, 0.06, 0.03, 'triangle'),
-    signal: () => { playTone(600, 0.08, 0.04, 'sine'); setTimeout(()=>playTone(900, 0.10, 0.03, 'sine'), 70); },
-    open:   () => playTone(320, 0.10, 0.03, 'sine'),
-    close:  () => playTone(220, 0.10, 0.03, 'sine'),
-    error:  () => playTone(180, 0.14, 0.04, 'sawtooth')
+  var sounds = {
+    hover:  function(){ playTone(880, 0.04, 0.02, 'sine'); },
+    click:  function(){ playTone(420, 0.06, 0.03, 'triangle'); },
+    signal: function(){ playTone(600, 0.08, 0.04, 'sine'); setTimeout(function(){ playTone(900, 0.10, 0.03, 'sine'); }, 70); },
+    open:   function(){ playTone(320, 0.10, 0.03, 'sine'); },
+    close:  function(){ playTone(220, 0.10, 0.03, 'sine'); },
+    error:  function(){ playTone(180, 0.14, 0.04, 'sawtooth'); }
   };
 
   /* =========================================================
      TOAST
      ========================================================= */
-  let toastTimer;
+  var toastTimer;
   function showToast(text){
-    toast.textContent=text;
+    toast.textContent = text;
     toast.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer=setTimeout(()=>toast.classList.remove('show'),1800);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
   }
 
   /* =========================================================
      CLOCK / TZ
      ========================================================= */
-  const clockEl=document.getElementById('clock');
-  const tzEl=document.getElementById('tz');
+  var clockEl = document.getElementById('clock');
+  var tzEl = document.getElementById('tz');
   try{
-    const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';
-    const city=tz.split('/').pop().replace(/_/g,' ');
-    const mins=-new Date().getTimezoneOffset();
-    const sign=mins>=0?'+':'−';
-    const hh=String(Math.floor(Math.abs(mins)/60)).padStart(2,'0');
-    const mm=String(Math.abs(mins)%60).padStart(2,'0');
-    tzEl.textContent=`${city} · GMT${sign}${hh}:${mm}`;
-  }catch{tzEl.textContent='local';}
-  function updateClock(){ clockEl.textContent=new Date().toLocaleTimeString(navigator.language||'en',{hour12:false}); }
+    var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    var city = tz.split('/').pop().replace(/_/g,' ');
+    var mins = -new Date().getTimezoneOffset();
+    var sign = mins >= 0 ? '+' : '−';
+    var hh = String(Math.floor(Math.abs(mins)/60)).padStart(2,'0');
+    var mm = String(Math.abs(mins)%60).padStart(2,'0');
+    tzEl.textContent = city + ' · GMT' + sign + hh + ':' + mm;
+  }catch(e){ tzEl.textContent = 'local'; }
+  function updateClock(){ clockEl.textContent = new Date().toLocaleTimeString(navigator.language || 'en', {hour12:false}); }
   updateClock();
-  setInterval(updateClock,1000);
+  setInterval(updateClock, 1000);
 
   /* =========================================================
      TIME-OF-DAY PALETTE
      ========================================================= */
-  let manualTheme = null;
+  var manualTheme = null;
   function applyTimeTheme(){
     if(manualTheme === 'dark'){ body.classList.add('theme-dark'); return; }
     if(manualTheme === 'light'){ body.classList.remove('theme-dark'); return; }
-    const h = new Date().getHours();
-    let sat, bright, hue, tint, alpha;
+    var h = new Date().getHours();
+    var sat, bright, hue, tint, alpha;
     if(h >= 22 || h < 6){ sat='.52'; bright='.88'; hue='-14deg'; tint='30,40,60'; alpha='.14'; }
     else if(h < 11){ sat='.88'; bright='1.06'; hue='8deg'; tint='255,240,220'; alpha='.10'; }
     else if(h < 17){ sat='.78'; bright='1.015'; hue='0deg'; tint='255,255,255'; alpha='.10'; }
@@ -861,89 +842,90 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
   /* =========================================================
      MUSIC
      ========================================================= */
-  const audio=document.getElementById('audio');
-  const playBtn=document.getElementById('play');
-  const prevBtn=document.getElementById('prev');
-  const nextBtn=document.getElementById('next');
-  const musicCard=document.getElementById('music-card');
-  const progress=document.getElementById('track-progress');
-  const trackTime=document.getElementById('track-time');
-  audio.volume=.15;
+  var audio = document.getElementById('audio');
+  var playBtn = document.getElementById('play');
+  var prevBtn = document.getElementById('prev');
+  var nextBtn = document.getElementById('next');
+  var musicCard = document.getElementById('music-card');
+  var progress = document.getElementById('track-progress');
+  var trackTime = document.getElementById('track-time');
+  audio.volume = 0.15;
 
   function fmtTime(t){
-    if(!Number.isFinite(t)) return '00:00';
-    const m=Math.floor(t/60).toString().padStart(2,'0');
-    const s=Math.floor(t%60).toString().padStart(2,'0');
-    return `${m}:${s}`;
+    if(!isFinite(t)) return '00:00';
+    var m = Math.floor(t/60); var s = Math.floor(t%60);
+    return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
   }
   function syncMusic(){
-    const d=audio.duration||0;
-    progress.style.width=(d?audio.currentTime/d*100:0)+'%';
-    trackTime.textContent=fmtTime(audio.currentTime);
-    const playing=!audio.paused;
-    musicCard.classList.toggle('playing',playing);
-    playBtn.textContent=playing?'❚❚':'▶';
-    playBtn.setAttribute('aria-label',playing?'Pause':'Play');
+    var d = audio.duration || 0;
+    progress.style.width = (d ? audio.currentTime/d*100 : 0) + '%';
+    trackTime.textContent = fmtTime(audio.currentTime);
+    var playing = !audio.paused;
+    musicCard.classList.toggle('playing', playing);
+    playBtn.textContent = playing ? '❚❚' : '▶';
+    playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
     if(body.classList.contains('cursor-play') && glyph) glyph.textContent = playing ? '❚❚' : '▶';
   }
-  playBtn.addEventListener('click',async()=>{
-    try{ if(audio.paused) await audio.play(); else audio.pause(); syncMusic(); }
-    catch{ showToast('AUDIO BLOCKED'); }
+  playBtn.addEventListener('click', function(){
+    if(audio.paused) audio.play().then(syncMusic).catch(function(){ showToast('AUDIO BLOCKED'); });
+    else { audio.pause(); syncMusic(); }
   });
-  prevBtn.addEventListener('click',()=>{ audio.currentTime=Math.max(0,(audio.currentTime||0)-10); syncMusic(); });
-  nextBtn.addEventListener('click',()=>{ audio.currentTime=Number.isFinite(audio.duration)?Math.min(audio.duration,audio.currentTime+10):audio.currentTime+10; syncMusic(); });
-  audio.addEventListener('timeupdate',syncMusic);
-  audio.addEventListener('loadedmetadata',syncMusic);
-  audio.addEventListener('pause',syncMusic);
-  audio.addEventListener('play',syncMusic);
-  audio.addEventListener('ended',()=>{audio.currentTime=0;syncMusic();});
+  prevBtn.addEventListener('click', function(){ audio.currentTime = Math.max(0, (audio.currentTime||0) - 10); syncMusic(); });
+  nextBtn.addEventListener('click', function(){ audio.currentTime = isFinite(audio.duration) ? Math.min(audio.duration, audio.currentTime + 10) : audio.currentTime + 10; syncMusic(); });
+  audio.addEventListener('timeupdate', syncMusic);
+  audio.addEventListener('loadedmetadata', syncMusic);
+  audio.addEventListener('pause', syncMusic);
+  audio.addEventListener('play', syncMusic);
+  audio.addEventListener('ended', function(){ audio.currentTime = 0; syncMusic(); });
 
   /* =========================================================
      AUDIO-REACTIVE
      ========================================================= */
-  let audioCtx=null, analyser=null, freqData=null, audioRAF=null, audioInitFailed=false;
+  var audioCtx = null, analyser = null, freqData = null, audioRAF = null, audioInitFailed = false;
   function initAudioEngine(){
-    if(audioCtx||audioInitFailed) return;
+    if(audioCtx || audioInitFailed) return;
     try{
-      audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-      const source=audioCtx.createMediaElementSource(audio);
-      analyser=audioCtx.createAnalyser();
-      analyser.fftSize=128;
-      analyser.smoothingTimeConstant=.82;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      var source = audioCtx.createMediaElementSource(audio);
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 128;
+      analyser.smoothingTimeConstant = 0.82;
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
-      freqData=new Uint8Array(analyser.frequencyBinCount);
-    }catch(e){ audioInitFailed=true; console.warn('[audio-reactive] disabled:', e.message); }
+      freqData = new Uint8Array(analyser.frequencyBinCount);
+    }catch(e){
+      audioInitFailed = true;
+    }
   }
   function tickAudio(){
-    audioRAF=null;
+    audioRAF = null;
     if(!analyser || document.hidden) return;
     analyser.getByteFrequencyData(freqData);
-    let bass=0,mid=0,treble=0;
-    for(let i=1;i<=4;i++) bass+=freqData[i];
-    for(let i=5;i<=15;i++) mid+=freqData[i];
-    for(let i=16;i<=31;i++) treble+=freqData[i];
-    bass=bass/(4*255); mid=mid/(11*255); treble=treble/(16*255);
-    root.style.setProperty('--audio-bass',bass.toFixed(3));
-    root.style.setProperty('--audio-mid',mid.toFixed(3));
-    root.style.setProperty('--audio-treble',treble.toFixed(3));
-    audioRAF=requestAnimationFrame(tickAudio);
+    var bass=0, mid=0, treble=0, i;
+    for(i=1; i<=4; i++) bass += freqData[i];
+    for(i=5; i<=15; i++) mid += freqData[i];
+    for(i=16; i<=31; i++) treble += freqData[i];
+    bass = bass / (4*255); mid = mid / (11*255); treble = treble / (16*255);
+    root.style.setProperty('--audio-bass', bass.toFixed(3));
+    root.style.setProperty('--audio-mid', mid.toFixed(3));
+    root.style.setProperty('--audio-treble', treble.toFixed(3));
+    audioRAF = requestAnimationFrame(tickAudio);
   }
   function startAudioEngine(){
     initAudioEngine();
-    if(audioCtx && audioCtx.state==='suspended') audioCtx.resume();
-    if(!audioRAF && analyser) audioRAF=requestAnimationFrame(tickAudio);
+    if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    if(!audioRAF && analyser) audioRAF = requestAnimationFrame(tickAudio);
   }
   function stopAudioEngine(){
-    if(audioRAF){ cancelAnimationFrame(audioRAF); audioRAF=null; }
-    root.style.setProperty('--audio-bass','0');
-    root.style.setProperty('--audio-mid','0');
-    root.style.setProperty('--audio-treble','0');
+    if(audioRAF){ cancelAnimationFrame(audioRAF); audioRAF = null; }
+    root.style.setProperty('--audio-bass', '0');
+    root.style.setProperty('--audio-mid', '0');
+    root.style.setProperty('--audio-treble', '0');
   }
-  audio.addEventListener('play',startAudioEngine);
-  audio.addEventListener('pause',stopAudioEngine);
-  audio.addEventListener('ended',stopAudioEngine);
-  document.addEventListener('visibilitychange',()=>{
+  audio.addEventListener('play', startAudioEngine);
+  audio.addEventListener('pause', stopAudioEngine);
+  audio.addEventListener('ended', stopAudioEngine);
+  document.addEventListener('visibilitychange', function(){
     if(document.hidden) stopAudioEngine();
     else if(!audio.paused) startAudioEngine();
   });
@@ -951,44 +933,43 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
   /* =========================================================
      ENTRY
      ========================================================= */
-  let entered=false;
+  var entered = false;
   function finishEntry(){
-    entryProgress.style.animation='none';
-    entryProgress.style.transform='scaleX(1)';
-    setTimeout(()=>entryScreen.classList.add('is-leaving'),120);
+    entryProgress.style.animation = 'none';
+    entryProgress.style.transform = 'scaleX(1)';
+    setTimeout(function(){ entryScreen.classList.add('is-leaving'); }, 120);
   }
-  async function enterInterface(){
+  function enterInterface(){
     if(entered) return;
-    entered=true;
+    entered = true;
     try{
-      audio.currentTime=0;
+      audio.currentTime = 0;
       initAudioEngine();
-      await Promise.race([
-        audio.play(),
-        new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),400))
-      ]);
-      startAudioEngine();
-    }catch{}
+      var playPromise = audio.play();
+      if(playPromise && playPromise.then){
+        playPromise.then(function(){ startAudioEngine(); }).catch(function(){});
+      }
+    }catch(e){}
     syncMusic();
     body.classList.remove('entry-locked');
     body.classList.add('site-entered');
     finishEntry();
-    setTimeout(()=>entryScreen.remove(),1200);
+    setTimeout(function(){ if(entryScreen && entryScreen.remove) entryScreen.remove(); }, 1200);
   }
-  window.addEventListener('keydown',enterInterface,{once:true});
-  entryBtn.addEventListener('click',enterInterface,{once:true});
+  window.addEventListener('keydown', enterInterface, {once:true});
+  entryBtn.addEventListener('click', enterInterface, {once:true});
 
   /* =========================================================
      CONSOLE
      ========================================================= */
-  const consoleOverlay = document.getElementById('console-overlay');
-  const consoleOutput  = document.getElementById('console-output');
-  const consoleInput   = document.getElementById('console-input');
-  const consoleTrigger = document.getElementById('console-trigger');
-  let consoleOpen = false;
+  var consoleOverlay = document.getElementById('console-overlay');
+  var consoleOutput = document.getElementById('console-output');
+  var consoleInput = document.getElementById('console-input');
+  var consoleTrigger = document.getElementById('console-trigger');
+  var consoleOpen = false;
 
-  function cLog(text, cls=''){
-    const line = document.createElement('div');
+  function cLog(text, cls){
+    var line = document.createElement('div');
     line.className = 'line' + (cls ? ' ' + cls : '');
     line.textContent = text;
     consoleOutput.appendChild(line);
@@ -999,10 +980,10 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
     if(consoleOpen) return;
     consoleOpen = true;
     consoleOverlay.classList.add('is-open');
-    consoleOverlay.setAttribute('aria-hidden','false');
+    consoleOverlay.setAttribute('aria-hidden', 'false');
     body.classList.add('console-open');
     if(sounds.open) sounds.open();
-    setTimeout(()=>consoleInput.focus(), 80);
+    setTimeout(function(){ consoleInput.focus(); }, 80);
     if(!consoleOutput.children.length){
       cLog('SVCURA / TERMINAL v1.0', 'accent');
       cLog('type "help" for available commands', 'dim');
@@ -1013,22 +994,23 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
     if(!consoleOpen) return;
     consoleOpen = false;
     consoleOverlay.classList.remove('is-open');
-    consoleOverlay.setAttribute('aria-hidden','true');
+    consoleOverlay.setAttribute('aria-hidden', 'true');
     body.classList.remove('console-open');
     if(sounds.close) sounds.close();
   }
 
-  consoleTrigger.addEventListener('click', () => {
+  consoleTrigger.addEventListener('click', function(e){
+    e.preventDefault();
     if(consoleOpen) closeConsole(); else openConsole();
   });
 
   function processCommand(raw){
-    const input = raw.trim();
+    var input = raw.trim();
     if(!input) return;
     cLog(input, 'cmd');
-    const parts = input.toLowerCase().split(/\s+/);
-    const cmd = parts[0];
-    const arg = parts.slice(1).join(' ');
+    var parts = input.toLowerCase().split(/\s+/);
+    var cmd = parts[0];
+    var arg = parts.slice(1).join(' ');
 
     switch(cmd){
       case 'help':
@@ -1038,104 +1020,77 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
         cLog('  music pause       — pause playback');
         cLog('  music next        — +10 seconds');
         cLog('  music prev        — −10 seconds');
-        cLog('  theme dark        — switch to dark theme');
-        cLog('  theme light       — switch to light theme');
+        cLog('  theme dark        — dark theme');
+        cLog('  theme light       — light theme');
         cLog('  theme auto        — follow time of day');
         cLog('  sound on          — enable UI sounds');
         cLog('  sound off         — disable UI sounds');
-        cLog('  cursor debug      — cursor diagnostics');
         cLog('  cursor on/off     — toggle custom cursor');
-        cLog('  stats             — show site stats');
-        cLog('  whoami            — info about visitor');
-        cLog('  time              — current local time');
-        cLog('  clear             — clear terminal');
+        cLog('  stats             — site stats');
+        cLog('  whoami            — visitor info');
+        cLog('  time              — current time');
+        cLog('  clear             — clear');
         cLog('  close / exit      — close terminal');
         break;
       case 'music':
-        if(arg === 'play'){ audio.play().then(()=>cLog('playing','ok')).catch(()=>cLog('playback blocked','err')); syncMusic(); }
-        else if(arg === 'pause'){ audio.pause(); cLog('paused','ok'); syncMusic(); }
-        else if(arg === 'next'){ audio.currentTime += 10; cLog('skipped +10s','ok'); syncMusic(); }
-        else if(arg === 'prev'){ audio.currentTime = Math.max(0, audio.currentTime - 10); cLog('skipped −10s','ok'); syncMusic(); }
+        if(arg === 'play'){ audio.play().then(function(){ cLog('playing', 'ok'); }).catch(function(){ cLog('playback blocked', 'err'); }); syncMusic(); }
+        else if(arg === 'pause'){ audio.pause(); cLog('paused', 'ok'); syncMusic(); }
+        else if(arg === 'next'){ audio.currentTime += 10; cLog('skipped +10s', 'ok'); syncMusic(); }
+        else if(arg === 'prev'){ audio.currentTime = Math.max(0, audio.currentTime - 10); cLog('skipped −10s', 'ok'); syncMusic(); }
         else cLog('usage: music play | pause | next | prev', 'err');
         break;
       case 'theme':
-        if(arg === 'dark'){ manualTheme = 'dark'; applyTimeTheme(); cLog('theme: dark','ok'); }
-        else if(arg === 'light'){ manualTheme = 'light'; applyTimeTheme(); cLog('theme: light','ok'); }
-        else if(arg === 'auto'){ manualTheme = null; applyTimeTheme(); cLog('theme: auto (time-of-day)','ok'); }
+        if(arg === 'dark'){ manualTheme = 'dark'; applyTimeTheme(); cLog('theme: dark', 'ok'); }
+        else if(arg === 'light'){ manualTheme = 'light'; applyTimeTheme(); cLog('theme: light', 'ok'); }
+        else if(arg === 'auto'){ manualTheme = null; applyTimeTheme(); cLog('theme: auto (time-of-day)', 'ok'); }
         else cLog('usage: theme dark | light | auto', 'err');
         break;
       case 'sound':
         if(arg === 'on'){
           soundEnabled = true;
-          localStorage.setItem('shiokaze_sound','1');
+          localStorage.setItem('shiokaze_sound', '1');
           ensureSoundCtx();
-          cLog('sound enabled','ok');
-          setTimeout(()=>playTone(880, 0.06, 0.04), 50);
-        }
-        else if(arg === 'off'){
+          cLog('sound enabled', 'ok');
+          setTimeout(function(){ playTone(880, 0.06, 0.04); }, 50);
+        } else if(arg === 'off'){
           soundEnabled = false;
-          localStorage.setItem('shiokaze_sound','0');
-          cLog('sound disabled','ok');
-        }
-        else cLog('usage: sound on | off', 'err');
+          localStorage.setItem('shiokaze_sound', '0');
+          cLog('sound disabled', 'ok');
+        } else cLog('usage: sound on | off', 'err');
         break;
       case 'cursor':
-        if(arg === 'debug'){
-          cLog('— cursor diagnostics —','accent');
-          cLog('touchOnly: ' + isTouchOnly);
-          cLog('enableCustom: ' + enableCustom);
-          cLog('cursorMovedOnce: ' + cursorMovedOnce);
-          cLog('ring element: ' + (ring ? 'found' : 'MISSING'));
-          cLog('ring opacity: ' + (ring ? getComputedStyle(ring).opacity : 'n/a'));
-          cLog('ring display: ' + (ring ? getComputedStyle(ring).display : 'n/a'));
-          cLog('ring left/top: ' + (ring ? getComputedStyle(ring).left + ' / ' + getComputedStyle(ring).top : 'n/a'));
-          cLog('html.has-custom-cursor: ' + document.documentElement.classList.contains('has-custom-cursor'));
-        }
-        else if(arg === 'on'){
-          document.documentElement.classList.add('has-custom-cursor');
-          cLog('cursor: on','ok');
-        }
-        else if(arg === 'off'){
-          document.documentElement.classList.remove('has-custom-cursor');
-          cLog('cursor: off (native)','ok');
-        }
-        else cLog('usage: cursor on | off | debug', 'err');
+        if(arg === 'on'){ root.classList.add('has-custom-cursor'); cLog('cursor: on', 'ok'); }
+        else if(arg === 'off'){ root.classList.remove('has-custom-cursor'); cLog('cursor: off (native)', 'ok'); }
+        else cLog('usage: cursor on | off', 'err');
         break;
       case 'stats':
-        cLog('— site statistics —','accent');
+        cLog('— site statistics —', 'accent');
         cLog('views:  ' + (document.getElementById('visit-count').textContent || '—'));
         cLog('rating: ' + (document.getElementById('rating-value').textContent || '—'));
         cLog('time:   ' + new Date().toLocaleString());
         break;
       case 'whoami':
-        cLog('— visitor info —','accent');
+        cLog('— visitor info —', 'accent');
         cLog('browser: ' + navigator.userAgent.split(') ')[0].split(' (')[0]);
         cLog('language: ' + (navigator.language || '—'));
         cLog('screen: ' + window.screen.width + '×' + window.screen.height);
         cLog('viewport: ' + window.innerWidth + '×' + window.innerHeight);
         cLog('timezone: ' + (Intl.DateTimeFormat().resolvedOptions().timeZone || '—'));
         break;
-      case 'time':
-        cLog(new Date().toString(), 'accent');
-        break;
-      case 'clear':
-        consoleOutput.innerHTML = '';
-        break;
+      case 'time': cLog(new Date().toString(), 'accent'); break;
+      case 'clear': consoleOutput.innerHTML = ''; break;
       case 'close':
-      case 'exit':
-        closeConsole();
-        break;
+      case 'exit': closeConsole(); break;
       default:
         cLog('unknown command: ' + cmd + ' — try "help"', 'err');
         if(sounds.error) sounds.error();
     }
   }
 
-  // Global hotkey: Backquote (тильда) — работает в любой раскладке
-  window.addEventListener('keydown', (e) => {
+  window.addEventListener('keydown', function(e){
     if(e.code === 'Backquote' || e.key === '~' || e.key === '`' || e.key === 'Ё' || e.key === 'ё'){
-      const ae = document.activeElement;
-      const typing = ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA');
+      var ae = document.activeElement;
+      var typing = ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA');
       if(typing && ae !== consoleInput) return;
       e.preventDefault();
       if(consoleOpen) closeConsole(); else openConsole();
@@ -1147,228 +1102,323 @@ body.theme-dark #console-trigger{background:rgba(20,22,24,.5);color:rgba(230,232
     }
   });
 
-  consoleInput.addEventListener('keydown', (e) => {
+  consoleInput.addEventListener('keydown', function(e){
     if(e.key === 'Enter'){
       e.preventDefault();
-      const val = consoleInput.value;
+      var val = consoleInput.value;
       consoleInput.value = '';
       processCommand(val);
     }
-    if(e.key === 'Escape'){
-      e.preventDefault();
-      closeConsole();
-    }
+    if(e.key === 'Escape'){ e.preventDefault(); closeConsole(); }
   });
 
   /* =========================================================
      DISCORD
      ========================================================= */
-  const DISCORD_ID='912747427465928754';
-  const dcAvatar=document.getElementById('dc-avatar');
-  const dcName=document.getElementById('dc-name');
-  const dcActivity=document.getElementById('dc-activity');
-  const dcStatus=document.getElementById('dc-status');
-  async function fetchDiscord(){
-    const controller=new AbortController();
-    const timeout=setTimeout(()=>controller.abort(),8000);
-    try{
-      const res=await fetch('https://lanyard-proxy.lopgg96.workers.dev/v1/users/'+DISCORD_ID,{cache:'no-store',signal:controller.signal});
-      const json=await res.json();
-      clearTimeout(timeout);
-      const d=json?.data;
-      if(!d) throw new Error('presence');
-      const u=d.discord_user||{};
-      dcName.textContent=u.global_name||u.username||'shiokaze';
-      dcAvatar.src=u.avatar?`https://cdn.discordapp.com/avatars/${DISCORD_ID}/${u.avatar}.${u.avatar.startsWith('a_')?'gif':'webp'}?size=96`:'https://cdn.discordapp.com/embed/avatars/0.png';
-      const st=d.discord_status||'offline';
-      dcStatus.className='status-dot '+(st==='online'?'online':st==='idle'?'idle':st==='dnd'?'dnd':'');
-      const acts=d.activities||[];
-      const act=acts.find(a=>a.type===0)||acts.find(a=>a.type===2)||acts.find(a=>a.type===1);
-      dcActivity.textContent=act?(act.details||act.name||'active on Discord'):(st==='offline'?'offline':'online / no activity');
-    }catch(e){
-      clearTimeout(timeout);
-      dcActivity.textContent=e?.name==='AbortError'?'presence timeout':'presence unavailable';
-      dcStatus.className='status-dot';
-    }
+  var DISCORD_ID = '912747427465928754';
+  var dcAvatar = document.getElementById('dc-avatar');
+  var dcName = document.getElementById('dc-name');
+  var dcActivity = document.getElementById('dc-activity');
+  var dcStatus = document.getElementById('dc-status');
+  function fetchDiscord(){
+    var ctrl = new AbortController();
+    var timeout = setTimeout(function(){ ctrl.abort(); }, 8000);
+    fetch('https://lanyard-proxy.lopgg96.workers.dev/v1/users/' + DISCORD_ID, {cache:'no-store', signal:ctrl.signal})
+      .then(function(r){ return r.json(); })
+      .then(function(json){
+        clearTimeout(timeout);
+        var d = json && json.data;
+        if(!d) throw new Error('presence');
+        var u = d.discord_user || {};
+        dcName.textContent = u.global_name || u.username || 'shiokaze';
+        dcAvatar.src = u.avatar
+          ? 'https://cdn.discordapp.com/avatars/' + DISCORD_ID + '/' + u.avatar + '.' + (u.avatar.indexOf('a_')===0 ? 'gif' : 'webp') + '?size=96'
+          : 'https://cdn.discordapp.com/embed/avatars/0.png';
+        var st = d.discord_status || 'offline';
+        dcStatus.className = 'status-dot ' + (st==='online'?'online':st==='idle'?'idle':st==='dnd'?'dnd':'');
+        var acts = d.activities || [];
+        var act = acts.filter(function(a){return a.type===0;})[0]
+              || acts.filter(function(a){return a.type===2;})[0]
+              || acts.filter(function(a){return a.type===1;})[0];
+        dcActivity.textContent = act ? (act.details || act.name || 'active on Discord') : (st==='offline' ? 'offline' : 'online / no activity');
+      })
+      .catch(function(e){
+        clearTimeout(timeout);
+        dcActivity.textContent = (e && e.name === 'AbortError') ? 'presence timeout' : 'presence unavailable';
+        dcStatus.className = 'status-dot';
+      });
   }
   fetchDiscord();
-  setInterval(()=>{if(!document.hidden)fetchDiscord();},matchMedia('(max-width:900px)').matches?90000:30000);
+  setInterval(function(){ if(!document.hidden) fetchDiscord(); }, matchMedia('(max-width:900px)').matches ? 90000 : 30000);
 
   /* =========================================================
      SUPABASE / GUESTBOOK / OWNER
      ========================================================= */
-  const GUESTBOOK_API='https://sdqfeycfahemliivrujg.supabase.co';
-  const GUESTBOOK_KEY='sb_publishable_WVjFpsuPNUu8KJ-1UNL8qA_mDYwlUZG';
-  const gbList=document.getElementById('gb-list');
-  const gbCount=document.getElementById('gb-count');
-  const gbForm=document.getElementById('guestbook-form');
-  const gbNameInput=document.getElementById('gb-name-input');
-  const gbInput=document.getElementById('gb-message');
-  const gbWebsite=document.getElementById('gb-website');
-  const gbSubmit=document.getElementById('gb-submit');
-  const visitCount=document.getElementById('visit-count');
-  const ratingStars=document.getElementById('rating-stars');
-  const ratingValue=document.getElementById('rating-value');
-  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-  const fmtDate=value=>{try{return new Date(value).toLocaleDateString(navigator.language||'en')}catch{return ''}};
+  var GUESTBOOK_API = 'https://sdqfeycfahemliivrujg.supabase.co';
+  var GUESTBOOK_KEY = 'sb_publishable_WVjFpsuPNUu8KJ-1UNL8qA_mDYwlUZG';
+  var gbList = document.getElementById('gb-list');
+  var gbCount = document.getElementById('gb-count');
+  var gbForm = document.getElementById('guestbook-form');
+  var gbNameInput = document.getElementById('gb-name-input');
+  var gbInput = document.getElementById('gb-message');
+  var gbWebsite = document.getElementById('gb-website');
+  var gbSubmit = document.getElementById('gb-submit');
+  var visitCount = document.getElementById('visit-count');
+  var ratingStars = document.getElementById('rating-stars');
+  var ratingValue = document.getElementById('rating-value');
 
-  async function api(path,options={},token=''){
-    const ctrl=new AbortController();
-    const timeout=setTimeout(()=>ctrl.abort(),8000);
-    try{
-      const res=await fetch(GUESTBOOK_API+path,{...options,signal:ctrl.signal,headers:{apikey:GUESTBOOK_KEY,'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{}),...(options.headers||{})}});
-      const data=await res.json().catch(()=>null);
-      if(!res.ok) throw new Error(data?.message||data?.hint||data?.error_description||'request failed');
-      return data;
-    }finally{ clearTimeout(timeout); }
+  function esc(v){
+    return String(v == null ? '' : v).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c];
+    });
+  }
+  function fmtDate(v){
+    try{ return new Date(v).toLocaleDateString(navigator.language || 'en'); }catch(e){ return ''; }
+  }
+  function api(path, options, token){
+    options = options || {};
+    var ctrl = new AbortController();
+    var timeout = setTimeout(function(){ ctrl.abort(); }, 8000);
+    var headers = {
+      apikey: GUESTBOOK_KEY,
+      'Content-Type': 'application/json'
+    };
+    if(token) headers.Authorization = 'Bearer ' + token;
+    if(options.headers) for(var k in options.headers) headers[k] = options.headers[k];
+    return fetch(GUESTBOOK_API + path, {
+      method: options.method,
+      body: options.body,
+      signal: ctrl.signal,
+      headers: headers
+    }).then(function(r){
+      return r.json().catch(function(){ return null; }).then(function(data){
+        clearTimeout(timeout);
+        if(!r.ok) throw new Error((data && (data.message || data.hint || data.error_description)) || 'request failed');
+        return data;
+      });
+    });
   }
 
-  let authorSession=null;
-  const ownerModal=document.getElementById('owner-modal');
-  const ownerOpen=document.getElementById('owner-login-open');
-  const ownerForm=document.getElementById('owner-login-form');
-  const authorEmailInput=document.getElementById('author-email');
-  const authorPasswordInput=document.getElementById('author-password');
-  const authorLogout=document.getElementById('author-logout');
-  const authorSessionLabel=document.getElementById('author-session');
-  const authorLoginError=document.getElementById('author-login-error');
+  var authorSession = null;
+  var ownerModal = document.getElementById('owner-modal');
+  var ownerOpen = document.getElementById('owner-login-open');
+  var ownerForm = document.getElementById('owner-login-form');
+  var authorEmailInput = document.getElementById('author-email');
+  var authorPasswordInput = document.getElementById('author-password');
+  var authorLogout = document.getElementById('author-logout');
+  var authorSessionLabel = document.getElementById('author-session');
+  var authorLoginError = document.getElementById('author-login-error');
 
   function syncOwnerUI(){
-    const on=!!authorSession;
-    body.classList.toggle('author-mode',on);
-    authorLogout.hidden=!on;
-    authorSessionLabel.hidden=!on;
-    authorEmailInput.hidden=on;
-    authorPasswordInput.hidden=on;
-    ownerForm.querySelector('button[type="submit"]').hidden=on;
+    var on = !!authorSession;
+    body.classList.toggle('author-mode', on);
+    authorLogout.hidden = !on;
+    authorSessionLabel.hidden = !on;
+    authorEmailInput.hidden = on;
+    authorPasswordInput.hidden = on;
+    ownerForm.querySelector('button[type="submit"]').hidden = on;
   }
 
   function renderMessages(items){
-    if(!Array.isArray(items)||!items.length){gbCount.textContent='0 / live';gbList.innerHTML='<div class="gb-empty">NO SIGNALS YET — BE THE FIRST.</div>';return;}
-    gbCount.textContent=`${items.length} / live`;
-    gbList.innerHTML=items.map(m=>{
-      const liked=!!m.author_liked;
-      const reply=m.author_reply?`<div class="gb-reply"><div class="gb-reply__label">AUTHOR TRANSMISSION</div><div class="gb-reply__text">${esc(m.author_reply)}</div>${m.author_reply_at?`<div class="gb-reply__date">${fmtDate(m.author_reply_at)}</div>`:''}</div>`:'';
-      const ownerControls=authorSession?`<div class="gb-author-actions"><button class="gb-like-btn ${liked?'author-active':''}" type="button" data-like="${esc(m.id)}" aria-label="${liked?'Unlike':'Like'}">${liked?'♥ LIKED':'♥ LIKE'}</button></div>`:'';
-      const replyEditor=authorSession?`<div class="gb-reply-editor"><textarea data-reply-input="${esc(m.id)}" maxlength="500" placeholder="reply...">${esc(m.author_reply||'')}</textarea><button type="button" data-reply="${esc(m.id)}">${m.author_reply?'UPDATE':'REPLY'}</button></div>`:'';
-      return `<article class="gb-message"><div class="gb-top"><span class="gb-name">${esc(m.name)}${liked?'<span class="gb-author-badge">♥ AUTHOR</span>':''}</span><span class="gb-date">${fmtDate(m.created_at)}</span></div><div class="gb-text">${esc(m.message)}</div>${m.contact?`<div class="gb-contact">${esc(m.contact)}</div>`:''}${reply}<div class="gb-message__bottom">${ownerControls}</div>${replyEditor}</article>`;
+    if(!Array.isArray(items) || !items.length){
+      gbCount.textContent = '0 / live';
+      gbList.innerHTML = '<div class="gb-empty">NO SIGNALS YET — BE THE FIRST.</div>';
+      return;
+    }
+    gbCount.textContent = items.length + ' / live';
+    gbList.innerHTML = items.map(function(m){
+      var liked = !!m.author_liked;
+      var reply = m.author_reply
+        ? '<div class="gb-reply"><div class="gb-reply__label">AUTHOR TRANSMISSION</div><div class="gb-reply__text">' + esc(m.author_reply) + '</div>' + (m.author_reply_at ? '<div class="gb-reply__date">' + fmtDate(m.author_reply_at) + '</div>' : '') + '</div>'
+        : '';
+      var ownerControls = authorSession
+        ? '<div class="gb-author-actions"><button class="gb-like-btn ' + (liked?'author-active':'') + '" type="button" data-like="' + esc(m.id) + '" aria-label="' + (liked?'Unlike':'Like') + '">' + (liked?'♥ LIKED':'♥ LIKE') + '</button></div>'
+        : '';
+      var replyEditor = authorSession
+        ? '<div class="gb-reply-editor"><textarea data-reply-input="' + esc(m.id) + '" maxlength="500" placeholder="reply...">' + esc(m.author_reply||'') + '</textarea><button type="button" data-reply="' + esc(m.id) + '">' + (m.author_reply?'UPDATE':'REPLY') + '</button></div>'
+        : '';
+      return '<article class="gb-message"><div class="gb-top"><span class="gb-name">' + esc(m.name) + (liked?'<span class="gb-author-badge">♥ AUTHOR</span>':'') + '</span><span class="gb-date">' + fmtDate(m.created_at) + '</span></div><div class="gb-text">' + esc(m.message) + '</div>' + (m.contact?'<div class="gb-contact">' + esc(m.contact) + '</div>':'') + reply + '<div class="gb-message__bottom">' + ownerControls + '</div>' + replyEditor + '</article>';
     }).join('');
   }
 
-  async function loadMessages(){
-    try{
-      let data;
-      try{data=await api('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked,author_reply,author_reply_at&order=created_at.desc&limit=50');}
-      catch{data=await api('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked&order=created_at.desc&limit=50');data=(data||[]).map(x=>({...x,author_reply:null,author_reply_at:null}));}
-      renderMessages(data);
-    }catch{gbList.innerHTML='<div class="gb-error">GUESTBOOK OFFLINE</div>';gbCount.textContent='offline';}
+  function loadMessages(){
+    api('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked,author_reply,author_reply_at&order=created_at.desc&limit=50')
+      .then(function(data){ renderMessages(data); })
+      .catch(function(){
+        return api('/rest/v1/guestbook_comments?select=id,name,contact,message,created_at,author_liked&order=created_at.desc&limit=50')
+          .then(function(data){ renderMessages((data||[]).map(function(x){ x.author_reply = null; x.author_reply_at = null; return x; })); });
+      })
+      .catch(function(){
+        gbList.innerHTML = '<div class="gb-error">GUESTBOOK OFFLINE</div>';
+        gbCount.textContent = 'offline';
+      });
   }
 
-  gbForm.addEventListener('submit',async e=>{
+  gbForm.addEventListener('submit', function(e){
     e.preventDefault();
     if(gbWebsite.value) return;
-    const lastSend=Number(localStorage.getItem('gb_last_send')||0);
-    const wait=30000-(Date.now()-lastSend);
-    if(wait>0){showToast(`WAIT ${Math.ceil(wait/1000)}S`);return;}
-    const name=(gbNameInput.value.trim()||'visitor').slice(0,32);
-    const message=gbInput.value.trim().slice(0,160);
-    if(!message)return;
-    gbSubmit.disabled=true;
-    try{
-      await api('/rest/v1/guestbook_comments',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({name,contact:null,message})});
-      localStorage.setItem('gb_last_send',String(Date.now()));
-      gbNameInput.value='';gbInput.value='';showToast('SIGNAL SENT');
+    var lastSend = Number(localStorage.getItem('gb_last_send')||0);
+    var wait = 30000 - (Date.now() - lastSend);
+    if(wait > 0){ showToast('WAIT ' + Math.ceil(wait/1000) + 'S'); return; }
+    var name = (gbNameInput.value.trim() || 'visitor').slice(0,32);
+    var message = gbInput.value.trim().slice(0,160);
+    if(!message) return;
+    gbSubmit.disabled = true;
+    api('/rest/v1/guestbook_comments', {
+      method: 'POST',
+      headers: { Prefer: 'return=minimal' },
+      body: JSON.stringify({name:name, contact:null, message:message})
+    }).then(function(){
+      localStorage.setItem('gb_last_send', String(Date.now()));
+      gbNameInput.value = '';
+      gbInput.value = '';
+      showToast('SIGNAL SENT');
       if(sounds.signal) sounds.signal();
-      await loadMessages();
-    }catch{showToast('SEND FAILED');}
-    finally{gbSubmit.disabled=false;}
+      return loadMessages();
+    }).catch(function(){
+      showToast('SEND FAILED');
+    }).then(function(){
+      gbSubmit.disabled = false;
+    });
   });
 
-  gbList.addEventListener('click',async e=>{
-    const like=e.target.closest('[data-like]');
-    const reply=e.target.closest('[data-reply]');
-    if(!authorSession)return;
+  gbList.addEventListener('click', function(e){
+    var like = e.target.closest('[data-like]');
+    var reply = e.target.closest('[data-reply]');
+    if(!authorSession) return;
     if(like){
-      like.disabled=true;
-      try{await api('/rest/v1/rpc/toggle_author_like',{method:'POST',body:JSON.stringify({p_comment_id:like.dataset.like})},authorSession.access_token);await loadMessages();}
-      catch{showToast('LIKE FAILED');}
-      finally{like.disabled=false;}
+      like.disabled = true;
+      api('/rest/v1/rpc/toggle_author_like', {method:'POST', body:JSON.stringify({p_comment_id: like.dataset.like})}, authorSession.access_token)
+        .then(loadMessages)
+        .catch(function(){ showToast('LIKE FAILED'); })
+        .then(function(){ like.disabled = false; });
       return;
     }
     if(reply){
-      const id=reply.dataset.reply;
-      const input=[...gbList.querySelectorAll('[data-reply-input]')].find(el=>el.dataset.replyInput===id);
-      const text=input?.value.trim()||'';
-      if(!text)return;
-      reply.disabled=true;
-      try{await api('/rest/v1/rpc/set_author_reply',{method:'POST',body:JSON.stringify({p_comment_id:id,p_reply:text})},authorSession.access_token);await loadMessages();showToast('REPLY SENT');}
-      catch{showToast('REPLY NOT ENABLED');}
-      finally{reply.disabled=false;}
+      var id = reply.dataset.reply;
+      var inputEl = null;
+      var all = gbList.querySelectorAll('[data-reply-input]');
+      for(var i=0; i<all.length; i++){ if(all[i].dataset.replyInput === id){ inputEl = all[i]; break; } }
+      var text = inputEl ? inputEl.value.trim() : '';
+      if(!text) return;
+      reply.disabled = true;
+      api('/rest/v1/rpc/set_author_reply', {method:'POST', body:JSON.stringify({p_comment_id: id, p_reply: text})}, authorSession.access_token)
+        .then(function(){ showToast('REPLY SENT'); return loadMessages(); })
+        .catch(function(){ showToast('REPLY NOT ENABLED'); })
+        .then(function(){ reply.disabled = false; });
     }
   });
 
-  ownerOpen.addEventListener('click',()=>{ownerModal.hidden=false;authorLoginError.textContent='';});
-  ownerModal.addEventListener('click',e=>{if(e.target.matches('[data-owner-close]')||e.target.classList.contains('owner-modal__backdrop'))ownerModal.hidden=true;});
-  authorLogout.addEventListener('click',()=>{authorSession=null;localStorage.removeItem('shiokaze_author_session');syncOwnerUI();loadMessages();ownerModal.hidden=true;});
-  ownerForm.addEventListener('submit',async e=>{
-    e.preventDefault();authorLoginError.textContent='';
-    try{
-      const d=await api('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email:authorEmailInput.value.trim(),password:authorPasswordInput.value||''})});
-      if(!d?.access_token)throw new Error('LOGIN FAILED');
-      authorSession=d;localStorage.setItem('shiokaze_author_session',JSON.stringify(d));ownerModal.hidden=true;syncOwnerUI();await loadMessages();
-    }catch(err){authorLoginError.textContent=err.message||'LOGIN FAILED';}
+  ownerOpen.addEventListener('click', function(){ ownerModal.hidden = false; authorLoginError.textContent = ''; });
+  ownerModal.addEventListener('click', function(e){
+    if(e.target.matches('[data-owner-close]') || e.target.classList.contains('owner-modal__backdrop')) ownerModal.hidden = true;
+  });
+  authorLogout.addEventListener('click', function(){
+    authorSession = null;
+    localStorage.removeItem('shiokaze_author_session');
+    syncOwnerUI();
+    loadMessages();
+    ownerModal.hidden = true;
+  });
+  ownerForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    authorLoginError.textContent = '';
+    api('/auth/v1/token?grant_type=password', {
+      method:'POST',
+      body: JSON.stringify({email: authorEmailInput.value.trim(), password: authorPasswordInput.value || ''})
+    }).then(function(d){
+      if(!d || !d.access_token) throw new Error('LOGIN FAILED');
+      authorSession = d;
+      localStorage.setItem('shiokaze_author_session', JSON.stringify(d));
+      ownerModal.hidden = true;
+      syncOwnerUI();
+      return loadMessages();
+    }).catch(function(err){
+      authorLoginError.textContent = err.message || 'LOGIN FAILED';
+    });
   });
   try{
-    const saved=JSON.parse(localStorage.getItem('shiokaze_author_session')||'null');
-    if(saved?.access_token && saved?.expires_at && saved.expires_at*1000>Date.now()) authorSession=saved;
+    var saved = JSON.parse(localStorage.getItem('shiokaze_author_session')||'null');
+    if(saved && saved.access_token && saved.expires_at && saved.expires_at*1000 > Date.now()) authorSession = saved;
     else if(saved) localStorage.removeItem('shiokaze_author_session');
-  }catch{}
+  }catch(e){}
   syncOwnerUI();
-  setInterval(()=>{
-    if(authorSession?.expires_at && authorSession.expires_at*1000<=Date.now()){
-      authorSession=null;localStorage.removeItem('shiokaze_author_session');syncOwnerUI();showToast('SESSION EXPIRED');
+  setInterval(function(){
+    if(authorSession && authorSession.expires_at && authorSession.expires_at*1000 <= Date.now()){
+      authorSession = null;
+      localStorage.removeItem('shiokaze_author_session');
+      syncOwnerUI();
+      showToast('SESSION EXPIRED');
     }
-  },60000);
+  }, 60000);
 
   /* =========================================================
      VISITS / RATING
      ========================================================= */
-  const visitorKey=()=>localStorage.getItem('shiokaze_visitor_id')||(()=>{const id=crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random()}`;localStorage.setItem('shiokaze_visitor_id',id);return id})();
-  async function loadSiteStats(){
-    const id=visitorKey();
-    try{
-      const visit=await api('/rest/v1/rpc/register_site_visit',{method:'POST',body:JSON.stringify({p_visitor_id:id})});
-      if(visit && typeof visit==='object') visitCount.textContent=String(visit.visits??visit.total_visits??'—');
-      const stats=await api('/rest/v1/rpc/get_site_stats');
-      if(stats){visitCount.textContent=String(stats.total_visits??stats.visits??visitCount.textContent);ratingValue.textContent=stats.average_rating?Number(stats.average_rating).toFixed(1):'—';}
-    }catch{visitCount.textContent='—';ratingValue.textContent='—';}
+  function visitorKey(){
+    var k = localStorage.getItem('shiokaze_visitor_id');
+    if(k) return k;
+    k = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random());
+    localStorage.setItem('shiokaze_visitor_id', k);
+    return k;
   }
-  const savedRating=Number(localStorage.getItem('shiokaze_rating')||0);
-  function paintRating(value){ratingStars.querySelectorAll('button').forEach(b=>{const n=Number(b.dataset.rating);b.classList.toggle('is-active',n<=value);b.setAttribute('aria-checked',n===value?'true':'false');});}
+  function loadSiteStats(){
+    var id = visitorKey();
+    api('/rest/v1/rpc/register_site_visit', {method:'POST', body:JSON.stringify({p_visitor_id:id})})
+      .then(function(visit){
+        if(visit && typeof visit === 'object') visitCount.textContent = String(visit.visits || visit.total_visits || '—');
+        return api('/rest/v1/rpc/get_site_stats');
+      })
+      .then(function(stats){
+        if(stats){
+          visitCount.textContent = String(stats.total_visits || stats.visits || visitCount.textContent);
+          ratingValue.textContent = stats.average_rating ? Number(stats.average_rating).toFixed(1) : '—';
+        }
+      })
+      .catch(function(){ visitCount.textContent = '—'; ratingValue.textContent = '—'; });
+  }
+  var savedRating = Number(localStorage.getItem('shiokaze_rating')||0);
+  function paintRating(value){
+    var btns = ratingStars.querySelectorAll('button');
+    for(var i=0; i<btns.length; i++){
+      var n = Number(btns[i].dataset.rating);
+      btns[i].classList.toggle('is-active', n <= value);
+      btns[i].setAttribute('aria-checked', n === value ? 'true' : 'false');
+    }
+  }
   paintRating(savedRating);
-  ratingStars.addEventListener('click',async e=>{
-    const b=e.target.closest('[data-rating]');if(!b)return;
-    const rating=Number(b.dataset.rating);localStorage.setItem('shiokaze_rating',String(rating));paintRating(rating);
-    try{await api('/rest/v1/rpc/submit_site_rating',{method:'POST',body:JSON.stringify({p_visitor_id:visitorKey(),p_rating:rating})});await loadSiteStats();showToast('RATING SAVED');}
-    catch{showToast('RATING OFFLINE');}
+  ratingStars.addEventListener('click', function(e){
+    var b = e.target.closest('[data-rating]');
+    if(!b) return;
+    var rating = Number(b.dataset.rating);
+    localStorage.setItem('shiokaze_rating', String(rating));
+    paintRating(rating);
+    api('/rest/v1/rpc/submit_site_rating', {method:'POST', body:JSON.stringify({p_visitor_id: visitorKey(), p_rating: rating})})
+      .then(function(){ return loadSiteStats(); })
+      .then(function(){ showToast('RATING SAVED'); })
+      .catch(function(){ showToast('RATING OFFLINE'); });
   });
-  ratingStars.addEventListener('keydown',e=>{
-    const buttons=[...ratingStars.querySelectorAll('button')];const i=buttons.indexOf(document.activeElement);if(i<0)return;
-    if(e.key==='ArrowRight'||e.key==='ArrowUp'){e.preventDefault();buttons[Math.min(buttons.length-1,i+1)].focus();}
-    if(e.key==='ArrowLeft'||e.key==='ArrowDown'){e.preventDefault();buttons[Math.max(0,i-1)].focus();}
+  ratingStars.addEventListener('keydown', function(e){
+    var buttons = Array.prototype.slice.call(ratingStars.querySelectorAll('button'));
+    var i = buttons.indexOf(document.activeElement);
+    if(i < 0) return;
+    if(e.key === 'ArrowRight' || e.key === 'ArrowUp'){ e.preventDefault(); buttons[Math.min(buttons.length-1, i+1)].focus(); }
+    if(e.key === 'ArrowLeft' || e.key === 'ArrowDown'){ e.preventDefault(); buttons[Math.max(0, i-1)].focus(); }
   });
 
-  document.querySelectorAll('[data-copy-email]').forEach(a=>a.addEventListener('click',e=>{
-    if(!navigator.clipboard)return;
-    e.preventDefault();navigator.clipboard.writeText(a.dataset.copyEmail).then(()=>showToast('EMAIL COPIED')).catch(()=>{window.location.href=a.href;});
-  }));
+  document.querySelectorAll('[data-copy-email]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      if(!navigator.clipboard) return;
+      e.preventDefault();
+      navigator.clipboard.writeText(a.dataset.copyEmail).then(function(){ showToast('EMAIL COPIED'); }).catch(function(){ window.location.href = a.href; });
+    });
+  });
 
   loadMessages();
   loadSiteStats();
-  setInterval(()=>{if(!document.hidden)loadMessages();},60000);
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden){loadMessages();loadSiteStats();wakeCursor();}});
+  setInterval(function(){ if(!document.hidden) loadMessages(); }, 60000);
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden){ loadMessages(); loadSiteStats(); wakeCursor(); } });
 
-  console.log('[boot] ready');
 })();
 </script>
 </body>
